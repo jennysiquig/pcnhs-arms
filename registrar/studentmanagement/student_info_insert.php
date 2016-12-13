@@ -29,8 +29,7 @@
 	$gender = $_POST['gender'];
 	$birth_date = $_POST['byear'].'-'.$_POST['bmonth'].'-'.$_POST['bday'];
 	$birth_place = $_POST['birth_place'];
-	$schl_location = $_POST['schl_location'];
-	$yr_grad = $_POST['yr_grad'];
+	$second_school_name = $_POST['second_school_name'];
 	$program = $_POST['program'];
 	$curriculum = $_POST['curriculum'];
 
@@ -50,7 +49,7 @@
 		die("Connection failed: " . mysqli_connect_error());
 	}
 	//1 ========================
-	$statement1 = "INSERT INTO `pcnhsdb`.`students` (`stud_id`, `first_name`, `mid_name`, `last_name`, `gender`, `birth_date`, `birth_place`, `yr_grad`, `curr_id`, `prog_id`) VALUES ('$stud_id' , '$first_name', '$mid_name', '$last_name', '$gender', '$birth_date', '$birth_place', '$yr_grad', '$curriculum', '$program')";
+	$statement1 = "INSERT INTO `pcnhsdb`.`students` (`stud_id`, `first_name`, `mid_name`, `last_name`, `gender`, `birth_date`, `birth_place`, `second_school_name`, `curr_id`, `prog_id`) VALUES ('$stud_id' , '$first_name', '$mid_name', '$last_name', '$gender', '$birth_date', '$birth_place', '$second_school_name', '$curriculum', '$program')";
 
 	//2 ========================
 	$statement2 = "INSERT INTO `pcnhsdb`.`parent` (`stud_id`, `pname`, `occupation`, `address` ) VALUES ('$stud_id', '$pname', '$parent_occupation', '$parent_address')";

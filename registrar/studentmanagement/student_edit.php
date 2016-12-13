@@ -1,17 +1,44 @@
-<?php $base_url =  "http://".$_SERVER['SERVER_NAME']."/pcnhs.sis"; ?>
 <!DOCTYPE html>
+<?php require_once "../../resources/config.php" ?>
 <html>
 	<head>
-		<?php include "$base_url/resources/templates/registrar/header.php"; ?>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		
+		
+		<!-- Bootstrap -->
+		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Font Awesome -->
+		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		
+		<!-- Datatables -->
+		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+		
+		<!-- Custom Theme Style -->
+		<link href="../../css/custom.min.css" rel="stylesheet">
+		<link href="../../css/tstheme/style.css" rel="stylesheet">
+		
+		<!--[if lt IE 9]>
+		<script src="../js/ie8-responsive-file-warning.js"></script>
+		<![endif]-->
+		
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
 	</head>
 	<body class="nav-md">
 		<!-- Sidebar -->
-		<?php include "$base_url/resources/templates/registrar/sidebar.php"; ?>
+		<?php include "../../resources/templates/registrar/sidebar.php"; ?>
 		<!-- Top Navigation -->
-		<?php include "$base_url/resources/templates/registrar/top-nav.php"; ?>
+		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
 			<div class="clearfix"></div>
-			<form class="form-horizontal form-label-left" action=<?php echo "$base_url/registrar/studentmanagement/add_grades.php"; ?> method="POST" novalidate>
+			<form class="form-horizontal form-label-left" action=<?php echo "../../registrar/studentmanagement/add_grades.php"; ?> method="POST" novalidate>
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Student Personal Information</h2>
@@ -25,67 +52,116 @@
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
+									<!--  -->
+										<?php
+
+											$stud_id = $_GET['stud_id'];
+											$first_name;
+											$mid_name;
+											$last_name;
+											$gender;
+											$birth_date;
+											$birth_place;
+											$schl_location;
+											$yr_grad;
+											$program;
+											$curriculum;
+											$pname;
+											$parent_occupation;
+											$parent_address;
+											$primary_schl_name;
+											$primary_schl_year;
+											$total_elem_years;
+											$gpa;
+
+											$statement = "SELECT * FROM pcnhsdb.students left join parent on students.stud_id = parent.stud_id left join primaryschool on students.stud_id = primaryschool.stud_id left join programs on students.prog_id = programs.prog_id left join curriculum on students.curr_id = curriculum.curr_id left join grades on students.stud_id = grades.stud_id where students.stud_id = '$stud_id'";
+											$result = $conn->query($statement);
+											if($result->num_rows>0) {
+												while($row=$result->fetch_assoc()) {
+													$curriculum = $row['curr_name'];
+													$first_name = $row['first_name'];
+													$mid_name = $row['mid_name'];
+													$last_name = $row['last_name'];
+													$gender = $row['gender'];
+													$birth_date = $row['birth_date'];
+													$birth_place = $row['birth_place'];
+													$last_schyear_attended = $row['schl_year'];
+													$program = $row['prog_name'];
+													$pname = $row['pname'];
+													$parent_occupation = $row['occupation'];
+													$parent_address = $row['address'];
+													$primary_schl_name = $row['psname'];
+													$primary_schl_year = $row['pschool_year'];
+													$total_elem_years = $row['total_elem_years'];
+													$gpa = $row['gen_average'];
+												}
+											}
+										?>
+									<!--  -->
+									<div class="item form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum</label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$curriculum'"; ?>>
+										</div>
+										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
+									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled value="129">
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$stud_id'"; ?>>
 										</div>
 										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="lastName" value="Migu">
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text"  value=<?php echo "'$last_name'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="firstName" value="Drake">
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="firstName"  value=<?php echo "'$first_name'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="middleName" value="Escobar">
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="middleName"  value=<?php echo "'$mid_name'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<div id="gender" class="btn-group" data-toggle="buttons">
-												<label class="btn btn-default active" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-													<input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
-												</label>
-												<label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-													<input type="radio" name="gender" value="female"> Female
-												</label>
-											</div>
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text"  value=<?php echo "'$gender'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthday</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" type="text" name="birthdate" data-inputmask="'mask': '99/99/9999'" value="10/19/1998">
+											<input class="form-control col-md-7 col-xs-12" type="text" name="birthdate" data-inputmask="'mask': '9999-99-99'"  value=<?php echo "'$birth_date'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthplace</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" type="text" name="birthplace" value="Rosario">
+											<input class="form-control col-md-7 col-xs-12" type="text" name="birthplace"  value=<?php echo "'$birth_place'"; ?>>
 										</div>
 									</div>
+									<!--  -->
 									<div class="item form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Home Address</label>
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Program</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" name="home_add" value="Poblacion">
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$program'"; ?>>
 										</div>
+										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
 									<div class="item form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">School Location</label>
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Last School Year Attended</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" disabled="" value="Main">
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$last_schyear_attended'"; ?>>
 										</div>
+										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
 								</div>
 							</div>
@@ -100,19 +176,19 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Full Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" name="pname" value="Emilia Rose">
+											<input class="form-control  col-md-7 col-xs-12" type="text"  value=<?php echo "'$pname'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Occupation</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" name="occupation" value="Flight Attendance">
+											<input class="form-control  col-md-7 col-xs-12" type="text"  value=<?php echo "'$parent_occupation'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" name="parent_address" value="Honeymoon Baguio City">
+											<input class="form-control  col-md-7 col-xs-12" type="text" name="parent_address"  value=<?php echo "'$parent_address'"; ?>>
 										</div>
 									</div>
 								</div>
@@ -128,19 +204,19 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" name="psname" value="Mabini Elementary School">
+											<input class="form-control  col-md-7 col-xs-12" type="text" disabled="" value=<?php echo "'$primary_schl_name'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">School Year</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" name="pschool_year" value="2009">
+											<input class="form-control  col-md-7 col-xs-12" type="text" disabled="" value=<?php echo "'$primary_schl_year'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Total Elementary Years</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" name="total_elem_years" value="6">
+											<input class="form-control  col-md-7 col-xs-12" type="text" disabled="" value=<?php echo "'$total_elem_years'"; ?>>
 										</div>
 									</div>
 								</div>
@@ -149,58 +225,13 @@
 						
 						
 						
-						<!-- <div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12">Religion</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-																<input class="form-control col-md-7 col-xs-12" type="text" name="religion">
-											</div>
-						</div>
-						
-						
-						<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12">Citizenship</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-																<input class="form-control col-md-7 col-xs-12" type="text" name="citizenship">
-											</div>
-						</div>
-						<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12">Contact Number</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-																<input class="form-control col-md-7 col-xs-12" type="text" name="contactno">
-											</div>
-						</div>
-						<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-																<input class="form-control col-md-7 col-xs-12" type="number" name="yearLevel">
-											</div>
-						</div>
-						
-						
-						<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12">Civil Status</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-																<div class="radio">
-																					
-																					<label>
-																										<input type="radio" name="civil_status" value="single">Single
-																					</label>
-																					<label>
-																										<input type="radio" name="civil_status" value="married">Married
-																					</label>
-																</div>
-											</div>
-						</div> -->
-						
-						
-						
 						
 						<div class="clearfix"></div>
 						<div class="ln_solid"></div>
 						<div class="form-group">
-							<div class="col-md-5 col-md-offset-3 pull-right">
+							<div class=" pull-right">
 								<button type="submit" class="btn btn-primary">Cancel</button>
-								<a class="btn btn-success" href=<?php echo "$base_url/registrar/studentmanagement/student_info.php" ?>> Save Changes</a>
+								<a class="btn btn-success" href=<?php echo "../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" ?>> Save Changes</a>
 							</div>
 						</div>
 						
@@ -211,8 +242,20 @@
 			
 			
 			<!-- Content End -->
-			<?php include "$base_url/resources/templates/registrar/footer.php"; ?>
-			<?php include "$base_url/resources/templates/registrar/scripts.php"; ?>
+			<?php include "../../resources/templates/registrar/footer.php"; ?>
+			<!-- Scripts -->
+			<!-- jQuery -->
+			<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+			<!-- Bootstrap -->
+			<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
+			<!-- FastClick -->
+			<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
+			<!-- input mask -->
+			<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+			<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+			<!-- Custom Theme Scripts -->
+			<script src= "../../js/custom.min.js"></script>
+			<!-- Scripts -->
 			<!-- validator -->
 			<!-- /jquery.inputmask -->
 		</body>

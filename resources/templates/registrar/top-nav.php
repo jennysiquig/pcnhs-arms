@@ -1,5 +1,5 @@
 <?php
-$base_url =  "http://".$_SERVER['SERVER_NAME']."/pcnhs.sis";
+  require_once "pathconfig.php";
 	echo <<<TN
 <!-- top navigation -->
 <div class="top_nav">

@@ -1,7 +1,9 @@
 <?php
-  $base_url =  "http://".$_SERVER['SERVER_NAME']."/pcnhs.sis";
-	echo <<<SB
+  require_once "pathconfig.php";
 
+?>
+<?php
+echo <<<SB
 		<div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col menu_fixed">
@@ -46,9 +48,8 @@
                     <ul class="nav child_menu">
                       <li><a href="$base_url/registrar/schoolmanagement/curriculum.php">Curriculum</a></li>
                       <li><a href="$base_url/registrar/schoolmanagement/credentials.php">Credentials</a></li>
-                      <li><a href="$base_url/registrar/schoolmanagement/signatories.php">Signatories</a></li>
-                      <li><a href="$base_url/registrar/studentmanagement/student_subjects.php">Student Subjects</a></li>
-                      <li><a href="$base_url/registrar/studentmanagement/student_programs.php">Student Programs</a></li>
+                      <li><a href="$base_url/registrar/schoolmanagement/student_subjects.php">Student Subjects</a></li>
+                      <li><a href="$base_url/registrar/schoolmanagement/student_programs.php">Student Programs</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-check"></i>Credential Status<span class="fa fa-chevron-down"></span></a>
@@ -71,10 +72,10 @@
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
-              <a href="$base_url/registrar" data-toggle="tooltip" data-placement="top" title="Home">
+              <a href="../registrar" data-toggle="tooltip" data-placement="top" title="Home">
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
               </a>
-              <a href="$base_url/registrar/studentmanagement/student_list.php" data-toggle="tooltip" data-placement="top" title="Search">
+              <a href="../registrar/studentmanagement/student_list.php" data-toggle="tooltip" data-placement="top" title="Search">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
               </a>
               <a data-toggle="tooltip" data-placement="top" title="Reports">
@@ -87,8 +88,5 @@
             <!-- /menu footer buttons -->
           </div>
         </div>
-
-        
 SB;
-
 ?>

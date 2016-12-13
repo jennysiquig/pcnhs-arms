@@ -1,13 +1,15 @@
 <?php
- $base_url =  "http://".$_SERVER['SERVER_NAME']."/pcnhs.sis";
-	echo <<<SB
+  require_once "pathconfig.php";
 
+?>
+<?php
+echo <<<SB
 		<div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="$base_url/systemadmin/index.php" class="site_title"><i class="fa fa-wrench"></i> <span>PCNHS System</span></a>
+              <a href="$base_url/registrar/index.php" class="site_title"><i class="fa fa-book"></i> <span>PCNHS SIS</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -19,7 +21,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>System Administrator</h2>
+                <h2>Administrator</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -31,14 +33,17 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-user"></i> Account Management <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="$base_url/systemadmin/index.php"> Manage Personnel Accounts </a></li>
+                      <li><a href="$base_url/systemadmin/index.php">Manage Accounts</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-desktop"></i> Activity Log<span class="fa fa-chevron-down"></span></a>
+                  
+                  <li><a><i class="fa fa-university"></i>School Management<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="$base_url/systemadmin/activitylog.php">Review Personnel Activity</a></li>
+                      
+                      <li><a href="$base_url/systemadmin/schoolmanagement/signatories.php">Signatories</a></li>
+                      
                     </ul>
                   </li>
                 </ul>
@@ -47,10 +52,23 @@
             </div>
             <!-- /sidebar menu -->
 
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a href="../registrar" data-toggle="tooltip" data-placement="top" title="Home">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+              </a>
+              <a href="../registrar/studentmanagement/student_list.php" data-toggle="tooltip" data-placement="top" title="Search">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Reports">
+                <span class="fa fa-desktop" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
           </div>
         </div>
-
-        
 SB;
-
 ?>
