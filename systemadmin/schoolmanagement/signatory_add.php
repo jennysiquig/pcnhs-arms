@@ -101,7 +101,7 @@
 												<option value="present">Present</option>
 												<?php 
 														$present = date("Y");
-													for ($year=$present; $year >= 1920; $year--) { 
+													for ($year=1920; $year <= $present; $year++) { 
 														echo "<option value='$year'>$year</option>";
 												} ?>
 											</select>

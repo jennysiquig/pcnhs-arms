@@ -48,6 +48,11 @@
 			</div>
 			<div class="x_content">
 				*Form 137 Template Here*
+				<div class="clearfix"></div>
+				<br>
+				<label for="message">Remarks :</label>
+				<textarea id="message" required="required" class="form-control" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
+				data-parsley-validation-threshold="10"></textarea>
 			</div>
 		</div>
 		<!-- this row will not appear when printing -->
@@ -60,17 +65,17 @@
 	<!-- Contents Here -->
 	<?php include "../../resources/templates/registrar/footer.php"; ?>
 	<!-- Scripts -->
-		<!-- jQuery -->
-		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
-		<!-- Bootstrap -->
-		<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
-		<!-- FastClick -->
-		<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
-		<!-- input mask -->
-		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
-		<!-- Custom Theme Scripts -->
-		<script src= "../../js/custom.min.js"></script>
+	<!-- jQuery -->
+	<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+	<!-- Bootstrap -->
+	<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
+	<!-- input mask -->
+	<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src= "../../js/custom.min.js"></script>
 	<!-- Scripts -->
 </body>
 </html>

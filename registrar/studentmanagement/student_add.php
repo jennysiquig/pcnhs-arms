@@ -73,7 +73,7 @@
 																<option value="$curr_id">$curr_name</option>
 OPTION1;
 														}
-														}
+													}
 														
 												?>
 											</select>
@@ -119,7 +119,7 @@ OPTION1;
 													<label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
 														<input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
 													</label>
-													<label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+													<label class="btn btn-danger" data-toggle-class="btn-primary" data-toggle-passive-class="btn-danger">
 														<input type="radio" name="gender" value="female"> Female
 													</label>
 												</div>
@@ -162,7 +162,7 @@ OPTION1;
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthplace *</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place" required="">
 											</div>
 										</div>
 										<!-- <div class="item form-group">
@@ -223,19 +223,19 @@ OPTION1;
 											<div class="item form-group">
 												<label class="control-label col-md-3 col-sm-3 col-xs-12">Full Name *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="text" name="pname">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="pname" required="">
 												</div>
 											</div>
 											<div class="item form-group">
 												<label class="control-label col-md-3 col-sm-3 col-xs-12">Occupation *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="text" name="occupation">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="occupation" required="">
 												</div>
 											</div>
 											<div class="item form-group">
 												<label class="control-label col-md-3 col-sm-3 col-xs-12">Address *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="text" name="parent_address">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="parent_address" required="">
 												</div>
 											</div>
 										</div>
@@ -251,25 +251,25 @@ OPTION1;
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">School Name *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="text" name="schl_name">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="schl_name" required="">
 												</div>
 											</div>
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">School Year *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="text" name="schl_year">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="schl_year" required="">
 												</div>
 											</div>
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">Total Elementary Years *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="number" name="total_elem_years" min="1">
+													<input class="form-control  col-md-7 col-xs-12" type="number" name="total_elem_years" min="1" required="">
 												</div>
 											</div>
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">Average Grade *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="number" name="gpa" min="1">
+													<input class="form-control  col-md-7 col-xs-12" type="number" name="gpa" min="1" required="">
 												</div>
 											</div>
 										</div>

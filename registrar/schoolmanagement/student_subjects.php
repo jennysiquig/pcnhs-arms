@@ -123,7 +123,7 @@ SUBJS;
 									?>
 								</tbody>
 							</table>
-							<a href="add_subject.php">Add Subject</a>
+							<a href="subject_add.php">Add Subject</a>
 						</div>
 					</div>
 				</div>

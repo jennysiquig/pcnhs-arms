@@ -5,7 +5,7 @@
 	$year_started = $_POST['year_started'];
 	$year_ended = $_POST['year_ended'];
 
-	require_once "../../resources/config.php";
+	require_once "../../../resources/config.php";
 	if(!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}
@@ -16,7 +16,7 @@
 
 	$statement->execute();
 
-	header('location: curriculum.php');
+	header('location: ../curriculum.php');
 
 	$statement->close();
 	$conn->close();

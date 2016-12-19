@@ -2,7 +2,7 @@
 	$prog_id = $_POST['prog_id'];
 	$prog_name = $_POST['prog_name'];
 	
-	require_once "../../resources/config.php";
+	require_once "../../../resources/config.php";
 	if(!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}
@@ -13,7 +13,7 @@
 
 	$statement->execute();
 
-	header('location: student_programs.php');
+	header('location: ../student_programs.php');
 
 	$statement->close();
 	$conn->close();

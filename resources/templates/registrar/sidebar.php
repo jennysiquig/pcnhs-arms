@@ -33,11 +33,7 @@ echo <<<SB
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="$base_url/registrar/index.php">Dashboard</a></li>
-                    </ul>
-                  </li>
+                  <li><a href="$base_url/registrar/index.php"><i class="fa fa-home"></i> Home </a></li>
                   <li><a><i class="fa fa-edit"></i>Student Management<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="$base_url/registrar/studentmanagement/student_add.php">Add Student Record</a></li>

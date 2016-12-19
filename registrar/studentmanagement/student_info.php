@@ -32,6 +32,7 @@
 			$birth_date = $row['birth_date'];
 			$birth_place = $row['birth_place'];
 			$last_schyear_attended = $row['schl_year'];
+			$second_school_name = $row['second_school_name'];
 			$program = $row['prog_name'];
 			$pname = $row['pname'];
 			$parent_occupation = $row['occupation'];
@@ -100,6 +101,13 @@
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
 											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$curriculum'"; ?>>
+										</div>
+										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
+									</div>
+									<div class="item form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Secondary School Name</label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$second_school_name'"; ?>>
 										</div>
 										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
@@ -256,7 +264,7 @@
 								<a class="btn btn-default" href=<?php echo "../../registrar/studentmanagement/attendance.php?stud_id=$stud_id" ?>><i class="fa fa-calendar m-right-xs"></i> Attendance</a>
 							</div>
 							<div class="col-md-3 pull-right">
-								<a class="btn btn-primary" href=<?php echo "../../registrar/credentials/generate_cred.php" ?>><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
+								<a class="btn btn-primary" href=<?php echo "../../registrar/credentials/choose_credential.php" ?>><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
 							</div>
 						</div>
 					</div>

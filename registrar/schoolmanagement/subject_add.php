@@ -56,7 +56,7 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<form class="form-horizontal form-label-left" action=<?php echo "../../registrar/studentmanagement/subject_insert.php"; ?> method="POST" novalidate>
+						<form class="form-horizontal form-label-left" action="phpinsert/subject_insert.php" method="POST" novalidate>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Subject ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">

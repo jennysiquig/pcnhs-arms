@@ -1,5 +1,5 @@
 <?php
-	require_once "../../resources/config.php";
+	require_once "../../../resources/config.php";
 
 	$subj_id = $_POST['subj_id'];
 	$subj_name = $_POST['subj_name'];
@@ -13,7 +13,7 @@
 	mysqli_query($conn, $insertsubject);
 	mysqli_query($conn, $insertcurriculum);
 
-	header("location: student_subjects.php");
+	header("location: ../student_subjects.php");
 
 	$conn->close();
 ?>

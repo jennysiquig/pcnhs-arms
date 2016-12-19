@@ -55,6 +55,7 @@
 		                  <div class="x_content">
 		                    <h2>Days Attended: 177</h2>
 		                    <h2>Days of School: 196</h2>
+		                    <h2>Total Years in School: 7</h2>
 		                  </div>
 		                </div>
 		              </div>
@@ -67,10 +68,9 @@
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
-		                  	
-		                    
-		                    <h2>Days Attended: 177</h2>
+		                  	<h2>Days Attended: 177</h2>
 		                    <h2>Days of School: 196</h2>
+		                    <h2>Total Years in School: 8</h2>
 		                  </div>
 		                </div>
 		              </div>
@@ -87,6 +87,7 @@
 		                    
 		                    <h2>Days Attended: 177</h2>
 		                    <h2>Days of School: 196</h2>
+		                    <h2>Total Years in School: 9</h2>
 		                  </div>
 		                </div>
 		              </div>
@@ -103,6 +104,7 @@
 		                    
 		                    <h2>Days Attended: 177</h2>
 		                    <h2>Days of School: 196</h2>
+		                    <h2>Total Years in School: 10</h2>
 		                  </div>
 		                </div>
 		              </div>

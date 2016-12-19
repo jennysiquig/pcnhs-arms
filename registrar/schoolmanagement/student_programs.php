@@ -96,7 +96,7 @@ CURR;
 							</tbody>
 						</table>
 					</div>
-					<a href=<?php echo "../../registrar/studentmanagement/programs_add.php" ?>>Add Program</a>
+					<a href="programs_add.php">Add Program</a>
 					
 				</div>
 			</div>

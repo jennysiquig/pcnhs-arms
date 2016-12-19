@@ -55,7 +55,7 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<form class="form-horizontal form-label-left" action=<?php echo "../../registrar/studentmanagement/programs_insert.php"; ?> method="POST" novalidate>
+						<form id="program-val" class="form-horizontal form-label-left" action="phpinsert/programs_insert.php" method="POST" novalidate>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Program ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -96,30 +96,31 @@
 	<!-- Custom Theme Scripts -->
 	<script src= "../../js/custom.min.js"></script>
 	<!-- Scripts -->
-	<!-- validator -->
-	<script>
-	// initialize the validator function
-	validator.message.date = 'not a real date';
-	// validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
-	$('form')
-	.on('blur', 'input[required], input.optional, select.required', validator.checkField)
-	.on('change', 'select.required', validator.checkField)
-	.on('keypress', 'input[required][pattern]', validator.keypress);
-	$('.multi.required').on('keyup blur', 'input', function() {
-	validator.checkField.apply($(this).siblings().last()[0]);
-	});
-	$('form').submit(function(e) {
-	e.preventDefault();
-	var submit = true;
-	// evaluate the form using generic validaing
-	if (!validator.checkAll($(this))) {
-	submit = false;
-	}
-	if (submit)
-	this.submit();
-	return false;
-	});
-	</script>
-	<!-- /validator -->
+	<!-- Parsley -->
+			    <script>
+			      $(document).ready(function() {
+			        $.listen('parsley:field:validate', function() {
+			          validateFront();
+			        });
+			        $('#program-val .btn').on('click', function() {
+			          $('#program-val').parsley().validate();
+			          validateFront();
+			        });
+			        var validateFront = function() {
+			          if (true === $('#program-val').parsley().isValid()) {
+			            $('.bs-callout-info').removeClass('hidden');
+			            $('.bs-callout-warning').addClass('hidden');
+			          } else {
+			            $('.bs-callout-info').addClass('hidden');
+			            $('.bs-callout-warning').removeClass('hidden');
+			          }
+			        };
+			      });
+
+			      try {
+			        hljs.initHighlightingOnLoad();
+			      } catch (err) {}
+			    </script>
+	<!-- /Parsley -->
 </body>
 </html>

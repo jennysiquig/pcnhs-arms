@@ -71,6 +71,17 @@
 							</div>
 						</div>
 					</a>
+					<a href="#">
+						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="tile-stats">
+								<div class="icon"><i class="glyphicon glyphicon-check"></i></div>
+								<div class="count">179</div>
+								<p>&nbsp</p>
+								<h3>Total Transactions</h3>
+								<p>&nbsp</p>
+							</div>
+						</div>
+					</a>
 				</div>
 			</div>
 			<div class="row">

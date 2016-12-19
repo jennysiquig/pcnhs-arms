@@ -69,8 +69,8 @@
 		                          <th scope="row">Filipino</th>
 		                          <td>1</td>
 		                          <td>89</td>
-		                          <td></td>
-		                          <td></td>
+		                          <td>1.2</td>
+		                          <td>Nakapasa</td>
 		                        </tr>
 		                      </tbody>
 		                    </table>
@@ -101,10 +101,10 @@
 		                      <tbody>
 		                        <tr>
 		                          <th scope="row">Filipino</th>
-		                          <td>1</td>
+		                          <td>2</td>
 		                          <td>89</td>
-		                          <td></td>
-		                          <td></td>
+		                          <td>1.2</td>
+		                          <td>Nakapasa</td>
 		                        </tr>
 		                      </tbody>
 		                    </table>
@@ -135,10 +135,10 @@
 		                      <tbody>
 		                        <tr>
 		                          <th scope="row">Filipino</th>
-		                          <td>1</td>
+		                          <td>3</td>
 		                          <td>89</td>
-		                          <td></td>
-		                          <td></td>
+		                          <td>1.2</td>
+		                          <td>Nakapasa</td>
 		                        </tr>
 		                      </tbody>
 		                    </table>
@@ -169,10 +169,10 @@
 		                      <tbody>
 		                        <tr>
 		                          <th scope="row">Filipino</th>
-		                          <td>1</td>
+		                          <td>4</td>
 		                          <td>89</td>
-		                          <td></td>
-		                          <td></td>
+		                          <td>1.2</td>
+		                          <td>Nakapasa</td>
 		                        </tr>
 		                      </tbody>
 		                    </table>

@@ -9,19 +9,19 @@
 		
 		
 		<!-- Bootstrap -->
-		<link href="../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
-		<link href="../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 		
 		<!-- Datatables -->
-		<link href="../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
 		<!-- Custom Theme Style -->
-		<link href="../css/custom.min.css" rel="stylesheet">
-		<link href="../css/tstheme/style.css" rel="stylesheet">
+		<link href="../../css/custom.min.css" rel="stylesheet">
+		<link href="../../css/tstheme/style.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
-		<script src="../js/ie8-responsive-file-warning.js"></script>
+		<script src="../../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
 		
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -32,9 +32,9 @@
 	</head>
 	<body class="nav-md">
 		<!-- Sidebar -->
-		<?php include "../resources/templates/registrar/sidebar.php"; ?>
+		<?php include "../../resources/templates/registrar/sidebar.php"; ?>
 		<!-- Top Navigation -->
-		<?php include "../resources/templates/registrar/top-nav.php"; ?>
+		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
@@ -55,7 +55,7 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<form id="curriculum-val" class="form-horizontal form-label-left" action=<?php echo "../registrar/schoolmanagement/curriculum_insert.php"; ?> method="POST" novalidate>
+						<form id="curriculum-val" class="form-horizontal form-label-left" action="/phpinsertcurriculum_insert.php" method="POST" novalidate>
 						<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -100,19 +100,19 @@
 	<!-- /page content -->
 	<!-- Content Here -->
 	<!-- Footer -->
-	<?php include "../resources/templates/registrar/footer.php"; ?>
+	<?php include "../../resources/templates/registrar/footer.php"; ?>
 	<!-- Scripts -->
 		<!-- jQuery -->
-		<script src="../resources/libraries/jquery/dist/jquery.min.js" ></script>
+		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 		<!-- Bootstrap -->
-		<script src="../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 		<!-- FastClick -->
-		<script src= "../resources/libraries/fastclick/lib/fastclick.js"></script>
+		<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
 		<!-- input mask -->
-		<script src= "../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-		<script src= "../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
-		<script src= "../js/custom.min.js"></script>
+		<script src= "../../js/custom.min.js"></script>
 	<!-- Scripts -->
 
 	<!-- Parsley -->
