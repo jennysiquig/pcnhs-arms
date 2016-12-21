@@ -2,7 +2,7 @@
 	session_start();
 ?>
 <?php
-	include 'config.php';
+	require_once 'config.php';
 	/*   */
 	$username = $_POST['username'];
 	$password = $_POST['password'];
@@ -25,28 +25,31 @@
 				$_SESSION['username'] = $row['username'];
 				$_SESSION['first_name'] = $row['first_name'];
 				$_SESSION['last_name'] = $row['last_name'];
-				$access_type = $row['access_type'];
-
+				// 
+				$_SESSION['account_type'] = "systemadmin";
+				$_SESSION['logged_in'] = "true";
+				// 
 				header("Location: ../systemadmin/index.php");
 			}
 			if($row['access_type']=="registrar") {
 				$_SESSION['username'] = $row['username'];
 				$_SESSION['first_name'] = $row['first_name'];
 				$_SESSION['last_name'] = $row['last_name'];
-				$access_type = $row['access_type'];
+				// 
+				$_SESSION['logged_in'] = "true";
+				$_SESSION['account_type'] = "registrar";
+				// 
 
 				header("Location: ../registrar/index.php");
 			}
 			
-			
-			$_SESSION['session_account'] = $account_type;
 			/*   */
 			
 		}
 	}else {
 		$_SESSION['error_message'] = "Invalid Username or Password";
-		header("Location: ../login.php");
-		die();
+
+		die(header("Location: ../login.php"));
 	}
 	$conn->close();
 ?>

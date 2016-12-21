@@ -58,7 +58,7 @@
 			                  	<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Student Curriculum</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="curriculum" onchange="showSubjects()">
+											<select id="curriculum" class="form-control col-md-7 col-xs-12" name="curriculum">
 												<!-- <option value="1">Regular</option>
 												<option value="2">Special Science</option>
 												<option value="3">Special Journalism</option> -->
@@ -69,7 +69,9 @@
 														die("Connection failed: " . mysqli_connect_error());
 													}
 
-													$statement = "SELECT * FROM pcnhsdb.curriculum";
+													$stud_id = $_GET['stud_id'];
+
+													$statement = "SELECT curr_name FROM pcnhsdb.students left join pcnhsdb.curriculum on students.curr_id = curriculum.curr_id where stud_id = '$stud_id'";
 													$result = $conn->query($statement);
 													if ($result->num_rows > 0) {
 													    // output data of each row
@@ -81,11 +83,34 @@
 OPTION2;
 													  }
 													}
-													$conn->close();
 												?>
 											</select>
 										</div>
+								</div>
+								<div class="item form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">School Name</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<?php
+											if(!$conn) {
+														die("Connection failed: " . mysqli_connect_error());
+											}
+
+											$stud_id = $_GET['stud_id'];
+											$statement = "SELECT * from students where stud_id = '$stud_id'";
+
+											$result = $conn->query($statement);
+											if ($result->num_rows > 0) {
+												// output data of each row
+												while($row = $result->fetch_assoc()) {
+													$second_school_name = $row['second_school_name'];
+													echo <<<OPTION2
+														<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="schl_name" value="$second_school_name" placeholder="School Name">
+OPTION2;
+												}
+											}
+										?>
 									</div>
+								</div>
 			                    <table class="table table-hover">
 			                      <thead>
 			                        <tr>
@@ -96,8 +121,27 @@ OPTION2;
 			                          <th>Remarks</th>
 			                        </tr>
 			                      </thead>
-			                      <tbody id="subj1">
-			                      		
+			                      <tbody>
+			                      <?php
+			                      	$stud_id = $_GET['stud_id'];
+			                      	$statement = "SELECT subjects.subj_name, subjects.subj_level from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id where subjectcurriculum.curr_id = (SELECT students.curr_id FROM pcnhsdb.students left join pcnhsdb.curriculum on students.curr_id = curriculum.curr_id where stud_id = '$stud_id')";
+
+			                      		$result = $conn->query($statement);
+										if ($result->num_rows > 0) {
+											// output data of each row
+											while($row = $result->fetch_assoc()) {
+												$subj_name = $row['subj_name'];
+												$subj_level = $row['subj_level'];
+												echo <<<SUBJ
+													<td>$subj_name</td>
+													<td>$subj_level</td>
+SUBJ;
+											}
+										}
+			                      ?>
+			                      		<td></td>
+			                      		<td></td>
+			                      		<td></td>
 			                      </tbody>
 			                    </table>
 			                  </div>
@@ -183,7 +227,7 @@ OPTION2;
 		      this.responseText;
 		    }
 		  };
-		  xhttp.open("GET", "showsubjects.php?curr_id="+curriculum, true);
+		  xhttp.open("GET", "../schoolmanagement/phpscripts/showsubjects.php?curr_id="+curriculum, true);
 		  xhttp.send();
 		}
 		</script>
