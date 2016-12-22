@@ -76,6 +76,12 @@
 								</div>
 							</div>
 							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level Needed</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="yr_level_needed" min="1">
+								</div>
+							</div>
+							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<select id="curriculum" class="form-control col-md-7 col-xs-12" name="curr_id">
