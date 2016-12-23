@@ -54,8 +54,8 @@
 								<div class="item form-group">
 									<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum of Student *</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
-										<select id="curr-select" class="form-control col-md-7 col-xs-12" name="curriculum" required="required">
-											<option value="none">-- No Selected --</option>
+										<select id="curr-select" class="form-control col-md-7 col-xs-12" name="curriculum" required="">
+											<option value="">-- No Selected --</option>
 											<?php
 												
 																									
@@ -91,7 +91,7 @@ OPTION1;
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID or LRN *</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="stud_id">
+												<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="stud_id" maxlength="20">
 											</div>
 											<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 										</div>
@@ -117,11 +117,11 @@ OPTION1;
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender *</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<div id="gender" class="btn-group" data-toggle="buttons">
-													<label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-														<input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
+													<label>
+														<input type="radio" name="gender" value="male" required=""> &nbsp; Male &nbsp;
 													</label>
-													<label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-														<input type="radio" name="gender" value="female"> Female
+													<label>
+														<input type="radio" name="gender" value="female" required=""> Female
 													</label>
 												</div>
 											</div>
@@ -129,7 +129,7 @@ OPTION1;
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthday *</label>
 											<div class="col-md-2 col-sm-6 col-xs-12">
-												<select class="form-control col-md-7 col-xs-12" name="bmonth">
+												<select class="form-control col-md-7 col-xs-12" name="bmonth" required="">
 													<option value="">Month</option>
 													<?php
 														$month=array('January','February','March','April','May','June','July','August','September','October','November','December');
@@ -142,7 +142,7 @@ OPTION1;
 												</select>
 											</div>
 											<div class="col-md-2 col-sm-6 col-xs-12">
-												<select class="form-control col-md-7 col-xs-12" name="bday">
+												<select class="form-control col-md-7 col-xs-12" name="bday" required="">
 													<option value="">Day</option>
 													<?php for ($day=1; $day <= 31 ; $day++) {
 														echo "<option value='$day'>$day</option>";
@@ -150,7 +150,7 @@ OPTION1;
 												</select>
 											</div>
 											<div class="col-md-2 col-sm-6 col-xs-12">
-												<select class="form-control col-md-7 col-xs-12" name="byear">
+												<select class="form-control col-md-7 col-xs-12" name="byear" required="">
 													<option value="">Year</option>
 													<?php
 															$present = date("Y");
@@ -163,18 +163,18 @@ OPTION1;
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthplace *</label>
 											<div class="col-md-3 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place" required="" placeholder="Province">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_province" required="" placeholder="Province">
 											</div>
 											<div class="col-md-3 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place" required="" placeholder="Barangay">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_barangay" required="" placeholder="Barangay">
 											</div>
 										</div>
 										
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Student Program *</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<select class="form-control col-md-7 col-xs-12" name="program">
-												<option value="none">-- No Selected --</option>
+												<select class="form-control col-md-7 col-xs-12" name="program" required="">
+												<option value="">-- No Selected --</option>
 													<?php
 														
 																											
@@ -192,7 +192,7 @@ OPTION1;
 																		<option value="$prog_id">$prog_name</option>
 OPTION1;
 																}
-																}
+														}
 																
 														?>
 													</select>

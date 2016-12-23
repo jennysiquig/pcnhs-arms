@@ -92,7 +92,13 @@
                             </thead>
                             <tbody id="subj_list">
                                 <?php
-                                $curriculum = $_POST['curriculum'];
+                                $curriculum;
+                                if($_POST['curriculum_subj'] == "none") {
+                                    $curriculum = $_POST['curriculum'];
+                                }else {
+                                    $curriculum = $_POST['curriculum_subj'];
+                                }
+                                
                                 $yr_level_needed = $_POST['yr_level'];
                                 
                                 $statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id where subjectcurriculum.curr_id = $curriculum and yr_level_needed = $yr_level_needed";

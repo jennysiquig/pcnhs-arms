@@ -71,6 +71,31 @@
                             </div>
                         </div>
                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Curriculum</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <select class="form-control col-md-7 col-xs-12" name="curriculum_subj">
+                                    <option value="none">-- No Selected --</option>>
+                                    <?php
+                                    if(!$conn) {
+                                    die("Connection failed: " . mysqli_connect_error());
+                                    }
+                                    $stud_id = $_GET['stud_id'];
+                                    $statement = "SELECT * FROM pcnhsdb.curriculum";
+                                    $result = $conn->query($statement);
+                                    if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while($row = $result->fetch_assoc()) {
+                                    $curr_name = $row['curr_name'];
+                                    $curr_id = $row['curr_id'];
+                                    echo "<option value='$curr_id'>$curr_name</option>";
+                                    }
+                                    }
+                                    ?>
+                                </select>
+                                <p style="color: red">Select to override the <b>Student Curriculum</b></p>
+                            </div>
+                        </div>
+                        <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <?php
@@ -95,14 +120,14 @@ OPTION2;
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year</label>
                                 <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <input type="text" class="form-control col-md-7 col-xs-12" name="schl_year" placeholder="YYYY - YYYY" required="">
+                                    <input type="text" class="form-control col-md-7 col-xs-12" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" required="" >
                                 </div>
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Year or Grade</label>
                                 <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <select class="form-control col-md-7 col-xs-12" name="yr_level">
-                                        <option value="none" selected="" disabled="">-- No Selected --</option>
+                                    <select class="form-control col-md-7 col-xs-12" name="yr_level" required="">
+                                        <option value="" selected="" disabled="">-- No Selected --</option>
                                         <option value="1">Year 1 or Grade 7</option>
                                         <option value="2">Year 2 or Grade 8</option>
                                         <option value="3">Year 3 or Grade 9</option>
@@ -138,7 +163,7 @@ OPTION2;
             <script src= "../../js/custom.min.js"></script>
             <!-- Scripts -->
             <!-- Parsley -->
-                <script>
+            <script>
                 $(document).ready(function() {
                 $.listen('parsley:field:validate', function() {
                 validateFront();
@@ -160,7 +185,15 @@ OPTION2;
                 try {
                 hljs.initHighlightingOnLoad();
                 } catch (err) {}
-                </script>
+            </script>
                 <!-- /Parsley -->
+                <!-- jquery.inputmask -->
+            <script>
+                $(document).ready(function() {
+                    $(":input").inputmask();
+                });
+            </script>
+                <!-- /jquery.inputmask -->
+
         </body>
     </html>
