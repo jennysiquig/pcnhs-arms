@@ -1,49 +1,3 @@
-<?php require_once "../../resources/config.php";
-	
-	$stud_id = $_GET['stud_id'];
-	
-	$first_name;
-	$mid_name;
-	$last_name;
-	$gender;
-	$birth_date;
-	$birth_place;
-	$schl_location;
-	$yr_grad;
-	$program;
-	$curriculum;
-	$pname;
-	$parent_occupation;
-	$parent_address;
-	$primary_schl_name;
-	$primary_schl_year;
-	$total_elem_years;
-	$gpa;
-	$statement = "SELECT * FROM pcnhsdb.students left join parent on students.stud_id = parent.stud_id left join primaryschool on students.stud_id = primaryschool.stud_id left join programs on students.prog_id = programs.prog_id left join curriculum on students.curr_id = curriculum.curr_id left join grades on students.stud_id = grades.stud_id where students.stud_id = '$stud_id' order by schl_year desc limit 1";
-
-	$result = $conn->query($statement);
-	if($result->num_rows>0) {
-		while($row=$result->fetch_assoc()) {
-			$curriculum = $row['curr_name'];
-			$first_name = $row['first_name'];
-			$mid_name = $row['mid_name'];
-			$last_name = $row['last_name'];
-			$gender = $row['gender'];
-			$birth_date = $row['birth_date'];
-			$birth_place = $row['birth_place'];
-			$last_schyear_attended = $row['schl_year'];
-			$second_school_name = $row['second_school_name'];
-			$program = $row['prog_name'];
-			$pname = $row['pname'];
-			$parent_occupation = $row['occupation'];
-			$parent_address = $row['address'];
-			$primary_schl_name = $row['psname'];
-			$primary_schl_year = $row['pschool_year'];
-			$total_elem_years = $row['total_elem_years'];
-			$gpa = $row['gen_average'];
-		}
-	}
-?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -77,6 +31,52 @@
 		<![endif]-->
 	</head>
 	<body class="nav-md">
+		<?php require_once "../../resources/config.php";
+		
+			$stud_id = $_GET['stud_id'];
+			
+			$first_name;
+			$mid_name;
+			$last_name;
+			$gender;
+			$birth_date;
+			$birth_place;
+			$schl_location;
+			$yr_grad;
+			$program;
+			$curriculum;
+			$pname;
+			$parent_occupation;
+			$parent_address;
+			$primary_schl_name;
+			$primary_schl_year;
+			$total_elem_years;
+			$gpa;
+			$statement = "SELECT * FROM pcnhsdb.students left join parent on students.stud_id = parent.stud_id left join primaryschool on students.stud_id = primaryschool.stud_id left join programs on students.prog_id = programs.prog_id left join curriculum on students.curr_id = curriculum.curr_id left join grades on students.stud_id = grades.stud_id where students.stud_id = '$stud_id' order by schl_year desc limit 1";
+
+			$result = $conn->query($statement);
+			if($result->num_rows>0) {
+				while($row=$result->fetch_assoc()) {
+					$curriculum = $row['curr_name'];
+					$first_name = $row['first_name'];
+					$mid_name = $row['mid_name'];
+					$last_name = $row['last_name'];
+					$gender = $row['gender'];
+					$birth_date = $row['birth_date'];
+					$birth_place = $row['birth_place'];
+					$last_schyear_attended = $row['schl_year'];
+					$second_school_name = $row['second_school_name'];
+					$program = $row['prog_name'];
+					$pname = $row['pname'];
+					$parent_occupation = $row['occupation'];
+					$parent_address = $row['address'];
+					$primary_schl_name = $row['psname'];
+					$primary_schl_year = $row['pschool_year'];
+					$total_elem_years = $row['total_elem_years'];
+					$gpa = $row['gen_average'];
+				}
+			}
+		?>
 		<!-- Sidebar -->
 		<?php include "../../resources/templates/registrar/sidebar.php"; ?>
 		<!-- Top Navigation -->
@@ -100,72 +100,72 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$curriculum'"; ?>>
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" readonly value=<?php echo "'$curriculum'"; ?>>
 										</div>
 										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Secondary School Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$second_school_name'"; ?>>
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" readonly value=<?php echo "'$second_school_name'"; ?>>
 										</div>
 										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$stud_id'"; ?>>
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" readonly value=<?php echo "'$stud_id'"; ?>>
 										</div>
 										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$last_name'"; ?>>
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text" readonly value=<?php echo "'$last_name'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="firstName" disabled="" value=<?php echo "'$first_name'"; ?>>
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="firstName" readonly value=<?php echo "'$first_name'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="middleName" disabled="" value=<?php echo "'$mid_name'"; ?>>
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="middleName" readonly value=<?php echo "'$mid_name'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$gender'"; ?>>
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text" readonly value=<?php echo "'$gender'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthday</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" type="text" name="birthdate" data-inputmask="'mask': '9999-99-99'" disabled="" value=<?php echo "'$birth_date'"; ?>>
+											<input class="form-control col-md-7 col-xs-12" type="text" name="birthdate" data-inputmask="'mask': '9999-99-99'" readonly value=<?php echo "'$birth_date'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthplace</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" type="text" name="birthplace" disabled="" value=<?php echo "'$birth_place'"; ?>>
+											<input class="form-control col-md-7 col-xs-12" type="text" name="birthplace" readonly value=<?php echo "'$birth_place'"; ?>>
 										</div>
 									</div>
 									<!--  -->
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Program</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$program'"; ?>>
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" readonly value=<?php echo "'$program'"; ?>>
 										</div>
 										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Last School Year Attended</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$last_schyear_attended'"; ?>>
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" readonly value=<?php echo "'$last_schyear_attended'"; ?>>
 										</div>
 										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
@@ -182,19 +182,19 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Full Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" disabled="" value=<?php echo "'$pname'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="text" readonly value=<?php echo "'$pname'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Occupation</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" disabled="" value=<?php echo "'$parent_occupation'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="text" readonly value=<?php echo "'$parent_occupation'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" name="parent_address" disabled="" value=<?php echo "'$parent_address'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="text" name="parent_address" readonly value=<?php echo "'$parent_address'"; ?>>
 										</div>
 									</div>
 								</div>
@@ -210,19 +210,19 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" disabled="" value=<?php echo "'$primary_schl_name'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="text" readonly value=<?php echo "'$primary_schl_name'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">School Year</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" disabled="" value=<?php echo "'$primary_schl_year'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="text" readonly value=<?php echo "'$primary_schl_year'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Total Elementary Years</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" disabled="" value=<?php echo "'$total_elem_years'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="text" readonly value=<?php echo "'$total_elem_years'"; ?>>
 										</div>
 									</div>
 								</div>
