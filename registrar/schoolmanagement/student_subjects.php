@@ -100,7 +100,7 @@ OPTION2;
 								</thead>
 								<tbody id="subjlist">
 									<?php
-											$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id";
+											$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id";
 											$result = $conn->query($statement);
 											if($result->num_rows>0) {
 												while ($row = $result->fetch_assoc()) {
@@ -109,13 +109,14 @@ OPTION2;
 													$subj_name = $row['subj_name'];
 													$subj_level = $row['subj_level'];
 													$curr_name = $row['curr_name'];
+													$prog_name = $row['prog_name'];
 													echo <<<SUBJS
 														<tr>
 																<td>$subj_id</td>
 																<td>$subj_name</td>
 																<td>$subj_level</td>
 																<td>$curr_name</td>
-																<td> </td>
+																<td>$prog_name</td>
 														</tr>
 SUBJS;
 												}

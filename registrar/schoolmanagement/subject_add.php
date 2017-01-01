@@ -56,7 +56,7 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<form class="form-horizontal form-label-left" action="phpinsert/subject_insert.php" method="POST" novalidate>
+						<form id="subject-val" class="form-horizontal form-label-left" action="phpinsert/subject_insert.php" method="POST" novalidate>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Subject ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -84,10 +84,10 @@
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select id="curriculum" class="form-control col-md-7 col-xs-12" name="curr_id">
+									<select class="form-control col-md-7 col-xs-12" name="curr_id" required="">
 										<!-- <option value="1">Regular</option>
 										-->
-										<option value="all">No Selected</option>
+										<option value="">No Selected</option>
 										<?php
 											
 																								
@@ -104,6 +104,35 @@
 												echo <<<OPTION2
 																		<option value="$curr_id">$curr_name</option>
 OPTION2;
+																}
+															}
+											?>
+										</select>
+									</div>
+								</div>
+								<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Program</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<select class="form-control col-md-7 col-xs-12" name="prog_id" required="">
+										<!-- <option value="1">Regular</option>
+										-->
+										<option value="">No Selected</option>
+										<?php
+											
+																								
+											if(!$conn) {
+												die("Connection failed: " . mysqli_connect_error());
+											}
+											$statement = "SELECT * FROM pcnhsdb.programs";
+											$result = $conn->query($statement);
+											if ($result->num_rows > 0) {
+											// output data of each row
+											while($row = $result->fetch_assoc()) {
+												$prog_id = $row['prog_id'];
+												$prog_name = $row['prog_name'];
+												echo <<<OPTION3
+																		<option value="$prog_id">$prog_name</option>
+OPTION3;
 																}
 															}
 											?>
@@ -138,30 +167,31 @@ OPTION2;
 		<!-- Custom Theme Scripts -->
 		<script src= "../../js/custom.min.js"></script>
 		<!-- Scripts -->
-		<!-- validator -->
-		<script>
-		// initialize the validator function
-		validator.message.date = 'not a real date';
-		// validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
-		$('form')
-		.on('blur', 'input[required], input.optional, select.required', validator.checkField)
-		.on('change', 'select.required', validator.checkField)
-		.on('keypress', 'input[required][pattern]', validator.keypress);
-		$('.multi.required').on('keyup blur', 'input', function() {
-		validator.checkField.apply($(this).siblings().last()[0]);
-		});
-		$('form').submit(function(e) {
-		e.preventDefault();
-		var submit = true;
-		// evaluate the form using generic validaing
-		if (!validator.checkAll($(this))) {
-		submit = false;
-		}
-		if (submit)
-		this.submit();
-		return false;
-		});
-		</script>
-		<!-- /validator -->
+		<!-- Parsley -->
+			    <script>
+			      $(document).ready(function() {
+			        $.listen('parsley:field:validate', function() {
+			          validateFront();
+			        });
+			        $('#subject-val .btn').on('click', function() {
+			          $('#subject-val').parsley().validate();
+			          validateFront();
+			        });
+			        var validateFront = function() {
+			          if (true === $('#subject-val').parsley().isValid()) {
+			            $('.bs-callout-info').removeClass('hidden');
+			            $('.bs-callout-warning').addClass('hidden');
+			          } else {
+			            $('.bs-callout-info').addClass('hidden');
+			            $('.bs-callout-warning').removeClass('hidden');
+			          }
+			        };
+			      });
+
+			      try {
+			        hljs.initHighlightingOnLoad();
+			      } catch (err) {}
+			    </script>
+	<!-- /Parsley -->
 	</body>
 </html>
