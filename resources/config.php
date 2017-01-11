@@ -1,12 +1,12 @@
 
 <?php
-	$path = "pcnhs.sis";
-	$base_url = "http://".$_SERVER['SERVER_NAME'].'/'.$path;
+	$path = "pcnhs.sis"; //set path to the folder name of the web application (ex: pcnhs.sis)
+	$base_url = "http://".$_SERVER['SERVER_NAME'].'/'.$path; //base_url (localhost/pcnhs.sis)
 
     $host = 'localhost';
-    $db = 'pcnhsdb';
-    $user = 'pcnhs';
-    $pass = 'pcnhs';
+    $db = 'pcnhsdb'; //default
+    $user = 'root'; //default
+    $pass = ''; //default
     
     $conn = new mysqli($host,$user,$pass,$db);
 
