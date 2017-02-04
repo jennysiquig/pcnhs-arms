@@ -38,7 +38,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
 			<div class="clearfix"></div>
-			<form class="form-horizontal form-label-left" action=<?php echo "../../registrar/studentmanagement/add_grades.php"; ?> method="POST" novalidate>
+			<form class="form-horizontal form-label-left" action="phpupdate/update_student_info.php" method="POST" novalidate>
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Student Personal Information</h2>
@@ -108,14 +108,14 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$stud_id'"; ?>>
+											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="stud_id" readonly="" value=<?php echo "'$stud_id'"; ?>>
 										</div>
 										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text"  value=<?php echo "'$last_name'"; ?>>
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="lastName" value=<?php echo "'$last_name'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
@@ -133,7 +133,7 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text"  value=<?php echo "'$gender'"; ?>>
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="gender" value=<?php echo "'$gender'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
@@ -176,13 +176,13 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Full Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text"  value=<?php echo "'$pname'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="text" name="parent_name" value=<?php echo "'$pname'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Occupation</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text"  value=<?php echo "'$parent_occupation'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="text" name="occupation" value=<?php echo "'$parent_occupation'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
@@ -230,8 +230,8 @@
 						<div class="ln_solid"></div>
 						<div class="form-group">
 							<div class=" pull-right">
-								<button type="submit" class="btn btn-primary">Cancel</button>
-								<a class="btn btn-success" href=<?php echo "../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" ?>> Save Changes</a>
+								<button class="btn btn-default" onclick="history.go(-1);return true;">Cancel</button>
+								<button type="submit" class="btn btn-primary">Save Changes</button>
 							</div>
 						</div>
 						
