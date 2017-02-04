@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php require_once '../resources/config.php' ?>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -43,7 +44,20 @@
 					<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 						<div class="tile-stats">
 							<div class="icon"><i class="fa fa-user"></i></div>
-							<div class="count">179</div>
+							<?php
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT count(*) as students FROM pcnhsdb.students";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$students = $row["students"];
+										echo "<div class='count'>$students</div>";
+									}
+								}
+							?>
 							<p>&nbsp</p>
 							<h3>Total Students</h3>
 							<p>&nbsp</p>
@@ -53,7 +67,20 @@
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"><i class="glyphicon glyphicon-hourglass"></i></div>
-								<div class="count">179</div>
+								<?php
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$statement = "SELECT count(*) as unclaimed FROM pcnhsdb.requests where status = 'u'";
+									$result = $conn->query($statement);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$unclaimed = $row["unclaimed"];
+											echo "<div class='count'>$unclaimed</div>";
+										}
+									}
+								?>
 								<p>&nbsp</p>
 								<h3>Unclaimed Credentials</h3>
 								<p>&nbsp</p>
@@ -64,7 +91,20 @@
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"><i class="fa fa-paper-plane"></i></div>
-								<div class="count">179</div>
+								<?php
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$statement = "SELECT count(*) as released FROM pcnhsdb.requests where status = 'r'";
+									$result = $conn->query($statement);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$released = $row["released"];
+											echo "<div class='count'>$released</div>";
+										}
+									}
+								?>
 								<p>&nbsp</p>
 								<h3>Released Credentials</h3>
 								<p>&nbsp</p>
@@ -75,7 +115,20 @@
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"><i class="glyphicon glyphicon-check"></i></div>
-								<div class="count">179</div>
+								<?php
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$statement = "SELECT count(*) as totaltrans FROM pcnhsdb.transaction";
+									$result = $conn->query($statement);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$totaltrans = $row["totaltrans"];
+											echo "<div class='count'>$totaltrans</div>";
+										}
+									}
+								?>
 								<p>&nbsp</p>
 								<h3>Total Transactions</h3>
 								<p>&nbsp</p>
@@ -84,7 +137,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
 						<div class="x_title">
@@ -113,7 +166,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<!-- /page content -->

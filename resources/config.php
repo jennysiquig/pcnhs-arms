@@ -5,8 +5,8 @@
 
     $host = 'localhost';
     $db = 'pcnhsdb'; //default
-    $user = 'root'; //default
-    $pass = ''; //default
+    $user = 'pcnhs'; //default
+    $pass = 'pcnhs'; //default
     
     $conn = new mysqli($host,$user,$pass,$db);
 
