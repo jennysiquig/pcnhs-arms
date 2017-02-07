@@ -45,11 +45,40 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-				<!-- First Sample -->
+				<!-- First Year -->
 					<div class="col-md-6 col-sm-6 col-xs-12">
+						<?php
+
+							if(!$conn) {
+								die("Connection failed: " . mysqli_connect_error());
+							}
+							$stud_id = $_GET['stud_id'];
+							$query = "SELECT yr_level, schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = $stud_id;";
+							$result = $conn->query($query);
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+									$yr_level1 = $row['yr_level'];
+									$schl_year1 = $row['schl_year'];
+								}
+							}
+							
+
+						?>
 		                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Year Level: 1<small>School Year: 2010-2011</small></h2>
+		                    <h2>Year Level: <?php if(!empty($yr_level1)){
+		                    						echo $yr_level1;
+		                    						}else {
+		                    							echo "None";
+		                    						} 
+											?><small>School Year: 
+													<?php if(!empty($schl_year1)){
+			                    						echo $schl_year1;
+			                    						}else {
+			                    							echo "None";
+			                    						} 
+													?></small></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
@@ -65,25 +94,97 @@
 		                        </tr>
 		                      </thead>
 		                      <tbody>
-		                        <tr>
-		                          <th scope="row">Filipino</th>
-		                          <td>1</td>
-		                          <td>89</td>
-		                          <td>1.2</td>
-		                          <td>Nakapasa</td>
-		                        </tr>
+		                      	<?php
+
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = $stud_id;";
+									$result = $conn->query($query);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$subj_name1 = $row['subj_name'];
+											$subj_level1 = $row['subj_level'];
+											$fin_grade1 = $row['fin_grade'];
+											$unit1 = $row['unit'];
+											$comment1 = $row['comment'];
+
+											echo <<<YR1
+												<tr>
+						                          <th scope="row">$subj_name1</th>
+						                          <td>$subj_level1</td>
+						                          <td>$fin_grade1</td>
+						                          <td>$unit1</td>
+						                          <td>$comment1</td>
+						                        </tr>
+
+YR1;
+										}
+									}
+									
+
+								?>
+		                        
 		                      </tbody>
 		                    </table>
-		                    <h2>Average Grade:</h2>
+		                    <?php
+
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 1 and stud_id = $stud_id;";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$average_grade1 = $row['average_grade'];
+									}
+								}
+							?>
+		                    <h2>Average Grade: <?php if(!empty($average_grade1)){
+		                    						echo $average_grade1;
+		                    						}else {
+		                    							echo "None";
+		                    						} ?></h2>
 		                  </div>
 		                </div>
 		              </div>
-				<!-- First Sample -->
-				<!-- First Sample -->
+				<!-- First Year -->
+				<!-- Second Year -->
 					<div class="col-md-6 col-sm-6 col-xs-12">
+						<?php
+
+							if(!$conn) {
+								die("Connection failed: " . mysqli_connect_error());
+							}
+							$stud_id = $_GET['stud_id'];
+							$query = "SELECT yr_level, schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = $stud_id;";
+							$result = $conn->query($query);
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+									$yr_level2 = $row['yr_level'];
+									$schl_year2 = $row['schl_year'];
+								}
+							}
+							
+
+						?>
 		                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Year Level: 2<small>School Year: 2011-2012</small></h2>
+		                    <h2>Year Level: <?php if(!empty($yr_level2)){
+		                    						echo $yr_level2;
+		                    						}else {
+		                    							echo "None";
+		                    						} 
+											?><small>School Year: 
+													<?php if(!empty($schl_year2)){
+			                    						echo $schl_year2;
+			                    						}else {
+			                    							echo "None";
+			                    						} 
+													?></small></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
@@ -99,25 +200,97 @@
 		                        </tr>
 		                      </thead>
 		                      <tbody>
-		                        <tr>
-		                          <th scope="row">Filipino</th>
-		                          <td>2</td>
-		                          <td>89</td>
-		                          <td>1.2</td>
-		                          <td>Nakapasa</td>
-		                        </tr>
+		                      	<?php
+
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = $stud_id;";
+									$result = $conn->query($query);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$subj_name2 = $row['subj_name'];
+											$subj_level2 = $row['subj_level'];
+											$fin_grade2 = $row['fin_grade'];
+											$unit2 = $row['unit'];
+											$comment2 = $row['comment'];
+
+											echo <<<YR1
+												<tr>
+						                          <th scope="row">$subj_name2</th>
+						                          <td>$subj_level2</td>
+						                          <td>$fin_grade2</td>
+						                          <td>$unit2</td>
+						                          <td>$comment2</td>
+						                        </tr>
+
+YR1;
+										}
+									}
+									
+
+								?>
+		                        
 		                      </tbody>
 		                    </table>
-		                    <h2>Average Grade:</h2>
+		                    <?php
+
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 2 and stud_id = $stud_id;";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$average_grade2 = $row['average_grade'];
+									}
+								}
+							?>
+		                    <h2>Average Grade: <?php if(!empty($average_grade2)){
+		                    						echo $average_grade2;
+		                    						}else {
+		                    							echo "None";
+		                    						} ?></h2>
 		                  </div>
 		                </div>
 		              </div>
-				<!-- First Sample -->
-				<!-- First Sample -->
+				<!-- Second Year -->
+				<!-- Third Year -->
 					<div class="col-md-6 col-sm-6 col-xs-12">
+						<?php
+
+							if(!$conn) {
+								die("Connection failed: " . mysqli_connect_error());
+							}
+							$stud_id = $_GET['stud_id'];
+							$query = "SELECT yr_level, schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = $stud_id;";
+							$result = $conn->query($query);
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+									$yr_level3 = $row['yr_level'];
+									$schl_year3 = $row['schl_year'];
+								}
+							}
+							
+
+						?>
 		                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Year Level: 3<small>School Year: 2012-2013</small></h2>
+		                    <h2>Year Level: <?php if(!empty($yr_level3)){
+		                    						echo $yr_level3;
+		                    						}else {
+		                    							echo "None";
+		                    						} 
+											?><small>School Year: 
+													<?php if(!empty($schl_year3)){
+			                    						echo $schl_year3;
+			                    						}else {
+			                    							echo "None";
+			                    						} 
+													?></small></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
@@ -133,25 +306,99 @@
 		                        </tr>
 		                      </thead>
 		                      <tbody>
-		                        <tr>
-		                          <th scope="row">Filipino</th>
-		                          <td>3</td>
-		                          <td>89</td>
-		                          <td>1.2</td>
-		                          <td>Nakapasa</td>
-		                        </tr>
+		                      	<?php
+
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = $stud_id;";
+									$result = $conn->query($query);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$yr_level3 = $row['yr_level'];
+											$schl_year3 = $row['schl_year'];
+											$subj_name3 = $row['subj_name'];
+											$subj_level3 = $row['subj_level'];
+											$fin_grade3 = $row['fin_grade'];
+											$unit3 = $row['unit'];
+											$comment3 = $row['comment'];
+
+											echo <<<YR1
+												<tr>
+						                          <th scope="row">$subj_name3</th>
+						                          <td>$subj_level3</td>
+						                          <td>$fin_grade3</td>
+						                          <td>$unit3</td>
+						                          <td>$comment3</td>
+						                        </tr>
+
+YR1;
+										}
+									}
+									
+
+								?>
+		                        
 		                      </tbody>
 		                    </table>
-		                    <h2>Average Grade:</h2>
+		                    <?php
+
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 3 and stud_id = $stud_id;";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$average_grade3 = $row['average_grade'];
+									}
+								}
+							?>
+		                   <h2>Average Grade: <?php if(!empty($average_grade3)){
+		                    						echo $average_grade3;
+		                    						}else {
+		                    							echo "None";
+		                    						} ?></h2>
 		                  </div>
 		                </div>
 		              </div>
-				<!-- First Sample -->
-				<!-- First Sample -->
+				<!-- Third Year -->
+				<!-- Fourth Year -->
 					<div class="col-md-6 col-sm-6 col-xs-12">
+						<?php
+
+							if(!$conn) {
+								die("Connection failed: " . mysqli_connect_error());
+							}
+							$stud_id = $_GET['stud_id'];
+							$query = "SELECT yr_level, schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = $stud_id;";
+							$result = $conn->query($query);
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+									$yr_level4 = $row['yr_level'];
+									$schl_year4 = $row['schl_year'];
+								}
+							}
+							
+
+						?>
 		                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Year Level: 4<small>School Year: 2013-2014</small></h2>
+		                    <h2>Year Level: <?php if(!empty($yr_level4)){
+		                    						echo $yr_level4;
+		                    						}else {
+		                    							echo "None";
+		                    						} 
+											?><small>School Year: 
+													<?php if(!empty($schl_year4)){
+			                    						echo $schl_year4;
+			                    						}else {
+			                    							echo "None";
+			                    						} 
+													?></small></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
@@ -167,20 +414,63 @@
 		                        </tr>
 		                      </thead>
 		                      <tbody>
-		                        <tr>
-		                          <th scope="row">Filipino</th>
-		                          <td>4</td>
-		                          <td>89</td>
-		                          <td>1.2</td>
-		                          <td>Nakapasa</td>
-		                        </tr>
+		                      	<?php
+
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = $stud_id;";
+									$result = $conn->query($query);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$subj_name4 = $row['subj_name'];
+											$subj_level4 = $row['subj_level'];
+											$fin_grade4 = $row['fin_grade'];
+											$unit4 = $row['unit'];
+											$comment4 = $row['comment'];
+
+											echo <<<YR1
+												<tr>
+						                          <th scope="row">$subj_name4</th>
+						                          <td>$subj_level4</td>
+						                          <td>$fin_grade4</td>
+						                          <td>$unit4</td>
+						                          <td>$comment4</td>
+						                        </tr>
+
+YR1;
+										}
+									}
+									
+
+								?>
+		                        
 		                      </tbody>
 		                    </table>
-		                    <h2>Average Grade:</h2>
+		                    <?php
+
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 4 and stud_id = $stud_id;";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$average_grade4 = $row['average_grade'];
+									}
+								}
+							?>
+		                    <h2>Average Grade: <?php if(!empty($average_grade4)){
+		                    						echo $average_grade4;
+		                    						}else {
+		                    							echo "None";
+		                    						} ?></h2>
 		                  </div>
 		                </div>
 		              </div>
-				<!-- First Sample -->
+				<!-- Fourth Year -->
               		<div class="clearfix"></div>
               		<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Grades</a>
 				</div>
