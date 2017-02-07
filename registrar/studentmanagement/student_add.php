@@ -84,7 +84,7 @@ OPTION1;
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Secondary School *</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="second_school_name" placeholder="Current School or School Graduated">
+												<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="second_school_name" placeholder="Full Name of Current School or School Graduated">
 											</div>
 											<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 										</div>
