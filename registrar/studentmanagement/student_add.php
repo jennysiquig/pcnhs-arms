@@ -163,10 +163,10 @@ OPTION1;
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthplace *</label>
 											<div class="col-md-3 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_province" required="" placeholder="Province">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_barangay" required="" placeholder="Barangay">
 											</div>
 											<div class="col-md-3 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_barangay" required="" placeholder="Barangay">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_province" required="" placeholder="Province">
 											</div>
 										</div>
 										

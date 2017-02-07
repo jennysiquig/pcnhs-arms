@@ -30,7 +30,7 @@
 		$birth_date = $_POST['byear'].'-'.$_POST['bmonth'].'-'.$_POST['bday'];
 	}
 
-	$birth_place = test_ifset($_POST['birth_place_province']).', '.test_ifset($_POST['birth_place_barangay']);
+	$birth_place = test_ifset($_POST['birth_place_barangay']).', '.test_ifset($_POST['birth_place_province']);
 	$second_school_name = test_ifset($_POST['second_school_name']);
 	$program = test_ifset($_POST['program']);
 	$curriculum = test_ifset($_POST['curriculum']);
