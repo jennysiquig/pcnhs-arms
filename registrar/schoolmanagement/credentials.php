@@ -62,6 +62,7 @@
 										<th class="column-title">Credential ID</th>
 										<th class="column-title">Credential Name</th>
 										<th class="column-title">Price</th>
+										<th class="column-title">Action</th>
 									</th>
 									
 								</tr>
@@ -86,6 +87,7 @@
 														<td class=" ">$cred_id</td>
 														<td class=" ">$cred_name</td>
 														<td class=" ">$price</td>
+														<td class=" "><a href="credential_edit.php?cred_id=$cred_id" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit </a></td>
 											</tr>
 CURR;
 										}

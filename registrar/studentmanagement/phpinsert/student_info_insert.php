@@ -30,7 +30,7 @@
 		$birth_date = $_POST['byear'].'-'.$_POST['bmonth'].'-'.$_POST['bday'];
 	}
 
-	$birth_place = test_ifset($_POST['birth_place_barangay']).', '.test_ifset($_POST['birth_place_province']);
+	$birth_place = test_ifset($_POST['birth_place_province']).', '.test_ifset($_POST['birth_place_barangay']).', '.test_ifset($_POST['birth_place_barangay']);
 	$second_school_name = test_ifset($_POST['second_school_name']);
 	$program = test_ifset($_POST['program']);
 	$curriculum = test_ifset($_POST['curriculum']);
@@ -45,7 +45,7 @@
 	$gpa = test_ifset($_POST['gpa']);
 
 	
-	require_once "../../resources/config.php";
+	require_once "../../../resources/config.php";
 
 	if(!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
@@ -64,7 +64,7 @@
 	$insertstmt3 = mysqli_query($conn, $statement3);
 
 	if($insertstmt1 && $insertstmt2 && $insertstmt3) {
-		header("location: student_info.php?stud_id=$stud_id");
+		header("location: ../student_info.php?stud_id=$stud_id");
 	}else {
 		header("location:javascript://history.go(-1)");
 	}

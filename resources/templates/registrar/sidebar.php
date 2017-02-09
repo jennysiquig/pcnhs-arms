@@ -50,7 +50,7 @@ echo <<<SB
                   </li>
                   <li><a><i class="fa fa-check"></i>Credential Status<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="$base_url/registrar/credentials/credential_status.php?status=uc">Unclaimed Credentials</a></li>
+                      <li><a href="$base_url/registrar/credentials/unclaimed.php">Unclaimed Credentials</a></li>
                       <li><a href="$base_url/registrar/credentials/released.php">Released Credentials</a></li>
                     </ul>
                   </li>

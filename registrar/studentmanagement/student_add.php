@@ -38,7 +38,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
 			<div class="clearfix"></div>
-			<form id="validate-add" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "../../registrar/studentmanagement/student_info_insert.php"; ?> method="POST" >
+			<form id="validate-add" class="form-horizontal form-label-left" data-parsley-validate action= "phpinsert/student_info_insert.php" method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Student Personal Information</h2>
@@ -163,10 +163,13 @@ OPTION1;
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthplace *</label>
 											<div class="col-md-3 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_barangay" required="" placeholder="Barangay">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_province" required="" placeholder="Province">
 											</div>
 											<div class="col-md-3 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_province" required="" placeholder="Province">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="town" required="" placeholder="Town">
+											</div>
+											<div class="col-md-3 col-sm-6 col-xs-12">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_barangay" required="" placeholder="Barangay">
 											</div>
 										</div>
 										

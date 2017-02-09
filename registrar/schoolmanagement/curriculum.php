@@ -64,6 +64,7 @@
 										<th class="column-title">Curriculum Name</th>
 										<th class="column-title">Year Started</th>
 										<th class="column-title">Year Ended</th>
+										<th class="column-title">Action</th>
 									</th>
 									
 								</tr>
@@ -92,6 +93,7 @@
 													<td class=" ">$curr_name</td>
 													<td class=" ">$year_started</td>
 													<td class=" ">$year_ended</td>
+													<td class=" "><a href="curriculum_edit.php?curr_id=$curr_id" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit </a></td>
 											</tr>
 CURR;
 										}
