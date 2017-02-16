@@ -30,7 +30,10 @@
 		$birth_date = $_POST['byear'].'-'.$_POST['bmonth'].'-'.$_POST['bday'];
 	}
 
-	$birth_place = test_ifset($_POST['birth_place_province']).', '.test_ifset($_POST['birth_place_barangay']).', '.test_ifset($_POST['birth_place_barangay']);
+	$province = test_ifset($_POST['birth_place_province']);
+	$towncity = test_ifset($_POST['birth_place_towncity']);
+	$barangay = test_ifset($_POST['birth_place_barangay']);
+
 	$second_school_name = test_ifset($_POST['second_school_name']);
 	$program = test_ifset($_POST['program']);
 	$curriculum = test_ifset($_POST['curriculum']);
@@ -51,7 +54,7 @@
 		die("Connection failed: " . mysqli_connect_error());
 	}
 	//1 ========================
-	$statement1 = "INSERT INTO `pcnhsdb`.`students` (`stud_id`, `first_name`, `mid_name`, `last_name`, `gender`, `birth_date`, `birth_place`, `second_school_name`, `curr_id`, `prog_id`) VALUES ('$stud_id' , '$first_name', '$mid_name', '$last_name', '$gender', '$birth_date', '$birth_place', '$second_school_name', '$curriculum', '$program')";
+	$statement1 = "INSERT INTO `pcnhsdb`.`students` (`stud_id`, `first_name`, `mid_name`, `last_name`, `gender`, `birth_date`, `province`, `towncity`, `barangay`, `second_school_name`, `curr_id`, `prog_id`) VALUES ('$stud_id' , '$first_name', '$mid_name', '$last_name', '$gender', '$birth_date', '$province', '$towncity', '$barangay', '$second_school_name', '$curriculum', '$program')";
 
 	//2 ========================
 	$statement2 = "INSERT INTO `pcnhsdb`.`parent` (`stud_id`, `pname`, `occupation`, `address` ) VALUES ('$stud_id', '$pname', '$parent_occupation', '$parent_address')";

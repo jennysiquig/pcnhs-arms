@@ -61,7 +61,9 @@
 											$last_name;
 											$gender;
 											$birth_date;
-											$birth_place;
+											$barangay;
+											$towncity;
+											$province;
 											$schl_location;
 											$yr_grad;
 											$program;
@@ -84,7 +86,9 @@
 													$last_name = $row['last_name'];
 													$gender = $row['gender'];
 													$birth_date = $row['birth_date'];
-													$birth_place = $row['birth_place'];
+													$province = $row['province'];
+													$towncity = $row['towncity'];
+													$barangay = $row['barangay'];
 													$last_schyear_attended = $row['schl_year'];
 													$program = $row['prog_name'];
 													$pname = $row['pname'];
@@ -143,9 +147,25 @@
 										</div>
 									</div>
 									<div class="item form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthplace</label>
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Birth Place: </label>
+										
+									</div>
+									<div class="item form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Province</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" type="text" name="birthplace"  value=<?php echo "'$birth_place'"; ?>>
+											<input class="form-control col-md-12 col-xs-12" type="text" name="province" value=<?php echo "'$province'"; ?>>
+										</div>
+									</div>
+									<div class="item form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Town</label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<input class="form-control col-md-12 col-xs-12" type="text" name="towncity" value=<?php echo "'$towncity'"; ?>>
+										</div>
+									</div>
+									<div class="item form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Barangay</label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<input class="form-control col-md-12 col-xs-12" type="text" name="barangay" value=<?php echo "'$barangay'"; ?>>
 										</div>
 									</div>
 									<!--  -->
