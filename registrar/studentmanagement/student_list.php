@@ -106,7 +106,7 @@
                     $last_name = $row['last_name'];
                     $gender = $row['gender'];
                     $birth_date = $row['birth_date'];
-                    $birth_place = $row['birth_place'];
+                    
                     
                     //$yr_grad = $row['yr_grad'];
                     $program = $row['prog_id'];

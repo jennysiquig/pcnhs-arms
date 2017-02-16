@@ -150,14 +150,7 @@ OPTION1;
 												</select>
 											</div>
 											<div class="col-md-2 col-sm-6 col-xs-12">
-												<select class="form-control col-md-7 col-xs-12" name="byear" required="">
-													<option value="">Year</option>
-													<?php
-															$present = date("Y");
-														for ($year=1980; $year <= $present; $year++) {
-															echo "<option value='$year'>$year</option>";
-													} ?>
-												</select>
+												<input class="form-control  col-md-7 col-xs-12" type="text" name="byear" placeholder="Year" data-inputmask="'mask': '9999'" required="">
 											</div>
 										</div>
 										<div class="item form-group">
@@ -166,13 +159,16 @@ OPTION1;
 												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_province" required="" placeholder="Province">
 											</div>
 											<div class="col-md-3 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" type="text" name="town" required="" placeholder="Town">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_towncity" required="" placeholder="Town">
 											</div>
+											
+										</div>
+										<div class="item form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
 											<div class="col-md-3 col-sm-6 col-xs-12">
 												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_barangay" required="" placeholder="Barangay">
 											</div>
 										</div>
-										
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Student Program *</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
@@ -249,7 +245,7 @@ OPTION1;
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">School Year *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="text" name="schl_year" required="">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" required="">
 												</div>
 											</div>
 											<div class="item form-group">
@@ -261,7 +257,7 @@ OPTION1;
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">Average Grade *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="number" name="gpa" min="1" required="">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="gpa" min="1" placeholder="" data-inputmask="'mask': '99'">
 												</div>
 											</div>
 										</div>
@@ -329,5 +325,13 @@ OPTION1;
 				} catch (err) {}
 				</script>
 				<!-- /Parsley -->
+				 <!-- jquery.inputmask -->
+	            <script>
+	                $(document).ready(function() {
+	                    $(":input").inputmask();
+	                });
+	            </script>
+                <!-- /jquery.inputmask -->
+
 			</body>
 		</html>
