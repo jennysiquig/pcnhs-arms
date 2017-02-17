@@ -46,68 +46,136 @@
 				</div>
 				<div class="x_content">
 				<!-- First Sample -->
+					<?php
+						if(!$conn) {
+		                    die("Connection failed: " . mysqli_connect_error());
+		                }
+
+		                $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_level = 1;";
+		                $result = $conn->query($attendance1);
+	                    if ($result->num_rows > 0) {
+	                    // output data of each row
+		                    while($row = $result->fetch_assoc()) {
+		                    	$schl_yr1 = $row['schl_yr'];
+		                    	$yr_lvl1 = $row['yr_level'];
+		                    	$days_attended1 = $row['days_attended'];
+		                    	$school_days1 = $row['school_days'];
+		                    }
+		                }
+
+					?>
 					<div class="col-md-6 col-sm-6 col-xs-12">
 		                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Year Level: 1<small>School Year: 2010-2011</small></h2>
+		                    <h2>Year Level: 1<small>School Year: <?php if(!empty($schl_yr1)){ echo "$schl_yr1"; }else{echo "None";} ?></small></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
-		                    <h2>Days Attended: 177</h2>
-		                    <h2>Days of School: 196</h2>
+		                    <h2>Days Attended: <?php  if(!empty($days_attended1)){ echo "$days_attended1"; }else{echo "None";}  ?></h2>
+		                    <h2>Days of School: <?php if(!empty($school_days1)){ echo "$school_days1"; }else{echo "None";} ?></h2>
 		                    <h2>Total Years in School: 7</h2>
 		                  </div>
 		                </div>
-		              </div>
+		            </div>
 				<!-- First Sample -->
 				<!-- First Sample -->
+					<?php
+						if(!$conn) {
+		                    die("Connection failed: " . mysqli_connect_error());
+		                }
+
+		                $attendance2 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_level = 2;";
+		                $result = $conn->query($attendance2);
+	                    if ($result->num_rows > 0) {
+	                    // output data of each row
+		                    while($row = $result->fetch_assoc()) {
+		                    	$schl_yr2 = $row['schl_yr'];
+		                    	$yr_lvl2 = $row['yr_level'];
+		                    	$days_attended2 = $row['days_attended'];
+		                    	$school_days2 = $row['school_days'];
+		                    }
+		                }
+
+					?>
 					<div class="col-md-6 col-sm-6 col-xs-12">
 		                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Year Level: 2<small>School Year: 2011-2012</small></h2>
+		                    <h2>Year Level: 2<small>School Year: <?php if(!empty($schl_yr2)){ echo "$schl_yr2"; }else{echo "None";} ?></small></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
-		                  	<h2>Days Attended: 177</h2>
-		                    <h2>Days of School: 196</h2>
-		                    <h2>Total Years in School: 8</h2>
+		                    <h2>Days Attended: <?php  if(!empty($days_attended2)){ echo "$days_attended2"; }else{echo "None";}  ?></h2>
+		                    <h2>Days of School: <?php if(!empty($school_days2)){ echo "$school_days2"; }else{echo "None";} ?></h2>
+		                    <h2>Total Years in School: 7</h2>
 		                  </div>
 		                </div>
-		              </div>
+		            </div>
 				<!-- First Sample -->
 				<!-- First Sample -->
+					<?php
+						if(!$conn) {
+		                    die("Connection failed: " . mysqli_connect_error());
+		                }
+
+		                $attendance3 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_level = 3;";
+		                $result = $conn->query($attendance3);
+	                    if ($result->num_rows > 0) {
+	                    // output data of each row
+		                    while($row = $result->fetch_assoc()) {
+		                    	$schl_yr3 = $row['schl_yr'];
+		                    	$yr_lvl3 = $row['yr_level'];
+		                    	$days_attended3 = $row['days_attended'];
+		                    	$school_days3 = $row['school_days'];
+		                    }
+		                }
+
+					?>
 					<div class="col-md-6 col-sm-6 col-xs-12">
 		                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Year Level: 3<small>School Year: 2012-2013</small></h2>
+		                    <h2>Year Level: 3<small>School Year: <?php if(!empty($schl_yr3)){ echo "$schl_yr3"; }else{echo "None";} ?></small></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
-		                  	
-		                    
-		                    <h2>Days Attended: 177</h2>
-		                    <h2>Days of School: 196</h2>
-		                    <h2>Total Years in School: 9</h2>
+		                    <h2>Days Attended: <?php  if(!empty($days_attended3)){ echo "$days_attended3"; }else{echo "None";}  ?></h2>
+		                    <h2>Days of School: <?php if(!empty($school_days3)){ echo "$school_days3"; }else{echo "None";} ?></h2>
+		                    <h2>Total Years in School: 7</h2>
 		                  </div>
 		                </div>
-		              </div>
+		            </div>
 				<!-- First Sample -->
 				<!-- First Sample -->
+				<?php
+						if(!$conn) {
+		                    die("Connection failed: " . mysqli_connect_error());
+		                }
+
+		                $attendance4 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_level = 4;";
+		                $result = $conn->query($attendance4);
+	                    if ($result->num_rows > 0) {
+	                    // output data of each row
+		                    while($row = $result->fetch_assoc()) {
+		                    	$schl_yr4 = $row['schl_yr'];
+		                    	$yr_lvl4 = $row['yr_level'];
+		                    	$days_attended4 = $row['days_attended'];
+		                    	$school_days4 = $row['school_days'];
+		                    }
+		                }
+
+					?>
 					<div class="col-md-6 col-sm-6 col-xs-12">
 		                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Year Level: 4<small>School Year: 2013-2014</small></h2>
+		                    <h2>Year Level: 4<small>School Year: <?php if(!empty($schl_yr4)){ echo "$schl_yr4"; }else{echo "None";} ?></small></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
-		                  	
-		                    
-		                    <h2>Days Attended: 177</h2>
-		                    <h2>Days of School: 196</h2>
-		                    <h2>Total Years in School: 10</h2>
+		                    <h2>Days Attended: <?php  if(!empty($days_attended4)){ echo "$days_attended4"; }else{echo "None";}  ?></h2>
+		                    <h2>Days of School: <?php if(!empty($school_days4)){ echo "$school_days4"; }else{echo "None";} ?></h2>
+		                    <h2>Total Years in School: 7</h2>
 		                  </div>
 		                </div>
-		              </div>
+		            </div>
 				<!-- First Sample -->
               		<div class="clearfix"></div>
               		<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Attendance</a>

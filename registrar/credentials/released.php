@@ -1,4 +1,4 @@
-
+<?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
 <html>
 		<head>
@@ -61,22 +61,30 @@
 								</tr>
 							</thead>
 							<tbody>
+							<?php
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT date_released as 'date released', concat(first_name, last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join released natural join credentials where status='r';";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$date_released = $row['date released'];
+										$stud_name = $row['stud_name'];
+										$cred_name = $row['cred_name'];
+
+										echo <<<RELEASED
+										<tr class="odd pointer">
+											<td class=" ">$date_released</td>
+											<td class=" ">$stud_name</td>
+											<td class=" ">$cred_name</td>
+										</tr>
+RELEASED;
+									}
+								}
 								
-							<tr class="odd pointer">
-								<td class=" ">11/11/2016</td>
-								<td class=" ">Juan Migu</td>
-								<td class=" ">Form 137</td>
-							</tr>
-							<tr class="odd pointer">
-								<td class=" ">11/13/2016</td>
-								<td class=" ">Jake Ross</td>
-								<td class=" ">Form 137</td>
-							</tr>
-							<tr class="odd pointer">
-								<td class=" ">11/16/2016</td>
-								<td class=" ">Kaiser Ken</td>
-								<td class=" ">Form 137</td>
-							</tr>
+							?>		
 					</tbody>
 				</table>
 			</div>

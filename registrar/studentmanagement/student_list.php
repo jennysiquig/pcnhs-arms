@@ -80,7 +80,7 @@
                     
                     <?php
                     $start=0;
-                    $limit=50;
+                    $limit=20;
                     if(isset($_GET['page'])){
                       $page=$_GET['page'];
                       $start=($page-1)*$limit;

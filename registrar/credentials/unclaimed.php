@@ -1,3 +1,4 @@
+<?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -40,7 +41,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			
+
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
@@ -64,25 +65,32 @@
 								</tr>
 							</thead>
 							<tbody>
+							<?php
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT stud_id, date_processed as 'date processed', concat(first_name, last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join unclaimed natural join credentials where status='u';";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$stud_id = $_row['stud_id'];
+										$date_processed = $row['date processed'];
+										$stud_name = $row['stud_name'];
+										$cred_name = $row['cred_name'];
+
+										echo <<<UNCLAIMED
+										<tr class="odd pointer">
+											<td class=" ">$date_processed</td>
+											<td class=" ">$stud_name</td>
+											<td class=" ">$cred_name</td>
+											<td class=" last"><a class="btn btn-default btn-xs" href="release_action.php?stud_id=$stud_id"><i class="fa fa-paper-plane"></i> Released</a></td>
+										</tr>
+UNCLAIMED;
+									}
+								}
 								
-							<tr class="odd pointer">
-								<td class=" ">11/11/2016</td>
-								<td class=" ">Juan Migu</td>
-								<td class=" ">Form 137</td>
-								<td class=" last"><a class="btn btn-default btn-xs" href="#"><i class="fa fa-paper-plane"></i> Released</a></td>
-							</tr>
-							<tr class="odd pointer">
-								<td class=" ">11/12/2016</td>
-								<td class=" ">Jake Ross</td>
-								<td class=" ">Form 137</td>
-								<td class=" last"><a class="btn btn-default btn-xs" href="#"><i class="fa fa-paper-plane"></i> Released</a></td>
-							</tr>
-							<tr class="odd pointer">
-								<td class=" ">11/14/2016</td>
-								<td class=" ">Kaiser Ken</td>
-								<td class=" ">Form 137</td>
-								<td class=" last"><a class="btn btn-default btn-xs" href="#"><i class="fa fa-paper-plane"></i> Released</a></td>
-							</tr>
+							?>	
 					</tbody>
 				</table>
 			</div>

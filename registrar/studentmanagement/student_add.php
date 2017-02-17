@@ -257,7 +257,7 @@ OPTION1;
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">Average Grade *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="text" name="gpa" min="1" placeholder="" data-inputmask="'mask': '99'">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="gpa" placeholder="" data-inputmask="'mask': '99'">
 												</div>
 											</div>
 										</div>
