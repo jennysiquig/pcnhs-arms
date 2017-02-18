@@ -43,9 +43,9 @@ echo <<<SB
                   <li><a><i class="fa fa-university"></i>School Management<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="$base_url/registrar/schoolmanagement/curriculum.php">Curriculum</a></li>
-                      <li><a href="$base_url/registrar/schoolmanagement/credentials.php">Credentials</a></li>
                       <li><a href="$base_url/registrar/schoolmanagement/student_subjects.php">Student Subjects</a></li>
                       <li><a href="$base_url/registrar/schoolmanagement/student_programs.php">Student Programs</a></li>
+                      <li><a href="$base_url/registrar/schoolmanagement/credentials.php">Credentials</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-check"></i>Credential Status<span class="fa fa-chevron-down"></span></a>

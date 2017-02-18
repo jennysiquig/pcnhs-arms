@@ -37,16 +37,17 @@
     <!-- Content Start -->
     <div class="right_col" role="main">
       
-      <form class="form-horizontal form-label-left ">
+      <form class="form-horizontal form-label-left" action="student_list.php" method="GET">
         
         <div class="form-group">
           <div class="col-sm-5"></div>
           <div class="col-sm-7">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search Student...">
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-primary">Go</button>
-              </span>
+              
+                <input type="text" class="form-control" name="search_key" placeholder="Search Student...">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary">Go</button>
+                </span>
             </div>
           </div>
         </div>
@@ -79,6 +80,7 @@
                   <tbody>
                     
                     <?php
+                    $statement = "";
                     $start=0;
                     $limit=20;
                     if(isset($_GET['page'])){
@@ -92,7 +94,14 @@
                     die("Connection failed: " . mysqli_connect_error());
                     }
 
-                    $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id limit $start, $limit";
+                    if(isset($_GET['search_key'])) {
+                      $search = $_GET['search_key'];
+                      $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '%$search' or first_name like '%$search' or stud_id like '%$search' or concat(first_name,' ',last_name) like '%$search' or concat(last_name,' ',first_name,' ',mid_name) like '%$search' or concat(first_name,' ',mid_name,' ',last_name) like '%$search' limit $start, $limit";
+                    }else {
+                      $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id limit $start, $limit";
+                    }
+
+                    
                     
                     
 

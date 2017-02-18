@@ -18,7 +18,7 @@
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
 		<!-- Custom Theme Style -->
-		<link href="../../css/custom.min.css" rel="stylesheet">
+		<link href="../../css/custom.css" rel="stylesheet">
 		<link href="../../css/tstheme/style.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
@@ -57,7 +57,7 @@
 	                              <div class="controls">
 	                                <div class="input-prepend input-group">
 	                                  <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-	                                  <input type="text" style="width: 200px" name="transaction_date" id="transaction_date" class="form-control" value="01/01/2016 - 01/25/2016" />
+	                                  <input type="text" style="width: 200px" name="transaction_date" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
 	                                </div>
 
 	                              </div>
@@ -118,7 +118,7 @@
 		
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
-		<script src= "../../js/custom.min.js"></script>
+		<script src= "../../js/custom.js"></script>
 		
 	<!-- Scripts -->
 </body>
