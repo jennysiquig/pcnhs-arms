@@ -1,3 +1,4 @@
+<?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -38,7 +39,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			<form id="validate-add" class="form-horizontal form-label-left" data-parsley-validate action = "" method="POST" >
+			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action = "" method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Generate Credential</h2>
@@ -53,26 +54,49 @@
 					<?php
 						echo date("Y-m-d");
 					?>
-					<br>
-					<br>
-					<label for="credential">Choose Credential:</label>
-					<select id="credential" class="form-control" required>
-						<option value="">Choose..</option>
-					</select>
-					<br>
-					<label>Type of Request:</label>
-					<p>
-						<input type="radio" class="flat" name="type_of_request" id="tor-individual" value="individual" checked="" required /> Individual Request:
-						<input type="radio" class="flat" name="type_of_request" id="tor-bulk" value="bulk" />
-						Bulk Request:
-						
-					</p>
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Credential <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <select id="credential" class="form-control" required>
+							<option value="">Choose..</option>
+							<?php
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT * FROM credentials";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$cred_id = $row['cred_id'];
+										$cred_name = $row['cred_name'];
+
+										echo "<option value='$cred_id'>$cred_name</option>";
+									}
+								}
+							?>
+						</select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Type of Request <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <p>
+							<input type="radio" class="flat" name="type_of_request" id="tor-individual" value="individual" checked="" required /> Individual Request:
+							<input type="radio" class="flat" name="type_of_request" id="tor-bulk" value="bulk" />
+							Bulk Request:
+							
+						</p>
+                        </div>
+                      </div>
 				</div>
 			</div>
 			<div class="row no-print">
 				<div class="col-xs-12">
-					<a href="generate_cred.php" class="btn btn-success pull-right">Submit</a>
-					<button class="btn btn-primary pull-right">Back</button>
+					<button class="btn btn-success pull-right">Submit</button>
+					<button class="btn btn-primary pull-right" onclick="history.go(-1);return true;">Back</button>
 				</div>
 			</div>
 		</form>
@@ -95,5 +119,30 @@
 	<!-- iCheck -->
 	<script src="../../resources/libraries/iCheck/icheck.min.js"></script>
 	<!-- Scripts -->
+	<!-- Parsley -->
+				<script>
+				$(document).ready(function() {
+				$.listen('parsley:field:validate', function() {
+				validateFront();
+				});
+				$('#choose_cred .btn').on('click', function() {
+				$('#choose_cred').parsley().validate();
+				validateFront();
+				});
+				var validateFront = function() {
+				if (true === $('#choose_cred').parsley().isValid()) {
+				$('.bs-callout-info').removeClass('hidden');
+				$('.bs-callout-warning').addClass('hidden');
+				} else {
+				$('.bs-callout-info').addClass('hidden');
+				$('.bs-callout-warning').removeClass('hidden');
+				}
+				};
+				});
+				try {
+				hljs.initHighlightingOnLoad();
+				} catch (err) {}
+				</script>
+				<!-- /Parsley -->
 </body>
 </html>

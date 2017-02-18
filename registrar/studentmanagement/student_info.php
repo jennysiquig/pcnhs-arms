@@ -288,7 +288,7 @@
 								<a class="btn btn-default" href=<?php echo "../../registrar/studentmanagement/attendance.php?stud_id=$stud_id" ?>><i class="fa fa-calendar m-right-xs"></i> Attendance</a>
 							</div>
 							<div class="col-md-3 pull-right">
-								<a class="btn btn-primary" href=<?php echo "../../registrar/credentials/choose_credential.php" ?>><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
+								<a class="btn btn-primary" href=<?php echo "../../registrar/credentials/choose_credential.php?stud_id=$stud_id" ?>><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
 							</div>
 						</div>
 					</div>

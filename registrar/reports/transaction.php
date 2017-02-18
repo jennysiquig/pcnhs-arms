@@ -12,7 +12,8 @@
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+		<!-- Date Range Picker -->
+		<link href="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
@@ -47,6 +48,25 @@
 							</ul>
 							<div class="clearfix"></div>
 						</div>
+						<!-- Date Picker -->
+	                      <div class="col-md-4">
+	                        Select Date of Transaction
+	                        <form class="form-horizontal">
+	                          <fieldset>
+	                            <div class="control-group">
+	                              <div class="controls">
+	                                <div class="input-prepend input-group">
+	                                  <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+	                                  <input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
+	                                  <button class="btn btn-primary"> Go</button>
+	                                </div>
+
+	                              </div>
+	                            </div>
+	                          </fieldset>
+	                        </form>
+	                      </div>
+	                      <!-- Date Picker -->
 						<div class="x_content">
 							<div class="table-responsive">
 								<table class="table table-striped jambo_table">
@@ -73,22 +93,6 @@
 										<td class=" ">11/11/2016</td>
 										<td class=" ">75</td>
 									</tr>
-									<tr class="odd pointer">
-										<td class=" ">11/12/2016</td>
-										<td class=" ">Jake Ross</td>
-										<td class=" ">Form 137</td>
-										<td class=" ">11/12/2016</td>
-										<td class=" ">11/13/2016</td>
-										<td class=" ">75</td>
-									</tr>
-									<tr class="odd pointer">
-										<td class=" ">11/13/2016</td>
-										<td class=" ">Kaiser Ken</td>
-										<td class=" ">Form 137</td>
-										<td class=" ">11/14/2016</td>
-										<td class=" ">11/16/2016</td>
-										<td class=" ">75</td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -108,9 +112,14 @@
 		<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
 		<!-- input mask -->
 		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+		<!-- Date Range Picker -->
+		<script src="../../resources/libraries/moment/min/moment.min.js"></script>
+		<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
+		
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../js/custom.min.js"></script>
+		
 	<!-- Scripts -->
 </body>
 </html>
