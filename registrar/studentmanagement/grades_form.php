@@ -86,7 +86,6 @@
                                     <th>Subject</th>
                                     <th>Subject Level</th>
                                     <th>Final Grade</th>
-                                    <th>Unit</th>
                                     <th>Remarks</th>
                                 </tr>
                             </thead>
@@ -117,7 +116,6 @@
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td><input style="width: 60px;" name="fin_grade[]" required></td>
-                                    <td><input style="width: 60px;" name="unit[]" required></td>
                                     <td><input style="width: 100px;" name="comment[]" required></td>
                                 </tr>
                                 
@@ -134,6 +132,10 @@ SUBJ;
                         <div class="col-md-2 col-xs-12">
                             <label for="average">Average Grade: </label>
                             <input id="average" class="form-control" type="text" style="width: 70px;" name="average_grade" required="">
+                        </div>
+                        <div class="col-md-2 col-xs-12">
+                            <label for="average">Total Units: </label>
+                            <input id="average" class="form-control" type="text" style="width: 70px;" name="total_unit" required="">
                         </div>
 
                         <div class="clearfix"></div>

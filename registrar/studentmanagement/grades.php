@@ -46,18 +46,19 @@
 				</div>
 				<div class="x_content">
 				<!-- First Year -->
-					<div class="col-md-6 col-sm-6 col-xs-12">
+					<div class="col-md-12 col-sm-6 col-xs-12">
 						<?php
 
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
 							$stud_id = $_GET['stud_id'];
-							$query = "SELECT yr_level, schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = $stud_id;";
+							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 1 and studentsubjects.stud_id = '$stud_id';";
 							$result = $conn->query($query);
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {
+									$schl_name1 = $row['schl_name'];
 									$yr_level1 = $row['yr_level'];
 									$schl_year1 = $row['schl_year'];
 								}
@@ -79,6 +80,13 @@
 			                    							echo "None";
 			                    						} 
 													?></small></h2>
+		                    <div class="clearfix"></div>
+		                    <h2>School: <?php if(!empty($schl_name1)){
+		                    						echo $schl_name1;
+		                    						}else {
+		                    							echo "None";
+		                    						} 
+											?></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
@@ -147,23 +155,43 @@ YR1;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>
+		                    						 <?php
+
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 1 and stud_id = $stud_id;";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$total_unit1 = $row['total_unit'];
+									}
+								}
+							?>
+		                    <h2>Total Units: <?php if(!empty($total_unit1)){
+		                    						echo $total_unit1;
+		                    						}else {
+		                    							echo "None";
+		                    						} ?></h2>	
 		                  </div>
 		                </div>
 		              </div>
 				<!-- First Year -->
 				<!-- Second Year -->
-					<div class="col-md-6 col-sm-6 col-xs-12">
+					<div class="col-md-12 col-sm-6 col-xs-12">
 						<?php
 
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
 							$stud_id = $_GET['stud_id'];
-							$query = "SELECT yr_level, schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = $stud_id;";
+							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 2 and studentsubjects.stud_id = '$stud_id';";
 							$result = $conn->query($query);
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {
+									$schl_name2 = $row['schl_name'];
 									$yr_level2 = $row['yr_level'];
 									$schl_year2 = $row['schl_year'];
 								}
@@ -186,6 +214,13 @@ YR1;
 			                    						} 
 													?></small></h2>
 		                    <div class="clearfix"></div>
+		                    <h2>School: <?php if(!empty($schl_name2)){
+		                    						echo $schl_name2;
+		                    						}else {
+		                    							echo "None";
+		                    						} 
+											?></h2>
+		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
 		                  	
@@ -205,7 +240,7 @@ YR1;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = $stud_id;";
+									$query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = $stud_id;";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -253,23 +288,45 @@ YR1;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>
+
+		                    
+		                     <?php
+
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 2 and stud_id = $stud_id;";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$total_unit2 = $row['total_unit'];
+									}
+								}
+							?>
+		                    <h2>Total Units: <?php if(!empty($total_unit2)){
+		                    						echo $total_unit2;
+		                    						}else {
+		                    							echo "None";
+		                    						} ?></h2>						
 		                  </div>
 		                </div>
 		              </div>
 				<!-- Second Year -->
 				<!-- Third Year -->
-					<div class="col-md-6 col-sm-6 col-xs-12">
+					<div class="col-md-12 col-sm-6 col-xs-12">
 						<?php
 
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
 							$stud_id = $_GET['stud_id'];
-							$query = "SELECT yr_level, schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = $stud_id;";
+							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 3 and studentsubjects.stud_id = '$stud_id';";
 							$result = $conn->query($query);
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {
+									$schl_name3 = $row['schl_name'];
 									$yr_level3 = $row['yr_level'];
 									$schl_year3 = $row['schl_year'];
 								}
@@ -291,6 +348,13 @@ YR1;
 			                    							echo "None";
 			                    						} 
 													?></small></h2>
+		                    <div class="clearfix"></div>
+		                    <h2>School: <?php if(!empty($schl_name3)){
+		                    						echo $schl_name3;
+		                    						}else {
+		                    							echo "None";
+		                    						} 
+											?></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
@@ -361,23 +425,43 @@ YR1;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>
+		                     <?php
+
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 3 and stud_id = $stud_id;";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$total_unit3 = $row['total_unit'];
+									}
+								}
+							?>
+		                    <h2>Total Units: <?php if(!empty($total_unit3)){
+		                    						echo $total_unit3;
+		                    						}else {
+		                    							echo "None";
+		                    						} ?></h2>	
 		                  </div>
 		                </div>
 		              </div>
 				<!-- Third Year -->
 				<!-- Fourth Year -->
-					<div class="col-md-6 col-sm-6 col-xs-12">
+					<div class="col-md-12 col-sm-6 col-xs-12">
 						<?php
 
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
 							$stud_id = $_GET['stud_id'];
-							$query = "SELECT yr_level, schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = $stud_id;";
+							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 4 and studentsubjects.stud_id = '$stud_id';";
 							$result = $conn->query($query);
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {
+									$schl_name4 = $row['schl_name'];
 									$yr_level4 = $row['yr_level'];
 									$schl_year4 = $row['schl_year'];
 								}
@@ -399,6 +483,13 @@ YR1;
 			                    							echo "None";
 			                    						} 
 													?></small></h2>
+		                    <div class="clearfix"></div>
+		                    <h2>School: <?php if(!empty($schl_name4)){
+		                    						echo $schl_name4;
+		                    						}else {
+		                    							echo "None";
+		                    						} 
+											?></h2>
 		                    <div class="clearfix"></div>
 		                  </div>
 		                  <div class="x_content">
@@ -467,6 +558,25 @@ YR1;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>
+		                     <?php
+
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 4 and stud_id = $stud_id;";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$total_unit4 = $row['total_unit'];
+									}
+								}
+							?>
+		                    <h2>Total Units: <?php if(!empty($total_unit4)){
+		                    						echo $total_unit4;
+		                    						}else {
+		                    							echo "None";
+		                    						} ?></h2>	
 		                  </div>
 		                </div>
 		              </div>
