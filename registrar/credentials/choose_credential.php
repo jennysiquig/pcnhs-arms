@@ -86,7 +86,7 @@
                           <p>
 							<input type="radio" class="flat" name="type_of_request" id="tor-individual" value="individual" checked="" required /> Individual Request:
 							<input type="radio" class="flat" name="type_of_request" id="tor-bulk" value="bulk" />
-							Bulk Request:
+							School Request:
 							
 						</p>
                         </div>

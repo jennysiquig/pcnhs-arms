@@ -39,6 +39,27 @@
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
+			<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>Search Student Record</h2>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+							<form action="studentmanagement/student_list.php" method="GET">
+								<div class="input-group input-group-lg">
+									<span class="input-group-addon"><i class="fa fa-search"></i></span>
+									<input type="text" class="form-control" name="search_key" placeholder="Name of Student or ID Number">
+								</div>
+								<br>
+								<button class="btn btn-lg btn-primary btn-block">Search</button>
+								<br>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="">
 				<div class="row top_tiles">
 					<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -137,37 +158,9 @@
 					</a>
 				</div>
 			</div>
-			<!-- <div class="row">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<div class="x_panel">
-						<div class="x_title">
-							<h2>Recent Released Credentials</h2>
-							<ul class="nav navbar-right panel_toolbox">
-								<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-						</ul>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<div class="table-responsive">
-							<table class="table table-striped">
-								<thead>
-									<tr class="headings">
-										<th class="column-title">Date</th>
-										<th class="column-title">Student Name</th>
-										<th class="column-title">Requested Credential/s</th>
-										<th class="column-title">Total Amount Paid</th>
-									</tr>
-								</thead>
-								<tbody>
-									
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div> -->
-		</div>
+			
+			
+		<div class="clearfix"></div>
 	</div>
 	<!-- /page content -->
 	<!-- Content Here -->
@@ -175,17 +168,17 @@
 	<?php include "../resources/templates/registrar/footer.php"; ?>
 	
 	<!-- Scripts -->
-		<!-- jQuery -->
-		<script src="../resources/libraries/jquery/dist/jquery.min.js" ></script>
-		<!-- Bootstrap -->
-		<script src="../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
-		<!-- FastClick -->
-		<script src= "../resources/libraries/fastclick/lib/fastclick.js"></script>
-		<!-- input mask -->
-		<script src= "../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-		<script src= "../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
-		<!-- Custom Theme Scripts -->
-		<script src= "../js/custom.min.js"></script>
+	<!-- jQuery -->
+	<script src="../resources/libraries/jquery/dist/jquery.min.js" ></script>
+	<!-- Bootstrap -->
+	<script src="../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src= "../resources/libraries/fastclick/lib/fastclick.js"></script>
+	<!-- input mask -->
+	<script src= "../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+	<script src= "../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src= "../js/custom.min.js"></script>
 	<!-- Scripts -->
 </body>
 </html>
