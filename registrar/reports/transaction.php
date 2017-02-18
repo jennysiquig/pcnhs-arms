@@ -51,17 +51,17 @@
 						<!-- Date Picker -->
 	                      <div class="col-md-4">
 	                        Select Date of Transaction
-	                        <form class="form-horizontal">
+	                        <form class="form-horizontal" action="temp.php" method="get">
 	                          <fieldset>
 	                            <div class="control-group">
 	                              <div class="controls">
 	                                <div class="input-prepend input-group">
 	                                  <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-	                                  <input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
-	                                  <button class="btn btn-primary"> Go</button>
+	                                  <input type="text" style="width: 200px" name="transaction_date" id="transaction_date" class="form-control" value="01/01/2016 - 01/25/2016" />
 	                                </div>
 
 	                              </div>
+	                              <button>Go</button>
 	                            </div>
 	                          </fieldset>
 	                        </form>

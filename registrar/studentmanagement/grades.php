@@ -39,11 +39,13 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
 			<div class="clearfix"></div>
+			<button class="btn btn-primary" onclick="history.go(-1);return true;"><i class="fa fa-arrow-circle-left"></i> Back to Previous Page</button>
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>Grades</h2>
 					<div class="clearfix"></div>
 				</div>
+
 				<div class="x_content">
 				<!-- First Year -->
 					<div class="col-md-12 col-sm-6 col-xs-12">
