@@ -66,22 +66,6 @@ echo <<<SB
             </div>
             <!-- /sidebar menu -->
 
-            <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a href="../registrar" data-toggle="tooltip" data-placement="top" title="Home">
-                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-              </a>
-              <a href="../registrar/studentmanagement/student_list.php" data-toggle="tooltip" data-placement="top" title="Search">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Reports">
-                <span class="fa fa-desktop" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-            </div>
-            <!-- /menu footer buttons -->
           </div>
         </div>
 SB;
