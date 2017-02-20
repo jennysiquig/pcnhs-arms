@@ -1,4 +1,5 @@
 <?php require_once "../../resources/config.php"; ?>
+<?php $stud_id = $_GET['stud_id'] ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -39,7 +40,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action = "" method="POST" >
+			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "generate_cred.php?stud_id=$stud_id" ?> method="GET" >
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Generate Credential</h2>
@@ -50,15 +51,17 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<label>Date:</label>
-					<?php
-						echo date("Y-m-d");
-					?>
+					<div class="item form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="stud_id" readonly="" value=<?php echo "'$stud_id'"; ?>>
+						</div>
+					</div>
 					<div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Credential <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select id="credential" class="form-control" required>
+                          <select id="credential" class="form-control" name="credential" required>
 							<option value="">Choose..</option>
 							<?php
 								if(!$conn) {
@@ -76,16 +79,16 @@
 									}
 								}
 							?>
-						</select>
-                        </div>
+							</select>
+	                      </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Type of Request <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <p>
-							<input type="radio" class="flat" name="type_of_request" id="tor-individual" value="individual" checked="" required /> Individual Request:
-							<input type="radio" class="flat" name="type_of_request" id="tor-bulk" value="bulk" />
+							<input type="radio" class="flat" name="request_type" id="tor-individual" value="individual" checked="" required /> Individual Request:
+							<input type="radio" class="flat" name="request_type" id="tor-bulk" value="bulk" />
 							School Request:
 							
 						</p>
@@ -95,7 +98,7 @@
 			</div>
 			<div class="row no-print">
 				<div class="col-xs-12">
-					<button class="btn btn-success pull-right">Submit</button>
+					<button class="btn btn-success pull-right">Next</button>
 					<button class="btn btn-primary pull-right" onclick="history.go(-1);return true;">Back</button>
 				</div>
 			</div>

@@ -1,3 +1,9 @@
+<?php require_once "../../resources/config.php"; ?>
+<?php 
+	$stud_id = $_GET['stud_id'];
+	$credential = $_GET['credential'];
+	$request_type = $_GET['request_type'];
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -37,31 +43,93 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>Form 137</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-					</li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				*Form 137 Template Here*
-				<div class="clearfix"></div>
-				<br>
-				<label for="message">Remarks :</label>
-				<textarea id="message" required="required" class="form-control" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
-				data-parsley-validation-threshold="10"></textarea>
-			</div>
+			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "preview_cred.php?stud_id=$stud_id" ?> method="POST" >
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>Form 137 <small></small></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+					</ul>
+					<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						*Form 137 Template Here*
+						<div class="clearfix"></div>
+						<br>
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Date</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="date" readonly="" value=<?php echo date("Y-m-d"); ?>>
+						</div>
+						</div>
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Credential ID</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="credential" readonly="" value=<?php echo "'$credential'"; ?>>
+							</div>
+						</div>
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Type of Request</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="request_type" readonly="" value=<?php echo "'$request_type'"; ?>>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Input 1:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="input1" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Input 2:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="input2" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks: </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<textarea id="message" required="required" class="form-control" name="remarks"></textarea>
+							</div>
+						</div>
+						<!--  -->
+						<div class="form-group">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Signatory <span class="required">*</span>
+	                        </label>
+	                        <div class="col-md-6 col-sm-6 col-xs-12">
+	                          <select id="credential" class="form-control" name="signatory" required>
+								<option value="">Choose..</option>
+								<?php
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$statement = "SELECT * FROM signatories";
+									$result = $conn->query($statement);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$sign_id = $row['sign_id'];
+											$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+
+											echo "<option value='$sign_id'>$sign_name</option>";
+										}
+									}
+								?>
+								</select>
+		                      </div>
+	                      </div>
+						<!--  -->
+					</div>
+				</div>
+				<!-- this row will not appear when printing -->
+				<div class="row no-print">
+					<div class="col-xs-12">
+						<button class="btn btn-success pull-right"><i class="fa fa-paper-plane"></i> Submit</button>
+					</div>
+				</div>
+			</form>
 		</div>
-		<!-- this row will not appear when printing -->
-		<div class="row no-print">
-			<div class="col-xs-12">
-				<button class="btn btn-default pull-right"><i class="fa fa-eye"></i> Preview</button>
-			</div>
-		</div>
-	</div>
 	<!-- Contents Here -->
 	<?php include "../../resources/templates/registrar/footer.php"; ?>
 	<!-- Scripts -->
