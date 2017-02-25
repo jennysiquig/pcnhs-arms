@@ -55,36 +55,105 @@
 						</ul>
 						<div class="clearfix"></div>
 					</div>
-					<div class="x_content">
-						<div class="item form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">Student Curriculum</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<select id="curriculum" class="form-control col-md-7 col-xs-12" name="curriculum" onchange="showSubjects()">
-									<!-- <option value="1">Regular</option>
-									-->
-									<option value="all">All</option>
-									<?php
-										
-																							
-										if(!$conn) {
-											die("Connection failed: " . mysqli_connect_error());
-										}
-										$statement = "SELECT * FROM pcnhsdb.curriculum";
-										$result = $conn->query($statement);
-										if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
-											$curr_id = $row['curr_id'];
-											$curr_name = $row['curr_name'];
-											echo <<<OPTION2
-																<option value="$curr_id">$curr_name</option>
+						<div class="x_content">
+							<form class="form-horizontal form-label-left" action="student_subjects.php" method="get">
+								<div class="item form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Filter Curriculum</label>
+									<div class="col-md-3 col-sm-4 col-xs-12">
+										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="curriculum">
+
+											<!-- <option value="1">Regular</option>
+											-->
+											<option value="all">All</option>
+											<?php
+												if(!$conn) {
+													die("Connection failed: " . mysqli_connect_error());
+												}
+
+												$statement = "SELECT * FROM pcnhsdb.curriculum";
+
+												$result = $conn->query($statement);
+												if ($result->num_rows > 0) {
+												// output data of each row
+												while($row = $result->fetch_assoc()) {
+													$curr_id = $row['curr_id'];
+													$curr_name = $row['curr_name'];
+													echo <<<OPTION2
+																		<option value="$curr_id">$curr_name</option>
 OPTION2;
-														}
-													}
-										?>
-									</select>
+																}
+															}
+											?>
+											</select>
+										</div>
+										
 								</div>
-							</div>
+								<div class="item form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Filter Program</label>
+									<div class="col-md-3 col-sm-4 col-xs-12">
+										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="program">
+
+											<!-- <option value="1">Regular</option>
+											-->
+											<option value="all">All</option>
+											<?php
+												if(!$conn) {
+													die("Connection failed: " . mysqli_connect_error());
+												}
+
+												$statement = "SELECT * FROM pcnhsdb.programs";
+
+												$result = $conn->query($statement);
+												if ($result->num_rows > 0) {
+												// output data of each row
+												while($row = $result->fetch_assoc()) {
+													$prog_id = $row['prog_id'];
+													$prog_name = $row['prog_name'];
+													echo <<<OPTION2
+																		<option value="$prog_id">$prog_name</option>
+OPTION2;
+																}
+															}
+											?>
+											</select>
+										</div>
+										
+								</div>
+								<div class="item form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+									<div class="col-md-3 col-sm-4 col-xs-12">
+										<button class="btn btn-primary pull-right">Go</button>
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Showing:</label>
+									<?php
+												if(!$conn) {
+													die("Connection failed: " . mysqli_connect_error());
+												}
+												if(isset($_GET['curriculum']) && isset($_GET['program']) ) {
+													$curr_id = $_GET['curriculum'];
+													$prog_id = $_GET['curriculum'];
+								                	if($curr_id === "all" && $prog_id === "all") {
+														$statement = "SELECT * FROM pcnhsdb.curriculum";
+													}else {
+														$statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id";
+													}
+												}
+												$result = $conn->query($statement);
+												if ($result->num_rows > 0) {
+													// output data of each row
+													while($row = $result->fetch_assoc()) {
+														$curr_id = $row['curr_id'];
+														$curr_name = $row['curr_name'];
+													}
+												}
+										?>
+										<div class="col-md-3 col-sm-3 col-xs-12">
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text" value=<?php $curr_id = $_GET['curriculum']; if($curr_id==="all") {echo "All";}else {echo "'$curr_name'";}  ?> readonly="">
+										</div>
+								</div>
+							
 							<div class="clearfix"></div>
 							<div class="table-responsive">
 								<table class="table table-hover">
@@ -100,8 +169,30 @@ OPTION2;
 								</thead>
 								<tbody id="subjlist">
 									<?php
-											$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id";
+											$statement = "";
+							                    $start=0;
+							                    $limit=20;
+							                    if(isset($_GET['page'])){
+							                      $page=$_GET['page'];
+							                      $start=($page-1)*$limit;
+							                    }else{
+							                      $page=1;
+							                    }
+							                if(isset($_GET['curriculum'])) {
+							                	$curr_id = $_GET['curriculum']; 
+							                	if($curr_id === "all") {
+							                		$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id limit $start, $limit;";
+
+							                	}else{
+							                		$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $curr_id limit $start, $limit;";
+							                	}
+							                	
+							                }else {
+							                	$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id limit $start, $limit;";
+							                }
+											
 											$result = $conn->query($statement);
+
 											if($result->num_rows>0) {
 												while ($row = $result->fetch_assoc()) {
 													# code...
@@ -124,9 +215,53 @@ SUBJS;
 									?>
 								</tbody>
 							</table>
+							<?php
+			                  	if(isset($_GET['curriculum'])) {
+								    $curr_id = $_GET['curriculum']; 
+								    if($curr_id === "all") {
+								    	$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id;";
+								    }else{
+								    	$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $curr_id;";
+								    }           	
+								}else {
+							        $statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id;";
+							    }
+							    $result = $conn->query($statement);
+			                    $rows = mysqli_num_rows($result);
+			                    $total = ceil($rows/$limit);
+
+			                    echo '<div class="pull-right">
+			                      <div class="col s12">
+			                      <ul class="pagination center-align">';
+			                      if($page > 1) {
+			                        echo "<li class=''><a href='student_subjects.php?curriculum=$curr_id&page=".($page-1)."'>Previous</a></li>";
+			                      }else if($total <= 0) {
+			                        echo '<li class="disabled"><a>Previous</a></li>';
+			                      }else {
+			                        echo '<li class="disabled"><a>Previous</a></li>';
+			                      }
+			                      for($i = 1;$i <= $total; $i++) {
+			                        if($i==$page) {
+			                          echo "<li class='active'><a href='student_subjects.php?curriculum=$curr_id&page=$i'>$i</a></li>";
+			                      } else {
+			                          echo "<li class=''><a href='student_subjects.php?curriculum=$curr_id&page=$i'>$i</a></li>";
+			                        }
+			                      }
+			                      if($total == 0) {
+			                        echo "<li class='disabled'><a>Next</a></li>";
+			                      }else if($page!=$total) {
+			                        echo "<li class=''><a href='student_subjects.php?curriculum=$curr_id&page=".($page+1)."'>Next</a></li>";
+			                      }else {
+			                        echo "<li class='disabled'><a>Next</a></li>";
+			                      }
+			                        echo "</ul></div></div>";
+			                      
+
+			                ?>
 							<a href="subject_add.php">Add Subject</a>
 						</div>
 					</div>
+					</form>
 				</div>
 				
 			</div>
