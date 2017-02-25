@@ -68,18 +68,21 @@
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name">
 								</div>
 							</div>
+
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="mname">
+									<input id="name" class="form-control col-md-7 col-xs-12" type="text" name="mname">
 								</div>
 							</div>
+
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name">
 								</div>
 							</div>
+
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Year Started</label>
 								<div class="col-md-2 col-sm-6 col-xs-12">
@@ -87,7 +90,7 @@
 												<option value="">-- Year --</option>
 												<?php 
 														$present = date("Y");
-													for ($year=1920; $year <= $present; $year++) { 
+													for ($year=1999; $year <= $present; $year++) {
 														echo "<option value='$year'>$year</option>";
 												} ?>
 											</select>
@@ -101,7 +104,7 @@
 												<option value="present">Present</option>
 												<?php 
 														$present = date("Y");
-													for ($year=1920; $year <= $present; $year++) { 
+													for ($year=1999; $year <= $present; $year++) {
 														echo "<option value='$year'>$year</option>";
 												} ?>
 											</select>
@@ -114,7 +117,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-							<div class="col-md-5 col-md-offset-3 pull-right">
+							<div class="col-md-5 col-md-offset-3 pull-left">
+                                <br>
 								<button type="submit" class="btn btn-success">Add Signatory</button>
 							</div>
 						</div>
