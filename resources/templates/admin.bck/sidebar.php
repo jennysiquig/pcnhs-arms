@@ -33,29 +33,27 @@ echo <<<SB
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                
-                  <li><a><i class="fa fa-home"></i>Personnel Accounts <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="$base_url/systemadmin/index.php">View Personnel Accounts</a></li>
-                      <li><a href="$base_url/systemadmin/personnelmanagement/personnel_add.php">Add Personnel Account</a></li>
+                      <li><a href="$base_url/systemadmin/index.php">Manage Accounts</a></li>
                     </ul>
                   </li>
-                  
-                  
                   
                   <li><a><i class="fa fa-university"></i>School Management<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="$base_url/systemadmin/schoolmanagement/signatories.php">View Signatories</a></li>
-                      <li><a href="$base_url/systemadmin/schoolmanagement/signatory_add.php">Add Signatory</a></li>
+                      
+                      <li><a href="$base_url/systemadmin/schoolmanagement/signatories.php">Signatories</a></li>
+                      
                     </ul>
                   </li>
-                  
-                   <li><a><i class="fa fa-desktop"></i> System Logs <span class="fa fa-chevron-down"></span></a>
+
+                  <li><a><i class="fa fa-university"></i>Activity Log<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="$base_url/systemadmin/activitylog/activitylog.php">View Activity Logs</a></li>
+                      
+                      <li><a href="$base_url/systemadmin/activitylog.php">Activity Log</a></li>
+                      
                     </ul>
                   </li>
-                  
                 </ul>
               </div>
 

@@ -92,20 +92,18 @@
                             if(!$conn) {
                                 die("Connection failed: " . mysqli_connect_error());
                             }
+
                             if (isset($_GET['search_key'])){
                                 $search = $_GET['search_key'];
                                 $statement = "SELECT * FROM pcnhsdb.personnel 
-                                WHERE per_id 
-                                LIKE '$search' OR uname 
-                                LIKE '$search'
-                                LIMIT $start, $limit";
+                                              WHERE per_id 
+                                              LIKE '$search' OR uname 
+                                              LIKE '$search'
+                                              LIMIT $start, $limit" ;
                             }else{
                                 $statement = "SELECT * FROM pcnhsdb.personnel
-                                WHERE uname NOT LIKE 'registrar' 
-                                AND uname NOT LIKE 'admin'
-                                LIMIT $start, $limit";
+                                              LIMIT $start, $limit";
                             }
-
 
                             $result = $conn->query($statement);
                             if ($result->num_rows > 0) {
@@ -120,6 +118,7 @@
                                     $position = $row ['position'];
                                     $access_type = $row ['access_type'];
                                     $accnt_status = $row ['accnt_status'];
+
                                     echo <<<PERSONNELLIST
                     <tr class="odd pointer">
 														<td class=" ">$per_id</td>
@@ -130,6 +129,7 @@
 														<td class=" ">$accnt_status</td>
 														<td class=" ">
 														<a href= "personnelmanagement/personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
+														<a href= "personnelmanagement/phpupdate/delete.php?per_id=$per_id" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Remove</a>
 														</td>
 														
 											</tr>
@@ -139,6 +139,7 @@ PERSONNELLIST;
                             ?>
                             </tbody>
                         </table>
+                        <small><b>NOTE: DO NOT MODIFY OR DELETE REGISTRAR AND ADMIN ACCOUNT</b></small>
                         <?php
                         $statement = "SELECT * FROM pcnhsdb.personnel";
                         $rows = mysqli_num_rows(mysqli_query($conn, $statement));

@@ -36,14 +36,14 @@
 <?php include "../../resources/templates/admin/top-nav.php"; ?>
 <!-- Content Start -->
 <div class="right_col" role="main">
-    <form class="form-horizontal form-label-left" action="signatories.php" method="GET">
+    <form class="form-horizontal form-label-left" action="activitylog.php" method="GET">
 
         <div class="form-group">
             <div class="col-sm-5"></div>
             <div class="col-sm-7">
                 <div class="input-group">
 
-                    <input type="text" class="form-control" name="search_key" placeholder="Search Signatory ID or Name">
+                    <input type="text" class="form-control" name="search_key" placeholder="Search Personnel ID or Username">
                     <span class="input-group-btn">
                   <button class="btn btn-primary">Go</button>
                 </span>
@@ -58,7 +58,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Signatories</h2>
+                    <h2>Personnel Acvitivty Logs</h2>
                     <div class="clearfix"></div>
                     <br/>
 
@@ -68,14 +68,12 @@
                         <table id="signList" class="table table-bordered tablesorter">
                             <thead>
                             <tr>
-                                <th>Signatory ID</th>
-                                <th>First Name</th>
-                                <th>Middle Name</th>
-                                <th>Last Name</th>
-                                <th>Position</th>
-                                <th>Year Started</th>
-                                <th>Year Ended</th>
-                                <th>Action</th>
+                                <th>Date</th>
+                                <th>Personnel ID</th>
+                                <th>Username</th>
+                                <th>Login</th>
+                                <th>Activiy</th>
+                                <th>Logout</th>
                             </tr>
                             </thead>
 
@@ -99,10 +97,10 @@
                                               OR first_name LIKE '$search'
                                               OR mname LIKE '$search'
                                               OR last_name LIKE '$search'
-                                              OR CONCAT(first_name,mname,last_name) LIKE '$search'
-                                              OR CONCAT(first_name,' ',last_name) LIKE '$search'
-                                              OR CONCAT(last_name,first_name,mname) LIKE '$search'
-                                              OR CONCAT(last_name,' ',first_name) LIKE '$search'
+                                              OR CONCAT(first_name,mname,last_name)
+                                              OR CONCAT(first_name,' ',last_name)
+                                              OR CONCAT(last_name,first_name,mname)
+                                              OR CONCAT(last_name,' ',first_name)
                                               LIMIT $start, $limit";
                             }else{
                                 $statement = "SELECT * FROM pcnhsdb.signatories
@@ -123,17 +121,12 @@
 
                                     echo <<<SIGNLIST
                    <tr class="odd pointer">
-														<td class=" ">$sign_id</td>
-														<td class=" ">$first_name</td>
-														<td class=" ">$mname</td>
-														<td class=" ">$last_name</td>
-														<td class=" ">$position</td>
-														<td class=" ">$yr_started</td>
-														<td class=" ">$yr_ended</td>
-														<td class=" ">
-														<a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
-														<a href= "phpupdate/delete.php?sign_id=$sign_id" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Remove</a>
-														</td>														
+														<td class=" ">February 27, 2017</td>
+														<td class=" ">214656</td>
+														<td class=" ">Acrobat</td>
+														<td class=" ">5:54 PM</td>
+														<td class=" ">Deleted Account</td>
+														<td class=" ">6:54 PM</td>													
 											</tr>
 SIGNLIST;
                                 }
@@ -171,8 +164,6 @@ SIGNLIST;
                             echo "<li class='disabled'><a>Next</a></li>";
                         }
                         echo "</ul></div></div>";
-
-
                         ?>
                     </div>
                 </div>

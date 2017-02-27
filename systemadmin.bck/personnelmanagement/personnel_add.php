@@ -144,7 +144,7 @@ OPTION1;
                         <div class="form-group">
                             <br>
                             <div class="col-md-5 col-md-offset-3 pull-left">
-                                <button type="submit" class="btn btn-success">Add Personnel</button>
+                                <button type="submit" class="btn btn-success" >Add Personnel </button>
                             </div>
                     </form>
                 </div>
@@ -169,7 +169,6 @@ OPTION1;
 <!-- Custom Theme Scripts -->
 <script src= "../../js/custom.min.js"></script>
 <!-- Scripts -->
-
 <!-- Parsley -->
 <script>
     $(document).ready(function() {

@@ -39,38 +39,34 @@
 <div class="right_col" role="main">
     <div class="x_panel">
         <div class="x_title">
-            <h2>View Personnel Account</h2>
+            <h2>View Signatory</h2>
             <div class="clearfix"></div>
             <br/>
-            <form class="form-horizontal form-label-left" action="phpupdate/personnel_update_info.php" method="POST" novalidate>
+            <form class="form-horizontal form-label-left" action="phpupdate/edit_signatory_info.php" method="POST" novalidate>
 
                 <?php require_once "../../resources/config.php";
 
-                $per_id = $_GET['per_id'];
-                //$per_id;
-                $uname;
-                $password;
-                $last_name;
+                $sign_id = $_GET['sign_id'];
+
                 $first_name;
                 $mname;
+                $last_name;
+                $yr_started;
+                $yr_ended;
                 $position;
-                $access_type;
-                $accnt_status;
 
-                $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
+                $statement = "SELECT * FROM pcnhsdb.signatories WHERE signatories.sign_id = '$sign_id'";
                 $result = $conn->query($statement);
                 if($result->num_rows>0) {
                     while($row=$result->fetch_assoc()){
 
-                        //$per_id = row['per_id'];
-                        $uname = $row['uname'];
-                        $password = $row['password'];
-                        $last_name = $row['last_name'];
+                        //$sign_id = row['sign_id'];
                         $first_name = $row['first_name'];
                         $mname = $row['mname'];
+                        $last_name = $row['last_name'];
+                        $yr_started = $row['yr_started'];
+                        $yr_ended = $row['yr_ended'];
                         $position = $row['position'];
-                        $access_type = $row['access_type'];
-                        $accnt_status = $row['accnt_status'];
                     }
                 }
                 $conn->close();
@@ -81,39 +77,9 @@
 
         <div class="x_content">
             <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Signatory ID</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id" readonly value=<?php echo "'$per_id'"; ?>>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">User Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname" readonly value=<?php echo "'$uname'"; ?>>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$password'"; ?>>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" readonly value=<?php echo "'$last_name'"; ?>>
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="sign_id" readonly value=<?php echo "'$sign_id'"; ?>>
                 </div>
 
             </div>
@@ -141,6 +107,36 @@
 
         <div class="x_content">
             <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" readonly value=<?php echo "'$last_name'"; ?>>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="x_content">
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Started</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="yr_started" readonly value=<?php echo "'$yr_started'"; ?>>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="x_content">
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Ended</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="yr_ended" readonly value=<?php echo "'$yr_ended'"; ?>>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="x_content">
+            <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position" readonly value=<?php echo "'$position'"; ?>>
@@ -149,37 +145,38 @@
             </div>
         </div>
 
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Access Type</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="access_type" readonly value=<?php echo "'$access_type'"; ?>>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="accnt_status" readonly value=<?php echo "'$accnt_status'"; ?>>
-                </div>
-
-            </div>
-        </div>
         <div class="clearfix"></div>
         <div class="ln_solid"></div>
         <div class="form-group">
             <div class="col-md-6">
-                <a href = <?php echo "personnel_edit.php?per_id=$per_id" ?> button type="submit" class="btn btn-primary " >Edit Profile</a>
-                <a href = "../index.php" button type="submit" class="btn btn-primary " >View Personnels</a>
+                <a href = <?php echo "signatory_edit.php?sign_id=$sign_id"?> button type="submit" class="btn btn-primary " >Edit Signatory</a>
+                <a href = "" button type="submit" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-sm" >Remove</a> &nbsp&nbsp&nbsp&nbsp
+                <a href = "signatories.php" button type="submit" class="btn btn-primary " >View Signatories</a>
             </div>
         </div>
 
         </form>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">Remove Signatory?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <a href= <?php echo "phpupdate/delete.php?sign_id=$sign_id"?> class="btn btn-danger">Remove</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Modal -->
 <!-- Contents Here -->
 <?php include "../../resources/templates/admin/footer.php"; ?>
 <!-- Scripts -->

@@ -132,7 +132,6 @@
 														<td class=" ">$yr_ended</td>
 														<td class=" ">
 														<a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
-														<a href= "phpupdate/delete.php?sign_id=$sign_id" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Remove</a>
 														</td>														
 											</tr>
 SIGNLIST;

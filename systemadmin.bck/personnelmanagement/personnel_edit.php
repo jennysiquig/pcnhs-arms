@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php require_once "../../resources/config.php" ?>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -39,12 +40,12 @@
 <div class="right_col" role="main">
     <div class="x_panel">
         <div class="x_title">
-            <h2>View Personnel Account</h2>
+            <h2>Edit Personnel Account</h2>
             <div class="clearfix"></div>
             <br/>
             <form class="form-horizontal form-label-left" action="phpupdate/personnel_update_info.php" method="POST" novalidate>
 
-                <?php require_once "../../resources/config.php";
+                <?php
 
                 $per_id = $_GET['per_id'];
                 //$per_id;
@@ -61,7 +62,6 @@
                 $result = $conn->query($statement);
                 if($result->num_rows>0) {
                     while($row=$result->fetch_assoc()){
-
                         //$per_id = row['per_id'];
                         $uname = $row['uname'];
                         $password = $row['password'];
@@ -83,7 +83,7 @@
             <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id" readonly value=<?php echo "'$per_id'"; ?>>
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id" value=<?php echo "'$per_id'"; ?>>
                 </div>
 
             </div>
@@ -93,7 +93,7 @@
             <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">User Name</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname" readonly value=<?php echo "'$uname'"; ?>>
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname" value=<?php echo "'$uname'"; ?>>
                 </div>
 
             </div>
@@ -103,7 +103,7 @@
             <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$password'"; ?>>
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" value=<?php echo "'$password'"; ?>>
                 </div>
 
             </div>
@@ -113,7 +113,7 @@
             <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" readonly value=<?php echo "'$last_name'"; ?>>
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" value=<?php echo "'$last_name'"; ?>>
                 </div>
 
             </div>
@@ -123,7 +123,7 @@
             <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" readonly value=<?php echo "'$first_name'"; ?>>
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" value=<?php echo "'$first_name'"; ?>>
                 </div>
 
             </div>
@@ -133,7 +133,7 @@
             <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="mname" readonly value=<?php echo "'$mname'"; ?>>
+                    <input id="name" class="form-control col-md-7 col-xs-12"  type="text" name="mname" value=<?php echo "'$mname'"; ?>>
                 </div>
 
             </div>
@@ -143,7 +143,7 @@
             <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position" readonly value=<?php echo "'$position'"; ?>>
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position" value=<?php echo "'$position'"; ?>>
                 </div>
 
             </div>
@@ -155,28 +155,36 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="access_type" readonly value=<?php echo "'$access_type'"; ?>>
                 </div>
-
             </div>
         </div>
 
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="accnt_status" readonly value=<?php echo "'$accnt_status'"; ?>>
-                </div>
-
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <select id="curr-select" class="form-control col-md-7 col-xs-12" name="accnt_status"  required="">
+                    <?php
+                    if(!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
+                    $access_type= $row['accnt_status'];
+                    echo <<<OPTION1
+                                            <option value="ACTIVE">ACTIVATE</option>
+                                            <option value="DEACTIVATED">DEACTIVATE</option>
+OPTION1;
+                    ?>
+                </select>
             </div>
         </div>
+
         <div class="clearfix"></div>
         <div class="ln_solid"></div>
         <div class="form-group">
-            <div class="col-md-6">
-                <a href = <?php echo "personnel_edit.php?per_id=$per_id" ?> button type="submit" class="btn btn-primary " >Edit Profile</a>
-                <a href = "../index.php" button type="submit" class="btn btn-primary " >View Personnels</a>
+
+            <div class=" pull-left">
+                <button class="btn btn-danger" onclick="history.go(-1);return true;">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
         </div>
-
         </form>
     </div>
 </div>
