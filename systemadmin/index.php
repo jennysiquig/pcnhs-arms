@@ -92,18 +92,20 @@
                             if(!$conn) {
                                 die("Connection failed: " . mysqli_connect_error());
                             }
-
                             if (isset($_GET['search_key'])){
                                 $search = $_GET['search_key'];
                                 $statement = "SELECT * FROM pcnhsdb.personnel 
-                                              WHERE per_id 
-                                              LIKE '$search' OR uname 
-                                              LIKE '$search'
-                                              LIMIT $start, $limit" ;
+                                WHERE per_id 
+                                LIKE '$search' OR uname 
+                                LIKE '$search'
+                                LIMIT $start, $limit";
                             }else{
                                 $statement = "SELECT * FROM pcnhsdb.personnel
-                                              LIMIT $start, $limit";
+                                WHERE uname NOT LIKE 'registrar' 
+                                AND uname NOT LIKE 'admin'
+                                LIMIT $start, $limit";
                             }
+
 
                             $result = $conn->query($statement);
                             if ($result->num_rows > 0) {
@@ -118,28 +120,25 @@
                                     $position = $row ['position'];
                                     $access_type = $row ['access_type'];
                                     $accnt_status = $row ['accnt_status'];
-
                                     echo <<<PERSONNELLIST
                     <tr class="odd pointer">
-														<td class=" ">$per_id</td>
-														<td class=" ">$uname</td>
-														<td class=" ">$password</td>
-														<td class=" ">$position</td>
-														<td class=" ">$access_type</td>
-														<td class=" ">$accnt_status</td>
-														<td class=" ">
-														<a href= "personnelmanagement/personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
-														<button class="btn btn-danger btn-xs" onclick="confirmDelete($per_id)"><i class="fa fa-trash-o"></i>Remove</button>
-														</td>
-														
-											</tr>
+                                                        <td class=" ">$per_id</td>
+                                                        <td class=" ">$uname</td>
+                                                        <td class=" ">$password</td>
+                                                        <td class=" ">$position</td>
+                                                        <td class=" ">$access_type</td>
+                                                        <td class=" ">$accnt_status</td>
+                                                        <td class=" ">
+                                                        <a href= "personnelmanagement/personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View  </a>
+                                                        </td>
+                                                        
+                                            </tr>
 PERSONNELLIST;
                                 }
                             }
                             ?>
                             </tbody>
                         </table>
-                        <small><b>NOTE: DO NOT MODIFY OR DELETE REGISTRAR AND ADMIN ACCOUNT</b></small>
                         <?php
                         $statement = "SELECT * FROM pcnhsdb.personnel";
                         $rows = mysqli_num_rows(mysqli_query($conn, $statement));
@@ -205,14 +204,12 @@ PERSONNELLIST;
     );
 </script>
 <script>
-    function confirmDelete(per_id){
+    function confirmDelete(){
         var retVal = confirm("PERSONNEL ACCOUNT WILL BE DELETED");
         if (retVal == true)
         {
-            window.location="personnelmanagement/phpupdate/delete.php?per_id="+per_id;
             alert("PERSONNEL ACCOUNT DELETED");
             return true;
-
         }
         else
         {
