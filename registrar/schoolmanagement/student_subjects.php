@@ -1,4 +1,9 @@
 <?php require_once "../../resources/config.php"; ?>
+<?php
+	if(!isset($_GET['curriculum']) && !isset($_GET['program']) ) {
+		header("location: student_subjects.php?curriculum=all&program=all");
+	}
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -132,13 +137,15 @@ OPTION2;
 													die("Connection failed: " . mysqli_connect_error());
 												}
 												if(isset($_GET['curriculum']) && isset($_GET['program']) ) {
-													$curr_id = $_GET['curriculum'];
-													$prog_id = $_GET['curriculum'];
-								                	if($curr_id === "all" && $prog_id === "all") {
+													$get_curr_id = $_GET['curriculum'];
+													$get_prog_id = $_GET['curriculum'];
+								                	if($get_curr_id === "all" && $get_prog_id === "all") {
 														$statement = "SELECT * FROM pcnhsdb.curriculum";
 													}else {
-														$statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id";
+														$statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $get_curr_id";
 													}
+												}else {
+													$statement = "SELECT * FROM pcnhsdb.curriculum";
 												}
 												$result = $conn->query($statement);
 												if ($result->num_rows > 0) {
@@ -150,7 +157,14 @@ OPTION2;
 												}
 										?>
 										<div class="col-md-3 col-sm-3 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text" value=<?php $curr_id = $_GET['curriculum']; if($curr_id==="all") {echo "All";}else {echo "'$curr_name'";}  ?> readonly="">
+											<input class="form-control col-md-7 col-xs-12" required="required" type="text" value=<?php 
+												if(isset($_GET['curriculum']) && $_GET['curriculum'] <> "all"){
+													$get_curr_id = $_GET['curriculum'];
+													echo "'$curr_name'";
+												}else{
+													echo "All";
+												}
+											?> readonly="">
 										</div>
 								</div>
 							
@@ -178,18 +192,23 @@ OPTION2;
 							                    }else{
 							                      $page=1;
 							                    }
-							                if(isset($_GET['curriculum'])) {
-							                	$curr_id = $_GET['curriculum']; 
-							                	if($curr_id === "all") {
-							                		$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id limit $start, $limit;";
 
-							                	}else{
-							                		$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $curr_id limit $start, $limit;";
-							                	}
-							                	
-							                }else {
-							                	$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id limit $start, $limit;";
-							                }
+							                if(isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] <> "all" && $_GET['program'] <> "all") {
+												$get_curr_id = $_GET['curriculum'];
+												$get_prog_id = $_GET['program'];
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id and programs.prog_id = $get_prog_id limit $start, $limit;";         	
+											}elseif (isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] == "all" && $_GET['program'] <> "all") {
+												$get_curr_id = "all";
+												$get_prog_id = $_GET['program'];
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where programs.prog_id = $get_prog_id limit $start, $limit;";  
+											}elseif (isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] <> "all" && $_GET['program'] == "all") {
+												$get_prog_id = "all";
+												$get_curr_id = $_GET['curriculum'];
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id limit $start, $limit;"; 
+											}
+											else {
+											        $statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id limit $start, $limit;";
+											}
 											
 											$result = $conn->query($statement);
 
@@ -216,16 +235,22 @@ SUBJS;
 								</tbody>
 							</table>
 							<?php
-			                  	if(isset($_GET['curriculum'])) {
-								    $curr_id = $_GET['curriculum']; 
-								    if($curr_id === "all") {
-								    	$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id;";
-								    }else{
-								    	$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $curr_id;";
-								    }           	
-								}else {
-							        $statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id;";
-							    }
+			                  	if(isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] <> "all" && $_GET['program'] <> "all") {
+												$get_curr_id = $_GET['curriculum'];
+												$get_prog_id = $_GET['program'];
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id and programs.prog_id = $get_prog_id;";         	
+											}elseif (isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] == "all" && $_GET['program'] <> "all") {
+												$get_curr_id = "all";
+												$get_prog_id = $_GET['program'];
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where programs.prog_id = $get_prog_id;";  
+											}elseif (isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] <> "all" && $_GET['program'] == "all") {
+												$get_prog_id = "all";
+												$get_curr_id = $_GET['curriculum'];
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id;"; 
+											}
+											else {
+											        $statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id;";
+											}
 							    $result = $conn->query($statement);
 			                    $rows = mysqli_num_rows($result);
 			                    $total = ceil($rows/$limit);
@@ -234,7 +259,7 @@ SUBJS;
 			                      <div class="col s12">
 			                      <ul class="pagination center-align">';
 			                      if($page > 1) {
-			                        echo "<li class=''><a href='student_subjects.php?curriculum=$curr_id&page=".($page-1)."'>Previous</a></li>";
+			                        echo "<li class=''><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=".($page-1)."'>Previous</a></li>";
 			                      }else if($total <= 0) {
 			                        echo '<li class="disabled"><a>Previous</a></li>';
 			                      }else {
@@ -242,15 +267,15 @@ SUBJS;
 			                      }
 			                      for($i = 1;$i <= $total; $i++) {
 			                        if($i==$page) {
-			                          echo "<li class='active'><a href='student_subjects.php?curriculum=$curr_id&page=$i'>$i</a></li>";
+			                          echo "<li class='active'><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=$i'>$i</a></li>";
 			                      } else {
-			                          echo "<li class=''><a href='student_subjects.php?curriculum=$curr_id&page=$i'>$i</a></li>";
+			                          echo "<li class=''><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=$i'>$i</a></li>";
 			                        }
 			                      }
 			                      if($total == 0) {
 			                        echo "<li class='disabled'><a>Next</a></li>";
 			                      }else if($page!=$total) {
-			                        echo "<li class=''><a href='student_subjects.php?curriculum=$curr_id&page=".($page+1)."'>Next</a></li>";
+			                        echo "<li class=''><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=".($page+1)."'>Next</a></li>";
 			                      }else {
 			                        echo "<li class='disabled'><a>Next</a></li>";
 			                      }

@@ -21,7 +21,7 @@
 	/*   */
 	if($result->num_rows>0) {
 		while ($row=$result->fetch_assoc()) {
-			if($row['access_type']=="SYSTEM ADMINISTRATOR") {
+			if($row['access_type']=="SYSTEM ADMINISTRATOR" || $row['access_type']=="sytem administrator") {
 				$_SESSION['username'] = $row['username'];
 				$_SESSION['first_name'] = $row['first_name'];
 				$_SESSION['last_name'] = $row['last_name'];
@@ -32,7 +32,7 @@
 				//
 				header("Location: ../systemadmin/index.php");
 			}
-			if($row['access_type']=="REGISTRAR") {
+			if($row['access_type']=="REGISTRAR" || $row['access_type']=="registrar") {
 				$_SESSION['username'] = $row['username'];
 				$_SESSION['first_name'] = $row['first_name'];
 				$_SESSION['last_name'] = $row['last_name'];
