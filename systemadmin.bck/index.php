@@ -122,17 +122,16 @@
                                     $accnt_status = $row ['accnt_status'];
                                     echo <<<PERSONNELLIST
                     <tr class="odd pointer">
-														<td class=" ">$per_id</td>
-														<td class=" ">$uname</td>
-														<td class=" ">$password</td>
-														<td class=" ">$position</td>
-														<td class=" ">$access_type</td>
-														<td class=" ">$accnt_status</td>
-														<td class=" ">
-														<a href= "personnelmanagement/personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
-														</td>
-														
-											</tr>
+                                                        <td class=" ">$per_id</td>
+                                                        <td class=" ">$uname</td>
+                                                        <td class=" ">$password</td>
+                                                        <td class=" ">$position</td>
+                                                        <td class=" ">$access_type</td>
+                                                        <td class=" ">$accnt_status</td>
+                                                        <td class=" ">
+                                                        <a href= "personnelmanagement/personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View  </a>
+                                                        </td>         
+                                            </tr>
 PERSONNELLIST;
                                 }
                             }
