@@ -129,7 +129,7 @@
 														<td class=" ">$accnt_status</td>
 														<td class=" ">
 														<a href= "personnelmanagement/personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
-														<a href= "personnelmanagement/phpupdate/delete.php?per_id=$per_id" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Remove</a>
+														<button class="btn btn-danger btn-xs" onclick="confirmDelete($per_id)"><i class="fa fa-trash-o"></i>Remove</button>
 														</td>
 														
 											</tr>
@@ -205,12 +205,14 @@ PERSONNELLIST;
     );
 </script>
 <script>
-    function confirmDelete(){
+    function confirmDelete(per_id){
         var retVal = confirm("PERSONNEL ACCOUNT WILL BE DELETED");
         if (retVal == true)
         {
+            window.location="personnelmanagement/phpupdate/delete.php?per_id="+per_id;
             alert("PERSONNEL ACCOUNT DELETED");
             return true;
+
         }
         else
         {
