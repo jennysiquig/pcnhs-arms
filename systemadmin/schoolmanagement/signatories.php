@@ -123,18 +123,17 @@
 
                                     echo <<<SIGNLIST
                    <tr class="odd pointer">
-														<td class=" ">$sign_id</td>
-														<td class=" ">$first_name</td>
-														<td class=" ">$mname</td>
-														<td class=" ">$last_name</td>
-														<td class=" ">$position</td>
-														<td class=" ">$yr_started</td>
-														<td class=" ">$yr_ended</td>
-														<td class=" ">
-														<a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
-														<a href= "phpupdate/delete.php?sign_id=$sign_id" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Remove</a>
-														</td>														
-											</tr>
+                                                        <td class=" ">$sign_id</td>
+                                                        <td class=" ">$first_name</td>
+                                                        <td class=" ">$mname</td>
+                                                        <td class=" ">$last_name</td>
+                                                        <td class=" ">$position</td>
+                                                        <td class=" ">$yr_started</td>
+                                                        <td class=" ">$yr_ended</td>
+                                                        <td class=" ">
+                                                        <a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
+                                                        </td>                                                       
+                                            </tr>
 SIGNLIST;
                                 }
                             }
