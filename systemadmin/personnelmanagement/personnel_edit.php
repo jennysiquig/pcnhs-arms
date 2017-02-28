@@ -43,7 +43,7 @@
             <h2>Edit Personnel Account</h2>
             <div class="clearfix"></div>
             <br/>
-            <form class="form-horizontal form-label-left" action="phpupdate/personnel_update_info.php" method="POST" novalidate>
+            <form id="personnel-valE" class="form-horizontal form-label-left" action="phpupdate/personnel_update_info.php" method="POST" novalidate>
 
                 <?php
 
@@ -140,37 +140,59 @@
         </div>
 
         <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position" value=<?php echo "'$position'"; ?>>
-                </div>
-
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" name="position">
+                    <?php
+                    if(!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
+                    $position= $row['position'];
+                    echo <<<OPTION0
+                                            <option value="ADMINISTRATOR">ADMINISTRATOR</option>
+                                            <option value="HEAD TEACHER">HEAD TEACHER</option>
+                                            <option value="PRINCIPAL">PRINCIPAL</option>
+                                            <option value="SUPERINTENDENT">SUPERINTENDENT</option>
+OPTION0;
+                    ?>
+                </select>
             </div>
+        </div>
         </div>
 
         <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Access Type</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="access_type" readonly value=<?php echo "'$access_type'"; ?>>
-                </div>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Access Type</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <select id="curr-select" class="form-control col-md-7 col-xs-12" required="required" name="access_type">
+                    <?php
+                    if(!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
+                    $access_type= $row['access_type'];
+                    echo <<<OPTION1
+                                            <option value="REGISTRAR">REGISTRAR</option>
+                                            <option value="SYSTEM ADMINISTRATOR">SYSTEM ADMINISTRATOR</option>
+OPTION1;
+                    ?>
+                </select>
             </div>
         </div>
-
+        </div>
         <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-                <select id="curr-select" class="form-control col-md-7 col-xs-12" name="accnt_status"  required="">
+                <select id="curr-select" class="form-control col-md-7 col-xs-12" required="required" name="accnt_status">
                     <?php
                     if(!$conn) {
                         die("Connection failed: " . mysqli_connect_error());
                     }
                     $access_type= $row['accnt_status'];
-                    echo <<<OPTION1
+                    echo <<<OPTION2
                                             <option value="ACTIVE">ACTIVATE</option>
                                             <option value="DEACTIVATED">DEACTIVATE</option>
-OPTION1;
+OPTION2;
                     ?>
                 </select>
             </div>
@@ -203,6 +225,30 @@ OPTION1;
 <!-- Custom Theme Scripts -->
 <script src= "../../js/custom.min.js"></script>
 <!-- Scripts -->
+<script>
+    $(document).ready(function() {
+        $.listen('parsley:field:validate', function() {
+            validateFront();
+        });
+        $('#personnel-valE .btn').on('click', function() {
+            $('#personnel-valE').parsley().validate();
+            validateFront();
+        });
+        var validateFront = function() {
+            if (true === $('#personnel-valE').parsley().isValid()) {
+                $('.bs-callout-info').removeClass('hidden');
+                $('.bs-callout-warning').addClass('hidden');
+            } else {
+                $('.bs-callout-info').addClass('hidden');
+                $('.bs-callout-warning').removeClass('hidden');
+            }
+        };
+    });
+
+    try {
+        hljs.initHighlightingOnLoad();
+    } catch (err) {}
+</script>
 
 </body>
 </html>
