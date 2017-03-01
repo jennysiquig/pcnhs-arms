@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -43,7 +44,7 @@
             <div class="col-sm-7">
                 <div class="input-group">
 
-                    <input type="text" class="form-control" name="search_key" placeholder="Search Personnel ID or Username">
+                    <input type="text" class="form-control" name="search_key" placeholder="Search Personnel Username">
                     <span class="input-group-btn">
                   <button class="btn btn-primary">Go</button>
                 </span>
@@ -58,21 +59,22 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Personnel Acvitivty Logs</h2>
+                    <h2>PCNHS-SIS User Logs</h2>
                     <div class="clearfix"></div>
                     <br/>
 
                 </div>
                 <div class="x_content">
                     <div class="table-responsive">
-                        <table id="signList" class="table table-bordered tablesorter">
+                        <table id="logList" class="table table-bordered tablesorter">
                             <thead>
                             <tr>
+                                <th>Log ID</th>
                                 <th>Date</th>
-                                <th>Personnel ID</th>
                                 <th>Username</th>
-                                <th>Login</th>
-                                <th>Activiy</th>
+                                <th>Access Type</th>
+                                <th>User Activity</th>
+                                <th>Login Time</th>
                                 <th>Logout</th>
                             </tr>
                             </thead>
@@ -80,7 +82,7 @@
                             <tbody>
                             <?php
                             $start=0;
-                            $limit=8;
+                            $limit=12;
                             if(isset($_GET['page'])){
                                 $page=$_GET['page'];
                                 $start=($page-1)*$limit;
@@ -93,17 +95,10 @@
                             }
                             if (isset($_GET['search_key'])){
                                 $search = $_GET['search_key'];
-                                $statement = "SELECT * FROM pcnhsdb.signatories WHERE sign_id LIKE '$search'
-                                              OR first_name LIKE '$search'
-                                              OR mname LIKE '$search'
-                                              OR last_name LIKE '$search'
-                                              OR CONCAT(first_name,mname,last_name)
-                                              OR CONCAT(first_name,' ',last_name)
-                                              OR CONCAT(last_name,first_name,mname)
-                                              OR CONCAT(last_name,' ',first_name)
+                                $statement = "SELECT * FROM pcnhsdb.user_logs WHERE user_name LIKE '$search'
                                               LIMIT $start, $limit";
                             }else{
-                                $statement = "SELECT * FROM pcnhsdb.signatories
+                                $statement = "SELECT * FROM pcnhsdb.user_logs
                                               LIMIT $start, $limit";
                             }
 
@@ -111,31 +106,32 @@
                             if ($result->num_rows > 0) {
                                 // output data of each row
                                 while($row = $result->fetch_assoc()) {
-                                    $sign_id = $row['sign_id'];
-                                    $first_name = $row['first_name'];
-                                    $mname = $row['mname'];
-                                    $last_name = $row['last_name'];
-                                    $position = $row['position'];
-                                    $yr_started = $row['yr_started'];
-                                    $yr_ended = $row['yr_ended'];
+                                    $log_id = $row['log_id'];
+                                    $log_date = $row['log_date'];
+                                    $user_name = $row['user_name'];
+                                    $account_type = $row['account_type'];
+                                    $log_date = $row['log_date'];
+                                    $log_in_time = $row['log_in_time'];
+                                    $log_out_time = $row['log_out_time'];
 
-                                    echo <<<SIGNLIST
+                                    echo <<<LOGLIST
                    <tr class="odd pointer">
-														<td class=" ">February 27, 2017</td>
-														<td class=" ">214656</td>
-														<td class=" ">Acrobat</td>
-														<td class=" ">5:54 PM</td>
-														<td class=" ">Deleted Account</td>
-														<td class=" ">6:54 PM</td>													
+														<td class=" ">$log_id</td>
+														<td class=" ">$log_date</td>
+														<td class=" ">$user_name</td>
+														<td class=" ">$account_type</td>
+														<td class=" ">TO DO</td>
+														<td class=" ">$log_in_time</td>
+														<td class=" ">$log_out_time</td>													
 											</tr>
-SIGNLIST;
+LOGLIST;
                                 }
                             }
                             ?>
                             </tbody>
                         </table>
                         <?php
-                        $statement = "SELECT * FROM pcnhsdb.signatories";
+                        $statement = "SELECT * FROM pcnhsdb.user_logs";
                         $rows = mysqli_num_rows(mysqli_query($conn, $statement));
                         $total = ceil($rows/$limit);
 
@@ -143,7 +139,7 @@ SIGNLIST;
                       <div class="col s12">
                       <ul class="pagination center-align">';
                         if($page > 1) {
-                            echo "<li class=''><a href='signatories.php?page=".($page-1)."'>Previous</a></li>";
+                            echo "<li class=''><a href='activitylog.php?page=".($page-1)."'>Previous</a></li>";
                         }else if($total <= 0) {
                             echo '<li class="disabled"><a>Previous</a></li>';
                         }else {
@@ -151,15 +147,15 @@ SIGNLIST;
                         }
                         for($i = 1;$i <= $total; $i++) {
                             if($i==$page) {
-                                echo "<li class='active'><a href='signatories.php?page=$i'>$i</a></li>";
+                                echo "<li class='active'><a href='activitylog.php?page=$i'>$i</a></li>";
                             } else {
-                                echo "<li class=''><a href='signatories.php?page=$i'>$i</a></li>";
+                                echo "<li class=''><a href='activitylog.php?page=$i'>$i</a></li>";
                             }
                         }
                         if($total == 0) {
                             echo "<li class='disabled'><a>Next</a></li>";
                         }else if($page!=$total) {
-                            echo "<li class=''><a href='signatories.php?page=".($page+1)."'>Next</a></li>";
+                            echo "<li class=''><a href='activitylog.php?page=".($page+1)."'>Next</a></li>";
                         }else {
                             echo "<li class='disabled'><a>Next</a></li>";
                         }
@@ -193,7 +189,7 @@ SIGNLIST;
 <script type="text/javascript">
 
     $(document).ready(function(){
-            $("#signList").tablesorter({headers: { 6:{sorter: false}, }});
+            $("#logList").tablesorter({headers: { 6:{sorter: false}, }});
         }
     );
 
