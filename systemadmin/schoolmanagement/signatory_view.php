@@ -51,6 +51,7 @@
                 $first_name;
                 $mname;
                 $last_name;
+                $title;
                 $yr_started;
                 $yr_ended;
                 $position;
@@ -64,6 +65,7 @@
                         $first_name = $row['first_name'];
                         $mname = $row['mname'];
                         $last_name = $row['last_name'];
+                        $title = $row['title'];
                         $yr_started = $row['yr_started'];
                         $yr_ended = $row['yr_ended'];
                         $position = $row['position'];
@@ -111,7 +113,15 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" readonly value=<?php echo "'$last_name'"; ?>>
                 </div>
+            </div>
+        </div>
 
+        <div class="x_content">
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Academic Degree</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="title" readonly value=<?php echo "'$title'"; ?>>
+                </div>
             </div>
         </div>
 
@@ -166,7 +176,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel2">Remove Signatory?</h4>
+                <h4 class="modal-title" id="myModalLabel2">Remove Signatory <?php echo $first_name?> ?</h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>

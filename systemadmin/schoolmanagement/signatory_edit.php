@@ -6,9 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
+    
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -52,6 +50,7 @@
                 $last_name;
                 $first_name;
                 $mname;
+                $title;
                 $yr_started;
                 $yr_ended;
                 $position;
@@ -64,6 +63,7 @@
                         $first_name = $row['first_name'];
                         $mname = $row['mname'];
                         $last_name = $row['last_name'];
+                        $title = $row['title'];
                         $yr_started = $row['yr_started'];
                         $yr_ended = $row['yr_ended'];
                         $position = $row['position'];
@@ -105,6 +105,15 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" value=<?php echo "'$last_name'"; ?>>
+                </div>
+            </div>
+        </div>
+
+        <div class="x_content">
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Academic Degree</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="title" value=<?php echo "'$title'"; ?>>
                 </div>
             </div>
         </div>

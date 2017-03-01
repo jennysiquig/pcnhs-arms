@@ -84,6 +84,13 @@
                         </div>
 
                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Academic Degree</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="title" placeholder="e.g. PhD, M.Ed., Ed.D.">
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Started</label>
                             <div class="col-md-2 col-sm-6 col-xs-12">
                                 <select class="form-control col-md-7 col-xs-12" required="required" name="yr_started">
