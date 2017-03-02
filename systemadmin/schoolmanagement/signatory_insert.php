@@ -3,6 +3,7 @@
 	$first_name = $_POST['first_name'];
 	$mname = $_POST['mname'];
 	$last_name = $_POST['last_name'];
+	$title = $_POST['title'];
 	$yr_started = $_POST['yr_started'];
 	$yr_ended = $_POST['yr_ended'];
 	$position = $_POST['position'];
@@ -12,9 +13,9 @@
 		die("Connection failed: " . mysqli_connect_error());
 	}
 
-	$statement = $conn->prepare("INSERT INTO `pcnhsdb`.`signatories` (`sign_id`, `last_name`, `first_name`, `mname`, `yr_started`, `yr_ended`, `position`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+	$statement = $conn->prepare("INSERT INTO `pcnhsdb`.`signatories` (`sign_id`, `last_name`, `first_name`, `mname`, `title`, `yr_started`, `yr_ended`, `position`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
-	$statement->bind_param("isssiss", $sign_id, $last_name, $first_name, $mname, $yr_started, $yr_ended, $position);
+	$statement->bind_param("issssiss", $sign_id, $last_name, $first_name, $mname, $title, $yr_started, $yr_ended, $position);
 
 	$statement->execute();
 
