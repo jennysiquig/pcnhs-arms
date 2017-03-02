@@ -1,3 +1,4 @@
+<?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -51,7 +52,7 @@
 						<!-- Date Picker -->
 	                      <div class="col-md-4">
 	                        Select Date of Transaction
-	                        <form class="form-horizontal" action="temp.php" method="get">
+	                        <form class="form-horizontal" action="transaction.php" method="get">
 	                          <fieldset>
 	                            <div class="control-group">
 	                              <div class="controls">
@@ -84,17 +85,140 @@
 									</tr>
 								</thead>
 								<tbody>
+								<?php
+									$statement = "";
+				                    $start=0;
+				                    $limit=20;
+
+				                    if(!$conn) {
+				                    die("Connection failed: " . mysqli_connect_error());
+				                    }
+
+				                    if(isset($_GET['page'])){
+				                      $page=$_GET['page'];
+				                      $start=($page-1)*$limit;
+				                    }else{
+				                      $page=1;
+				                    }
+
+				                    if(isset($_GET['transaction_date'])) {
+				                    	$transaction_date = $_GET['transaction_date'];
+				                    	$from_and_to_date = explode("-", $transaction_date);
+				                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
+										$m = $sqldate_format_from[0];
+										$d = $sqldate_format_from[1];
+										$y = $sqldate_format_from[2];
+										$m = preg_replace('/\s+/', '', $m);
+										$d = preg_replace('/\s+/', '', $d);
+										$y = preg_replace('/\s+/', '', $y);
+
+										$from = $y."-".$m."-".$d;
+
+										$sqldate_format_to = explode("/", $from_and_to_date[1]);
+										$m = $sqldate_format_to[0];
+										$d = $sqldate_format_to[1];
+										$y = $sqldate_format_to[2];
+										$m = preg_replace('/\s+/', '', $m);
+										$d = preg_replace('/\s+/', '', $d);
+										$y = preg_replace('/\s+/', '', $y);
+
+										$to = $y."-".$m."-".$d;
+
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between $from and $to limit $start, $limit;";
+				                    }else {
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials limit $start, $limit";
+				                    }
+
+
+				                    $result = $conn->query($statement);
+					                if ($result->num_rows > 0) {
+					                    // output data of each row
+					                    while($row = $result->fetch_assoc()) {
+					                    	$transaction_date = $row['trans_date'];
+					                    	$student = $row['first_name']." ".$row['last_name'];
+					                    	$credential = $row['cred_name'];
+					                    	$date_processed = $row['date_processed'];
+					                    	$date_released = $row['date_released'];
+					                    	$total_trans_amt = $row['total_trans_amt'];
+					                    echo <<<TRANS
+					                    	<tr class="odd pointer">
+												<td class=" ">$transaction_date</td>
+												<td class=" ">$student</td>
+												<td class=" ">$cred_name</td>
+												<td class=" ">$date_processed</td>
+												<td class=" ">$date_released</td>
+												<td class=" ">$total_trans_amt</td>
+											</tr>
+TRANS;
+					                    	
+
+					                    }
+					                }
+
+				                    
+
+								?>
 									
-									<tr class="odd pointer">
-										<td class=" ">11/11/2016</td>
-										<td class=" ">Juan Migu</td>
-										<td class=" ">Form 137</td>
-										<td class=" ">11/11/2016</td>
-										<td class=" ">11/11/2016</td>
-										<td class=" ">75</td>
-									</tr>
 								</tbody>
 							</table>
+							<?php
+								if(isset($_GET['transaction_date'])) {
+				                    	$transaction_date = $_GET['transaction_date'];
+				                    	$from_and_to_date = explode("-", $transaction_date);
+				                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
+										$m = $sqldate_format_from[0];
+										$d = $sqldate_format_from[1];
+										$y = $sqldate_format_from[2];
+										$m = preg_replace('/\s+/', '', $m);
+										$d = preg_replace('/\s+/', '', $d);
+										$y = preg_replace('/\s+/', '', $y);
+
+										$from = $y."-".$m."-".$d;
+
+										$sqldate_format_to = explode("/", $from_and_to_date[1]);
+										$m = $sqldate_format_to[0];
+										$d = $sqldate_format_to[1];
+										$y = $sqldate_format_to[2];
+										$m = preg_replace('/\s+/', '', $m);
+										$d = preg_replace('/\s+/', '', $d);
+										$y = preg_replace('/\s+/', '', $y);
+
+										$to = $y."-".$m."-".$d;
+
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between $from and $to;";
+				                    }else {
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials";
+				                    }
+							
+							$rows = mysqli_num_rows(mysqli_query($conn, $statement));
+							$total = ceil($rows/$limit);
+							echo '<div class="pull-right">
+									<div class="col s12">
+											<ul class="pagination center-align">';
+													if($page > 1) {
+													echo "<li class=''><a href='transaction.php?page=".($page-1)."&transaction_date=$transaction_date'>Previous</a></li>";
+													}else if($total <= 0) {
+													echo '<li class="disabled"><a>Previous</a></li>';
+													}else {
+													echo '<li class="disabled"><a>Previous</a></li>';
+													}
+													for($i = 1;$i <= $total; $i++) {
+													if($i==$page) {
+													echo "<li class='active'><a href='transaction.php?page=$i&transaction_date=$transaction_date'>$i</a></li>";
+													} else {
+													echo "<li class=''><a href='transaction.php?page=$i&transaction_date=$transaction_date'>$i</a></li>";
+													}
+													}
+													if($total == 0) {
+													echo "<li class='disabled'><a>Next</a></li>";
+													}else if($page!=$total) {
+													echo "<li class=''><a href='transaction.php?page=".($page+1)."&transaction_date=$transaction_date'>Next</a></li>";
+													}else {
+													echo "<li class='disabled'><a>Next</a></li>";
+													}
+											echo "</ul></div></div>";
+											
+									?>
 						</div>
 					</div>
 				</div>

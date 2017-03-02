@@ -11,13 +11,15 @@
 	$m = $sqldate_format_from[0];
 	$d = $sqldate_format_from[1];
 	$y = $sqldate_format_from[2];
-
+	$m = preg_replace('/\s+/', '', $m);
+	$d = preg_replace('/\s+/', '', $d);
+	$y = preg_replace('/\s+/', '', $y);
 	echo "<br>";
 	echo $m;
 	echo "<br>";
 	echo $d;
 	echo "<br>";
-	echo $y;
+	echo $y."-".$m."-".$d;
 	echo "<br>";
 
 	$sqldate_format_to = explode("/", $from_and_to_date[1]);

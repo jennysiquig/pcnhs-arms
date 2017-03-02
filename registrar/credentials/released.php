@@ -62,10 +62,18 @@
 							</thead>
 							<tbody>
 							<?php
+								$start=0;
+								$limit=20;
+								if(isset($_GET['page'])){
+									$page=$_GET['page'];
+									$start=($page-1)*$limit;
+								}else{
+									$page=1;
+								}
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT date_released as 'date released', concat(first_name, last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join released natural join credentials where status='r';";
+								$statement = "SELECT date_released as 'date released', concat(first_name, ' ' ,last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='r' limit $start, $limit;";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
@@ -87,6 +95,38 @@ RELEASED;
 							?>		
 					</tbody>
 				</table>
+				<?php
+							$statement = "SELECT date_released as 'date released', concat(first_name, ' ' ,last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='r';";
+							
+							$rows = mysqli_num_rows(mysqli_query($conn, $statement));
+							$total = ceil($rows/$limit);
+							echo '<div class="pull-right">
+									<div class="col s12">
+											<ul class="pagination center-align">';
+													if($page > 1) {
+													echo "<li class=''><a href='released.php?page=".($page-1)."'>Previous</a></li>";
+													}else if($total <= 0) {
+													echo '<li class="disabled"><a>Previous</a></li>';
+													}else {
+													echo '<li class="disabled"><a>Previous</a></li>';
+													}
+													for($i = 1;$i <= $total; $i++) {
+													if($i==$page) {
+													echo "<li class='active'><a href='released.php?page=$i'>$i</a></li>";
+													} else {
+													echo "<li class=''><a href='released.php?page=$i'>$i</a></li>";
+													}
+													}
+													if($total == 0) {
+													echo "<li class='disabled'><a>Next</a></li>";
+													}else if($page!=$total) {
+													echo "<li class=''><a href='released.php?page=".($page+1)."'>Next</a></li>";
+													}else {
+													echo "<li class='disabled'><a>Next</a></li>";
+													}
+											echo "</ul></div></div>";
+											
+									?>
 			</div>
 		</div>
 	</div>
