@@ -38,7 +38,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
 			<div class="clearfix"></div>
-			<form class="form-horizontal form-label-left" action="phpupdate/update_student_info.php" method="POST" novalidate>
+			<form id="stud-edit" class="form-horizontal form-label-left" action="phpupdate/update_student_info.php" method="POST" novalidate>
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Student Personal Information</h2>
@@ -179,7 +179,7 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Last School Year Attended</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" disabled="" value=<?php echo "'$last_schyear_attended'"; ?>>
+											<input id="name" class="form-control col-md-7 col-xs-12" type="text" disabled="" value=<?php echo "'$last_schyear_attended'"; ?>>
 										</div>
 										<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 									</div>
@@ -196,7 +196,7 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Full Name</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" name="parent_name" value=<?php echo "'$pname'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="text" name="parent_name" required="" value=<?php echo "'$pname'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
@@ -236,7 +236,7 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Total Elementary Years</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="number" min="1" value=<?php echo "'$total_elem_years'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="number" value=<?php echo "'$total_elem_years'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
@@ -290,5 +290,30 @@
 	                });
 	            </script>
                 <!-- /jquery.inputmask -->
+                <!-- Parsley -->
+				<script>
+				$(document).ready(function() {
+				$.listen('parsley:field:validate', function() {
+				validateFront();
+				});
+				$('#stud-edit .btn').on('click', function() {
+				$('#stud-edit').parsley().validate();
+				validateFront();
+				});
+				var validateFront = function() {
+				if (true === $('#stud-edit').parsley().isValid()) {
+				$('.bs-callout-info').removeClass('hidden');
+				$('.bs-callout-warning').addClass('hidden');
+				} else {
+				$('.bs-callout-info').addClass('hidden');
+				$('.bs-callout-warning').removeClass('hidden');
+				}
+				};
+				});
+				try {
+				hljs.initHighlightingOnLoad();
+				} catch (err) {}
+				</script>
+				<!-- /Parsley -->
 		</body>
 	</html>

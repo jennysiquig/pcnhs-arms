@@ -47,6 +47,58 @@
                     <!-- First -->
                     <form id="val-gr" class="form-horizontal form-label-left" action=<?php $stud_id = $_GET['stud_id']; echo "grades_form.php?stud_id=$stud_id" ?> method="POST" novalidate>
                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Program</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                
+                                    <?php
+                                    if(!$conn) {
+                                    die("Connection failed: " . mysqli_connect_error());
+                                    }
+                                    $stud_id = $_GET['stud_id'];
+                                    $statement = "SELECT prog_id, prog_name FROM pcnhsdb.students left join programs using (prog_id) where stud_id = '$stud_id'";
+                                    $result = $conn->query($statement);
+                                    if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while($row = $result->fetch_assoc()) {
+                                    $prog_name = $row['prog_name'];
+                                    $prog_id = $row['prog_id'];
+                                    echo <<<SP
+                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="program" readonly value='$prog_name'>
+                                        
+SP;
+                                    }
+                                    }
+                                    ?>
+                                
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Program ID</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                
+                                    <?php
+                                    if(!$conn) {
+                                    die("Connection failed: " . mysqli_connect_error());
+                                    }
+                                    $stud_id = $_GET['stud_id'];
+                                    $statement = "SELECT prog_id, prog_name FROM pcnhsdb.students left join programs using (prog_id) where stud_id = '$stud_id'";
+                                    $result = $conn->query($statement);
+                                    if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while($row = $result->fetch_assoc()) {
+                                    $prog_name = $row['prog_name'];
+                                    $prog_id = $row['prog_id'];
+                                    echo <<<SP
+                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="prog_id" readonly value='$prog_id'>
+                                        
+SP;
+                                    }
+                                    }
+                                    ?>
+                                
+                            </div>
+                        </div>
+                        <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Curriculum</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <select class="form-control col-md-7 col-xs-12" name="curriculum">

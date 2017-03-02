@@ -59,6 +59,10 @@
                             echo "<h4>School Year: <input value='$sy' name='schl_year' readonly></h4>";
                         ?>
                         <?php
+                            $sp = $_POST['program'];
+                            echo "<h4>Program: <input value='$sp' name='program' readonly></h4>";
+                        ?>
+                        <?php
                             if(!$conn) {
                                 die();
                             }
@@ -99,8 +103,8 @@
                                 }
                                 
                                 $yr_level_needed = $_POST['yr_level'];
-                                
-                                $statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id where subjectcurriculum.curr_id = $curriculum and yr_level_needed = $yr_level_needed";
+                                $prog_id = $_POST['prog_id'];
+                                $statement = "select * from subjects natural join subjectcurriculum natural join curriculum natural join programs natural join subjectprogram where subjectcurriculum.curr_id = $curriculum and yr_level_needed = $yr_level_needed and prog_id = $prog_id";
                                 $result = $conn->query($statement);
                                 if($result->num_rows>0) {
                                 while ($row = $result->fetch_assoc()) {

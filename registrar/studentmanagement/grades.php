@@ -109,7 +109,7 @@
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = $stud_id;";
+									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -143,7 +143,7 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 1 and stud_id = $stud_id;";
+								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 1 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
@@ -162,7 +162,7 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 1 and stud_id = $stud_id;";
+								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 1 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
@@ -242,7 +242,7 @@ YR1;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = $stud_id;";
+									$query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -276,7 +276,7 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 2 and stud_id = $stud_id;";
+								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 2 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
@@ -297,7 +297,7 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 2 and stud_id = $stud_id;";
+								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 2 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
@@ -377,7 +377,7 @@ YR1;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = $stud_id;";
+									$query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -413,7 +413,7 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 3 and stud_id = $stud_id;";
+								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 3 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
@@ -432,7 +432,7 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 3 and stud_id = $stud_id;";
+								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 3 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
@@ -512,7 +512,7 @@ YR1;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = $stud_id;";
+									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -546,7 +546,7 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 4 and stud_id = $stud_id;";
+								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 4 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
@@ -565,7 +565,7 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 4 and stud_id = $stud_id;";
+								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 4 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row

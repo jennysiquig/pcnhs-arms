@@ -52,13 +52,13 @@
 		                    die("Connection failed: " . mysqli_connect_error());
 		                }
 
-		                $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_level = 1;";
+		                $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 1;";
 		                $result = $conn->query($attendance1);
 	                    if ($result->num_rows > 0) {
 	                    // output data of each row
 		                    while($row = $result->fetch_assoc()) {
 		                    	$schl_yr1 = $row['schl_yr'];
-		                    	$yr_lvl1 = $row['yr_level'];
+		                    	$yr_lvl1 = $row['yr_lvl'];
 		                    	$days_attended1 = $row['days_attended'];
 		                    	$school_days1 = $row['school_days'];
 		                    }
@@ -85,13 +85,13 @@
 		                    die("Connection failed: " . mysqli_connect_error());
 		                }
 
-		                $attendance2 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_level = 2;";
+		                $attendance2 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_lvl = 2;";
 		                $result = $conn->query($attendance2);
 	                    if ($result->num_rows > 0) {
 	                    // output data of each row
 		                    while($row = $result->fetch_assoc()) {
 		                    	$schl_yr2 = $row['schl_yr'];
-		                    	$yr_lvl2 = $row['yr_level'];
+		                    	$yr_lvl2 = $row['yr_lvl'];
 		                    	$days_attended2 = $row['days_attended'];
 		                    	$school_days2 = $row['school_days'];
 		                    }
@@ -118,13 +118,13 @@
 		                    die("Connection failed: " . mysqli_connect_error());
 		                }
 
-		                $attendance3 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_level = 3;";
+		                $attendance3 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_lvl = 3;";
 		                $result = $conn->query($attendance3);
 	                    if ($result->num_rows > 0) {
 	                    // output data of each row
 		                    while($row = $result->fetch_assoc()) {
 		                    	$schl_yr3 = $row['schl_yr'];
-		                    	$yr_lvl3 = $row['yr_level'];
+		                    	$yr_lvl3 = $row['yr_lvl'];
 		                    	$days_attended3 = $row['days_attended'];
 		                    	$school_days3 = $row['school_days'];
 		                    }
@@ -151,13 +151,13 @@
 		                    die("Connection failed: " . mysqli_connect_error());
 		                }
 
-		                $attendance4 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_level = 4;";
+		                $attendance4 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_lvl = 4;";
 		                $result = $conn->query($attendance4);
 	                    if ($result->num_rows > 0) {
 	                    // output data of each row
 		                    while($row = $result->fetch_assoc()) {
 		                    	$schl_yr4 = $row['schl_yr'];
-		                    	$yr_lvl4 = $row['yr_level'];
+		                    	$yr_lvl4 = $row['yr_lvl'];
 		                    	$days_attended4 = $row['days_attended'];
 		                    	$school_days4 = $row['school_days'];
 		                    }
