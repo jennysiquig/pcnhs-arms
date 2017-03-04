@@ -58,7 +58,7 @@
 	                              <div class="controls">
 	                                <div class="input-prepend input-group">
 	                                  <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-	                                  <input type="text" style="width: 200px" name="transaction_date" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" />
+	                                  <input type="text" style="width: 200px" name="transaction_date" id="reservation" class="form-control" value=" " />
 	                                </div>
 
 	                              </div>
@@ -124,7 +124,7 @@
 
 										$to = $y."-".$m."-".$d;
 
-				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between $from and $to limit $start, $limit;";
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between '$from' and '$to' limit $start, $limit;";
 				                    }else {
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials limit $start, $limit";
 				                    }
@@ -144,7 +144,7 @@
 					                    	<tr class="odd pointer">
 												<td class=" ">$transaction_date</td>
 												<td class=" ">$student</td>
-												<td class=" ">$cred_name</td>
+												<td class=" ">$credential</td>
 												<td class=" ">$date_processed</td>
 												<td class=" ">$date_released</td>
 												<td class=" ">$total_trans_amt</td>
@@ -185,7 +185,7 @@ TRANS;
 
 										$to = $y."-".$m."-".$d;
 
-				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between $from and $to;";
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between '$from' and '$to';";
 				                    }else {
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials";
 				                    }

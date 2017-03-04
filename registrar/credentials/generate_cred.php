@@ -76,15 +76,15 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">Input 1:</label>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Date Accomplished:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="input1" value="">
+								<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="dateaccomplished" value="">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">Input 2:</label>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Admitted To:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="input2" value="">
+								<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="admittedto" value="">
 							</div>
 						</div>
 						<div class="form-group">

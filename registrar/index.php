@@ -62,6 +62,7 @@
 			</div>
 			<div class="">
 				<div class="row top_tiles">
+				<a href="studentmanagement/student_list.php">
 					<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 						<div class="tile-stats">
 							<div class="icon"><i class="fa fa-user"></i></div>
@@ -84,7 +85,8 @@
 							<p>&nbsp</p>
 						</div>
 					</div>
-					<a href="#">
+					</a>
+					<a href="credentials/unclaimed.php">
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"><i class="glyphicon glyphicon-hourglass"></i></div>
@@ -108,7 +110,7 @@
 							</div>
 						</div>
 					</a>
-					<a href="#">
+					<a href="credentials/released.php">
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"><i class="fa fa-paper-plane"></i></div>
@@ -132,7 +134,7 @@
 							</div>
 						</div>
 					</a>
-					<a href="#">
+					<a href="reports/transaction.php">
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"><i class="glyphicon glyphicon-check"></i></div>

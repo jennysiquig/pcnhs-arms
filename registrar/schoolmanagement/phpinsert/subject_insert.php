@@ -7,9 +7,10 @@
 	$curriculum = $_POST['curr_id'];
 	$program = $_POST['prog_id'];
 	$yr_level_needed = $_POST['yr_level_needed'];
+	$unit = $_POST['unit'];
 
 
-	$insertsubject = "INSERT INTO `pcnhsdb`.`subjects` (`subj_id`,`subj_name`, `subj_level`, `yr_level_needed`) VALUES ('$subj_id', '$subj_name', '$subj_level', '$yr_level_needed')";
+	$insertsubject = "INSERT INTO `pcnhsdb`.`subjects` (`subj_id`,`subj_name`, `subj_level`, `yr_level_needed`, `unit`) VALUES ('$subj_id', '$subj_name', '$subj_level', '$yr_level_needed', '$unit')";
 	$insertcurriculum = "INSERT INTO `pcnhsdb`.`subjectcurriculum` (`subj_id`,`curr_id`) VALUES ('$subj_id', '$curriculum')";
 	$insertprogram = "INSERT INTO `pcnhsdb`.`subjectprogram` (`subj_id`,`prog_id`) VALUES ('$subj_id', '$program')";
 

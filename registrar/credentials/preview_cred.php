@@ -56,12 +56,12 @@
 		<div class="right_col" role="main">
 
 			<?php
-				$input1 = $_POST['input1'];
-				$input2 = $_POST['input2'];
+				$dateaccomplished = $_POST['dateaccomplished'];
+				$admittedto = $_POST['addmittedto'];
 				$remarks = $_POST['remarks'];
 
-				echo $input1;
-				echo $input2;
+				echo $dateaccomplished;
+				echo $addmittedto;
 				echo $remarks;
 
 			?>

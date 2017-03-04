@@ -73,7 +73,7 @@
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT date_released as 'date released', concat(first_name, ' ' ,last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='r' limit $start, $limit;";
+								$statement = "SELECT stud_id, date_released as 'date released', concat(first_name, ' ' ,last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='r' limit $start, $limit;";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
@@ -81,11 +81,11 @@
 										$date_released = $row['date released'];
 										$stud_name = $row['stud_name'];
 										$cred_name = $row['cred_name'];
-
+										$stud_id = $row['stud_id'];
 										echo <<<RELEASED
 										<tr class="odd pointer">
 											<td class=" ">$date_released</td>
-											<td class=" ">$stud_name</td>
+											<td class=" "><a href="../studentmanagement/student_info.php?stud_id=$stud_id">$stud_name</a></td>
 											<td class=" ">$cred_name</td>
 										</tr>
 RELEASED;

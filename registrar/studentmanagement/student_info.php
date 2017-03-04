@@ -1,3 +1,4 @@
+<?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -31,7 +32,7 @@
 		<![endif]-->
 	</head>
 	<body class="nav-md">
-		<?php require_once "../../resources/config.php";
+		<?php 
 		
 			$stud_id = $_GET['stud_id'];
 			
@@ -262,16 +263,50 @@
 								</div>
 								<div class="x_content">
 									<!--  -->
+									
 									<div class="table-responsive">
-										<table class="table table-striped">
+										<table class="table table-striped jambo_table">
 											<thead>
 												<tr class="headings">
 													<th class="column-title">Credential Name</th>
-													<th class="column-title">Number of Copies</th>
+													<th class="column-title">Date Processed</th>
+													<th class="column-title">Credential Status</th>
+													<th class="column-title">Date Released</th>
 												</tr>
 											</thead>
 											<tbody>
-												
+												<?php
+													if(!$conn) {
+														die("Connection failed: " . mysqli_connect_error());
+													}
+													$statement = "SELECT date_processed, date_released, status, cred_name FROM pcnhsdb.requests natural join students natural join credentials where stud_id = '$stud_id';";
+													$result = $conn->query($statement);
+													if ($result->num_rows > 0) {
+														// output data of each row
+														while($row = $result->fetch_assoc()) {
+															$cred_name = $row['cred_name'];
+															$date_processed = $row['date_processed'];
+															$date_released = $row['date_released'];
+															if(is_null($date_released)) {
+																$date_released = "N/A";
+															}
+															$status = $row['status'];
+															if($status == 'r') {
+																$status = "Released";
+															}else {
+																$status = "Unclaimed";
+															}
+															echo <<<CREDC
+																<tr>
+																	<td>$cred_name</td>
+																	<td>$date_processed</td>
+																	<td>$status</td>
+																	<td>$date_released</td>
+																</tr>
+CREDC;
+														}
+													}
+												?>
 											</tbody>
 										</table>
 									</div>

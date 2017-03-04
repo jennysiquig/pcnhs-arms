@@ -178,6 +178,7 @@ OPTION2;
 											<th class="column-title">Subject Level</th>
 											<th class="column-title">Curriculum</th>
 											<th class="column-title">Program</th>
+											<th class="column-title">Unit</th>
 										</th>
 									</tr>
 								</thead>
@@ -220,6 +221,7 @@ OPTION2;
 													$subj_level = $row['subj_level'];
 													$curr_name = $row['curr_name'];
 													$prog_name = $row['prog_name'];
+													$unit = $row['unit'];
 													echo <<<SUBJS
 														<tr>
 																<td>$subj_id</td>
@@ -227,6 +229,7 @@ OPTION2;
 																<td>$subj_level</td>
 																<td>$curr_name</td>
 																<td>$prog_name</td>
+																<td>$unit</td>
 														</tr>
 SUBJS;
 												}

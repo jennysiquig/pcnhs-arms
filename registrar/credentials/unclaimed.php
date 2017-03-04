@@ -75,7 +75,7 @@
 										if(!$conn) {
 											die("Connection failed: " . mysqli_connect_error());
 										}
-										$statement = "SELECT req_id, stud_id, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='u' limit $start, $limit;";
+										$statement = "SELECT req_id, stud_id, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_id, cred_name, request_type FROM pcnhsdb.requests natural join students natural join credentials where status='u' limit $start, $limit;";
 										$result = $conn->query($statement);
 										if ($result->num_rows > 0) {
 											// output data of each row
@@ -83,14 +83,16 @@
 												$stud_id = $row['stud_id'];
 												$date_processed = $row['date processed'];
 												$stud_name = $row['stud_name'];
+												$cred_id = $row['cred_id'];
 												$cred_name = $row['cred_name'];
 												$req_id = $row['req_id'];
+												$request_type = $row['request_type'];
 												echo <<<UNCLAIMED
 												<tr class="odd pointer">
 																<td class=" ">$date_processed</td>
-																<td class=" ">$stud_name</td>
+																<td class=" "><a href="../studentmanagement/student_info.php?stud_id=$stud_id">$stud_name</a></td>
 																<td class=" ">$cred_name</td>
-																<td class=" last"><a class="btn btn-default btn-xs" href="release_action.php?stud_id=$stud_id&req_id=$req_id"><i class="fa fa-paper-plane"></i> Released</a></td>
+																<td class=" last"><a class="btn btn-default btn-xs" href="release_action.php?stud_id=$stud_id&cred_id=$cred_id&req_id=$req_id&request_type=$request_type"><i class="fa fa-paper-plane"></i> Released</a></td>
 												</tr>
 UNCLAIMED;
 											}
