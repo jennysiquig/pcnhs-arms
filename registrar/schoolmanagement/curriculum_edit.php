@@ -1,5 +1,13 @@
 <?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
+<?php
+    session_start();
+
+    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
+      header('Location: ../../login.php');
+    }
+
+  ?>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

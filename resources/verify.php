@@ -30,6 +30,8 @@
 				$_SESSION['account_type'] = "systemadmin";
 				$_SESSION['logged_in'] = "true";
                 $_SESSION['accnt_status'] = "ACTIVE";
+                date_default_timezone_set('Asia/Manila');
+                $_SESSION['liTime'] = date("h:i:sa");
 				//
 				header("Location: ../systemadmin/index.php");
 			}
@@ -42,6 +44,8 @@
                 $_SESSION['account_type'] = "registrar";
 				$_SESSION['logged_in'] = "true";
                 $_SESSION['accnt_status'] = "ACTIVE";
+                date_default_timezone_set('Asia/Manila');
+                $_SESSION['liTime'] = date("h:i:sa");
 				//
 				header("Location: ../registrar/index.php");
 			}

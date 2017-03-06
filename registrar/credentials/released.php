@@ -1,4 +1,12 @@
 <?php require_once "../../resources/config.php"; ?>
+<?php
+    session_start();
+
+    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
+      header('Location: ../../login.php');
+    }
+
+  ?>
 <!DOCTYPE html>
 <html>
 		<head>

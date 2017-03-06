@@ -1,5 +1,13 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php
+    session_start();
+
+    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
+      header('Location: ../../login.php');
+    }
+
+  ?>
+<?php
 	if(!isset($_GET['curriculum']) && !isset($_GET['program']) ) {
 		header("location: student_subjects.php?curriculum=all&program=all");
 	}
