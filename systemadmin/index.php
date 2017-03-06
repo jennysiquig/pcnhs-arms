@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <?php require_once "../resources/config.php"; ?>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
 
 
     <!-- Bootstrap -->
@@ -71,7 +71,6 @@
                             <tr>
                                 <th>Personnel ID</th>
                                 <th>Username</th>
-                                <th>Password</th>
                                 <th>Position</th>
                                 <th>Access Type</th>
                                 <th>Account Status</th>
@@ -102,10 +101,9 @@
                             }else{
                                 $statement = "SELECT * FROM pcnhsdb.personnel
                                 WHERE uname NOT LIKE 'registrar' 
-                                AND uname NOT LIKE 'admin'
+                                AND uname NOT LIKE 'admin' 
                                 LIMIT $start, $limit";
                             }
-
 
                             $result = $conn->query($statement);
                             if ($result->num_rows > 0) {
@@ -124,12 +122,12 @@
                     <tr class="odd pointer">
                                                         <td class=" ">$per_id</td>
                                                         <td class=" ">$uname</td>
-                                                        <td class=" ">$password</td>
                                                         <td class=" ">$position</td>
                                                         <td class=" ">$access_type</td>
                                                         <td class=" ">$accnt_status</td>
                                                         <td class=" ">
-                                                        <a href= "personnelmanagement/personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View  </a>
+                                                        <a href= "personnelmanagement/personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs">
+                                                        <i class="fa fa-user"></i>View</a>
                                                         </td>
                                                         
                                             </tr>
@@ -199,7 +197,7 @@ PERSONNELLIST;
 <script type="text/javascript">
 
     $(document).ready(function(){
-            $("#personnelList").tablesorter({headers: { 6:{sorter: false}, }});
+            $("#personnelList").tablesorter({headers: { 5:{sorter: false}, }});
         }
     );
 </script>

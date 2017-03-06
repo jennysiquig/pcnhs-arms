@@ -59,7 +59,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>PCNHS-SIS User Logs</h2>
+                    <h2>PCNHS-SIS User Activity Logs</h2>
                     <div class="clearfix"></div>
                     <br/>
 
@@ -73,9 +73,9 @@
                                 <th>Date</th>
                                 <th>Username</th>
                                 <th>Access Type</th>
-                                <th>User Activity</th>
                                 <th>Login Time</th>
-                                <th>Logout</th>
+                                <th>User Activity</th>
+                                <th>Logout Time</th>
                             </tr>
                             </thead>
 
@@ -96,9 +96,11 @@
                             if (isset($_GET['search_key'])){
                                 $search = $_GET['search_key'];
                                 $statement = "SELECT * FROM pcnhsdb.user_logs WHERE user_name LIKE '$search'
+                                              ORDER BY log_id DESC
                                               LIMIT $start, $limit";
                             }else{
                                 $statement = "SELECT * FROM pcnhsdb.user_logs
+                                              ORDER BY log_id DESC
                                               LIMIT $start, $limit";
                             }
 
@@ -113,23 +115,25 @@
                                     $log_date = $row['log_date'];
                                     $log_in_time = $row['log_in_time'];
                                     $log_out_time = $row['log_out_time'];
+                                    $user_act = $row['user_act'];
 
                                     echo <<<LOGLIST
-                   <tr class="odd pointer">
+                                            <tr class="odd pointer">
 														<td class=" ">$log_id</td>
 														<td class=" ">$log_date</td>
 														<td class=" ">$user_name</td>
 														<td class=" ">$account_type</td>
-														<td class=" ">TO DO</td>
 														<td class=" ">$log_in_time</td>
+                                                        <td class=" ">$user_act</td>
 														<td class=" ">$log_out_time</td>													
 											</tr>
 LOGLIST;
+                                        }
                                 }
-                            }
                             ?>
                             </tbody>
                         </table>
+                        
                         <?php
                         $statement = "SELECT * FROM pcnhsdb.user_logs";
                         $rows = mysqli_num_rows(mysqli_query($conn, $statement));
@@ -189,7 +193,7 @@ LOGLIST;
 <script type="text/javascript">
 
     $(document).ready(function(){
-            $("#logList").tablesorter({headers: { 6:{sorter: false}, }});
+            $("#logList").tablesorter({headers: { 7:{sorter: false}, }});
         }
     );
 

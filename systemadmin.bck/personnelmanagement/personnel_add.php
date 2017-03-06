@@ -55,7 +55,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form id="credential-val" class="form-horizontal form-label-left" action="personnel_insert.php" method="POST" novalidate>
+                    <form id="personnel-val" class="form-horizontal form-label-left" action="personnel_insert.php" method="POST" novalidate>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -99,14 +99,28 @@
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position">
+                                <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position">
+                                    <option value="">--NO SELECTED--</option>
+                                    <?php
+                                    if(!$conn) {
+                                        die("Connection failed: " . mysqli_connect_error());
+                                    }
+                                    $position= $row['position'];
+                                    echo <<<OPTION0
+                                            <option value="ADMINISTRATOR">ADMINISTRATOR</option>
+                                            <option value="HEAD TEACHER">HEAD TEACHER</option>
+                                            <option value="PRINCIPAL">PRINCIPAL</option>
+                                            <option value="SUPERINTENDENT">SUPERINTENDENT</option>
+OPTION0;
+                                    ?>
+                                </select>
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Access Type</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select id="curr-select" class="form-control col-md-7 col-xs-12" name="access_type"  required="">
+                                <select id="curr-select" class="form-control col-md-7 col-xs-12" name="access_type"  required="required">
                                     <option value="">--NO SELECTED--</option>
                                     <?php
                                     if(!$conn) {
@@ -125,17 +139,17 @@ OPTION1;
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select id="curr-select" class="form-control col-md-7 col-xs-12" name="accnt_status"  required="">
+                                <select id="curr-select" class="form-control col-md-7 col-xs-12" name="accnt_status"  required="required">
                                     <option value="">--NO SELECTED--</option>
                                     <?php
                                     if(!$conn) {
                                         die("Connection failed: " . mysqli_connect_error());
                                     }
                                     $access_type= $row['accnt_status'];
-                                    echo <<<OPTION1
+                                    echo <<<OPTION2
                                             <option value="ACTIVE">ACTIVATED</option>
                                             <option value="DEACTIVATED">DEACTIVATED</option>
-OPTION1;
+OPTION2;
                                     ?>
                                 </select>
                             </div>
@@ -144,7 +158,7 @@ OPTION1;
                         <div class="form-group">
                             <br>
                             <div class="col-md-5 col-md-offset-3 pull-left">
-                                <button type="submit" class="btn btn-success" >Add Personnel </button>
+                                <button type="submit" class="btn btn-success">Add Personnel</button>
                             </div>
                     </form>
                 </div>
@@ -169,18 +183,19 @@ OPTION1;
 <!-- Custom Theme Scripts -->
 <script src= "../../js/custom.min.js"></script>
 <!-- Scripts -->
+
 <!-- Parsley -->
 <script>
     $(document).ready(function() {
         $.listen('parsley:field:validate', function() {
             validateFront();
         });
-        $('#credential-val .btn').on('click', function() {
-            $('#credential-val').parsley().validate();
+        $('#personnel-val .btn').on('click', function() {
+            $('#personnel-val').parsley().validate();
             validateFront();
         });
         var validateFront = function() {
-            if (true === $('#credential-val').parsley().isValid()) {
+            if (true === $('#personnel-val').parsley().isValid()) {
                 $('.bs-callout-info').removeClass('hidden');
                 $('.bs-callout-warning').addClass('hidden');
             } else {

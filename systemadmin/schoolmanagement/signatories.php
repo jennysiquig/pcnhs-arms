@@ -72,6 +72,7 @@
                                 <th>First Name</th>
                                 <th>Middle Name</th>
                                 <th>Last Name</th>
+                                <th>Degree</th>
                                 <th>Position</th>
                                 <th>Year Started</th>
                                 <th>Year Ended</th>
@@ -117,6 +118,7 @@
                                     $first_name = $row['first_name'];
                                     $mname = $row['mname'];
                                     $last_name = $row['last_name'];
+                                    $title = $row['title'];
                                     $position = $row['position'];
                                     $yr_started = $row['yr_started'];
                                     $yr_ended = $row['yr_ended'];
@@ -127,6 +129,7 @@
                                                         <td class=" ">$first_name</td>
                                                         <td class=" ">$mname</td>
                                                         <td class=" ">$last_name</td>
+                                                        <td class=" ">$title</td>
                                                         <td class=" ">$position</td>
                                                         <td class=" ">$yr_started</td>
                                                         <td class=" ">$yr_ended</td>
@@ -201,7 +204,7 @@ SIGNLIST;
 <script type="text/javascript">
 
     $(document).ready(function(){
-            $("#signList").tablesorter({headers: { 6:{sorter: false}, }});
+            $("#signList").tablesorter({headers: { 8:{sorter: false}, }});
         }
     );
 

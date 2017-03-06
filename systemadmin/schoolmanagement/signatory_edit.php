@@ -6,7 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
+
+
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -20,7 +22,7 @@
     <link href="../../css/tstheme/style.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
-    <script src="../js/ie8-responsive-file-warning.js"></script>
+    <script src="../../js/ie8-responsive-file-warning.js"></script>
     <![endif]-->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -28,159 +30,160 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-</head>
-<body class="nav-md">
+</head>	<body class="nav-md">
 <!-- Sidebar -->
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
 <!-- Top Navigation -->
 <?php include "../../resources/templates/admin/top-nav.php"; ?>
-<!-- Contents Here -->
+<!-- Content Here -->
+<!-- page content -->
 <div class="right_col" role="main">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Edit Signatory</h2>
-            <div class="clearfix"></div>
-            <br/>
-            <form id="signatory-valE" class="form-horizontal form-label-left" action="phpupdate/edit_signatory_info.php" method="POST" novalidate>
-
-                <?php
-
-                $sign_id = $_GET['sign_id'];
-                //$sign_id;
-                $last_name;
-                $first_name;
-                $mname;
-                $title;
-                $yr_started;
-                $yr_ended;
-                $position;
-
-                $statement = "SELECT * FROM pcnhsdb.signatories WHERE signatories.sign_id='$sign_id'";
-                $result = $conn->query($statement);
-                if($result->num_rows>0) {
-                    while($row=$result->fetch_assoc()) {
-                        //$sign_id = $row['sign_id'];
-                        $first_name = $row['first_name'];
-                        $mname = $row['mname'];
-                        $last_name = $row['last_name'];
-                        $title = $row['title'];
-                        $yr_started = $row['yr_started'];
-                        $yr_ended = $row['yr_ended'];
-                        $position = $row['position'];
-                    }
-                }
-                ?>
+    <div class="">
+        <div class="row top_tiles">
 
         </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Signatory ID</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="sign_id"  value=<?php echo "'$sign_id'"; ?>>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Edit Signatory</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
                 </div>
-            </div>
-        </div>
+                <div class="x_content">
+                    <form id="signatory-edit" class="form-horizontal form-label-left" action="phpupdate/update_signatory_info.php" method="POST" novalidate>
 
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" value=<?php echo "'$first_name'"; ?>>
-                </div>
-            </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="mname" value=<?php echo "'$mname'"; ?>>
-                </div>
-            </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" value=<?php echo "'$last_name'"; ?>>
-                </div>
-            </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Academic Degree</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="title" value=<?php echo "'$title'"; ?>>
-                </div>
-            </div>
-        </div>
-
-        <div class="x_content">
-        <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Started</label>
-            <div class="col-md-2 col-sm-6 col-xs-12">
-                <select class="form-control col-md-7 col-xs-12" name="yr_started"  required = "required" value=<?php echo "'$yr_started'";?>>
-                    <option value="<?php echo $yr_started?>"> <?php echo $yr_started?></option>
-                    <?php
-                    $present = date("Y");
-                    for ($year=1973; $year <= $present; $year++) {
-                        echo "<option value='$year'>$year</option>";
-                    } ?>
-                </select>
-            </div>
-        </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Ended</label>
-                <div class="col-md-2 col-sm-6 col-xs-12">
-                    <select class="form-control col-md-7 col-xs-12" name="yr_ended"  required = "required" value=<?php echo "'$yr_ended'";?>>
-                        <option value="<?php echo $yr_ended?>"> <?php echo $yr_ended?></option>
                         <?php
-                        $present = date("Y");
-                        for ($year=1973; $year <= $present; $year++) {
-                            echo "<option value='$year'>$year</option>";
-                        } ?>
-                    </select>
-                </div>
-            </div>
-        </div>
+                        $sign_id = $_GET['sign_id'];
+                        //$sign_id;
+                        $last_name;
+                        $first_name;
+                        $mname;
+                        $title;
+                        $yr_started;
+                        $yr_ended;
+                        $position;
 
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position" value=<?php echo "'$position'"; ?>>
-                        <option value="<?php echo $position?>"> <?php echo $position?></option>
-                        <?php
-                        $position= $row['position'];
-                        echo <<<OPTION0
+                        $statement = "SELECT * FROM pcnhsdb.signatories WHERE signatories.sign_id='$sign_id'";
+                        $result = $conn->query($statement);
+                        if($result->num_rows>0) {
+                            while($row=$result->fetch_assoc()) {
+                                //$sign_id = $row['sign_id'];
+                                $first_name = $row['first_name'];
+                                $mname = $row['mname'];
+                                $last_name = $row['last_name'];
+                                $title = $row['title'];
+                                $yr_started = $row['yr_started'];
+                                $yr_ended = $row['yr_ended'];
+                                $position = $row['position'];
+                            }
+                        }
+                        ?>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Signatory ID</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="sign_id" readonly value=<?php echo "'$sign_id'"; ?>>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" value=<?php echo "'$first_name'"; ?>>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="mname" value=<?php echo "'$mname'"; ?>>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" value=<?php echo "'$last_name'"; ?>>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Academic Degree</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="title" value=<?php echo "'$title'"; ?>>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Started</label>
+                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                <select class="form-control col-md-7 col-xs-12" name="yr_started"  required = "required" value=<?php echo "'$yr_started'";?>>
+                                    <option value="<?php echo $yr_started?>"> <?php echo $yr_started?></option>
+                                    <?php
+                                    $present = date("Y");
+                                    for ($year=1973; $year <= $present; $year++) {
+                                        echo "<option value='$year'>$year</option>";
+                                    } ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Ended</label>
+                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                <select class="form-control col-md-7 col-xs-12" name="yr_ended"  required = "required" value=<?php echo "'$yr_ended'";?>>
+                                    <option value="<?php echo $yr_ended?>"> <?php echo $yr_ended?></option>
+                                    <?php
+                                    $present = date("Y");
+                                    for ($year=1973; $year <= $present; $year++) {
+                                        echo "<option value='$year'>$year</option>";
+                                    } ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position" value=<?php echo "'$position'"; ?>>
+                                    <option value="<?php echo $position?>"> <?php echo $position?></option>
+                                    <?php
+                                    $position= $row['position'];
+                                    echo <<<OPTION0
                                             <option value="ADMINISTRATOR">ADMINISTRATOR</option>
                                             <option value="HEAD TEACHER">HEAD TEACHER</option>
                                             <option value="PRINCIPAL">PRINCIPAL</option>
                                             <option value="SUPERINTENDENT">SUPERINTENDENT</option>
 OPTION0;
-                    ?>
-                    </select>
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-5 col-md-offset-3 pull-left">
+                                <br>
+                                <div class=" pull-left">
+                                    <button class="btn btn-danger" onclick="history.go(-1);return true;">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="clearfix"></div>
-        <div class="ln_solid"></div>
-        <div class="form-group">
-            <div class=" pull-left">
-                <button class="btn btn-danger" onclick="history.go(-1);return true;">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
-        </div>
-        </form>
     </div>
 </div>
-<!-- Contents Here -->
+<!-- /page content -->
+<!-- Content Here -->
+
+<!-- Footer -->
 <?php include "../../resources/templates/admin/footer.php"; ?>
 <!-- Scripts -->
 <!-- jQuery -->
@@ -197,15 +200,22 @@ OPTION0;
 <!-- Scripts -->
 <script>
     $(document).ready(function() {
+        $(":input").inputmask();
+    });
+</script>
+<!-- /jquery.inputmask -->
+<!-- Parsley -->
+<script>
+    $(document).ready(function() {
         $.listen('parsley:field:validate', function() {
             validateFront();
         });
-        $('#signatory-valE .btn').on('click', function() {
-            $('#signatory-valE').parsley().validate();
+        $('#signatory-edit .btn').on('click', function() {
+            $('#signatory-edit').parsley().validate();
             validateFront();
         });
         var validateFront = function() {
-            if (true === $('#signatory-valE').parsley().isValid()) {
+            if (true === $('#signatory-edit').parsley().isValid()) {
                 $('.bs-callout-info').removeClass('hidden');
                 $('.bs-callout-warning').addClass('hidden');
             } else {
@@ -214,10 +224,10 @@ OPTION0;
             }
         };
     });
-
     try {
         hljs.initHighlightingOnLoad();
     } catch (err) {}
 </script>
+<!-- /Parsley -->
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
-    require_once "resources/config.php";
-	session_start();
+        require_once "resources/config.php";
+        session_start();
 
         date_default_timezone_set('Asia/Manila');
         $loTime = date("h:i:sa");
@@ -15,13 +15,20 @@
         $accnt_type = $_SESSION['accnt_type'];
         $sDate = $_SESSION['sDate'];
         $liTime = $_SESSION['liTime'];
+        
+        $user_act = $_SESSION ['user_activity'];
 
-        $stmt = $conn->prepare("INSERT INTO `pcnhsdb`.`user_logs` (`log_id`,`user_name`,`account_type`,`log_date`,`log_in_time`,`log_out_time`) 
-                                                VALUES (?,?,?,?,?,?)");
-        $stmt ->bind_param("isssss",$log_id,$username,$accnt_type,$sDate,$liTime,$loTime);
-        $stmt->execute();
+        foreach ($_SESSION['user_activity'] as $user_act) {
+            
+        $stmt = $conn->prepare("INSERT INTO `pcnhsdb`.`user_logs` (`log_id`,`user_name`,`account_type`,`log_date`,`log_in_time`,`log_out_time`,`user_act`) 
+                                VALUES (?,?,?,?,?,?,?)");
+
+        $stmt ->bind_param("issssss",$log_id,$username,$accnt_type,$sDate,$liTime,$loTime,$user_act);
+        
+        $stmt->execute(); 
+        }
 
     session_unset();
-	session_destroy();
-	header("location: login.php");
+    session_destroy();
+    header("location: login.php");
 ?>

@@ -54,7 +54,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form id="signatory-add" class="form-horizontal form-label-left" action="signatory_insert.php" method="POST" novalidate>
+                    <form id="signatory-add" class="form-horizontal form-label-left" action="phpinsert/signatory_insert.php" method="POST" novalidate>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Signatory ID</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -86,7 +86,7 @@
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Academic Degree</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="title" placeholder="e.g. PhD, M.Ed., Ed.D.">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="title" placeholder="e.g. PhD, M.Ed., Ed.D.">
                             </div>
                         </div>
 
@@ -97,7 +97,7 @@
                                     <option value="">-- Year --</option>
                                     <?php
                                     $present = date("Y");
-                                    for ($year=1999; $year <= $present; $year++) {
+                                    for ($year=1973; $year <= $present; $year++) {
                                         echo "<option value='$year'>$year</option>";
                                     } ?>
                                 </select>
@@ -108,10 +108,9 @@
                             <div class="col-md-2 col-sm-6 col-xs-12">
                                 <select class="form-control col-md-7 col-xs-12" required="required" name="yr_ended">
                                     <option value="">-- Year --</option>
-                                    <option value="present">Present</option>
                                     <?php
                                     $present = date("Y");
-                                    for ($year=1999; $year <= $present; $year++) {
+                                    for ($year=1973; $year <= $present; $year++) {
                                         echo "<option value='$year'>$year</option>";
                                     } ?>
                                 </select>

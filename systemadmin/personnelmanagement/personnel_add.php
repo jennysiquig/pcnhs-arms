@@ -38,177 +38,182 @@
 <!-- Content Here -->
 <!-- page content -->
 <div class="right_col" role="main">
-    <div class="">
-        <div class="row top_tiles">
+    <div class="row top_tiles">
 
-        </div>
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Add Personnel Account</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
                     <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <form id="personnel-val" class="form-horizontal form-label-left" action="personnel_insert.php" method="POST" novalidate>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id">
-                            </div>
-                        </div>
+                    <br>
 
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">User Name</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name">
-                            </div>
-                        </div>
+                    <div class="x_content">
+                        <form id="personnel-add" class="form-horizontal form-label-left" action="phpinsert/personnel_insert.php" method="POST" novalidate>
 
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name">
+                            <div class="item form-group"><br>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12"  type="text" name="mname">
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">User Name</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required"  type="text" name="uname"
+                                     data-parsley-trigger="keyup" data-parsley-minlength="4"
+                                     data-parsley-minlength-message="User Name should be greater than 4 characters"
+                                     data-parsley-validation-threshold="10">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position">
-                                    <option value="">--NO SELECTED--</option>
-                                    <?php
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $position= $row['position'];
-                                    echo <<<OPTION0
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="password" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password"
+                                     data-parsley-trigger="keyup" data-parsley-minlength="4"
+                                     data-parsley-minlength-message="Password should be greater than 4 characters"
+                                     data-parsley-validation-threshold="10">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="name" class="form-control col-md-7 col-xs-12"  type="text" name="mname">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position">
+                                        <option value="">--NO SELECTED--</option>
+                                        <?php
+                                        if(!$conn) {
+                                            die("Connection failed: " . mysqli_connect_error());
+                                        }
+                                        $position= $row['position'];
+                                        echo <<<OPTION0
                                             <option value="ADMINISTRATOR">ADMINISTRATOR</option>
                                             <option value="HEAD TEACHER">HEAD TEACHER</option>
                                             <option value="PRINCIPAL">PRINCIPAL</option>
                                             <option value="SUPERINTENDENT">SUPERINTENDENT</option>
 OPTION0;
-                                    ?>
-                                </select>
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Access Type</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select id="curr-select" class="form-control col-md-7 col-xs-12" name="access_type"  required="required">
-                                    <option value="">--NO SELECTED--</option>
-                                    <?php
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $access_type= $row['access_type'];
-                                    echo <<<OPTION1
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Access Type</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select id="curr-select" class="form-control col-md-7 col-xs-12" name="access_type"  required="required">
+                                        <option value="">--NO SELECTED--</option>
+                                        <?php
+                                        if(!$conn) {
+                                            die("Connection failed: " . mysqli_connect_error());
+                                        }
+                                        $access_type= $row['access_type'];
+                                        echo <<<OPTION1
                                             <option value="REGISTRAR">REGISTRAR</option>
                                             <option value="SYSTEM ADMINISTRATOR">SYSTEM ADMINISTRATOR</option>
 OPTION1;
-                                    ?>
-                                </select>
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select id="curr-select" class="form-control col-md-7 col-xs-12" name="accnt_status"  required="required">
-                                    <option value="">--NO SELECTED--</option>
-                                    <?php
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $access_type= $row['accnt_status'];
-                                    echo <<<OPTION2
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select id="curr-select" class="form-control col-md-7 col-xs-12" name="accnt_status"  required="required">
+                                        <option value="">--NO SELECTED--</option>
+                                        <?php
+                                        if(!$conn) {
+                                            die("Connection failed: " . mysqli_connect_error());
+                                        }
+                                        $access_type= $row['accnt_status'];
+                                        echo <<<OPTION2
                                             <option value="ACTIVE">ACTIVATED</option>
                                             <option value="DEACTIVATED">DEACTIVATED</option>
 OPTION2;
-                                    ?>
-                                </select>
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <br>
-                            <div class="col-md-5 col-md-offset-3 pull-left">
-                                <button type="submit" class="btn btn-success">Add Personnel</button>
+                            <div class="form-group">
+                                <br>
+                                <div class="col-md-5 col-md-offset-3 pull-left">
+                                    <button type="submit" class="btn btn-success"  >Add Personnel</button>
+                                </div>
                             </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- /page content -->
-<!-- Content Here -->
-<!-- Footer -->
-<?php include "../../resources/templates/admin/footer.php"; ?>
-<!-- Scripts -->
-<!-- jQuery -->
-<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
-<!-- Bootstrap -->
-<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
-<!-- input mask -->
-<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
-<!-- Custom Theme Scripts -->
-<script src= "../../js/custom.min.js"></script>
-<!-- Scripts -->
+    <!-- /page content -->
+    <!-- Content Here -->
+    <!-- Footer -->
+    <?php include "../../resources/templates/admin/footer.php"; ?>
+    <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+    <!-- Bootstrap -->
+    <script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
+    <!-- input mask -->
+    <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src= "../../js/custom.min.js"></script>
+    <!-- Scripts -->
 
-<!-- Parsley -->
-<script>
-    $(document).ready(function() {
-        $.listen('parsley:field:validate', function() {
-            validateFront();
+    <!-- Parsley -->
+    <script>
+        $(document).ready(function() {
+            $.listen('parsley:field:validate', function() {
+                validateFront();
+            });
+            $('#personnel-add .btn').on('click', function() {
+                $('#personnel-add').parsley().validate();
+                validateFront();
+            });
+            var validateFront = function() {
+                if (true === $('#personnel-add').parsley().isValid()) {
+                    $('.bs-callout-info').removeClass('hidden');
+                    $('.bs-callout-warning').addClass('hidden');
+                } else {
+                    $('.bs-callout-info').addClass('hidden');
+                    $('.bs-callout-warning').removeClass('hidden');
+                }
+            };
         });
-        $('#personnel-val .btn').on('click', function() {
-            $('#personnel-val').parsley().validate();
-            validateFront();
-        });
-        var validateFront = function() {
-            if (true === $('#personnel-val').parsley().isValid()) {
-                $('.bs-callout-info').removeClass('hidden');
-                $('.bs-callout-warning').addClass('hidden');
-            } else {
-                $('.bs-callout-info').addClass('hidden');
-                $('.bs-callout-warning').removeClass('hidden');
-            }
-        };
-    });
 
-    try {
-        hljs.initHighlightingOnLoad();
-    } catch (err) {}
-</script>
-<!-- /Parsley -->
+        try {
+            hljs.initHighlightingOnLoad();
+        } catch (err) {}
+    </script>
+    <!-- /Parsley -->
 </body>
 </html>

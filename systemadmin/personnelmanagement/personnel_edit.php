@@ -1,5 +1,5 @@
+<?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
-<?php require_once "../../resources/config.php" ?>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,7 +22,7 @@
     <link href="../../css/tstheme/style.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
-    <script src="../js/ie8-responsive-file-warning.js"></script>
+    <script src="../../js/ie8-responsive-file-warning.js"></script>
     <![endif]-->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -30,225 +30,227 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-</head>
-<body class="nav-md">
+</head>	<body class="nav-md">
 <!-- Sidebar -->
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
 <!-- Top Navigation -->
 <?php include "../../resources/templates/admin/top-nav.php"; ?>
-<!-- Contents Here -->
+<!-- Content Here -->
+<!-- page content -->
 <div class="right_col" role="main">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Edit Personnel Account</h2>
-            <div class="clearfix"></div>
-            <br/>
-            <form id="personnel-valE" class="form-horizontal form-label-left" action="phpupdate/personnel_update_info.php" method="POST" novalidate>
+    <div class="row top_tiles">
 
-                <?php
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Edit Personnel Account</h2>
+                    <div class="clearfix"></div>
+                    <br>
 
-                $per_id = $_GET['per_id'];
-                //$per_id;
-                $uname;
-                $password;
-                $last_name;
-                $first_name;
-                $mname;
-                $position;
-                $access_type;
-                $accnt_status;
+                    <div class="x_content">
+                        <form id="personnel-edit" class="form-horizontal form-label-left" action="phpupdate/personnel_update_info.php" method="POST">
+                        <?php
 
-                $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
-                $result = $conn->query($statement);
-                if($result->num_rows>0) {
-                    while($row=$result->fetch_assoc()){
-                        //$per_id = row['per_id'];
-                        $uname = $row['uname'];
-                        $password = $row['password'];
-                        $last_name = $row['last_name'];
-                        $first_name = $row['first_name'];
-                        $mname = $row['mname'];
-                        $position = $row['position'];
-                        $access_type = $row['access_type'];
-                        $accnt_status = $row['accnt_status'];
-                    }
-                }
-                $conn->close();
-                ?>
+                        $per_id = $_GET['per_id'];
+                        //$per_id;
+                        $uname;
+                        $password;
+                        $last_name;
+                        $first_name;
+                        $mname;
+                        $position;
+                        $access_type;
+                        $accnt_status;
 
-        </div>
+                        $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
+                        $result = $conn->query($statement);
+                        if($result->num_rows>0) {
+                            while($row=$result->fetch_assoc()){
+                                //$per_id = row['per_id'];
+                                $uname = $row['uname'];
+                                $password = $row['password'];
+                                $last_name = $row['last_name'];
+                                $first_name = $row['first_name'];
+                                $mname = $row['mname'];
+                                $position = $row['position'];
+                                $access_type = $row['access_type'];
+                                $accnt_status = $row['accnt_status'];
+                            }
+                        }
+                        $conn->close();
+                        ?>
 
+                        <div class="item form-group"><br>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12"type="text" name="per_id" readonly value=<?php echo "'$per_id'"; ?>>
+                            </div>
+                        </div>
 
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id" value=<?php echo "'$per_id'"; ?>>
-                </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">User Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname" value=<?php echo "'$uname'"; ?>
+                                     data-parsley-trigger="keyup" data-parsley-minlength="4"
+                                     data-parsley-minlength-message="User Name should be greater than 4 characters"
+                                     data-parsley-validation-threshold="10">
+                            </div>
+                        </div>
 
-            </div>
-        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="password" value=<?php echo "'$password'"; ?>
+                                     data-parsley-trigger="keyup" data-parsley-minlength="4"
+                                     data-parsley-minlength-message="Password should be greater than 4 characters"
+                                     data-parsley-validation-threshold="10">
+                            </div>
+                        </div>
 
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">User Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname" value=<?php echo "'$uname'"; ?>>
-                </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" value=<?php echo "'$last_name'"; ?>>
+                            </div>
+                        </div>
 
-            </div>
-        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" value=<?php echo "'$first_name'"; ?>>
+                            </div>
+                        </div>
 
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" value=<?php echo "'$password'"; ?>>
-                </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12"  type="text" name="mname" value=<?php echo "'$mname'"; ?>>
+                            </div>
+                        </div>
 
-            </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" value=<?php echo "'$last_name'"; ?>>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" value=<?php echo "'$first_name'"; ?>>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="x_content">
-            <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" class="form-control col-md-7 col-xs-12"  type="text" name="mname" value=<?php echo "'$mname'"; ?>>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="x_content">
-        <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" name="position">
-                    <?php
-                    if(!$conn) {
-                        die("Connection failed: " . mysqli_connect_error());
-                    }
-                    $position= $row['position'];
-                    echo <<<OPTION0
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" name="position" value = <?php echo "'position'"; ?>>
+                                    <option value="<?php echo $position?>"> <?php echo $position?></option>
+                                    <?php
+                                    if(!$conn) {
+                                        die("Connection failed: " . mysqli_connect_error());
+                                    }
+                                    $position= $row['position'];
+                                    echo <<<OPTION0
                                             <option value="ADMINISTRATOR">ADMINISTRATOR</option>
                                             <option value="HEAD TEACHER">HEAD TEACHER</option>
                                             <option value="PRINCIPAL">PRINCIPAL</option>
                                             <option value="SUPERINTENDENT">SUPERINTENDENT</option>
 OPTION0;
-                    ?>
-                </select>
-            </div>
-        </div>
-        </div>
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
 
-        <div class="x_content">
-        <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Access Type</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <select id="curr-select" class="form-control col-md-7 col-xs-12" required="required" name="access_type">
-                    <?php
-                    if(!$conn) {
-                        die("Connection failed: " . mysqli_connect_error());
-                    }
-                    $access_type= $row['access_type'];
-                    echo <<<OPTION1
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Access Type</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="curr-select" class="form-control col-md-7 col-xs-12" required="required" name="access_type" value = <?php echo "'access_type'"; ?>>
+                                    <option value="<?php echo $access_type?>"> <?php echo $access_type?></option>
+                                    <?php
+                                    if(!$conn) {
+                                        die("Connection failed: " . mysqli_connect_error());
+                                    }
+                                    $access_type= $row['access_type'];
+                                    echo <<<OPTION1
                                             <option value="REGISTRAR">REGISTRAR</option>
                                             <option value="SYSTEM ADMINISTRATOR">SYSTEM ADMINISTRATOR</option>
 OPTION1;
-                    ?>
-                </select>
-            </div>
-        </div>
-        </div>
-        <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <select id="curr-select" class="form-control col-md-7 col-xs-12" required="required" name="accnt_status">
-                    <?php
-                    if(!$conn) {
-                        die("Connection failed: " . mysqli_connect_error());
-                    }
-                    $access_type= $row['accnt_status'];
-                    echo <<<OPTION2
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="curr-select" class="form-control col-md-7 col-xs-12" required="required" name="accnt_status" value=<?php echo "'accnt_status'"; ?>>
+                                    <option value="<?php echo $accnt_status?>"> <?php echo $accnt_status?></option>
+                                    <?php
+                                    if(!$conn) {
+                                        die("Connection failed: " . mysqli_connect_error());
+                                    }
+                                    $access_type= $row['accnt_status'];
+                                    echo <<<OPTION2
                                             <option value="ACTIVE">ACTIVATE</option>
                                             <option value="DEACTIVATED">DEACTIVATE</option>
 OPTION2;
-                    ?>
-                </select>
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                            <div class="form-group">
+                                <br>
+                                <div class="col-md-5 col-md-offset-3 pull-left">
+                                    <button class="btn btn-danger" onclick="history.go(-1);return true;">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="clearfix"></div>
-        <div class="ln_solid"></div>
-        <div class="form-group">
-
-            <div class=" pull-left">
-                <button class="btn btn-danger" onclick="history.go(-1);return true;">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
-        </div>
-        </form>
     </div>
-</div>
-<!-- Contents Here -->
-<?php include "../../resources/templates/admin/footer.php"; ?>
-<!-- Scripts -->
-<!-- jQuery -->
-<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
-<!-- Bootstrap -->
-<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
-<!-- input mask -->
-<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
-<!-- Custom Theme Scripts -->
-<script src= "../../js/custom.min.js"></script>
-<!-- Scripts -->
-<script>
-    $(document).ready(function() {
-        $.listen('parsley:field:validate', function() {
-            validateFront();
-        });
-        $('#personnel-valE .btn').on('click', function() {
-            $('#personnel-valE').parsley().validate();
-            validateFront();
-        });
-        var validateFront = function() {
-            if (true === $('#personnel-valE').parsley().isValid()) {
-                $('.bs-callout-info').removeClass('hidden');
-                $('.bs-callout-warning').addClass('hidden');
-            } else {
-                $('.bs-callout-info').addClass('hidden');
-                $('.bs-callout-warning').removeClass('hidden');
-            }
-        };
-    });
-
-    try {
-        hljs.initHighlightingOnLoad();
-    } catch (err) {}
-</script>
-
+    <!-- /page content -->
+    <!-- Content Here -->
+    <!-- Footer -->
+    <?php include "../../resources/templates/admin/footer.php"; ?>
+    <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+    <!-- Bootstrap -->
+    <script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
+    <!-- input mask -->
+    <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src= "../../js/custom.min.js"></script>
+    <!-- Scripts -->
+    <!-- jquery.inputmask -->
+        <script>
+            $(document).ready(function() {
+                $(":input").inputmask();
+            });
+        </script>
+        <!-- /jquery.inputmask -->
+        <!-- Parsley -->
+        <script>
+            $(document).ready(function() {
+                $.listen('parsley:field:validate', function() {
+                    validateFront();
+                });
+                $('#personnel-edit .btn').on('click', function() {
+                    $('#personnel-edit').parsley().validate();
+                    validateFront();
+                });
+                var validateFront = function() {
+                    if (true === $('#personnel-edit').parsley().isValid()) {
+                        $('.bs-callout-info').removeClass('hidden');
+                        $('.bs-callout-warning').addClass('hidden');
+                    } else {
+                        $('.bs-callout-info').addClass('hidden');
+                        $('.bs-callout-warning').removeClass('hidden');
+                    }
+                };
+            });
+            try {
+                hljs.initHighlightingOnLoad();
+            } catch (err) {}
+        </script>
+        <!-- /Parsley -->
 </body>
 </html>

@@ -130,7 +130,8 @@
                                                         <td class=" ">$accnt_status</td>
                                                         <td class=" ">
                                                         <a href= "personnelmanagement/personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View  </a>
-                                                        </td>         
+                                                        </td>
+                                                        
                                             </tr>
 PERSONNELLIST;
                                 }

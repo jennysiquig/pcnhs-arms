@@ -1,5 +1,6 @@
 <?php
 	require_once "../../../resources/config.php";
+	session_start();
 
 	if(!$conn) {
 		die();
@@ -9,24 +10,20 @@
 	$first_name = $_POST['first_name'];
 	$mname = $_POST['mname'];
 	$last_name = $_POST['last_name'];
-    $title = $_POST['title'];
+	$title = $_POST['title'];
 	$yr_started = $_POST['yr_started'];
 	$yr_ended = $_POST['yr_ended'];
 	$position = $_POST['position'];
 
-	require_once "../../../resources/config.php";
-	if(!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
+	$updatestmt = "UPDATE `pcnhsdb`.`signatories` 
+				   SET `first_name`='$first_name', `mname`='$mname', `last_name`='$last_name',`title`='$title', `yr_started`='$yr_started', `yr_ended`='$yr_ended', `position`='$position' 
+				   WHERE signatories.sign_id = '$sign_id'";
 
-	$statement = $conn->prepare("INSERT INTO `pcnhsdb`.`signatories` (`sign_id`, `last_name`, `first_name`, `mname`,`title`, `yr_started`, `yr_ended`, `position`) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
+    mysqli_query($conn, $updatestmt);
 
-	$statement->bind_param("issssiis", $sign_id, $last_name, $first_name, $mname, $title, $yr_started, $yr_ended, $position);
+   	$sign_edit = "EDITED SIGNATORY $first_name $mname $last_name";    
+   	$_SESSION['user_activity'][] = $sign_edit;
 
-	$statement->execute();
+	header("location: ../signatory_view.php?sign_id=$sign_id");
 
-	header('location: signatories.php');
-
-	$statement->close();
-	$conn->close();
 ?>
