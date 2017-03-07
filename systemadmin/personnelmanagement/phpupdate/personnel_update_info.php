@@ -22,7 +22,7 @@
 
     mysqli_query($conn, $updatestmnt);
 
-    $per_edit = "EDITED PERSONNEL ACCOUNT $uname";
+    $per_edit = "EDITED PERSONNEL ACCOUNT : $per_id";
     $_SESSION['user_activity'][] = $per_edit;
     
     header("location: ../personnel_view.php?per_id=$per_id");

@@ -45,7 +45,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Edit Personnel Account</h2>
+                    <h2><i class="fa fa-user"> </i> Edit Personnel Account</h2>
                     <div class="clearfix"></div>
                     <br>
 
@@ -95,7 +95,7 @@
                                 <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname" value=<?php echo "'$uname'"; ?>
                                      data-parsley-trigger="keyup" data-parsley-minlength="4"
                                      data-parsley-minlength-message="User Name should be greater than 4 characters"
-                                     data-parsley-validation-threshold="10">
+                                     data-parsley-validation-threshold="40">
                             </div>
                         </div>
 
@@ -105,28 +105,37 @@
                                 <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="password" value=<?php echo "'$password'"; ?>
                                      data-parsley-trigger="keyup" data-parsley-minlength="4"
                                      data-parsley-minlength-message="Password should be greater than 4 characters"
-                                     data-parsley-validation-threshold="10">
+                                     data-parsley-validation-threshold="40">
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" value=<?php echo "'$last_name'"; ?>>
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" value=<?php echo "'$last_name'"; ?>
+                                    data-parsley-pattern="^[a-zA-Z]+$"
+                                    data-parsley-pattern-message="Last Name should not contain a special character or number"
+                                    data-parsley-validation-threshold="40">
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" value=<?php echo "'$first_name'"; ?>>
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" value=<?php echo "'$first_name'"; ?>
+                                    data-parsley-pattern="^[a-zA-Z]+$"
+                                    data-parsley-pattern-message="First Name should not contain a special character or number"
+                                    data-parsley-validation-threshold="40">
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12"  type="text" name="mname" value=<?php echo "'$mname'"; ?>>
+                                <input id="name" class="form-control col-md-7 col-xs-12"  type="text" name="mname" value=<?php echo "'$mname'"; ?>
+                                    data-parsley-pattern="^[a-zA-Z]+$"
+                                    data-parsley-pattern-message="Middle Name should not contain a special character or number"
+                                    data-parsley-validation-threshold="40">
                             </div>
                         </div>
 

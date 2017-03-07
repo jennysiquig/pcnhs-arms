@@ -21,7 +21,7 @@
 
     mysqli_query($conn, $updatestmt);
 
-   	$sign_edit = "EDITED SIGNATORY $first_name $mname $last_name";    
+   	$sign_edit = "EDITED SIGNATORY : $sign_id";    
    	$_SESSION['user_activity'][] = $sign_edit;
 
 	header("location: ../signatory_view.php?sign_id=$sign_id");

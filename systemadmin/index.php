@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+
     <!-- Bootstrap -->
     <link href="../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -43,7 +44,7 @@
             <div class="col-sm-7">
                 <div class="input-group">
 
-                    <input type="text" class="form-control" name="search_key" placeholder="Search Personnel ID or User Name">
+                    <input type="text" class="form-control" name="search_key" placeholder="Search Personnel Username">
                     <span class="input-group-btn">
                   <button class="btn btn-primary">Go</button>
                 </span>
@@ -58,87 +59,84 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Personnel Accounts
-                    </h2>
+                    <h2><i class="fa fa-tasks"> </i> PCNHS-SIS User Activity Logs</h2>
                     <div class="clearfix"></div>
                     <br/>
 
                 </div>
                 <div class="x_content">
                     <div class="table-responsive">
-                        <table id="personnelList" class="table table-bordered tablesorter ">
+                        <table id="logList" class="table table-bordered tablesorter">
                             <thead>
                             <tr>
-                                <th>Personnel ID</th>
+                                <th>Log ID</th>
+                                <th>Date</th>
                                 <th>Username</th>
-                                <th>Position</th>
                                 <th>Access Type</th>
-                                <th>Account Status</th>
-                                <th>Action</th>
+                                <th>Login Time</th>
+                                <th>User Activity</th>
+                                <th>Logout Time</th>
                             </tr>
                             </thead>
-                            <tbody>
 
+                            <tbody>
                             <?php
                             $start=0;
-                            $limit=8;
+                            $limit=12;
                             if(isset($_GET['page'])){
                                 $page=$_GET['page'];
                                 $start=($page-1)*$limit;
                             }else{
                                 $page=1;
                             }
+
                             if(!$conn) {
                                 die("Connection failed: " . mysqli_connect_error());
                             }
                             if (isset($_GET['search_key'])){
                                 $search = $_GET['search_key'];
-                                $statement = "SELECT * FROM pcnhsdb.personnel 
-                                WHERE per_id 
-                                LIKE '$search' OR uname 
-                                LIKE '$search'
-                                LIMIT $start, $limit";
+                                $statement = "SELECT * FROM pcnhsdb.user_logs WHERE user_name 
+                                              LIKE '%$search%'
+                                              ORDER BY log_id DESC
+                                              LIMIT $start, $limit";
                             }else{
-                                $statement = "SELECT * FROM pcnhsdb.personnel
-                                WHERE uname NOT LIKE 'registrar' 
-                                AND uname NOT LIKE 'admin' 
-                                LIMIT $start, $limit";
+                                $statement = "SELECT * FROM pcnhsdb.user_logs
+                                              ORDER BY log_id DESC
+                                              LIMIT $start, $limit";
                             }
 
                             $result = $conn->query($statement);
                             if ($result->num_rows > 0) {
                                 // output data of each row
                                 while($row = $result->fetch_assoc()) {
-                                    $per_id = $row['per_id'];
-                                    $uname = $row['uname'];
-                                    $password = $row['password'];
-                                    $last_name = $row['last_name'];
-                                    $first_name = $row['first_name'];
-                                    $mname = $row ['mname'];
-                                    $position = $row ['position'];
-                                    $access_type = $row ['access_type'];
-                                    $accnt_status = $row ['accnt_status'];
-                                    echo <<<PERSONNELLIST
-                    <tr class="odd pointer">
-                                                        <td class=" ">$per_id</td>
-                                                        <td class=" ">$uname</td>
-                                                        <td class=" ">$position</td>
-                                                        <td class=" ">$access_type</td>
-                                                        <td class=" ">$accnt_status</td>
-                                                        <td class=" ">
-                                                        <a href= "personnelmanagement/personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs">
-                                                        <i class="fa fa-user"></i>View</a>
-                                                        </td>
-                                                        
-                                            </tr>
-PERSONNELLIST;
+                                    $log_id = $row['log_id'];
+                                    $log_date = $row['log_date'];
+                                    $user_name = $row['user_name'];
+                                    $account_type = $row['account_type'];
+                                    $log_date = $row['log_date'];
+                                    $log_in_time = $row['log_in_time'];
+                                    $log_out_time = $row['log_out_time'];
+                                    $user_act = $row['user_act'];
+
+                                    echo <<<LOGLIST
+                                            <tr class="odd pointer">
+														<td class=" ">$log_id</td>
+														<td class=" ">$log_date</td>
+														<td class=" ">$user_name</td>
+														<td class=" ">$account_type</td>
+														<td class=" ">$log_in_time</td>
+                                                        <td class=" ">$user_act</td>
+														<td class=" ">$log_out_time</td>													
+											</tr>
+LOGLIST;
+                                        }
                                 }
-                            }
                             ?>
                             </tbody>
                         </table>
+                        
                         <?php
-                        $statement = "SELECT * FROM pcnhsdb.personnel";
+                        $statement = "SELECT * FROM pcnhsdb.user_logs";
                         $rows = mysqli_num_rows(mysqli_query($conn, $statement));
                         $total = ceil($rows/$limit);
 
@@ -167,7 +165,6 @@ PERSONNELLIST;
                             echo "<li class='disabled'><a>Next</a></li>";
                         }
                         echo "</ul></div></div>";
-
                         ?>
                     </div>
                 </div>
@@ -176,7 +173,7 @@ PERSONNELLIST;
     </div>
 </div>
 <!-- Content End -->
-<?php include "../resources/templates/admin/footer.php"; ?>
+<?php include "../resources/templates/registrar/footer.php"; ?>
 
 <!-- Scripts -->
 <!-- jQuery -->
@@ -197,24 +194,10 @@ PERSONNELLIST;
 <script type="text/javascript">
 
     $(document).ready(function(){
-            $("#personnelList").tablesorter({headers: { 5:{sorter: false}, }});
+            $("#logList").tablesorter({headers: { 7:{sorter: false}, }});
         }
     );
-</script>
-<script>
-    function confirmDelete(){
-        var retVal = confirm("PERSONNEL ACCOUNT WILL BE DELETED");
-        if (retVal == true)
-        {
-            alert("PERSONNEL ACCOUNT DELETED");
-            return true;
-        }
-        else
-        {
-            alert("CANCELLED");
-            return false;
-        }
-    }
+
 </script>
 
 </body>

@@ -6,7 +6,8 @@ if(!$conn) {
     die();
 }
     $per_id = $_GET['per_id'];
-    $uname = $_GET['uname'];
+    
+    $_SESSION['per_id'] = $per_id;
 
     $query = 'DELETE FROM personnel WHERE per_id = ?';
     $stmt = mysqli_stmt_init($conn);
@@ -15,7 +16,7 @@ if(!$conn) {
 
     mysqli_stmt_execute($stmt);
 
-    $per_del = "DELETED PERSONNEL ACCOUNT $uname";
+    $per_del = "DELETED PERSONNEL ACCOUNT : $per_id";
     $_SESSION['user_activity'][] = $per_del;
 
 header("location: ../../index.php");

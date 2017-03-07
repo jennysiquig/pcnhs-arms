@@ -21,7 +21,7 @@
 
 	$statement->execute();
 
-	$sign_add = "ADDED SIGNATORY $sign_id";
+	$sign_add = "ADDED SIGNATORY : $sign_id";
     $_SESSION['user_activity'][] = $sign_add;
 
 	header('location: ../signatories.php');

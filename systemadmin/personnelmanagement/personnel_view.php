@@ -45,7 +45,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>View Personnel Account</h2>
+                    <h2><i class="fa fa-user"> </i> View Personnel Account</h2>
                     <div class="clearfix"></div>
                     <br>
 

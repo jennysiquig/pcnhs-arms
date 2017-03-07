@@ -24,10 +24,10 @@
     $statement->execute();
 
 
-    $per_add = "ADDED PERSONNEL ACCOUNT $uname";
+    $per_add = "ADDED PERSONNEL ACCOUNT : $per_id";
     $_SESSION['user_activity'][] = $per_add;
 
-	header('location: ../../index.php');
+	header('location: ../personnels.php');
 
 	$statement->close();
 	$conn->close();

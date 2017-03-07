@@ -6,9 +6,6 @@ if(!$conn) {
     die();
 }
     $sign_id = $_GET['sign_id'];
-    $first_name = $_GET['first_name'];
-    $mname = $_GET['mname'];
-    $last_name = $_GET['last_name'];
 
     $query = 'DELETE FROM signatories WHERE sign_id = ?';
     $stmt = mysqli_stmt_init($conn);
@@ -17,7 +14,7 @@ if(!$conn) {
 
     mysqli_stmt_execute($stmt);
 
-    $sign_del = "DELETED SIGNATORY $first_name $mname $last_name";
+    $sign_del = "DELETED SIGNATORY : $sign_id";
     $_SESSION['user_activity'][] = $sign_del;
 
 header("location: ../signatories.php");
