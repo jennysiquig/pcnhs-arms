@@ -1,14 +1,16 @@
 <?php
         require_once "resources/config.php";
-        session_start();
+	    session_start();
 
         date_default_timezone_set('Asia/Manila');
         $loTime = date("h:i:sa");
-        
+        $_SESSION ['loTime'] = $loTime;
+
         if(!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
+        $log_id = $_SESSION['log_id'];
         $username = $_SESSION['username'];
         $accnt_type = $_SESSION['accnt_type'];
         $sDate = $_SESSION['sDate'];
@@ -18,15 +20,15 @@
 
         foreach ($_SESSION['user_activity'] as $user_act) {
             
-        $stmt = $conn->prepare("INSERT INTO `pcnhsdb`.`user_logs` (`user_name`,`account_type`,`log_date`,`log_in_time`,`log_out_time`,`user_act`) 
-                                VALUES (?,?,?,?,?,?)");
+        $stmt = $conn->prepare("INSERT INTO `pcnhsdb`.`user_logs` (`log_id`,`user_name`,`account_type`,`log_date`,`log_in_time`,`log_out_time`,`user_act`) 
+                                VALUES (?,?,?,?,?,?,?)");
 
-        $stmt ->bind_param("ssssss",$username,$accnt_type,$sDate,$liTime,$loTime,$user_act);
+        $stmt ->bind_param("issssss",$log_id,$username,$accnt_type,$sDate,$liTime,$loTime,$user_act);
         
         $stmt->execute(); 
         }
 
     session_unset();
-    session_destroy();
-    header("location: login.php");
+	session_destroy();
+	header("location: login.php");
 ?>
