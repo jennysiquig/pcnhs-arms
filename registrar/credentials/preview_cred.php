@@ -21,9 +21,9 @@
 
 	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$signatory', '$personnel_id');";
 
-	//$statement2 = "INSERT INTO `pcnhsdb`.`unclaimed` (`date_processed`) VALUES ('$date');";
+	$statement2 = "INSERT INTO `pcnhsdb`.`unclaimed` (`date_processed`) VALUES ('$date');";
 
-	//mysqli_query($conn, $statement1);
+	mysqli_query($conn, $statement1);
 
 ?>
 <!DOCTYPE html>
