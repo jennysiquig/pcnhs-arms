@@ -19,5 +19,5 @@ if(!$conn) {
     $per_del = "DELETED PERSONNEL ACCOUNT : $per_id";
     $_SESSION['user_activity'][] = $per_del;
 
-header("location: ../../index.php");
+header("location: ../personnels.php");
 ?>

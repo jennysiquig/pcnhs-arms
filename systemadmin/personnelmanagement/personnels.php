@@ -94,9 +94,10 @@
                             if (isset($_GET['search_key'])){
                                 $search = $_GET['search_key'];
                                 $statement = "SELECT * FROM pcnhsdb.personnel 
-                                WHERE per_id 
-                                LIKE '%$search%' OR uname 
-                                LIKE '%$search%'
+                                WHERE (per_id LIKE '%$search%') 
+                                AND (per_id NOT LIKE '1' and per_id NOT LIKE '2') 
+                                OR (uname LIKE '%$search%')
+                                AND (uname NOT LIKE 'admin' and uname NOT LIKE 'registrar') 
                                 LIMIT $start, $limit";
                             }else{
                                 $statement = "SELECT * FROM pcnhsdb.personnel
