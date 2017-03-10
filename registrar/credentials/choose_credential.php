@@ -96,7 +96,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <p>
 							<input type="radio" class="flat" name="request_type" id="tor-individual" value="individual" checked="" required /> Individual Request:
-							<input type="radio" class="flat" name="request_type" id="tor-bulk" value="bulk" />
+							<input type="radio" class="flat" name="request_type" id="tor-bulk" value="school" />
 							School Request:
 							
 						</p>

@@ -15,7 +15,9 @@
 	}
 	$cred_id = $_POST['credential'];
 	$request_type = $_POST['request_type'];
-	$signatory = $_POST['signatory'];
+	$signatory_registrar = $_POST['signatory_registrar'];
+    $signatory_principal = $_POST['signatory_principal'];
+    $signatory_headteacher = $_POST['signatory_headteacher'];
 	$personnel_id = $_SESSION['per_id'];
 	$date = $_POST['date'];
 

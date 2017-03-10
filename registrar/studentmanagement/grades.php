@@ -594,7 +594,92 @@ YR1;
               		<div class="clearfix"></div>
               		<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Grades</a>
 				</div>
+
 			</div>
+			<!-- Other Subjects -->
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>Other Subjects</h2>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content">
+					<!--  -->
+					<div class="col-md-12 col-sm-6 col-xs-12">
+		                <div class="x_panel">
+		                  <div class="x_title">
+		                    <h2></h2>
+		                    
+		                    <div class="clearfix"></div>
+		                  </div>
+		                  <div class="x_content">
+		                  	
+		                    <table class="table table-bordered">
+		                      <thead>
+		                        <tr>
+		                          <th>School Name</th>
+		                          <th>School Year</th>
+		                          <th>Year Level</th>
+		                          <th>Subject</th>
+		                          <th>Subject Level</th>
+		                          <th>Subject Type</th>
+		                          <th>Final Grade</th>
+		                          <th>Unit</th>
+		                          <th>Remarks</th>
+		                        </tr>
+		                      </thead>
+		                      <tbody>
+		                      	<?php
+
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$query = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id';";
+									$result = $conn->query($query);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$schl_name = $row['schl_name'];
+											$schl_year = $row['schl_year'];
+											$yr_level = $row['yr_level'];
+											$subj_name = $row['subj_name'];
+											$subj_level = $row['subj_level'];
+											$subj_type = $row['subj_type'];
+											$fin_grade = $row['fin_grade'];
+											$unit = $row['unit'];
+											$comment = $row['comment'];
+
+											echo <<<YR1
+												<tr>
+						                          <th scope="row">$schl_name</th>
+						                          <td>$schl_year</td>
+						                          <td>$yr_level</td>
+						                          <td>$subj_name</td>
+						                          <td>$subj_level</td>
+						                          <td>$subj_type</td>
+						                          <td>$fin_grade</td>
+						                          <td>$unit</td>
+						                          <td>$comment</td>
+						                        </tr>
+
+YR1;
+										}
+									}
+									
+
+								?>
+		                        
+		                      </tbody>
+		                    </table>	
+		                  </div>
+		                </div>
+		              </div>
+				<!-- -->
+				<div class="clearfix"></div>
+              		<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
+				</div>
+			</div>
+			<!-- Other Subjects -->
 		</div>
 		<?php include "../../resources/templates/registrar/footer.php"; ?>
 		<!-- Scripts -->
