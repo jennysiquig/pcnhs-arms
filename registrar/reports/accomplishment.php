@@ -101,7 +101,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									
+									<tr class="odd pointer">
+												<td class=" ">Form 137</td>
 									<?php
 									$statement = "";
 				                    $start=0;
@@ -159,8 +160,7 @@
 					                    	$date_processed_count = $row['date_processed_count'];
 					                    	$date_released_count = $row['date_released_count'];
 					                    echo <<<REQ
-					                    	<tr class="odd pointer">
-												<td class=" ">$credential</td>
+					                    	
 												<td class=" ">$date_processed_count</td>
 												<td class=" ">$date_released_count</td>
 											</tr>

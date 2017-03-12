@@ -335,6 +335,38 @@ CREDC;
 						
 						<div class="clearfix"></div>
 						<div class="ln_solid"></div>
+
+						<!-- Check Attendance and Grades to Generate Credentials -->
+							<?php
+
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$stud_id = $_GET['stud_id'];
+								$attendancecount = "";
+								$gradecount = "";
+								$attquery = "SELECT count(*) as 'attendancecount' FROM pcnhsdb.attendance where stud_id = '$stud_id';";
+								$result1 = $conn->query($attquery);
+								if ($result1->num_rows > 0) {
+									// output data of each row
+									while($row = $result1->fetch_assoc()) {
+										$attendancecount = $row['attendancecount'];
+
+									}
+								}
+
+								$gradequery = "SELECT count(*) as 'gradecount' FROM pcnhsdb.grades where stud_id = '$stud_id';";
+								$result2 = $conn->query($gradequery);
+								if ($result2->num_rows > 0) {
+									// output data of each row
+									while($row = $result2->fetch_assoc()) {
+										$gradecount = $row['gradecount'];
+
+									}
+								}
+							?>
+
+						<!--  -->
 						<div class="form-group">
 							<div class="col-md-6">
 								<a class="btn btn-default" href=<?php echo "../../registrar/studentmanagement/student_edit.php?stud_id=$stud_id" ?>><i class="fa fa-edit m-right-xs"></i> Edit Profile</a>
@@ -342,7 +374,18 @@ CREDC;
 								<a class="btn btn-default" href=<?php echo "../../registrar/studentmanagement/attendance.php?stud_id=$stud_id" ?>><i class="fa fa-calendar m-right-xs"></i> Attendance</a>
 							</div>
 							<div class="col-md-3 pull-right">
-								<a class="btn btn-primary" href=<?php echo "../../registrar/credentials/choose_credential.php?stud_id=$stud_id" ?>><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
+								<?php
+									if($attendancecount > 0 && $gradecount > 0) {
+										echo <<<GEN
+											<a class="btn btn-primary" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
+GEN;
+									}else {
+										echo <<<GEN1
+											<a class="btn btn-primary disabled" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
+GEN1;
+									}
+								?>
+								
 							</div>
 						</div>
 					</div>

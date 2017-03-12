@@ -35,6 +35,7 @@
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['first_name'] = $row['first_name'];
                 $_SESSION['last_name'] = $row['last_name'];
+                $_SESSION['per_id'] = $row['per_id'];
                 //
                 $_SESSION['account_type'] = "systemadmin";
                 $_SESSION['logged_in'] = "true";
@@ -51,6 +52,7 @@
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['first_name'] = $row['first_name'];
                 $_SESSION['last_name'] = $row['last_name'];
+                $_SESSION['per_id'] = $row['per_id'];
                 //
                 $_SESSION['account_type'] = "registrar";
                 $_SESSION['logged_in'] = "true";

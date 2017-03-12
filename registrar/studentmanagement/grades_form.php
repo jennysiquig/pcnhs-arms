@@ -5,17 +5,7 @@
     if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
       header('Location: ../../login.php');
     }
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
 
-    $_SESSION['last_activity'] = $time;
   ?>
 <!DOCTYPE html>
 <html>
@@ -138,7 +128,11 @@
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td><input style="width: 60px;" name="fin_grade[]" required></td>
-                                    <td><input style="width: 100px;" name="comment[]" required></td>
+                                    <td><select name="comment[]" class="form-control">
+                                            <option value="PASSED">PASSED</option>
+                                            <option value="FAILED">FAILED</option>
+                                        </select>
+                                    </td>
                                 </tr>
                                 
 SUBJ;

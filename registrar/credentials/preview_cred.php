@@ -25,13 +25,11 @@
 	}
 	$cred_id = $_POST['credential'];
 	$request_type = $_POST['request_type'];
-	$signatory_registrar = $_POST['signatory_registrar'];
     $signatory_principal = $_POST['signatory_principal'];
-    $signatory_headteacher = $_POST['signatory_headteacher'];
 	$personnel_id = $_SESSION['per_id'];
 	$date = $_POST['date'];
 
-	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$signatory', '$personnel_id');";
+	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$signatory_principal', '$personnel_id');";
 
 	$statement2 = "INSERT INTO `pcnhsdb`.`unclaimed` (`date_processed`) VALUES ('$date');";
 

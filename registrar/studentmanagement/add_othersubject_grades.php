@@ -65,55 +65,59 @@
                     <!-- First -->
                     <form id="val-gr" class="form-horizontal form-label-left" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/othersubjectgrades_insert.php?stud_id=$stud_id" ?> method="POST" novalidate>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" required=" " type="text" name="schl_name">
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required=" " type="text" name="schl_year">
+                                <input id="name" class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '9999 - 9999'" required=" " type="text" name="schl_year">
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="yr_level" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="number" maxlength="2" min="1" max="10" name="yr_level" required=" ">
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="subj_name" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text"  name="subj_name" required=" ">
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="subj_level" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="number" maxlength="2" min="1" max="10" name="subj_level" required=" ">
                             </div>
                         </div>
                          <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Type</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Type <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="subj_type" required=" ">
+                                <select class="form-control col-md-7 col-xs-12" name="subj_type" required="">
+                                    <option value="">-- No Selected --</option>
+                                    <option value="summer">Summer</option>
+                                    <option value="transferee">Transferee</option>
+                                </select>
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Final Grade</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Final Grade <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="fin_grade" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" data-inputmask="'mask': '99'" name="fin_grade" required=" ">
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Unit</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Unit <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="unit" required=" ">
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="comment" required=" ">
                             </div>
