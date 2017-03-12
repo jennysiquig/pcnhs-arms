@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <!-- Session Check -->
   <?php
+    date_default_timezone_set('Asia/Manila');
     session_start();
+
 
     if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
       //header('Location: login.php');
@@ -9,6 +11,9 @@
       $account_type = $_SESSION['account_type'];
       header("Location: $account_type/index.php");
     }
+    
+
+    
 
   ?>
 <!-- Session Check -->

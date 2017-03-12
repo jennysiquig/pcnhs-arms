@@ -5,7 +5,17 @@
     if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
       header('Location: ../../login.php');
     }
+    // Session Timeout
+    $time = time();
+    $session_timeout = 1800; //seconds
+    
+    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
+      session_unset();
+      session_destroy();
+      session_start();
+    }
 
+    $_SESSION['last_activity'] = $time;
   ?>
 <!DOCTYPE html>
 <html>
@@ -157,7 +167,7 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthday</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" type="text" name="birthdate" data-inputmask="'mask': '9999-99-99'" readonly value=<?php echo "'$birth_date'"; ?>>
+											<input class="form-control col-md-7 col-xs-12" type="text" name="birthdate" readonly value=<?php echo "'$birth_date'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">

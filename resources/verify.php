@@ -66,8 +66,8 @@
     }
     
     else {
-        $_SESSION['error_message'] = "INVALID LOGIN <br>
-                                      CONTACT SYSTEM ADMIN";
+        $_SESSION['error_message'] = "Invalid Login <br>
+                                      Contact System Admin";
         die(header("Location: ../login.php"));
     }
     $conn->close();
