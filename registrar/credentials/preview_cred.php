@@ -78,6 +78,28 @@
 
 			?>
 
+             <?php
+             $box1 = "SELECT *, concat(first_name, ', ', last_name, ' ', upper(left(mid_name, 1)), '.') as 'full_name' FROM students NATURAL JOIN parent NATURAL JOIN primaryschool WHERE students.stud_id = '$stud_id';";
+             $result = $conn->query($box1);
+             if ($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    $name = $row['full_name'];
+                    $province = $row['province'];
+                    $barangay = $row['barangay'];
+                    $towncity = $row['towncity'];
+                    $pname = $row['pname'];
+                    $occupation = $row['occupation'];
+                    $address = $row['address'];
+                    $total_elem_years = $row['total_elem_years'];
+                    $psname = $row['psname'];
+                    $pschool_year = $row['pschool_year'];
+                    $stud_id = $row['stud_id'];
+
+                   // $bday = $row['']
+                }
+             }
+             ?>
+
 			<!-- FORM 137 -->
 			<div class="col-md-12">
 			<div class = "container">
@@ -104,7 +126,7 @@
                     
                     <p id = "b1-r1-p1">Name:</p>            
                         <div id = "b1-r1-d1" class="underline">
-                            
+                           <?php echo $name; ?> 
                         </div>
 
                     <p id = "b1-r1-p2">Date of Birth:</p>
@@ -130,62 +152,62 @@
 
                     <p id="b1-r2-p2">Province:</p>
                         <div id="b1-r2-d1" class="underline">
-                            
+                            <?php echo $province; ?>
                         </div>
                     
 
                     <p id="b1-r2-p3">Municipality/City:</p>
                         <div id="b1-r2-d2" class="underline">
-                            
+                            <?php echo $towncity; ?>
                         </div>
                     
 
                     <p id="b1-r2-p4">Barangay:</p>
                         <div id="b1-r2-d3" class="underline">
-                            
+                            <?php echo $barangay; ?>
                         </div>
                        
                     
 
                     <p id="b1-r3-p1">Parent/Guardian:</p>
                         <div id="b1-r3-d1" class="underline">
-                            
+                            <?php echo $pname; ?>
                         </div>
                     
 
                     <p id="b1-r3-p2">Occupation:</p>
                         <div id="b1-r3-d2" class="underline">
-                            
+                            <?php echo $occupation; ?>
                         </div>
                     
 
                     <p id="b1-r4-p1">Address of Parent/Guardian:</p>
                         <div id="b1-r4-d1" class="underline">
-                            
+                            <?php echo $address; ?>
                         </div>
                     
 
                     <p id="b1-r5-p1">Elementary Course Completed:</p>
                         <div id="b1-r5-d1" class="underline">
-                            
+                            <?php echo $total_elem_years; ?>
                         </div>
                     
 
                     <p id="b1-r5-p2"></p>
                         <div id="b1-r5-d2" class="underline">
-                            
+                            <?php echo $psname; ?>
                         </div>
                     
 
                     <p id="b1-r5-p3">Year:</p>
                         <div id="b1-r5-d3" class="underline">
-                            
+                            <?php echo $pschool_year; ?>
                         </div>
                     
 
                     <p id="b1-r6-p1">LRN:</p>
                         <div id="b1-r6-d1" class="underline">
-                            
+                            <?php echo $stud_id; ?>
                         </div>
                     
                    </div>
@@ -754,6 +776,8 @@
                         </div>
 
                         <div id="box-7">
+
+                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> this <div id="day-cert"> <?php $POST_['dateaccomplished']; ?> </div> day of <div id="month-cert"> <?php $POST_['dateaccomplished']; ?> </div> <div id="year"> <?php $POST_['dateaccomplished']; ?> </div> for admission to <div id="grade-cert"> <?php $POST_['dateaccomplished']; ?> </div> as a <div id="reg-cert"> <?php echo $regcert; ?> </div> student and <div id="gender-cert"> <?php echo $gendercert; ?> </div>has no</br> property and/or money accountability in this school.</div>
 
                             <div id="b7-d1"></div>
 
