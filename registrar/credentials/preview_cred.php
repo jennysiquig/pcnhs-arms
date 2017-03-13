@@ -33,7 +33,7 @@
 
 	$statement2 = "INSERT INTO `pcnhsdb`.`unclaimed` (`date_processed`) VALUES ('$date');";
 
-	mysqli_query($conn, $statement1);
+	//mysqli_query($conn, $statement1);
 
 ?>
 <!DOCTYPE html>
