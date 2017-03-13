@@ -27,3 +27,6 @@ pcnhs.sis/resources/config.php contains the configuration of the database connec
 2. clone my repo or download zip then extract the zip file to your development server root folder
 3. modify config.php, set the proper value for the database connection (default values has been set)
 4. access web application by entering this url to your browser "localhost/pcnhs.sis" without quotes
+
+vm: user: pcnhs
+	pass: pcnhs

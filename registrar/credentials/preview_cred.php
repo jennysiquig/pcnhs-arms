@@ -68,13 +68,23 @@
 		<div class="right_col" role="main">
 
 			<?php
-				$dateaccomplished = $_POST['dateaccomplished'];
+				$DAmonth = $_POST['month'];
+                $DAday = $_POST['day'];
+                $DAyear = $_POST['year'];
 				$admittedto = $_POST['admittedto'];
 				$remarks = $_POST['remarks'];
 
-				echo $dateaccomplished;
-				echo $admittedto;
-				echo $remarks;
+				echo "Month: ".$DAmonth;
+                echo "<br>";
+                echo "Day: ".$DAday;
+                echo "<br>";
+                echo "Year: ".$DAyear;
+                echo "<br>";
+
+				echo "Admitted To: ".$admittedto;
+                echo "<br>";
+				echo "Remarks: ".$remarks;
+                echo "<br>";
 
 			?>
 
