@@ -1,6 +1,6 @@
 [Folder Structure]
 
-- css     				
+- css
 - fonts
 - images
 - js
