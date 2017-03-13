@@ -5,7 +5,17 @@
     if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
       header('Location: ../../login.php');
     }
+    // Session Timeout
+    $time = time();
+    $session_timeout = 1800; //seconds
+    
+    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
+      session_unset();
+      session_destroy();
+      session_start();
+    }
 
+    $_SESSION['last_activity'] = $time;
   ?>
 <!DOCTYPE html>
 <html>
@@ -66,7 +76,7 @@
 	                              <div class="controls">
 	                                <div class="input-prepend input-group">
 	                                  <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-	                                  <input type="text" style="width: 200px" name="transaction_date" id="reservation" class="form-control" value=" " />
+	                                  <input type="text" style="width: 200px" name="transaction_date" id="reservation" class="form-control" value="03/11/2017 - 03/11/2017" />
 	                                </div>
 
 	                              </div>
@@ -132,8 +142,11 @@
 
 										$to = $y."-".$m."-".$d;
 
+
+
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between '$from' and '$to' limit $start, $limit;";
 				                    }else {
+				                    	$transaction_date = date('m/d/y').'-'.date('m/d/y');
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials limit $start, $limit";
 				                    }
 
@@ -195,6 +208,7 @@ TRANS;
 
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between '$from' and '$to';";
 				                    }else {
+				                    	$transaction_date = date('m/d/y').'-'.date('m/d/y');
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials";
 				                    }
 							

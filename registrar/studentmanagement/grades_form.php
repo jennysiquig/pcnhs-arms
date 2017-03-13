@@ -128,7 +128,11 @@
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td><input style="width: 60px;" name="fin_grade[]" required></td>
-                                    <td><input style="width: 100px;" name="comment[]" required></td>
+                                    <td><select name="comment[]" class="form-control">
+                                            <option value="PASSED">PASSED</option>
+                                            <option value="FAILED">FAILED</option>
+                                        </select>
+                                    </td>
                                 </tr>
                                 
 SUBJ;

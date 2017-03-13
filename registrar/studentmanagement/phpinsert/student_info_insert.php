@@ -27,7 +27,7 @@
 	$gender = test_ifset($_POST['gender']);
 
 	if(!empty(test_ifset($_POST['byear'])) && !empty(test_ifset($_POST['bmonth'])) && !empty(test_ifset($_POST['bday']))) {
-		$birth_date = $_POST['byear'].'-'.$_POST['bmonth'].'-'.$_POST['bday'];
+		$birth_date = $_POST['bday'].'/'.$_POST['bmonth'].'/'.$_POST['byear'];
 	}
 
 	$province = test_ifset($_POST['birth_place_province']);

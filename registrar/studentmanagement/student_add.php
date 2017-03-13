@@ -5,7 +5,17 @@
     if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
       header('Location: ../../login.php');
     }
+    // Session Timeout
+    $time = time();
+    $session_timeout = 1800; //seconds
+    
+    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
+      session_unset();
+      session_destroy();
+      session_start();
+    }
 
+    $_SESSION['last_activity'] = $time;
   ?>
 <!DOCTYPE html>
 <html>
@@ -275,7 +285,7 @@ OPTION1;
 								<div class="ln_solid"></div>
 								<div class="form-group">
 									<div class="col-md-3 col-md-offset-3 pull-right">
-										<button type="submit" class="btn btn-success">Save Changes</button>
+										<button type="submit" class="btn btn-success"><i class="fa fa-save m-right-xs"></i> Save Changes</button>
 									</div>
 								</div>
 							</div>

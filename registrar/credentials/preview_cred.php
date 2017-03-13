@@ -4,7 +4,17 @@
     if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
       header('Location: ../../login.php');
     }
+    // Session Timeout
+    $time = time();
+    $session_timeout = 1800; //seconds
+    
+    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
+      session_unset();
+      session_destroy();
+      session_start();
+    }
 
+    $_SESSION['last_activity'] = $time;
   ?>
 <?php require_once "../../resources/config.php"; ?>
 <?php $stud_id = $_GET['stud_id'] ?>
@@ -15,15 +25,15 @@
 	}
 	$cred_id = $_POST['credential'];
 	$request_type = $_POST['request_type'];
-	$signatory = $_POST['signatory'];
+    $signatory_principal = $_POST['signatory_principal'];
 	$personnel_id = $_SESSION['per_id'];
 	$date = $_POST['date'];
 
-	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$signatory', '$personnel_id');";
+	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$signatory_principal', '$personnel_id');";
 
 	$statement2 = "INSERT INTO `pcnhsdb`.`unclaimed` (`date_processed`) VALUES ('$date');";
 
-	mysqli_query($conn, $statement1);
+	//mysqli_query($conn, $statement1);
 
 ?>
 <!DOCTYPE html>

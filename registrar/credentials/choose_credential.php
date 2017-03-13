@@ -5,7 +5,17 @@
     if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
       header('Location: ../../login.php');
     }
+    // Session Timeout
+    $time = time();
+    $session_timeout = 1800; //seconds
+    
+    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
+      session_unset();
+      session_destroy();
+      session_start();
+    }
 
+    $_SESSION['last_activity'] = $time;
   ?>
 <?php $stud_id = $_GET['stud_id'] ?>
 <!DOCTYPE html>
@@ -96,7 +106,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <p>
 							<input type="radio" class="flat" name="request_type" id="tor-individual" value="individual" checked="" required /> Individual Request:
-							<input type="radio" class="flat" name="request_type" id="tor-bulk" value="bulk" />
+							<input type="radio" class="flat" name="request_type" id="tor-bulk" value="school" />
 							School Request:
 							
 						</p>

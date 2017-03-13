@@ -58,54 +58,76 @@
             <div class="clearfix"></div>
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Attendance</h2>
+                    <h2>Other Subject Grades</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <!-- First -->
-                    <form id="val-gr" class="form-horizontal form-label-left" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/attendance_insert.php?stud_id=$stud_id" ?> method="POST" novalidate>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level or Grade</label>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <select class="form-control col-md-7 col-xs-12" name="yr_level" required="">
-                                        <option value="" selected="" disabled="">-- No Selected --</option>
-                                        <option value="1">Year 1 or Grade 7</option>
-                                        <option value="2">Year 2 or Grade 8</option>
-                                        <option value="3">Year 3 or Grade 9</option>
-                                        <option value="4">Year 4 or Grade 10</option>
-                                    </select>
-                                </div>
+                    <form id="val-gr" class="form-horizontal form-label-left" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/othersubjectgrades_insert.php?stud_id=$stud_id" ?> method="POST" novalidate>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name <span style="color:red;">*</span></label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" required=" " type="text" name="schl_name">
                             </div>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year</label>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <input type="text" class="form-control col-md-7 col-xs-12" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" required="" >
-                                </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year <span style="color:red;">*</span></label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '9999 - 9999'" required=" " type="text" name="schl_year">
                             </div>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Days of School</label>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <input type="text" class="form-control col-md-7 col-xs-12" name="school_days" data-inputmask="'mask': '999'" required="" >
-                                </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level <span style="color:red;">*</span></label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="number" maxlength="2" min="1" max="10" name="yr_level" required=" ">
                             </div>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Days Attended</label>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <input type="text" class="form-control col-md-7 col-xs-12" name="days_attended" data-inputmask="'mask': '999'" required="" >
-                                </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject <span style="color:red;">*</span></label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text"  name="subj_name" required=" ">
                             </div>
-                           <!--  <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Total Years in School</label>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <input type="number" class="form-control col-md-7 col-xs-12" name="days_attended" required="" >
-                                </div>
-                            </div> -->
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level <span style="color:red;">*</span></label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="number" maxlength="2" min="1" max="10" name="subj_level" required=" ">
+                            </div>
+                        </div>
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Type <span style="color:red;">*</span></label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <select class="form-control col-md-7 col-xs-12" name="subj_type" required="">
+                                    <option value="">-- No Selected --</option>
+                                    <option value="summer">Summer</option>
+                                    <option value="transferee">Transferee</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Final Grade <span style="color:red;">*</span></label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" data-inputmask="'mask': '99'" name="fin_grade" required=" ">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Unit <span style="color:red;">*</span></label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="unit" required=" ">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks <span style="color:red;">*</span></label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="comment" required=" ">
+                            </div>
+                        </div>
                             <div class="clearfix"></div>
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <!-- <div class="col-md-6"></div> -->
                                 <div class="col-md-2 pull-right">
-                                    <button id="send" type="submit" class="btn btn-default">Submit</button>
+                                    <button id="send" type="submit" class="btn btn-success"><i class="fa fa-save m-right-xs"></i> Save</button>
                                 </div>
                             </div>
                         </form>
