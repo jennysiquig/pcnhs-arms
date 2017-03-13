@@ -50,12 +50,16 @@
                     <br>
 
                     <div class="x_content">
-                        <form id="personnel-add" class="form-horizontal form-label-left" action="phpinsert/personnel_insert.php" method="POST" novalidate>
+                        <form id="personnel-add" class="form-horizontal form-label-left" action="phpinsert/personnel_insert.php" method="POST" novalidate data-parsley-trigger="keyup">
 
                             <div class="item form-group"><br>
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id">
+                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id"
+                                     data-parsley-pattern="^[a-zA-Z\s\0-9\-]+$"
+                                     data-parsley-pattern-message="Personnel ID Invalid"
+                                     data-parsley-maxlength="50"
+                                     data-parsley-maxlength-message="Error">
                                 </div>
                             </div>
 
@@ -63,21 +67,21 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">User Name</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="name" class="form-control col-md-7 col-xs-12" required="required"  type="text" name="uname"
-                                     data-parsley-trigger="keyup"
                                      data-parsley-minlength="4"
                                      data-parsley-minlength-message="User Name should be greater than 4 characters"
-                                     data-parsley-validation-threshold="40">
+                                     data-parsley-maxlength="50"
+                                     data-parsley-maxlength-message="Error">
                                 </div>
                             </div>
 
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="password" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password"
-                                     data-parsley-trigger="keyup" 
+                                    <input id="password" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password" 
                                      data-parsley-minlength="4"
                                      data-parsley-minlength-message="Password should be greater than 4 characters"
-                                     data-parsley-validation-threshold="40">
+                                     data-parsley-maxlength="50"
+                                     data-parsley-maxlength-message="Error">
                                 </div>
                             </div>
 
@@ -85,9 +89,10 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name"
-                                    data-parsley-pattern="^[a-zA-Z]+$"
-                                    data-parsley-pattern-message="Last Name should not contain a special character or number"
-                                    data-parsley-validation-threshold="40">
+                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern-message="Invalid Last Name"
+                                    data-parsley-maxlength="50"
+                                    data-parsley-maxlength-message="Error">
                                 </div>
                             </div>
 
@@ -95,9 +100,10 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name"
-                                    data-parsley-pattern="^[a-zA-Z]+$"
-                                    data-parsley-pattern-message="First Name should not contain a special character or number"
-                                    data-parsley-validation-threshold="40">
+                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern-message="Invalid First Name"
+                                    data-parsley-maxlength="50"
+                                    data-parsley-maxlength-message="Error">
                                 </div>
                             </div>
 
@@ -105,9 +111,10 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="name" class="form-control col-md-7 col-xs-12"  type="text" name="mname"
-                                    data-parsley-pattern="^[a-zA-Z]+$"
-                                    data-parsley-pattern-message="Middle Name should not contain a special character or number"
-                                    data-parsley-validation-threshold="40">
+                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern-message="Invalid Middle Name"
+                                    data-parsley-maxlength="50"
+                                    data-parsley-maxlength-message="Error">
                                 </div>
                             </div>
 
@@ -125,6 +132,7 @@
                                             <option value="ADMINISTRATOR">ADMINISTRATOR</option>
                                             <option value="HEAD TEACHER">HEAD TEACHER</option>
                                             <option value="PRINCIPAL">PRINCIPAL</option>
+                                            <option value="REGISTRAR">REGISTRAR</option>
                                             <option value="SUPERINTENDENT">SUPERINTENDENT</option>
 OPTION0;
                                         ?>

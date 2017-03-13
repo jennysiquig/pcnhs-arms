@@ -17,7 +17,7 @@
 
 	$statement = $conn->prepare("INSERT INTO `pcnhsdb`.`signatories` (`sign_id`, `last_name`, `first_name`, `mname`, `title`, `yr_started`, `yr_ended`, `position`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
-	$statement->bind_param("sssssiss", $sign_id, $last_name, $first_name, $mname, $title, $yr_started, $yr_ended, $position);
+	$statement->bind_param("sssssiis", $sign_id, $last_name, $first_name, $mname, $title, $yr_started, $yr_ended, $position);
 
 	$statement->execute();
 
