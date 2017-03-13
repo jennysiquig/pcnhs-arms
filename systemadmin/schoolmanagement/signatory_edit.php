@@ -113,9 +113,10 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" value=<?php echo "'$first_name'"; ?>
-                                    data-parsley-pattern="^[a-zA-Z]+$"
-                                    data-parsley-pattern-message="First Name should not contain a special character or number"
-                                    data-parsley-validation-threshold="40">
+                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern-message="Invalid First Name"
+                                    data-parsley-maxlength="50"
+                                    data-parsley-maxlength-message="Error">
                             </div>
                         </div>
 
@@ -123,9 +124,10 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="mname" value=<?php echo "'$mname'"; ?>
-                                    data-parsley-pattern="^[a-zA-Z]+$"
-                                    data-parsley-pattern-message="Middle Name should not contain a special character or number"
-                                    data-parsley-validation-threshold="40">
+                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern-message="Invalid Middle Name"
+                                    data-parsley-maxlength="50"
+                                    data-parsley-maxlength-message="Error">
                             </div>
                         </div>
 
@@ -133,23 +135,28 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" value=<?php echo "'$last_name'"; ?>
-                                    data-parsley-pattern="^[a-zA-Z]+$"
-                                    data-parsley-pattern-message="Last Name should not contain a special character or number"
-                                    data-parsley-validation-threshold="40">
+                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern-message="Invalid Last Name"
+                                    data-parsley-maxlength="50"
+                                    data-parsley-maxlength-message="Error">
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Academic Degree</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="title" value=<?php echo "'$title'"; ?>>
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="title" value=<?php echo "'$title'"; ?>
+                                    data-parsley-pattern="^[a-zA-Z\s\+\-\.]+$"
+                                    data-parsley-pattern-message="Invalid Format"
+                                    data-parsley-maxlength="50"
+                                    data-parsley-maxlength-message="Error">
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Started</label>
                             <div class="col-md-2 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="yr_started"  required = "required" value=<?php echo "'$yr_started'";?>>
+                                <select id = "yrStarted"class="form-control col-md-7 col-xs-12" name="yr_started"  required = "required" value=<?php echo "'$yr_started'";?>>
                                     <option value="<?php echo $yr_started?>"> <?php echo $yr_started?></option>
                                     <?php
                                     $present = date("Y");
@@ -163,7 +170,9 @@
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Ended</label>
                             <div class="col-md-2 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="yr_ended"  required = "required" value=<?php echo "'$yr_ended'";?>>
+                                <select id = "yrEnded" class="form-control col-md-7 col-xs-12" name="yr_ended"  required = "required" value=<?php echo "'$yr_ended'";?>
+                                    data-parsley-ge = "#yrStarted"
+                                    data-parsley-ge-message = "Year Ended should be greater than or equal to Year Started">
                                     <option value="<?php echo $yr_ended?>"> <?php echo $yr_ended?></option>
                                     <?php
                                     $present = date("Y");
@@ -185,6 +194,7 @@
                                             <option value="ADMINISTRATOR">ADMINISTRATOR</option>
                                             <option value="HEAD TEACHER">HEAD TEACHER</option>
                                             <option value="PRINCIPAL">PRINCIPAL</option>
+                                            <option value="REGISTRAR">REGISTRAR</option>
                                             <option value="SUPERINTENDENT">SUPERINTENDENT</option>
 OPTION0;
                                     ?>
@@ -255,6 +265,15 @@ OPTION0;
         hljs.initHighlightingOnLoad();
     } catch (err) {}
 </script>
+
+<script>
+window.ParsleyValidator.addValidator('ge', 
+    function (value, requirement) {
+        return parseFloat(value) >= parseFloat($(requirement).val());
+    }, 32)
+    .addMessage('en', 'ge', 'This value should be greater or equal');
+</script>
 <!-- /Parsley -->
+
 </body>
 </html>
