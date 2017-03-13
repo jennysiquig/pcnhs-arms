@@ -1,23 +1,21 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php
-    session_start();
+session_start();
+if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
+header('Location: ../../login.php');
+}
+// Session Timeout
+$time = time();
+$session_timeout = 1800; //seconds
 
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-  ?>
-<?php 
+if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
+session_unset();
+session_destroy();
+session_start();
+}
+$_SESSION['last_activity'] = $time;
+?>
+<?php
 	$stud_id = $_GET['stud_id'];
 	$credential = $_GET['credential'];
 	$request_type = $_GET['request_type'];
@@ -70,125 +68,150 @@
 						</li>
 					</ul>
 					<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						*Form 137 Template Here*
-						<div class="clearfix"></div>
-						<br>
-						<div class="item form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">Date</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
+				</div>
+				<div class="x_content">
+					*Form 137 Template Here*
+					<div class="clearfix"></div>
+					<br>
+					<div class="item form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date Today</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="date" readonly="" value=<?php echo date("Y-m-d"); ?>>
 						</div>
+					</div>
+					<div class="item form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Credential ID</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="credential" readonly="" value=<?php echo "'$credential'"; ?>>
 						</div>
-						<div class="item form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">Credential ID</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="credential" readonly="" value=<?php echo "'$credential'"; ?>>
-							</div>
+					</div>
+					<div class="item form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Type of Request</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="request_type" readonly="" value=<?php echo "'$request_type'"; ?>>
 						</div>
-						<div class="item form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">Type of Request</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="request_type" readonly="" value=<?php echo "'$request_type'"; ?>>
-							</div>
-						</div>
-						<div class="form-group">
+					</div>
+					<!-- <div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">Date Accomplished:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="dateaccomplished" value="">
+									<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="dateaccomplished" value="">
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">Admitted To:</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="admittedto" value="">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks: </label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<textarea id="message" required="required" class="form-control" name="remarks"></textarea>
-							</div>
-						</div>
-						<!--  -->
-						<div class="form-group">
-	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Principal Signatory <span class="required">*</span>
-	                        </label>
-	                        <div class="col-md-6 col-sm-6 col-xs-12">
-	                          <select id="credential" class="form-control" name="signatory_principal">
-								<option value="">Choose..</option>
+					</div> -->
+					<div class="item form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date Accomplished *</label>
+						<div class="col-md-2 col-sm-6 col-xs-12">
+							<select class="form-control col-md-7 col-xs-12" name="month" required="">
+								<option value="">Month</option>
 								<?php
-									if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
-									}
-									$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
-									$result = $conn->query($statement);
-									if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
-											$sign_id = $row['sign_id'];
-											$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
-
-											echo "<option value='$sign_id'>$sign_name</option>";
-										}
+									$month=array('January','February','March','April','May','June','July','August','September','October','November','December');
+									for ($i=0; $i < count($month) ; $i++) {
+										$dayVal = $i+1;
+										$monthName = $month[$i];
+										echo "<option value='$monthName'>$monthName</option>";
 									}
 								?>
-								</select>
-		                      </div>
-	                      </div>
-						<!--  -->
-						<!--  -->
-						<div class="form-group">
-	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Head Teacher Signatory <span class="required">*</span>
-	                        </label>
-	                        <div class="col-md-6 col-sm-6 col-xs-12">
-	                          <select id="credential" class="form-control" name="signatory_headteacher">
-								<option value="">Choose..</option>
-								<?php
-									if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
+							</select>
+						</div>
+						<div class="col-md-2 col-sm-6 col-xs-12">
+							<select class="form-control col-md-7 col-xs-12" name="day" required="">
+								<option value="">Day</option>
+								<?php for ($day=1; $day <= 31 ; $day++) {
+									echo "<option value='$day'>$day</option>";
+								} ?>
+							</select>
+						</div>
+						<div class="col-md-2 col-sm-6 col-xs-12">
+							<input class="form-control  col-md-7 col-xs-12" type="text" name="year" placeholder="Year" data-inputmask="'mask': '9999'" required="">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Admitted To:</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="admittedto" value="" placeholder="ex: Grade 11">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks: </label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<textarea id="message" required="required" class="form-control" name="remarks" placeholder="ex: ISSUED FOR..."></textarea>
+						</div>
+					</div>
+					<!--  -->
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Principal Signatory <span class="required">*</span>
+					</label>
+					<div class="col-md-6 col-sm-6 col-xs-12">
+						<select id="credential" class="form-control" name="signatory_principal">
+							<option value="">Choose..</option>
+							<?php
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$sign_id = $row['sign_id'];
+										$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+										echo "<option value='$sign_id'>$sign_name</option>";
 									}
-									$statement = "SELECT * FROM signatories WHERE position='HEAD TEACHER'";
-									$result = $conn->query($statement);
-									if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
-											$sign_id = $row['sign_id'];
-											$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
-
-											echo "<option value='$sign_id'>$sign_name</option>";
-										}
-									}
-								?>
-								</select>
-		                      </div>
-	                      </div>
-						<!--  -->												
+								}
+							?>
+						</select>
 					</div>
 				</div>
-				<!-- this row will not appear when printing -->
-				<div class="row no-print">
-					<div class="col-xs-12">
-						<button class="btn btn-success pull-right"><i class="fa fa-paper-plane"></i> Submit</button>
-					</div>
+				<!--  -->
+				<!--  -->
+				<div class="form-group">
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Head Teacher Signatory <span class="required">*</span>
+				</label>
+				<div class="col-md-6 col-sm-6 col-xs-12">
+					<select id="credential" class="form-control" name="signatory_headteacher">
+						<option value="">Choose..</option>
+						<?php
+							if(!$conn) {
+								die("Connection failed: " . mysqli_connect_error());
+							}
+							$statement = "SELECT * FROM signatories WHERE position='HEAD TEACHER'";
+							$result = $conn->query($statement);
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+									$sign_id = $row['sign_id'];
+									$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+									echo "<option value='$sign_id'>$sign_name</option>";
+								}
+							}
+						?>
+					</select>
 				</div>
-			</form>
+			</div>
+			<!--  -->
 		</div>
-	<!-- Contents Here -->
-	<?php include "../../resources/templates/registrar/footer.php"; ?>
-	<!-- Scripts -->
-	<!-- jQuery -->
-	<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
-	<!-- Bootstrap -->
-	<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
-	<!-- input mask -->
-	<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
-	<!-- Custom Theme Scripts -->
-	<script src= "../../js/custom.min.js"></script>
-	<!-- Scripts -->
+	</div>
+	<!-- this row will not appear when printing -->
+	<div class="row no-print">
+		<div class="col-xs-12">
+			<button class="btn btn-success pull-right"><i class="fa fa-paper-plane"></i> Submit</button>
+		</div>
+	</div>
+</form>
+</div>
+<!-- Contents Here -->
+<?php include "../../resources/templates/registrar/footer.php"; ?>
+<!-- Scripts -->
+<!-- jQuery -->
+<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+<!-- Bootstrap -->
+<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
+<!-- input mask -->
+<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+<!-- Custom Theme Scripts -->
+<script src= "../../js/custom.min.js"></script>
+<!-- Scripts -->
 </body>
 </html>
