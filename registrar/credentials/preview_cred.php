@@ -73,23 +73,11 @@
                 $DAyear = $_POST['year'];
 				$admittedto = $_POST['admittedto'];
 				$remarks = $_POST['remarks'];
-
-				echo "Month: ".$DAmonth;
-                echo "<br>";
-                echo "Day: ".$DAday;
-                echo "<br>";
-                echo "Year: ".$DAyear;
-                echo "<br>";
-
-				echo "Admitted To: ".$admittedto;
-                echo "<br>";
-				echo "Remarks: ".$remarks;
-                echo "<br>";
-
 			?>
 
              <?php
-             $box1 = "SELECT *, concat(first_name, ', ', last_name, ' ', upper(left(mid_name, 1)), '.') as 'full_name' FROM students NATURAL JOIN parent NATURAL JOIN primaryschool WHERE students.stud_id = '$stud_id';";
+             $birth_date = "";
+             $box1 = "SELECT *, concat(last_name, ', ', first_name, ' ', upper(left(mid_name, 1)), '.') as 'full_name' FROM students NATURAL JOIN parent NATURAL JOIN primaryschool WHERE students.stud_id = '$stud_id';";
              $result = $conn->query($box1);
              if ($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -104,10 +92,23 @@
                     $psname = $row['psname'];
                     $pschool_year = $row['pschool_year'];
                     $stud_id = $row['stud_id'];
-
-                   // $bday = $row['']
+                    $birth_date = $row['birth_date'];
                 }
              }
+
+             $birthday = explode("/", $birth_date);
+
+             $bday = $birthday[0];
+             $bmonth = $birthday[1];
+             $byear = substr($birthday[2], 0, 4);
+            
+
+             if($bmonth < 10) {
+                $bmonth = substr($bmonth, 1, 1);
+             }
+
+              $month_array = array('January','February','March','April','May','June','July','August','September','October','November','December');
+              $monthstr = $month_array[$bmonth-1];
              ?>
 
 			<!-- FORM 137 -->
@@ -143,17 +144,17 @@
 
                     <p id="b1-r1-p3">Year:</p>
                         <div id ="b1-r1-d2" class="underline">
-                            
+                            <?php echo $byear; ?>
                         </div>
                     
                     <p id="b1-r1-p4">Month:</p>
                         <div id="b1-r1-d3" class="underline">
-                            
+                            <?php echo $monthstr; ?>
                         </div>
 
                     <p id="b1-r1-p5">Day:</p>
                         <div id="b1-r1-d4" class="underline">
-                            
+                            <?php echo $bday; ?>
                         </div>
                    
 
@@ -787,15 +788,13 @@
 
                         <div id="box-7">
 
-                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> this <div id="day-cert"> <?php $POST_['dateaccomplished']; ?> </div> day of <div id="month-cert"> <?php $POST_['dateaccomplished']; ?> </div> <div id="year"> <?php $POST_['dateaccomplished']; ?> </div> for admission to <div id="grade-cert"> <?php $POST_['dateaccomplished']; ?> </div> as a <div id="reg-cert"> <?php echo $regcert; ?> </div> student and <div id="gender-cert"> <?php echo $gendercert; ?> </div>has no</br> property and/or money accountability in this school.</div>
-
-                            <div id="b7-d1"></div>
+                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> this <div id="day-cert"> <?php echo $DAday; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $admittedto; ?> </div> as a <div id="reg-cert"> <!-- <?php echo $regcert; ?>  --></div> student and <div id="gender-cert"><!--  <?php echo $gendercert; ?> --> </div>has no</br> property and/or money accountability in this school.</div>
 
                             <p id="b7-r1-p1">REMARKS:</p>
                             <div id="b7-r1-d1"></div>
 
-                            <p id="b7-r1-p2">ISSUED TO:</p>
-                            <div id="b7-r1-d2"></div>
+                            <p id="b7-r1-p2">ISSUED TO: <div id="b7-r1-d2"><?PHP echo $remarks; ?></div></p>
+
 
 
                             <p id="b7-r2-p1">NOTE: A mark, erasure or alternation of any entry invalidates this form.</p>

@@ -656,11 +656,11 @@ table{
 /*	background-color: black;*/
 }
 
-#b7-d1{
+/*#b7-d1{
 	height: 125px;
 	max-width: 650px;
 }
-
+*/
 #b7-r1-p1{
 	margin-top: 5px;
 	font-weight: bold;
@@ -673,20 +673,23 @@ table{
 #b7-r1-p2{
 	margin-top: -30px;
 	margin-left: 130px;
+	width: 80px;
 }
 
 #b7-r1-d2{
-	margin-top: -14px;
+	margin-top: -34px;
 	margin-left: 210px;
 	border-bottom-color: black;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
-	width: 250px;
+	height: 20px;
+	max-width: 200px;
+	width: auto;
 }
 
 #b7-r2-p1{
 	font-weight: bold;
-	margin-top: 20px;
+	margin-top: 35px;
 	margin-left: 10px;
 }
 
@@ -760,7 +763,7 @@ table{
 	font-style: italic;
 	font-weight: bold;
 	width: 700px;
-	height: 150px;
+	height: 55px;
 }
 
 #cert > div{
