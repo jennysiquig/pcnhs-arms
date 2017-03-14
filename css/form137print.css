@@ -2,7 +2,7 @@
   @page {
     size: 8.5in 13in; /* landscape */
     /* you can also specify margins here: */
-    margin: 5mm;
+    margin: 10mm;
     margin-right: 45mm; /* for compatibility with both A4 and Letter */
   }
 }
@@ -31,6 +31,11 @@ body{
 .info{
 	text-align: center;
 	font-size: 13px;
+}
+
+.underline{
+	padding: 2px;
+	text-align: center;
 }
 
 /*box-1*/
@@ -83,7 +88,7 @@ body{
 	margin-left: 65px;
 	width: 225px;
 	height: 20px;
-	margin-top: -31px;
+	margin-top: -30px;
 }
 
 #b1-r1-p2{
@@ -106,7 +111,7 @@ body{
 	border-bottom-style: solid;
 	margin-left: 435px;
 	width: 60px;
-	margin-top: -28px;
+	margin-top: -30px;
 	margin-right: 15px;
 }
 
@@ -140,7 +145,7 @@ body{
 	border-bottom-style: solid;
 	margin-left: 700px;
 	width: 50px;
-	margin-top: -31px;
+	margin-top: -30px;
 	margin-right: 15px;
 }
 
@@ -162,7 +167,7 @@ body{
 	border-bottom-style: solid;
 	margin-left: 180px;
 	width: 110px;
-	margin-top: -29px;
+	margin-top: -30px;
 	margin-right: 15px;
 }
 
@@ -178,7 +183,7 @@ body{
 	border-bottom-style: solid;
 	margin-left: 435px;
 	width: 125px;
-	margin-top: -31px;
+	margin-top: -30px;
 	margin-right: 15px;
 }
 
@@ -194,7 +199,7 @@ body{
 	border-bottom-style: solid;
 	margin-left: 650px;
 	width: 100px;
-	margin-top: -31px;
+	margin-top: -30px;
 	margin-right: 15px;
 }
 
@@ -212,7 +217,7 @@ body{
 	width: 170px;
 	margin-right: 15px;
 	margin-left: 120px;
-	margin-top: -27px;
+	margin-top: -30px;
 }
 
 #b1-r3-p2{
@@ -227,7 +232,7 @@ body{
 	border-bottom-style: solid;
 	margin-left: 435px;
 	width: 125px;
-	margin-top: -32px;
+	margin-top: -30px;
 	margin-right: 15px;
 }
 
@@ -285,7 +290,7 @@ body{
 	border-bottom-style: solid;
 	margin-left: 660px;
 	width: 90px;
-	margin-top: -32px;
+	margin-top: -30px;
 	margin-right: 15px;
 }
 
@@ -651,11 +656,11 @@ table{
 /*	background-color: black;*/
 }
 
-#b7-d1{
+/*#b7-d1{
 	height: 125px;
 	max-width: 650px;
 }
-
+*/
 #b7-r1-p1{
 	margin-top: 5px;
 	font-weight: bold;
@@ -668,20 +673,23 @@ table{
 #b7-r1-p2{
 	margin-top: -30px;
 	margin-left: 130px;
+	width: 80px;
 }
 
 #b7-r1-d2{
-	margin-top: -14px;
+	margin-top: -34px;
 	margin-left: 210px;
 	border-bottom-color: black;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
-	width: 250px;
+	height: 20px;
+	max-width: 200px;
+	width: auto;
 }
 
 #b7-r2-p1{
 	font-weight: bold;
-	margin-top: 20px;
+	margin-top: 35px;
 	margin-left: 10px;
 }
 
@@ -737,7 +745,7 @@ table{
 	height: 20px;
 }
 
-#name{
+/*#name{
 	width: auto;
 	height: 20px;
 	font-size: 12px;
@@ -747,11 +755,46 @@ table{
 	border-bottom: 1px solid black;
 	font-style: italic;
 	font-weight: bold;
+}*/
 
 #cert{
 	font-size: 12px;
 	font-family: calibri;
 	font-style: italic;
 	font-weight: bold;
-	text-indent: 30px;
+	width: 700px;
+	height: 55px;
+}
+
+#cert > div{
+	display: inline-block;
+	width: auto;
+	border-bottom: 1px solid black;
+	height: 15px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+/*#name-cert{
+	width: 200px;
+	height: 20px;
+	background-color: black;
+	border-bottom: 1px solid black;
+	display: inline-block;
+}*/
+
+#day-cert{
+	
+}
+
+#month-cert{
+	
+}
+
+#grade-cert{
+	
+}
+
+#program-cert{
+	
 }
