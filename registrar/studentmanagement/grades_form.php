@@ -112,7 +112,7 @@
                                 
                                 $yr_level_needed = $_POST['yr_level'];
                                 $prog_id = $_POST['prog_id'];
-                                $statement = "select * from subjects natural join subjectcurriculum natural join curriculum natural join programs natural join subjectprogram where subjectcurriculum.curr_id = $curriculum and yr_level_needed = $yr_level_needed and prog_id = $prog_id";
+                                $statement = "SELECT * from subjects NATURAL JOIN subjectcurriculum NATURAL JOIN curriculum NATURAL JOIN programs NATURAL JOIN subjectprogram WHERE subjectcurriculum.curr_id = $curriculum AND yr_level_needed = $yr_level_needed AND prog_id = $prog_id";
                                 $result = $conn->query($statement);
                                 if($result->num_rows>0) {
                                 while ($row = $result->fetch_assoc()) {
