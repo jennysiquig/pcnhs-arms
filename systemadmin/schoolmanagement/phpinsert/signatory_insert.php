@@ -15,11 +15,25 @@
 		die("Connection failed: " . mysqli_connect_error());
 	}
 
+	$queryCheck = "SELECT * from signatories where sign_id = ?";
+
+    $preparedQuery = $conn->prepare($queryCheck);
+    $preparedQuery->bind_param("s",$sign_id);
+    $preparedQuery->execute();
+    $result = $preparedQuery->get_result();
+	
+	if ($result->num_rows > 0) {
+		 $_SESSION['error_msg_signatory'] = "Signatory ID already exists";
+         die(header("Location: ../signatory_add.php"));
+
+	} else {
+
 	$statement = $conn->prepare("INSERT INTO `pcnhsdb`.`signatories` (`sign_id`, `last_name`, `first_name`, `mname`, `title`, `yr_started`, `yr_ended`, `position`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
 	$statement->bind_param("sssssiis", $sign_id, $last_name, $first_name, $mname, $title, $yr_started, $yr_ended, $position);
 
 	$statement->execute();
+
 
 	$sign_add = "ADDED SIGNATORY : $sign_id";
     $_SESSION['user_activity'][] = $sign_add;
@@ -28,4 +42,5 @@
 
 	$statement->close();
 	$conn->close();
+		}
 ?>
