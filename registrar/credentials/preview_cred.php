@@ -173,6 +173,82 @@
                     }
              }
              ?>
+
+             <?php
+                        if(!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 1;";
+                        $result = $conn->query($attendance1);
+                        if ($result->num_rows > 0) {
+                        // output data of each row
+                            while($row = $result->fetch_assoc()) {
+                                $schl_yr1 = $row['schl_yr'];
+                                $yr_lvl1 = $row['yr_lvl'];
+                                $days_attended1 = $row['days_attended'];
+                                $school_days1 = $row['school_days'];
+                            }
+                        }
+
+                    ?>
+
+                                 <?php
+                        if(!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 2;";
+                        $result = $conn->query($attendance1);
+                        if ($result->num_rows > 0) {
+                        // output data of each row
+                            while($row = $result->fetch_assoc()) {
+                                $schl_yr2 = $row['schl_yr'];
+                                $yr_lvl2 = $row['yr_lvl'];
+                                $days_attended2 = $row['days_attended'];
+                                $school_days2 = $row['school_days'];
+                            }
+                        }
+
+                    ?>
+
+                                 <?php
+                        if(!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 3;";
+                        $result = $conn->query($attendance1);
+                        if ($result->num_rows > 0) {
+                        // output data of each row
+                            while($row = $result->fetch_assoc()) {
+                                $schl_yr3 = $row['schl_yr'];
+                                $yr_lvl3 = $row['yr_lvl'];
+                                $days_attended3 = $row['days_attended'];
+                                $school_days3 = $row['school_days'];
+                            }
+                        }
+
+                    ?>
+
+                                 <?php
+                        if(!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 4;";
+                        $result = $conn->query($attendance1);
+                        if ($result->num_rows > 0) {
+                        // output data of each row
+                            while($row = $result->fetch_assoc()) {
+                                $schl_yr4 = $row['schl_yr'];
+                                $yr_lvl4 = $row['yr_lvl'];
+                                $days_attended4 = $row['days_attended'];
+                                $school_days4 = $row['school_days'];
+                            }
+                        }
+
+                    ?>
 			<!-- FORM 137 -->
 			<div class="col-md-12">
 			<div class = "container">
@@ -376,10 +452,10 @@ YR1;
                             </table>
                             <div>
                                 <p id="b2-r18-p1">Days of School:</p>
-                                <div id="b2-r18-d1" class="underline"></div>
+                                <div id="b2-r18-d1" class="underline"><?php echo $school_days1?> </div>
 
                                 <p id="b2-r18-p2">Days Present:</p>
-                                <div id="b2-r18-d2" class="underline"></div>
+                                <div id="b2-r18-d2" class="underline"> <?php echo $days_attended1?> </div>
 
                                 <p id="b2-r19-p1">Total Number of Years in School:</p>
                                 <div id="b2-r19-d1" class="underline"></div>
@@ -469,10 +545,10 @@ YR1;
                             </table>
 
                                 <p id="b2-r18-p1">Days of School:</p>
-                                <div id="b2-r18-d1" class="underline"></div>
+                                <div id="b2-r18-d1" class="underline"> <?php echo $school_days2?> </div>
 
                                 <p id="b2-r18-p2">Days Present:</p>
-                                <div id="b2-r18-d2" class="underline"></div>
+                                <div id="b2-r18-d2" class="underline"> <?php echo $days_attended2?> </div>
 
                                 <p id="b2-r19-p1">Total Number of Years in School:</p>
                                 <div id="b2-r19-d1" class="underline"></div>
@@ -567,10 +643,10 @@ YR1;
                             </table>
 
                                 <p id="b2-r18-p1">Days of School:</p>
-                                <div id="b2-r18-d1" class="underline"></div>
+                                <div id="b2-r18-d1" class="underline"><?php echo $school_days3?> </div>
 
                                 <p id="b2-r18-p2">Days Present:</p>
-                                <div id="b2-r18-d2" class="underline"></div>
+                                <div id="b2-r18-d2" class="underline"> <?php echo $days_attended3?> </div>
 
                                 <p id="b2-r19-p1">Total Number of Years in School:</p>
                                 <div id="b2-r19-d1" class="underline"></div>
@@ -654,15 +730,15 @@ YR1;
                                     
 
                                 ?>
-                                
+
                                 </tbody>
                             </table>
 
                                 <p id="b2-r18-p1">Days of School:</p>
-                                <div id="b2-r18-d1" class="underline"></div>
+                                <div id="b2-r18-d1" class="underline"> <?php echo $school_days4?> </div>
 
                                 <p id="b2-r18-p2">Days Present:</p>
-                                <div id="b2-r18-d2" class="underline"></div>
+                                <div id="b2-r18-d2" class="underline"> <?php echo $days_attended3?> </div>
 
                                 <p id="b2-r19-p1">Total Number of Years in School:</p>
                                 <div id="b2-r19-d1" class="underline"></div>
