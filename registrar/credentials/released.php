@@ -1,11 +1,7 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php
     session_start();
-
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    // Session Timeout
+ // Session Timeout
     $time = time();
     $session_timeout = 1800; //seconds
     
@@ -16,6 +12,10 @@
     }
 
     $_SESSION['last_activity'] = $time;
+    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
+      header('Location: ../../login.php');
+    }
+   
   ?>
 <!DOCTYPE html>
 <html>

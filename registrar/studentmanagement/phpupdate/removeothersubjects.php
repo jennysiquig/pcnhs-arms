@@ -1,4 +1,4 @@
-<?php require_once "../../resources/config.php"; ?>
+<?php require_once "../../../resources/config.php"; ?>
 <?php
 	if(!$conn) {
 		die();
@@ -13,7 +13,7 @@
 	mysqli_query($conn, $statement1);
 	
 
-	header("location: grades.php?stud_id=$stud_id");
+	header("location: ../grades.php?stud_id=$stud_id");
 
 
 

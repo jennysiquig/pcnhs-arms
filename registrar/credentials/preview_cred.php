@@ -1,10 +1,6 @@
 <?php
     session_start();
-
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    // Session Timeout
+     // Session Timeout
     $time = time();
     $session_timeout = 1800; //seconds
     
@@ -13,6 +9,10 @@
       session_destroy();
       session_start();
     }
+    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
+      header('Location: ../../login.php');
+    }
+   
 
     $_SESSION['last_activity'] = $time;
   ?>
