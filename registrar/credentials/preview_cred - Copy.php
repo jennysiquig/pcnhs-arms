@@ -1,6 +1,10 @@
 <?php
     session_start();
-     // Session Timeout
+
+    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
+      header('Location: ../../login.php');
+    }
+    // Session Timeout
     $time = time();
     $session_timeout = 1800; //seconds
     
@@ -9,10 +13,6 @@
       session_destroy();
       session_start();
     }
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-   
 
     $_SESSION['last_activity'] = $time;
   ?>
@@ -374,7 +374,7 @@ YR1;
                             </tbody>
                                 
                             </table>
-                            <div>
+
                                 <p id="b2-r18-p1">Days of School:</p>
                                 <div id="b2-r18-d1" class="underline"></div>
 
@@ -383,7 +383,6 @@ YR1;
 
                                 <p id="b2-r19-p1">Total Number of Years in School:</p>
                                 <div id="b2-r19-d1" class="underline"></div>
-                            </div>
                         </div>
 
                     </div>
@@ -434,37 +433,91 @@ YR1;
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
-                                    $result = $conn->query($query);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while($row = $result->fetch_assoc()) {
-                                            $subj_name2 = $row['subj_name'];
-                                            $subj_level2 = $row['subj_level'];
-                                            $fin_grade2 = $row['fin_grade'];
-                                            $unit2 = $row['unit'];
-                                            $comment2 = $row['comment'];
-
-                                            echo <<<YR1
-                                                
-                                                 <tr id="b3-r4">  
-                                                    <td class="subj">$subj_name2</td> <!-- subject -->
-                                                    <td class="fr">$fin_grade2</td> <!-- final rating -->
-                                                    <td class="at">$comment2</td> <!-- Action Taken -->
-                                                </tr>
-
-YR1;
-                                        }
-                                    }
                                     
-
-                                ?>
                                
+                                <tr id="b3-r4">  
+                                <td class="subj">sample</td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r5">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r6">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r7">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r8">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r9">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r10">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r11">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r12">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r13">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r14">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r15">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r16">  <!-- additional subject -->
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r17">  <!-- additional subject -->
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
                                  </tbody>
                             </table>
 
@@ -484,86 +537,119 @@ YR1;
                         <!--end of box-2-->
 
                      <!--box-3-->
-                       <?php
 
-                            if(!$conn) {
-                                die("Connection failed: " . mysqli_connect_error());
-                            }
-                            $stud_id = $_GET['stud_id'];
-                            $query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 3 and studentsubjects.stud_id = '$stud_id';";
-                            $result = $conn->query($query);
-                            if ($result->num_rows > 0) {
-                                // output data of each row
-                                while($row = $result->fetch_assoc()) {
-                                    $schl_name3 = $row['schl_name'];
-                                    $yr_level3 = $row['yr_level'];
-                                    $schl_year3 = $row['schl_year'];
-                                }
-                            }
-                            
-
-                        ?>
                      <div id = "box-4-5">
                     <div id = "box-4" class="gr">
 
                             <div id="info">
 
                                 <p id="b2-r1-p1">School:</p>
-                                    <div id="b2-r1-d1" class="underline"><?php echo $schl_name3; ?></div>
+                                    <div id="b2-r1-d1" class="underline"></div>
                                 
 
                                 <p id="b2-r2-p1">Grade:</p>
-                                    <div id="b2-r2-d1" class="underline"><?php echo $yr_level3; ?></div>
+                                    <div id="b2-r2-d1" class="underline"></div>
                                 
 
                                 <p id="b2-r2-p2">School Year:</p>
-                                    <div id="b2-r2-d2" class="underline"><?php echo $schl_year3; ?></div>
+                                    <div id="b2-r2-d2" class="underline"></div>
                                 
 
                             </div>
                             <div id="3rd-yr">
 
                                 <table id="3rd-t">
-                                <thead>
-                                    <tr id="b3-r3-head">  
-                                    <th class="col1">SUBJECT</th>
-                                    <th class="col2">Final Rating</th>
-                                    <th class="col3">Action Taken</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php
+                                
+                                <tr id="b3-r3-head">  
+                                <th class="col1">SUBJECT</th>
+                                <th class="col2">Final Rating</th>
+                                <th class="col3">Action Taken</th>
+                                </tr>
 
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
-                                    $result = $conn->query($query);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while($row = $result->fetch_assoc()) {
-                                            $yr_level3 = $row['yr_level'];
-                                            $schl_year3 = $row['schl_year'];
-                                            $subj_name3 = $row['subj_name'];
-                                            $subj_level3 = $row['subj_level'];
-                                            $fin_grade3 = $row['fin_grade'];
-                                            $unit3 = $row['unit'];
-                                            $comment3 = $row['comment'];
+                                <tr id="b3-r4">  
+                                <td class="subj">sample</td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
 
-                                            echo <<<YR1
-                                                <tr id="b3-r4">  
-                                                    <td class="subj">$subj_name3</td> <!-- subject -->
-                                                    <td class="fr">$fin_grade3</td> <!-- final rating -->
-                                                    <td class="at">$comment3</td> <!-- Action Taken -->
-                                                </tr>
+                                <tr id="b3-r5">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
 
-YR1;
-                                        }
-                                    }
-                                    
+                                <tr id="b3-r6">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
 
-                                ?>
-                             </tbody>   
+                                <tr id="b3-r7">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r8">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r9">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r10">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r11">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r12">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r13">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r14">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r15">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r16">  <!-- additional subject -->
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r17">  <!-- additional subject -->
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
                             </table>
 
                                 <p id="b2-r18-p1">Days of School:</p>
@@ -580,82 +666,116 @@ YR1;
                     </div>
 
                     <div id = "box-5" class="gr">
-                        <?php
 
-                            if(!$conn) {
-                                die("Connection failed: " . mysqli_connect_error());
-                            }
-                            $stud_id = $_GET['stud_id'];
-                            $query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 4 and studentsubjects.stud_id = '$stud_id';";
-                            $result = $conn->query($query);
-                            if ($result->num_rows > 0) {
-                                // output data of each row
-                                while($row = $result->fetch_assoc()) {
-                                    $schl_name4 = $row['schl_name'];
-                                    $yr_level4 = $row['yr_level'];
-                                    $schl_year4 = $row['schl_year'];
-                                }
-                            }
-                            
-
-                        ?>
                             <div id="info">
 
                                 <p id="b2-r1-p1">School:</p>
-                                    <div id="b2-r1-d1" class="underline"><?php echo $schl_name4; ?></div>
+                                    <div id="b2-r1-d1" class="underline"></div>
                                 
 
                                 <p id="b2-r2-p1">Grade:</p>
-                                    <div id="b2-r2-d1" class="underline"><?php echo $yr_level4; ?></div>
+                                    <div id="b2-r2-d1" class="underline"></div>
                                 
 
                                 <p id="b2-r2-p2">School Year:</p>
-                                    <div id="b2-r2-d2" class="underline"><?php echo $schl_year4; ?></div>
+                                    <div id="b2-r2-d2" class="underline"></div>
                                 
 
                             </div>
                             <div id="4th-yr">
 
                                 <table id="4th-t">
-                                <thead>
-                                    <tr id="b3-r3-head">  
-                                    <th class="col1">SUBJECT</th>
-                                    <th class="col2">Final Rating</th>
-                                    <th class="col3">Action Taken</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = '$stud_id';";
-                                    $result = $conn->query($query);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while($row = $result->fetch_assoc()) {
-                                            $subj_name4 = $row['subj_name'];
-                                            $subj_level4 = $row['subj_level'];
-                                            $fin_grade4 = $row['fin_grade'];
-                                            $unit4 = $row['unit'];
-                                            $comment4 = $row['comment'];
-
-                                            echo <<<YR1
-                                                <tr id="b3-r4">  
-                                                    <td class="subj">$subj_name4</td> <!-- subject -->
-                                                    <td class="fr">$fin_grade4</td><!-- final rating -->
-                                                    <td class="at">$comment4</td><!-- Action Taken -->
-                                                </tr>
-
-YR1;
-                                        }
-                                    }
-                                    
-
-                                ?>
                                 
-                                </tbody>
+                                <tr id="b3-r3-head">  
+                                <th class="col1">SUBJECT</th>
+                                <th class="col2">Final Rating</th>
+                                <th class="col3">Action Taken</th>
+                                </tr>
+
+                                <tr id="b3-r4">  
+                                <td class="subj">sample</td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r5">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r6">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r7">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r8">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r9">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r10">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r11">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r12">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r13">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r14">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r15">  
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r16">  <!-- additional subject -->
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
+                                <tr id="b3-r17">  <!-- additional subject -->
+                                <td class="subj"></td> <!-- subject -->
+                                <td class="fr"></td> <!-- final rating -->
+                                <td class="at"></td> <!-- Action Taken -->
+                                </tr>
+
                             </table>
 
                                 <p id="b2-r18-p1">Days of School:</p>
@@ -686,7 +806,7 @@ YR1;
                             <p id="b6-r2-p2">Final Rating</p> 
                             <p id="b6-r2-p3">Action Taken</p> -->
 
-                            <table style="height: 0px;">
+                            <table id="additional-t">
                                 
                                 <tr id="b6-r2-head">  
                                 <th class="add-col1">SUBJECT</th>
@@ -723,7 +843,7 @@ YR1;
 
                         <div id="box-7">
 
-                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> the <div id="day-cert"> <?php echo $DAday; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $admittedto; ?> </div> as a <div id="reg-cert"> <?php echo $stat; ?> </div> student and <div id="gender-cert"> <?php echo $formgender; ?> </div> has no</br> property and/or money accountability in this school.</div>
+                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> this <div id="day-cert"> <?php echo $DAday; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $admittedto; ?> </div> as a <div id="reg-cert"> <?php echo $stat; ?> </div> student and <div id="gender-cert"> <?php echo $formgender; ?> </div> has no</br> property and/or money accountability in this school.</div>
 
                             <p id="b7-r1-p1">REMARKS:</p>
                             <div id="b7-r1-d1"></div>
