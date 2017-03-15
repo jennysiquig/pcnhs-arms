@@ -125,7 +125,7 @@
 		                  <div class="x_content">
 		                    <h2>Days Attended: <?php  if(!empty($days_attended2)){ echo "$days_attended2"; }else{echo "None";}  ?></h2>
 		                    <h2>Days of School: <?php if(!empty($school_days2)){ echo "$school_days2"; }else{echo "None";} ?></h2>
-		                    <h2>Total Years in School: 7</h2>
+		                    <h2>Total Years in School: 8</h2>
 		                  </div>
 		                </div>
 		            </div>
@@ -158,7 +158,7 @@
 		                  <div class="x_content">
 		                    <h2>Days Attended: <?php  if(!empty($days_attended3)){ echo "$days_attended3"; }else{echo "None";}  ?></h2>
 		                    <h2>Days of School: <?php if(!empty($school_days3)){ echo "$school_days3"; }else{echo "None";} ?></h2>
-		                    <h2>Total Years in School: 7</h2>
+		                    <h2>Total Years in School: 9</h2>
 		                  </div>
 		                </div>
 		            </div>
@@ -191,7 +191,7 @@
 		                  <div class="x_content">
 		                    <h2>Days Attended: <?php  if(!empty($days_attended4)){ echo "$days_attended4"; }else{echo "None";}  ?></h2>
 		                    <h2>Days of School: <?php if(!empty($school_days4)){ echo "$school_days4"; }else{echo "None";} ?></h2>
-		                    <h2>Total Years in School: 7</h2>
+		                    <h2>Total Years in School: 10</h2>
 		                  </div>
 		                </div>
 		            </div>

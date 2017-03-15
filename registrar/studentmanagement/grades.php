@@ -195,6 +195,18 @@ YR1;
 		                    							echo "None";
 		                    						} ?></h2>	
 		                  </div>
+		                  <?php 
+		                  	if(!empty($average_grade1)) {
+		                  		echo <<<REMBUT
+		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(1,'$stud_id');">Remove Record</button>
+REMBUT;
+		                  	}else {
+		                  		echo <<<REMBUT
+		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(1,'$stud_id';);" disabled="">Remove Record</button>
+REMBUT;
+		                  	}
+		                  ?>
+		                    
 		                </div>
 		              </div>
 				<!-- First Year -->
@@ -330,6 +342,17 @@ YR1;
 		                    							echo "None";
 		                    						} ?></h2>						
 		                  </div>
+		                  <?php 
+		                  	if(!empty($average_grade1)) {
+		                  		echo <<<REMBUT
+		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(2,'$stud_id');">Remove Record</button>
+REMBUT;
+		                  	}else {
+		                  		echo <<<REMBUT
+		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(2,'$stud_id';);" disabled="">Remove Record</button>
+REMBUT;
+		                  	}
+		                  ?>
 		                </div>
 		              </div>
 				<!-- Second Year -->
@@ -465,6 +488,17 @@ YR1;
 		                    							echo "None";
 		                    						} ?></h2>	
 		                  </div>
+		                  <?php 
+		                  	if(!empty($average_grade1)) {
+		                  		echo <<<REMBUT
+		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(3,'$stud_id');">Remove Record</button>
+REMBUT;
+		                  	}else {
+		                  		echo <<<REMBUT
+		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(3,'$stud_id';);" disabled="">Remove Record</button>
+REMBUT;
+		                  	}
+		                  ?>
 		                </div>
 		              </div>
 				<!-- Third Year -->
@@ -598,6 +632,17 @@ YR1;
 		                    							echo "None";
 		                    						} ?></h2>	
 		                  </div>
+		                  <?php 
+		                  	if(!empty($average_grade1)) {
+		                  		echo <<<REMBUT
+		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(4,'$stud_id');">Remove Record</button>
+REMBUT;
+		                  	}else {
+		                  		echo <<<REMBUT
+		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(4,'$stud_id';);" disabled="">Remove Record</button>
+REMBUT;
+		                  	}
+		                  ?>
 		                </div>
 		              </div>
 				<!-- Fourth Year -->
@@ -682,6 +727,17 @@ YR1;
 		                      </tbody>
 		                    </table>	
 		                  </div>
+		                  <?php 
+		                  	if(!empty($schl_name)) {
+		                  		echo <<<REMBUT
+		                  			<button class="btn btn-danger pull-right" onclick="removeOtherSubjects('$stud_id');">Remove Record</button>
+REMBUT;
+		                  	}else {
+		                  		echo <<<REMBUT
+		                  			<button class="btn btn-danger pull-right" onclick="removeOtherSubjects('$stud_id';);" disabled="">Remove Record</button>
+REMBUT;
+		                  	}
+		                  ?>
 		                </div>
 		              </div>
 				<!-- -->
@@ -757,6 +813,32 @@ YR1;
 		xhttp.open("GET", "showsubjects.php?curr_id="+curriculum, true);
 		xhttp.send();
 		}
+		</script>
+		<!-- Remove Record -->
+		<script type="text/javascript">
+			function removeGrade(yr_level, stud_id) {
+				var remove = confirm("Are you sure to remove this record?");
+
+				if(remove) {
+					//console.log(stud_id);
+					window.location.assign("removegrades.php?stud_id="+stud_id+"&yr_level="+yr_level);
+				}
+
+
+			}
+
+		</script>
+
+		<!-- Remove Other Subjects -->
+		<script type="text/javascript">
+			function removeOtherSubjects(stud_id) {
+				var remove = confirm("Are you sure to remove this record?");
+
+				if(remove) {
+					//console.log(stud_id);
+					window.location.assign("removeothersubjects.php?stud_id="+stud_id);
+				}	
+			}
 		</script>
 	</body>
 </html>

@@ -191,7 +191,6 @@ OPTION2;
 								<table class="table table-hover">
 									<thead>
 										<tr class="headings">
-											<th class="column-title">Subject ID</th>
 											<th class="column-title">Subject Name</th>
 											<th class="column-title">Subject Level</th>
 											<th class="column-title">Curriculum</th>
@@ -242,7 +241,6 @@ OPTION2;
 													$unit = $row['unit'];
 													echo <<<SUBJS
 														<tr>
-																<td>$subj_id</td>
 																<td>$subj_name</td>
 																<td>$subj_level</td>
 																<td>$curr_name</td>

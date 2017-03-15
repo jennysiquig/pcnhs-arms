@@ -136,39 +136,15 @@ $_SESSION['last_activity'] = $time;
 							<textarea id="message" required="required" class="form-control" name="remarks" placeholder="ex: ISSUED FOR..."></textarea>
 						</div>
 					</div>
-					<!--  -->
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Principal Signatory <span class="required">*</span>
-					</label>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-						<select id="credential" class="form-control" name="signatory_principal">
-							<option value="">Choose..</option>
-							<?php
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$sign_id = $row['sign_id'];
-										$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
-										echo "<option value='$sign_id'>$sign_name</option>";
-									}
-								}
-							?>
-						</select>
-					</div>
-				</div>
 				<!--  -->
 				<!--  -->
 				<div class="form-group">
-					<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Head Teacher Signatory <span class="required">*</span>
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Signatory <span class="required">*</span>
 				</label>
 				<div class="col-md-6 col-sm-6 col-xs-12">
-					<select id="credential" class="form-control" name="signatory_headteacher">
-						<option value="">Choose..</option>
+					<select id="credential" class="form-control" name="signatory">
+						<option value="">-- Choose Signatory --</option>
+						<option value="" disabled="">-- Head Teacher --</option>
 						<?php
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
@@ -184,6 +160,22 @@ $_SESSION['last_activity'] = $time;
 								}
 							}
 						?>
+						<option value="" disabled="">-- Principal --</option>
+						<?php
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$sign_id = $row['sign_id'];
+										$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+										echo "<option value='$sign_id'>$sign_name</option>";
+									}
+								}
+							?>
 					</select>
 				</div>
 			</div>
