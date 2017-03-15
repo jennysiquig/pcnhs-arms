@@ -112,6 +112,13 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">User Name</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname" readonly value=<?php echo "'$uname'"; ?>>
+                                    <?php
+                                            if(isset($_SESSION['error_msg_personnel_edit'])) {
+                                                $error_msg_personnel_edit = $_SESSION['error_msg_personnel_edit'];
+                                                echo "<p style='color: red'>$error_msg_personnel_edit</p>";
+                                                unset($_SESSION['error_msg_personnel_edit']);
+                                         } 
+                                     ?>
                                 </div>
                             </div>
 

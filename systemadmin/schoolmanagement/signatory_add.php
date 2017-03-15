@@ -83,9 +83,9 @@
                                      data-parsley-maxlength-message="Error">
                                      <?php
                                             if(isset($_SESSION['error_msg_signatory'])) {
-                                            $error_msg_signatory = $_SESSION['error_msg_signatory'];
-                                            echo "<p style='color: red'>$error_msg_signatory</p>";
-                                            unset($_SESSION['error_msg_signatory']);
+                                                $error_msg_signatory = $_SESSION['error_msg_signatory'];
+                                                echo "<p style='color: red'>$error_msg_signatory</p>";
+                                                unset($_SESSION['error_msg_signatory']);
                                          }
                                      ?>
                             </div>

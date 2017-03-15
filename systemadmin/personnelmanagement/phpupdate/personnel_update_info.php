@@ -26,5 +26,5 @@
     $_SESSION['user_activity'][] = $per_edit;
     
     header("location: ../personnel_view.php?per_id=$per_id");
-
+    
 ?>

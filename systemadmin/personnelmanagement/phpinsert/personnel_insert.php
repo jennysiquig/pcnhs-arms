@@ -28,15 +28,15 @@
     $preparedQuery2 = $conn->prepare($queryCheck2);
     $preparedQuery2->bind_param("s",$uname);
     $preparedQuery2->execute();
-    $result2 = $preparedQuery2->get_result();	
+    $result2 = $preparedQuery2->get_result();
    	 
    	if ($result1->num_rows > 0) {
-		 $_SESSION['error_msg_personnel1'] = "Personnel ID already exists";
+		 $_SESSION['error_msg_personnel1'] = "Personnel ID: $per_id already exists";
          die(header("Location: ../personnel_add.php"));
 	}
 
 	if ($result2->num_rows > 0) {
-		 $_SESSION['error_msg_personnel2'] = "User name already exists";
+		 $_SESSION['error_msg_personnel2'] = "User name: $uname already exists";
          die(header("Location: ../personnel_add.php"));
 	}
 

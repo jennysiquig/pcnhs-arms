@@ -23,7 +23,7 @@
     $result = $preparedQuery->get_result();
 	
 	if ($result->num_rows > 0) {
-		 $_SESSION['error_msg_signatory'] = "Signatory ID already exists";
+		 $_SESSION['error_msg_signatory'] = "Signatory ID: $sign_id already exists";
          die(header("Location: ../signatory_add.php"));
 
 	} else {
