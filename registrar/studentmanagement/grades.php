@@ -57,7 +57,8 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
 			<div class="clearfix"></div>
-			<button class="btn btn-primary" onclick="history.go(-1);return true;"><i class="fa fa-arrow-circle-left"></i> Back to Previous Page</button>
+			<a href=<?php echo "student_info.php?stud_id=$stud_id"; ?> class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i> Back to Previous Page</a>
+		
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>Grades</h2>
@@ -67,6 +68,7 @@
 				<div class="x_content">
 				<!-- First Year -->
 					<div class="col-md-12 col-sm-6 col-xs-12">
+					<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Grades</a>
 						<?php
 
 							if(!$conn) {
@@ -647,7 +649,7 @@ REMBUT;
 		              </div>
 				<!-- Fourth Year -->
               		<div class="clearfix"></div>
-              		<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Grades</a>
+              		
 				</div>
 
 			</div>
@@ -661,6 +663,7 @@ REMBUT;
 				<div class="x_content">
 					<!--  -->
 					<div class="col-md-12 col-sm-6 col-xs-12">
+					<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
 		                <div class="x_panel">
 		                  <div class="x_title">
 		                    <h2></h2>
@@ -742,7 +745,7 @@ REMBUT;
 		              </div>
 				<!-- -->
 				<div class="clearfix"></div>
-              		<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
+              		
 				</div>
 			</div>
 			<!-- Other Subjects -->

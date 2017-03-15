@@ -57,7 +57,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
 			<div class="clearfix"></div>
-			<button class="btn btn-primary" onclick="history.go(-1);return true;"><i class="fa fa-arrow-circle-left"></i> Back to Previous Page</button>
+			<a href=<?php echo "student_info.php?stud_id=$stud_id"; ?> class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i> Back to Previous Page</a>
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>Attendance</h2>

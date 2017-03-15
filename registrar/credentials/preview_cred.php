@@ -842,6 +842,7 @@ YR1;
 			<div class="row no-print">
 				<div class="col-xs-12">
 					<button class="btn btn-success pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+          <a href="../../registrar" class="btn btn-success pull-right"><i class="fa fa-home"></i> Back to Home</a>
 				</div>
 			</div>
 
