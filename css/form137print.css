@@ -2,8 +2,8 @@
   @page {
     size: 8.5in 13in; /* landscape */
     /* you can also specify margins here: */
-    margin: 10mm;
-    margin-right: 50mm; /* for compatibility with both A4 and Letter */
+    margin: 5mm;
+    margin-right: 30mm; /* for compatibility with both A4 and Letter */
   }
 }
 body{
