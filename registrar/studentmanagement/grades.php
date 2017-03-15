@@ -196,7 +196,7 @@ YR1;
 		                    						} ?></h2>	
 		                  </div>
 		                  <?php 
-		                  	if(!empty($average_grade1)) {
+		                  	if(!empty($average_grade1) || !empty($schl_year1) || !empty($yr_level1)) {
 		                  		echo <<<REMBUT
 		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(1,'$stud_id');">Remove Record</button>
 REMBUT;
@@ -343,7 +343,7 @@ YR1;
 		                    						} ?></h2>						
 		                  </div>
 		                  <?php 
-		                  	if(!empty($average_grade1)) {
+		                  	if(!empty($average_grade2) || !empty($schl_year2) || !empty($yr_level2)) {
 		                  		echo <<<REMBUT
 		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(2,'$stud_id');">Remove Record</button>
 REMBUT;
@@ -489,7 +489,7 @@ YR1;
 		                    						} ?></h2>	
 		                  </div>
 		                  <?php 
-		                  	if(!empty($average_grade1)) {
+		                  	if(!empty($average_grade3) || !empty($schl_year3) || !empty($yr_level3)) {
 		                  		echo <<<REMBUT
 		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(3,'$stud_id');">Remove Record</button>
 REMBUT;
@@ -633,7 +633,7 @@ YR1;
 		                    						} ?></h2>	
 		                  </div>
 		                  <?php 
-		                  	if(!empty($average_grade1)) {
+		                  	if(!empty($average_grade4) || !empty($schl_year4) || !empty($yr_level4)) {
 		                  		echo <<<REMBUT
 		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(4,'$stud_id');">Remove Record</button>
 REMBUT;
