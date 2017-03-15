@@ -72,7 +72,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form id="signatory-add" class="form-horizontal form-label-left" action="phpinsert/signatory_insert.php" method="POST" novalidate>
+                    <form id="signatory-add" class="form-horizontal form-label-left" action="phpinsert/signatory_insert.php" method="POST" data-parsley-trigger="keyup">
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Signatory ID</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -81,6 +81,13 @@
                                      data-parsley-pattern-message="Signatory ID Invalid"
                                      data-parsley-maxlength="50"
                                      data-parsley-maxlength-message="Error">
+                                     <?php
+                                            if(isset($_SESSION['error_msg_signatory'])) {
+                                                $error_msg_signatory = $_SESSION['error_msg_signatory'];
+                                                echo "<p style='color: red'>$error_msg_signatory</p>";
+                                                unset($_SESSION['error_msg_signatory']);
+                                         }
+                                     ?>
                             </div>
                         </div>
 
@@ -237,7 +244,6 @@ window.ParsleyValidator.addValidator('ge',
     function (value, requirement) {
         return parseFloat(value) >= parseFloat($(requirement).val());
     }, 32)
-    .addMessage('en', 'ge', 'This value should be greater or equal');
 </script>
 <!-- /Parsley -->
 </body>

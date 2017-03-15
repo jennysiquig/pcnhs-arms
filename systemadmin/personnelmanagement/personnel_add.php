@@ -68,7 +68,7 @@
                     <br>
 
                     <div class="x_content">
-                        <form id="personnel-add" class="form-horizontal form-label-left" action="phpinsert/personnel_insert.php" method="POST" novalidate data-parsley-trigger="keyup">
+                        <form id="personnel-add" class="form-horizontal form-label-left" action="phpinsert/personnel_insert.php" method="POST" data-parsley-trigger="keyup">
 
                             <div class="item form-group"><br>
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
@@ -78,6 +78,13 @@
                                      data-parsley-pattern-message="Personnel ID Invalid"
                                      data-parsley-maxlength="50"
                                      data-parsley-maxlength-message="Error">
+                                     <?php
+                                            if(isset($_SESSION['error_msg_personnel1'])) {
+                                                $error_msg_personnel1 = $_SESSION['error_msg_personnel1'];
+                                                echo "<p style='color: red'>$error_msg_personnel1</p>";
+                                                unset($_SESSION['error_msg_personnel1']);
+                                         } 
+                                     ?>
                                 </div>
                             </div>
 
@@ -89,6 +96,13 @@
                                      data-parsley-minlength-message="User Name should be greater than 4 characters"
                                      data-parsley-maxlength="50"
                                      data-parsley-maxlength-message="Error">
+                                     <?php
+                                            if(isset($_SESSION['error_msg_personnel2'])) {
+                                                $error_msg_personnel2 = $_SESSION['error_msg_personnel2'];
+                                                echo "<p style='color: red'>$error_msg_personnel2</p>";
+                                                unset($_SESSION['error_msg_personnel2']);
+                                         } 
+                                     ?>
                                 </div>
                             </div>
 
@@ -100,6 +114,19 @@
                                      data-parsley-minlength-message="Password should be greater than 4 characters"
                                      data-parsley-maxlength="50"
                                      data-parsley-maxlength-message="Error">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Confirm Password</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="password2" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password2" 
+                                     data-parsley-minlength="4"
+                                     data-parsley-minlength-message="Password should be greater than 4 characters"
+                                     data-parsley-maxlength="50"
+                                     data-parsley-maxlength-message="Error"
+                                     data-parsley-equalto = "#password"
+                                     data-parsley-equalto-message = "Password does not match">
                                 </div>
                             </div>
 
@@ -252,5 +279,8 @@ OPTION2;
         } catch (err) {}
     </script>
     <!-- /Parsley -->
+    <script>
+
+    </script>
 </body>
 </html>

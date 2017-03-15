@@ -121,13 +121,26 @@
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="password" value=<?php echo "'$password'"; ?>
+                                <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" value=<?php echo "'$password'"; ?>
                                      data-parsley-minlength="4"
                                      data-parsley-minlength-message="Password should be greater than 4 characters"
                                      data-parsley-maxlength="50"
                                      data-parsley-maxlength-message="Error">
                             </div>
                         </div>
+
+                        <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Confirm Password</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="password2" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password2" 
+                                     data-parsley-minlength="4"
+                                     data-parsley-minlength-message="Password should be greater than 4 characters"
+                                     data-parsley-maxlength="50"
+                                     data-parsley-maxlength-message="Error"
+                                     data-parsley-equalto = "#password"
+                                     data-parsley-equalto-message = "Password does not match">
+                                </div>
+                            </div>
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
