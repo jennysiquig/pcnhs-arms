@@ -9,7 +9,7 @@ echo <<<SB
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="$base_url/registrar/index.php" class="site_title"><i class="fa fa-book"></i> <span>PCNHS SIS</span></a>
+              <a href="$base_url/registrar/index.php" class="site_title"><i class="fa fa-book"></i> <span>PCNHS-ARMS</span></a>
             </div>
 
             <div class="clearfix"></div>

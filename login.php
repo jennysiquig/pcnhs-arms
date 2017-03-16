@@ -81,7 +81,7 @@
                 <br />
                 <div>
                   <h1><i class="fa fa-book"></i> Pines City National Highshool</h1>
-                  <h2>Student Information System</h2>
+                  <h2>Academic Records Mananagement System</h2>
                   <p>To login as Registrar, use the Registrar credential.</p>
                   <p>To login as System Admin, use the System Admin credential.</p>
                 </div>
