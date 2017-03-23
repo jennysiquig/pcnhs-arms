@@ -26,7 +26,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
         
-        
+        <!-- NProgress -->
+        <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
         <!-- Bootstrap -->
         <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -63,7 +64,36 @@
                 </div>
                 <div class="x_content">
                     <!-- First -->
-                    <form id="val-gr" class="form-horizontal form-label-left" action=<?php $stud_id = $_GET['stud_id']; echo "grades_form.php?stud_id=$stud_id" ?> method="POST" novalidate>
+                    <?php 
+                        $stud_id = $_GET['stud_id'];
+                        $yr_level = $_GET['yr_level'];
+
+                    ?>
+                    <form id="val-gr" class="form-horizontal form-label-left" action=<?php  echo "grades_form.php"; ?> method="GET" novalidate>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                
+                                    <?php
+                                 
+                                    echo <<<SP
+                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="stud_id" readonly value='$stud_id'>                                     
+SP;
+                                    ?>
+                                
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <?php
+                                 
+                                    echo <<<SP
+                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="yr_level" readonly value='$yr_level'>                                     
+SP;
+                                    ?>
+                            </div>
+                        </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Program</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
@@ -193,18 +223,6 @@ OPTION2;
                                     <input type="text" class="form-control col-md-7 col-xs-12" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" required="" >
                                 </div>
                             </div>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Year or Grade</label>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <select class="form-control col-md-7 col-xs-12" name="yr_level" required="">
-                                        <option value="" selected="" disabled="">-- No Selected --</option>
-                                        <option value="1">Year 1 or Grade 7</option>
-                                        <option value="2">Year 2 or Grade 8</option>
-                                        <option value="3">Year 3 or Grade 9</option>
-                                        <option value="4">Year 4 or Grade 10</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="clearfix"></div>
                             <div class="ln_solid"></div>
                             <div class="form-group">
@@ -229,6 +247,8 @@ OPTION2;
             <!-- input mask -->
             <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
             <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+            <!-- NProgress -->
+            <script src="../../resources/libraries/nprogress/nprogress.js"></script>
             <!-- Custom Theme Scripts -->
             <script src= "../../js/custom.min.js"></script>
             <!-- Scripts -->

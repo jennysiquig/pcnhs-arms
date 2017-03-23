@@ -26,7 +26,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		
-		
+		<!-- NProgress -->
+    	<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
@@ -297,6 +298,8 @@
 			<!-- input mask -->
 			<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 			<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+			<!-- NProgress -->
+    		<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 			<!-- Custom Theme Scripts -->
 			<script src= "../../js/custom.min.js"></script>
 			<!-- Scripts -->

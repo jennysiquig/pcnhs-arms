@@ -26,7 +26,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		
-		
+		<!-- NProgress -->
+    	<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
@@ -56,7 +57,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
 			<div class="clearfix"></div>
-			<form id="validate-add" class="form-horizontal form-label-left" data-parsley-validate action= "phpinsert/student_info_insert.php" method="POST" >
+			<form id="validate-add" class="form-horizontal form-label-left" name="validate-add" data-parsley-validate action= "phpinsert/student_info_insert.php" method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Student Personal Information</h2>
@@ -285,7 +286,7 @@ OPTION1;
 								<div class="ln_solid"></div>
 								<div class="form-group">
 									<div class="col-md-3 col-md-offset-3 pull-right">
-										<button type="submit" class="btn btn-success"><i class="fa fa-save m-right-xs"></i> Save Changes</button>
+										<button type="submit" class="btn btn-success"><i class="fa fa-save m-right-xs"></i> Add Student</button>
 									</div>
 								</div>
 							</div>
@@ -308,6 +309,10 @@ OPTION1;
 				<!-- input mask -->
 				<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 				<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+				<!-- Local Storage -->
+				<script src= "../../resources/libraries/sisyphus/sisyphus.js"></script>
+				<!-- NProgress -->
+    			<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 				<!-- Custom Theme Scripts -->
 				<script src= "../../js/custom.min.js"></script>
 				<!-- Scripts -->
@@ -350,6 +355,17 @@ OPTION1;
 	                });
 	            </script>
                 <!-- /jquery.inputmask -->
+
+                <!-- Sisyphus -->
+                <script type="text/javascript">
+                	// Here we'll persist the form's data into localStorage on
+					// every keystroke
+					$( function() {
+					$( "#validate-add" ).sisyphus();
+					// or you can persist all forms data at one command
+					// $( "form" ).sisyphus();
+					} );
+                </script>
 
 			</body>
 		</html>

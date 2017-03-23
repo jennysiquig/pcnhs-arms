@@ -69,16 +69,12 @@
 				<div class="x_content">
 				<!-- First Year -->
 					<div class="col-md-12 col-sm-6 col-xs-12">
-					
-
+					<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Grades</a>
 						<?php
 
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
-							$schl_name1 = "";
-							$yr_level1 = "";
-							$schl_year1 = "";
 							$stud_id = $_GET['stud_id'];
 							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 1 and studentsubjects.stud_id = '$stud_id';";
 							$result = $conn->query($query);
@@ -91,11 +87,6 @@
 								}
 							}
 							
-						if(empty($schl_year1) || $schl_year1 == "" || is_null($schl_year1)) {
-							echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=1'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-						}else {
-							echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=1'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-						}
 
 						?>
 		                <div class="x_panel">
@@ -183,7 +174,7 @@ YR1;
 								}
 							?>
 		                    <h2>Average Grade: <?php if(!empty($average_grade1)){
-		                    						echo substr($average_grade1, 0,5);
+		                    						echo $average_grade1;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>
@@ -224,16 +215,11 @@ REMBUT;
 				<!-- First Year -->
 				<!-- Second Year -->
 					<div class="col-md-12 col-sm-6 col-xs-12">
-					
-
 						<?php
 
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
-							$schl_name2 = "";
-							$yr_level2 = "";
-							$schl_year2 = "";
 							$stud_id = $_GET['stud_id'];
 							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 2 and studentsubjects.stud_id = '$stud_id';";
 							$result = $conn->query($query);
@@ -246,16 +232,6 @@ REMBUT;
 								}
 							}
 							
-						if(empty($schl_year1) || $schl_year1 == "" || is_null($schl_year1)) {
-							echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=2'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-						}else {
-							if(empty($schl_year2) || $schl_year2 == "" || is_null($schl_year2)) {
-								echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=2'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}else {
-								echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=2'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}
-							
-						}
 
 						?>
 		                <div class="x_panel">
@@ -299,7 +275,7 @@ REMBUT;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
+									$query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -343,11 +319,13 @@ YR1;
 								}
 							?>
 		                    <h2>Average Grade: <?php if(!empty($average_grade2)){
-		                    						echo substr($average_grade2, 0,5);
+		                    						echo $average_grade2;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>
-		                    						 <?php
+
+		                    
+		                     <?php
 
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
@@ -365,7 +343,7 @@ YR1;
 		                    						echo $total_unit2;
 		                    						}else {
 		                    							echo "None";
-		                    						} ?></h2>	
+		                    						} ?></h2>						
 		                  </div>
 		                  <?php 
 		                  	if(!empty($average_grade2) || !empty($schl_year2) || !empty($yr_level2)) {
@@ -378,22 +356,16 @@ REMBUT;
 REMBUT;
 		                  	}
 		                  ?>
-		                    
 		                </div>
 		              </div>
 				<!-- Second Year -->
 				<!-- Third Year -->
 					<div class="col-md-12 col-sm-6 col-xs-12">
-					
-
 						<?php
 
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
-							$schl_name3 = "";
-							$yr_level3 = "";
-							$schl_year3 = "";
 							$stud_id = $_GET['stud_id'];
 							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 3 and studentsubjects.stud_id = '$stud_id';";
 							$result = $conn->query($query);
@@ -406,16 +378,6 @@ REMBUT;
 								}
 							}
 							
-						if(empty($schl_year2) || $schl_year2 == "" || is_null($schl_year2)) {
-							echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=3'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-						}else {
-							if(empty($schl_year3) || $schl_year3 == "" || is_null($schl_year3)) {
-								echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=3'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}else {
-								echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=3'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}
-							
-						}
 
 						?>
 		                <div class="x_panel">
@@ -459,11 +421,13 @@ REMBUT;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
+									$query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
 										while($row = $result->fetch_assoc()) {
+											$yr_level3 = $row['yr_level'];
+											$schl_year3 = $row['schl_year'];
 											$subj_name3 = $row['subj_name'];
 											$subj_level3 = $row['subj_level'];
 											$fin_grade3 = $row['fin_grade'];
@@ -498,16 +462,16 @@ YR1;
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$average_grade2 = $row['average_grade'];
+										$average_grade3 = $row['average_grade'];
 									}
 								}
 							?>
-		                    <h2>Average Grade: <?php if(!empty($average_grade3)){
-		                    						echo substr($average_grade3, 0,5);
+		                   <h2>Average Grade: <?php if(!empty($average_grade3)){
+		                    						echo $average_grade3;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>
-		                    						 <?php
+		                     <?php
 
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
@@ -538,22 +502,16 @@ REMBUT;
 REMBUT;
 		                  	}
 		                  ?>
-		                    
 		                </div>
 		              </div>
 				<!-- Third Year -->
 				<!-- Fourth Year -->
 					<div class="col-md-12 col-sm-6 col-xs-12">
-					
-
 						<?php
 
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
-							$schl_name4 = "";
-							$yr_level4 = "";
-							$schl_year4 = "";
 							$stud_id = $_GET['stud_id'];
 							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 4 and studentsubjects.stud_id = '$stud_id';";
 							$result = $conn->query($query);
@@ -566,16 +524,6 @@ REMBUT;
 								}
 							}
 							
-						if(empty($schl_year3) || $schl_year3 == "" || is_null($schl_year3)) {
-							echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=4'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-						}else {
-							if(empty($schl_year4) || $schl_year4 == "" || is_null($schl_year4)) {
-								echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=4'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}else {
-								echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=4'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}
-							
-						}
 
 						?>
 		                <div class="x_panel">
@@ -658,16 +606,16 @@ YR1;
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$average_grade2 = $row['average_grade'];
+										$average_grade4 = $row['average_grade'];
 									}
 								}
 							?>
 		                    <h2>Average Grade: <?php if(!empty($average_grade4)){
-		                    						echo substr($average_grade4, 0,5);
+		                    						echo $average_grade4;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>
-		                    						 <?php
+		                     <?php
 
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
@@ -698,10 +646,13 @@ REMBUT;
 REMBUT;
 		                  	}
 		                  ?>
-		                    
 		                </div>
 		              </div>
 				<!-- Fourth Year -->
+              		<div class="clearfix"></div>
+              		
+				</div>
+
 			</div>
 			<!-- Other Subjects -->
 			<div class="x_panel">
@@ -811,8 +762,6 @@ REMBUT;
 		<!-- input mask -->
 		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
-		<!-- NProgress -->
-    	<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../js/custom.min.js"></script>
 		<!-- Scripts -->

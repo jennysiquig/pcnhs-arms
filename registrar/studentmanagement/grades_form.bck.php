@@ -66,7 +66,7 @@
                     <!-- First -->
                     <form id="val-gr-form" class="form-horizontal form-label-left" name="val-gr-form" action="phpinsert/grades_insert.php" method="POST" novalidate>
                         <?php
-                            $schl_name = $_GET['schl_name'];
+                            $schl_name = $_POST['schl_name'];
                             echo "<h4>School Name: <input value='$schl_name' name='schl_name' readonly></h4>";
                         ?>
                         <?php
@@ -74,18 +74,18 @@
                             echo "<h4>Student ID: <input value='$stud_id' name='stud_id' readonly></h4>";
                         ?>
                         <?php
-                            $sy = $_GET['schl_year'];
+                            $sy = $_POST['schl_year'];
                             echo "<h4>School Year: <input value='$sy' name='schl_year' readonly></h4>";
                         ?>
                         <?php
-                            $sp = $_GET['program'];
+                            $sp = $_POST['program'];
                             echo "<h4>Program: <input value='$sp' name='program' readonly></h4>";
                         ?>
                         <?php
                             if(!$conn) {
                                 die();
                             }
-                            $curr_id = $_GET['curriculum'];
+                            $curr_id = $_POST['curriculum'];
                             $statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id";
 
                             $result = $conn->query($statement);
@@ -98,7 +98,7 @@
                             }
                         ?>
                         <?php
-                            $year = $_GET['yr_level'];
+                            $year = $_POST['yr_level'];
                             $grade = ((int) $year)+6;
                             echo "<h4>Year Level: <input value='$year' name='yr_level' style='width: 20px;' readonly> | Grade: <input value='$grade' style='width: 20px;' readonly></h4>";
                         ?>
@@ -116,16 +116,15 @@
                             <tbody id="subj_list">
                                 <?php
                                 $curriculum;
-                                if($_GET['curriculum_subj'] == "none") {
-                                    $curriculum = $_GET['curriculum'];
+                                if($_POST['curriculum_subj'] == "none") {
+                                    $curriculum = $_POST['curriculum'];
                                 }else {
-                                    $curriculum = $_GET['curriculum_subj'];
+                                    $curriculum = $_POST['curriculum_subj'];
                                 }
                                 
-                                $yr_level_needed = $_GET['yr_level'];
-                                $prog_id = $_GET['prog_id'];
+                                $yr_level_needed = $_POST['yr_level'];
+                                $prog_id = $_POST['prog_id'];
                                 $total_unit = 0;
-                                $numberOfSubj = 0;
                                 $statement = "SELECT * from subjects NATURAL JOIN subjectcurriculum NATURAL JOIN curriculum NATURAL JOIN programs NATURAL JOIN subjectprogram WHERE subjectcurriculum.curr_id = $curriculum AND yr_level_needed = $yr_level_needed AND prog_id = $prog_id";
                                 $result = $conn->query($statement);
                                 if($result->num_rows>0) {
@@ -136,21 +135,17 @@
                                 $subj_level = $row['subj_level'];
                                 $unit = $row['unit'];
                                 $total_unit += $unit;
-                                $numberOfSubj += 1;
                                 //$curr_name = $row['curr_name'];
 
                                 if(strtolower($subj_name) == "makabayan i" || strtolower($subj_name) == "makabayan ii" || strtolower($subj_name) == "makabayan iii" || strtolower($subj_name) == "makabayan iv") {
-                                    
-                                    $numberOfSubj -= 1;
-
                                     echo <<<SUBJ
                                 
                                 <tr>
-                                    <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
+                                    <td><input value="$subj_id" style="width: 50px;" readonly></td>
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td>$unit</td>
-                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" value="0" readonly></td>
+                                    <td></td>
                                     
                                 </tr>
                                 
@@ -164,7 +159,7 @@ SUBJ;
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td>$unit</td>
-                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d*" minlength="2" maxlength="2" onblur="saveToDB(this.value)" required></td>
+                                    <td><input type="text" style="width: 50px;" name="fin_grade[]" pattern="\d*|.{2,}" minlength="2" maxlength="2" onblur="saveToDB(this.value);" required></td>
                                     
                                 </tr>
                                 
@@ -173,7 +168,7 @@ SUBJ;
                                 
                                     }
                                 }
-                                    echo "Number of Subjects: <input type='number' id='num_subj' style='width: 50px; text-align:center;'' value='$numberOfSubj' readonly>";
+                                
                                 ?>
                                 
                             </tbody>
@@ -208,7 +203,7 @@ SUBJ;
         <script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
         <!-- input mask -->
         <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-        <script src= "../../resources/libraries/parsleyjs/dist/parsley.js"></script>
+        <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
         <!-- Local Storage -->
         <script src= "../../resources/libraries/sisyphus/sisyphus.js"></script>
         <!-- NProgress -->
@@ -259,8 +254,7 @@ SUBJ;
                 var average = document.getElementById('average');
                 var computed_average = 0;
                 var total_finalgrade = 0;
-                var num_subj = parseInt(document.getElementById('num_subj').value);
-                console.log(num_subj);
+
                 if(x == "") {
 
                 }else {
@@ -269,7 +263,7 @@ SUBJ;
                         total_finalgrade += parseInt(fin_grade[i].value);
 
                     }
-                    computed_average = total_finalgrade/num_subj;
+                    computed_average = total_finalgrade/subj_id.length;
                     average.value = computed_average;
                     console.log(parseInt(total_finalgrade));
                     console.log(parseInt(computed_average));

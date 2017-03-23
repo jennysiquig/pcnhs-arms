@@ -26,7 +26,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     
-    
+    <!-- NProgress -->
+      <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -213,7 +214,8 @@ STUDLIST;
     <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src= "../../js/custom.min.js"></script>
-    
+    <!-- NProgress -->
+    <script src="../../resources/libraries/nprogress/nprogress.js"></script>
     <script type="text/javascript" src=<?php echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
     <!-- Scripts -->
     
