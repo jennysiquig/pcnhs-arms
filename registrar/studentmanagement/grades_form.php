@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
 <?php
     session_start();
@@ -16,8 +17,45 @@
       header('Location: ../../login.php');
     }
 
-  ?>
-<!DOCTYPE html>
+?>
+<!-- Validations -->
+<?php
+    $stud_id = $_GET['stud_id'];
+    if(!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $pschool_year = "";
+    $getsy = $_GET['schl_year'];
+    $statement = "SELECT * FROM pcnhsdb.students NATURAL JOIN primaryschool where stud_id = '$stud_id';";
+    $result = $conn->query($statement);
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            $pschool_year = $row['pschool_year'];
+        }
+    }
+
+    $explode_date_input = explode("-", $getsy);
+    $explode_date_compare = explode("-", $pschool_year);
+
+    $input_year1 = intval($explode_date_input[0]);
+    $input_year2 = intval($explode_date_input[1]);
+
+    $compare_year1 = intval($explode_date_compare[0]);
+    $compare_year2 = intval($explode_date_compare[1]);
+
+
+
+    if($input_year1 <= $compare_year1 || $input_year2 <= $compare_year2) {
+        $_SESSION['error_message'] = "<p style='color: red'><b>Invalid School Year</b></p>";
+        $yr_level_check = $_GET['yr_level'];
+        header("location: add_grades.php?stud_id=$stud_id&yr_level=$yr_level_check");
+    }
+
+?>
+
+
+<!-- Validations -->
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -182,7 +220,7 @@ SUBJ;
                         <div class="clearfix"></div>
                         <div class="col-md-2 col-xs-12">
                             <label for="average">Average Grade: </label>
-                            <input id="average" class="form-control" type="text" style="width: 70px;" value="" name="average_grade" readonly="">
+                            <input id="average" class="form-control" type="text" style="width: 70px;" value="" name="average_grade">
                         </div>
                         <div class="col-md-2 col-xs-12">
                             <label for="total_unit">Total Units: </label>

@@ -376,7 +376,7 @@ CREDC;
 							</div>
 							<div class="col-md-3 pull-right">
 								<?php
-									if($attendancecount > 0 && $gradecount > 0) {
+									if($attendancecount > 3 && $gradecount > 3) {
 										echo <<<GEN
 											<a class="btn btn-primary" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
 GEN;

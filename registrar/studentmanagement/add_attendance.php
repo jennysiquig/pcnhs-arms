@@ -66,21 +66,67 @@
                     <!-- First -->
                     <form id="val-gr" class="form-horizontal form-label-left" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/attendance_insert.php?stud_id=$stud_id" ?> method="POST" novalidate>
                             <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level or Grade</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level</label>
                                 <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <select class="form-control col-md-7 col-xs-12" name="yr_level" required="">
-                                        <option value="" selected="" disabled="">-- No Selected --</option>
-                                        <option value="1">Year 1 or Grade 7</option>
-                                        <option value="2">Year 2 or Grade 8</option>
-                                        <option value="3">Year 3 or Grade 9</option>
-                                        <option value="4">Year 4 or Grade 10</option>
-                                    </select>
+                                    <input type="text" class="form-control col-md-7 col-xs-12" name="yr_level" value=<?php echo $_GET['yr_level'] ?> readonly="" >
                                 </div>
                             </div>
+                            <?php
+                                        $stud_id = $_GET['stud_id'];
+                                        if(!$conn) {
+                                            die("Connection failed: " . mysqli_connect_error());
+                                        }
+
+                                        if($_GET['yr_level'] > 1) {
+
+                                            $pschool_year = "";
+
+                                            $yr_level_1 = intval($_GET['yr_level'])-1;
+                                            $statement = "SELECT * from attendance where stud_id = '$stud_id' and yr_lvl = $yr_level_1;";
+                                            $result = $conn->query($statement);
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                while($row = $result->fetch_assoc()) {
+                                                    $pschool_year = $row['schl_yr'];
+                                                }
+                                            }
+
+                                            $explode_pschool_year = explode("-", $pschool_year);
+
+                                            $yr1 = intval($explode_pschool_year[0]);
+                                            $yr2 = intval($explode_pschool_year[1]);
+                                            
+                                            $yr1plus1 = $yr1+1;
+                                            $yr2plus1 = $yr2+1;
+                                            $stryr = $yr1plus1.' - '.$yr2plus1;
+
+                                        }else {
+                                             $pschool_year = "";
+                                        
+                                            $statement = "SELECT * FROM pcnhsdb.students NATURAL JOIN primaryschool where stud_id = '$stud_id';";
+                                            $result = $conn->query($statement);
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                while($row = $result->fetch_assoc()) {
+                                                    $pschool_year = $row['pschool_year'];
+                                                }
+                                            }
+
+                                            
+                                            $explode_pschool_year = explode("-", $pschool_year);
+
+                                            $yr1 = intval($explode_pschool_year[0]);
+                                            $yr2 = intval($explode_pschool_year[1]);
+                                            
+                                            $yr1plus1 = $yr1+1;
+                                            $yr2plus1 = $yr2+1;
+                                            $stryr = $yr1plus1.' - '.$yr2plus1;
+                                            }
+                                    ?>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year</label>
                                 <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <input type="text" class="form-control col-md-7 col-xs-12" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" required="" >
+                                    <input type="text" class="form-control col-md-7 col-xs-12" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" value=<?php echo "'$stryr'"; ?> required="" >
                                 </div>
                             </div>
                             <div class="item form-group">

@@ -217,10 +217,75 @@ OPTION2;
                                     ?>
                                 </div>
                             </div>
+                            <!-- Error MSG -->
+                            
+                            <!--  -->
                             <div class="item form-group">
+
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year</label>
                                 <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <input type="text" class="form-control col-md-7 col-xs-12" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" required="" >
+                                    <?php
+                                        $stud_id = $_GET['stud_id'];
+                                        if(!$conn) {
+                                            die("Connection failed: " . mysqli_connect_error());
+                                        }
+
+                                        if($_GET['yr_level'] > 1) {
+
+                                            $pschool_year = "";
+
+                                            $yr_level_1 = intval($_GET['yr_level'])-1;
+                                            $statement = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = '$yr_level_1' and studentsubjects.stud_id = '$stud_id';";
+                                            $result = $conn->query($statement);
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                while($row = $result->fetch_assoc()) {
+                                                    $pschool_year = $row['schl_year'];
+                                                }
+                                            }
+
+                                            $explode_pschool_year = explode("-", $pschool_year);
+
+                                            $yr1 = intval($explode_pschool_year[0]);
+                                            $yr2 = intval($explode_pschool_year[1]);
+                                            
+                                            $yr1plus1 = $yr1+1;
+                                            $yr2plus1 = $yr2+1;
+                                            $stryr = $yr1plus1.' - '.$yr2plus1;
+
+                                        }else {
+                                             $pschool_year = "";
+                                        
+                                            $statement = "SELECT * FROM pcnhsdb.students NATURAL JOIN primaryschool where stud_id = '$stud_id';";
+                                            $result = $conn->query($statement);
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                while($row = $result->fetch_assoc()) {
+                                                    $pschool_year = $row['pschool_year'];
+                                                }
+                                            }
+
+                                            
+                                            $explode_pschool_year = explode("-", $pschool_year);
+
+                                            $yr1 = intval($explode_pschool_year[0]);
+                                            $yr2 = intval($explode_pschool_year[1]);
+                                            
+                                            $yr1plus1 = $yr1+1;
+                                            $yr2plus1 = $yr2+1;
+                                            $stryr = $yr1plus1.' - '.$yr2plus1;
+                                            }
+                                    ?>
+                                    <input type="text" class="form-control col-md-7 col-xs-12" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" value=<?php echo "'$stryr'"; ?> required="" >
+                                    <div id="sy-input-error">
+                                    <?php
+                                        if(isset($_SESSION['error_message'])) {
+                                            echo $_SESSION['error_message'];
+                                            unset($_SESSION['error_message']);
+
+                                        }
+                                    ?>
+                                </div>
                                 </div>
                             </div>
                             <div class="clearfix"></div>

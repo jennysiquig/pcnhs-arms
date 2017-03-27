@@ -99,6 +99,10 @@
 
 						?>
 		                <div class="x_panel">
+		                	<ul class="nav navbar-right panel_toolbox">
+		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+		                      </li>
+		                    </ul>
 		                  <div class="x_title">
 		                    <h2>Year Level: <?php if(!empty($yr_level1)){
 		                    						echo $yr_level1;
@@ -208,13 +212,32 @@ YR1;
 		                    						} ?></h2>	
 		                  </div>
 		                  <?php 
-		                  	if(!empty($average_grade1) || !empty($schl_year1) || !empty($yr_level1)) {
+		                  // Check if year 2 has record, if true, previous record cannot be deleted.
+							if(!$conn) {
+								die("Connection failed: " . mysqli_connect_error());
+							}
+							$schl_name2 = "";
+							$yr_level2 = "";
+							$schl_year2 = "";
+							$stud_id = $_GET['stud_id'];
+							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 2 and studentsubjects.stud_id = '$stud_id';";
+							$result = $conn->query($query);
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+									$schl_name2 = $row['schl_name'];
+									$yr_level2 = $row['yr_level'];
+									$schl_year2 = $row['schl_year'];
+								}
+							}
+
+		                  	if(!empty($average_grade1) && !empty($schl_year1) && !empty($yr_level1) && empty($schl_year2) && empty($yr_level2)) {
 		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(1,'$stud_id');">Remove Record</button>
+		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(1,'$stud_id');">Remove Record</button>
 REMBUT;
 		                  	}else {
 		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(1,'$stud_id';);" disabled="">Remove Record</button>
+		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(1,'$stud_id';);" disabled="">Remove Record</button>
 REMBUT;
 		                  	}
 		                  ?>
@@ -259,6 +282,10 @@ REMBUT;
 
 						?>
 		                <div class="x_panel">
+		                	<ul class="nav navbar-right panel_toolbox">
+		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+		                      </li>
+		                    </ul>
 		                  <div class="x_title">
 		                    <h2>Year Level: <?php if(!empty($yr_level2)){
 		                    						echo $yr_level2;
@@ -368,13 +395,31 @@ YR1;
 		                    						} ?></h2>	
 		                  </div>
 		                  <?php 
-		                  	if(!empty($average_grade2) || !empty($schl_year2) || !empty($yr_level2)) {
+		                  	if(!$conn) {
+								die("Connection failed: " . mysqli_connect_error());
+							}
+							$schl_name3 = "";
+							$yr_level3 = "";
+							$schl_year3 = "";
+							$stud_id = $_GET['stud_id'];
+							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 3 and studentsubjects.stud_id = '$stud_id';";
+							$result = $conn->query($query);
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+									$schl_name3 = $row['schl_name'];
+									$yr_level3 = $row['yr_level'];
+									$schl_year3 = $row['schl_year'];
+								}
+							}
+
+		                  	if(!empty($average_grade2) && !empty($schl_year2) && !empty($yr_level2) && empty($schl_year3) && empty($yr_level3)) {
 		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(2,'$stud_id');">Remove Record</button>
+		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(2,'$stud_id');">Remove Record</button>
 REMBUT;
 		                  	}else {
 		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(2,'$stud_id';);" disabled="">Remove Record</button>
+		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(2,'$stud_id';);" disabled="">Remove Record</button>
 REMBUT;
 		                  	}
 		                  ?>
@@ -419,6 +464,10 @@ REMBUT;
 
 						?>
 		                <div class="x_panel">
+		                	<ul class="nav navbar-right panel_toolbox">
+		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+		                      </li>
+		                    </ul>
 		                  <div class="x_title">
 		                    <h2>Year Level: <?php if(!empty($yr_level3)){
 		                    						echo $yr_level3;
@@ -498,7 +547,7 @@ YR1;
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$average_grade2 = $row['average_grade'];
+										$average_grade3 = $row['average_grade'];
 									}
 								}
 							?>
@@ -527,14 +576,32 @@ YR1;
 		                    							echo "None";
 		                    						} ?></h2>	
 		                  </div>
-		                  <?php 
-		                  	if(!empty($average_grade3) || !empty($schl_year3) || !empty($yr_level3)) {
+		                  <?php
+		                  	if(!$conn) {
+								die("Connection failed: " . mysqli_connect_error());
+							}
+							$schl_name4 = "";
+							$yr_level4 = "";
+							$schl_year4 = "";
+							$stud_id = $_GET['stud_id'];
+							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 4 and studentsubjects.stud_id = '$stud_id';";
+							$result = $conn->query($query);
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+									$schl_name4 = $row['schl_name'];
+									$yr_level4 = $row['yr_level'];
+									$schl_year4 = $row['schl_year'];
+								}
+							}
+
+		                  	if(!empty($average_grade3) && !empty($schl_year3) && !empty($yr_level3) && empty($schl_year4) && empty($yr_level4)) {
 		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(3,'$stud_id');">Remove Record</button>
+		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(3,'$stud_id');">Remove Record</button>
 REMBUT;
 		                  	}else {
 		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(3,'$stud_id';);" disabled="">Remove Record</button>
+		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(3,'$stud_id';);" disabled="">Remove Record</button>
 REMBUT;
 		                  	}
 		                  ?>
@@ -579,6 +646,10 @@ REMBUT;
 
 						?>
 		                <div class="x_panel">
+		                	<ul class="nav navbar-right panel_toolbox">
+		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+		                      </li>
+		                    </ul>
 		                  <div class="x_title">
 		                    <h2>Year Level: <?php if(!empty($yr_level4)){
 		                    						echo $yr_level4;
@@ -658,7 +729,7 @@ YR1;
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$average_grade2 = $row['average_grade'];
+										$average_grade4 = $row['average_grade'];
 									}
 								}
 							?>
@@ -690,11 +761,11 @@ YR1;
 		                  <?php 
 		                  	if(!empty($average_grade4) || !empty($schl_year4) || !empty($yr_level4)) {
 		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(4,'$stud_id');">Remove Record</button>
+		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(4,'$stud_id');">Remove Record</button>
 REMBUT;
 		                  	}else {
 		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger pull-right" onclick="removeGrade(4,'$stud_id';);" disabled="">Remove Record</button>
+		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(4,'$stud_id';);" disabled="">Remove Record</button>
 REMBUT;
 		                  	}
 		                  ?>
@@ -702,9 +773,14 @@ REMBUT;
 		                </div>
 		              </div>
 				<!-- Fourth Year -->
-			</div>
+			
 			<!-- Other Subjects -->
+			<div class="col-md-12 col-sm-6 col-xs-12">
 			<div class="x_panel">
+				<ul class="nav navbar-right panel_toolbox">
+		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+		                      </li>
+		                    </ul>
 				<div class="x_title">
 					<h2>Other Subjects</h2>
 					<div class="clearfix"></div>
@@ -714,13 +790,7 @@ REMBUT;
 					<!--  -->
 					<div class="col-md-12 col-sm-6 col-xs-12">
 					<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
-		                <div class="x_panel">
-		                  <div class="x_title">
-		                    <h2></h2>
-		                    
-		                    <div class="clearfix"></div>
-		                  </div>
-		                  <div class="x_content">
+		                
 		                  	
 		                    <table class="table table-bordered">
 		                      <thead>
@@ -779,20 +849,23 @@ YR1;
 		                        
 		                      </tbody>
 		                    </table>	
-		                  </div>
+		                  
 		                  <?php 
 		                  	if(!empty($schl_name)) {
 		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger pull-right" onclick="removeOtherSubjects('$stud_id');">Remove Record</button>
+		                  			<button class="btn btn-danger btn-xs" onclick="removeOtherSubjects('$stud_id');">Remove Record</button>
 REMBUT;
 		                  	}else {
 		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger pull-right" onclick="removeOtherSubjects('$stud_id';);" disabled="">Remove Record</button>
+		                  			<button class="btn btn-danger btn-xs" onclick="removeOtherSubjects('$stud_id';);" disabled="">Remove Record</button>
 REMBUT;
 		                  	}
 		                  ?>
 		                </div>
 		              </div>
+		            </div>
+		           </div>
+		          </div>
 				<!-- -->
 				<div class="clearfix"></div>
               		
