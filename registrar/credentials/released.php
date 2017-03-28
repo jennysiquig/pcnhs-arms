@@ -56,7 +56,13 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			
+			<div class="col-md-9">
+				<ol class="breadcrumb">
+				  <li><a href="../index.php">Home</a></li>
+				  <li><a href="#">Credentials</a></li>
+				  <li class="active">Released Credentials</li>
+				</ol>
+			</div>
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">

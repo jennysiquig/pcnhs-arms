@@ -89,6 +89,8 @@
 		if(isset($data)) {
 			test_input($data);
 			return $data;
+		}else {
+			return "";
 		}
 	}
 

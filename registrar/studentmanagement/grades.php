@@ -140,7 +140,7 @@
 		                          <th>Subject</th>
 		                          <th>Subject Level</th>
 		                          <th>Final Grade</th>
-		                          <th>Unit</th>
+		                          <th>Credit Earned</th>
 		                          <th>Remarks</th>
 		                        </tr>
 		                      </thead>
@@ -150,7 +150,7 @@
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = '$stud_id';";
+									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -158,7 +158,7 @@
 											$subj_name1 = $row['subj_name'];
 											$subj_level1 = $row['subj_level'];
 											$fin_grade1 = $row['fin_grade'];
-											$unit1 = $row['unit'];
+											$credit_earned1 = $row['credit_earned'];
 											$comment1 = $row['comment'];
 
 											echo <<<YR1
@@ -166,7 +166,7 @@
 						                          <th scope="row">$subj_name1</th>
 						                          <td>$subj_level1</td>
 						                          <td>$fin_grade1</td>
-						                          <td>$unit1</td>
+						                          <td>$credit_earned1</td>
 						                          <td>$comment1</td>
 						                        </tr>
 
@@ -323,7 +323,7 @@ REMBUT;
 		                          <th>Subject</th>
 		                          <th>Subject Level</th>
 		                          <th>Final Grade</th>
-		                          <th>Unit</th>
+		                          <th>Credit Earned</th>
 		                          <th>Remarks</th>
 		                        </tr>
 		                      </thead>
@@ -333,7 +333,7 @@ REMBUT;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
+									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -341,7 +341,7 @@ REMBUT;
 											$subj_name2 = $row['subj_name'];
 											$subj_level2 = $row['subj_level'];
 											$fin_grade2 = $row['fin_grade'];
-											$unit2 = $row['unit'];
+											$credit_earned2 = $row['credit_earned'];
 											$comment2 = $row['comment'];
 
 											echo <<<YR1
@@ -349,7 +349,7 @@ REMBUT;
 						                          <th scope="row">$subj_name2</th>
 						                          <td>$subj_level2</td>
 						                          <td>$fin_grade2</td>
-						                          <td>$unit2</td>
+						                          <td>$credit_earned2</td>
 						                          <td>$comment2</td>
 						                        </tr>
 
@@ -505,7 +505,7 @@ REMBUT;
 		                          <th>Subject</th>
 		                          <th>Subject Level</th>
 		                          <th>Final Grade</th>
-		                          <th>Unit</th>
+		                          <th>Credit Earned</th>
 		                          <th>Remarks</th>
 		                        </tr>
 		                      </thead>
@@ -515,7 +515,7 @@ REMBUT;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
+									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -523,7 +523,7 @@ REMBUT;
 											$subj_name3 = $row['subj_name'];
 											$subj_level3 = $row['subj_level'];
 											$fin_grade3 = $row['fin_grade'];
-											$unit3 = $row['unit'];
+											$credit_earned3 = $row['credit_earned'];
 											$comment3 = $row['comment'];
 
 											echo <<<YR1
@@ -531,7 +531,7 @@ REMBUT;
 						                          <th scope="row">$subj_name3</th>
 						                          <td>$subj_level3</td>
 						                          <td>$fin_grade3</td>
-						                          <td>$unit3</td>
+						                          <td>$credit_earned3</td>
 						                          <td>$comment3</td>
 						                        </tr>
 
@@ -687,7 +687,7 @@ REMBUT;
 		                          <th>Subject</th>
 		                          <th>Subject Level</th>
 		                          <th>Final Grade</th>
-		                          <th>Unit</th>
+		                          <th>Credit Earned</th>
 		                          <th>Remarks</th>
 		                        </tr>
 		                      </thead>
@@ -697,7 +697,7 @@ REMBUT;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = '$stud_id';";
+									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -705,7 +705,7 @@ REMBUT;
 											$subj_name4 = $row['subj_name'];
 											$subj_level4 = $row['subj_level'];
 											$fin_grade4 = $row['fin_grade'];
-											$unit4 = $row['unit'];
+											$credit_earned4 = $row['credit_earned'];
 											$comment4 = $row['comment'];
 
 											echo <<<YR1
@@ -713,7 +713,7 @@ REMBUT;
 						                          <th scope="row">$subj_name4</th>
 						                          <td>$subj_level4</td>
 						                          <td>$fin_grade4</td>
-						                          <td>$unit4</td>
+						                          <td>$credit_earned4</td>
 						                          <td>$comment4</td>
 						                        </tr>
 
@@ -809,7 +809,7 @@ REMBUT;
 		                          <th>Subject Level</th>
 		                          <th>Subject Type</th>
 		                          <th>Final Grade</th>
-		                          <th>Unit</th>
+		                          <th>Credit Earned</th>
 		                          <th>Remarks</th>
 		                        </tr>
 		                      </thead>
@@ -831,7 +831,7 @@ REMBUT;
 											$subj_level = $row['subj_level'];
 											$subj_type = $row['subj_type'];
 											$fin_grade = $row['fin_grade'];
-											$unit = $row['unit'];
+											$credit_earned = $row['credit_earned'];
 											$comment = $row['comment'];
 
 											echo <<<YR1
@@ -843,7 +843,7 @@ REMBUT;
 						                          <td>$subj_level</td>
 						                          <td>$subj_type</td>
 						                          <td>$fin_grade</td>
-						                          <td>$unit</td>
+						                          <td>$credit_earned</td>
 						                          <td>$comment</td>
 						                        </tr>
 

@@ -202,7 +202,7 @@ OPTION2;
 											<th class="column-title">Subject Level</th>
 											<th class="column-title">Curriculum</th>
 											<th class="column-title">Program</th>
-											<th class="column-title">Unit</th>
+											<th class="column-title">Credit Earned</th>
 										</th>
 									</tr>
 								</thead>
@@ -245,14 +245,14 @@ OPTION2;
 													$subj_level = $row['subj_level'];
 													$curr_name = $row['curr_name'];
 													$prog_name = $row['prog_name'];
-													$unit = $row['unit'];
+													$credit_earned = $row['credit_earned'];
 													echo <<<SUBJS
 														<tr>
 																<td>$subj_name</td>
 																<td>$subj_level</td>
 																<td>$curr_name</td>
 																<td>$prog_name</td>
-																<td>$unit</td>
+																<td>$credit_earned</td>
 														</tr>
 SUBJS;
 												}

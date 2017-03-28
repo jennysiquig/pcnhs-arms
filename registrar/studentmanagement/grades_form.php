@@ -146,7 +146,7 @@
                                     <th>Subject ID</th>
                                     <th>Subject</th>
                                     <th>Subject Level</th>
-                                    <th>Unit</th>
+                                    <th>Credit Earned</th>
                                     <th>Final Grade</th>
                                     
                                 </tr>
@@ -172,8 +172,8 @@
                                 $subj_id = $row['subj_id'];
                                 $subj_name = $row['subj_name'];
                                 $subj_level = $row['subj_level'];
-                                $unit = $row['unit'];
-                                $total_unit += $unit;
+                                $credit_earned = $row['credit_earned'];
+                                $total_unit += $credit_earned;
                                 $numberOfSubj += 1;
                                 //$curr_name = $row['curr_name'];
 
@@ -187,7 +187,7 @@
                                     <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
-                                    <td>$unit</td>
+                                    <td>$credit_earned</td>
                                     <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" value="0" readonly></td>
                                     
                                 </tr>
@@ -201,7 +201,7 @@ SUBJ;
                                     <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
-                                    <td>$unit</td>
+                                    <td>$credit_earned</td>
                                     <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d*" minlength="2" maxlength="2" onblur="saveToDB(this.value)" required></td>
                                     
                                 </tr>
