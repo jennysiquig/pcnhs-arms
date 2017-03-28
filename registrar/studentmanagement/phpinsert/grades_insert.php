@@ -14,6 +14,19 @@
 	$insertgrades = "";
 	$comment = "";
 	$willInsert = true;
+
+	if($average_grade > 99.999) {
+		$willInsert = false;
+			$_SESSION['error_pop'] = <<<ERROR_POP
+			<div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <strong>You have entered an Invalid Average Grade.</strong>
+            </div>
+ERROR_POP;
+			header("Location: " . $_SERVER["HTTP_REFERER"]);
+	}
+
 	foreach ($_POST['subj_id'] as $key => $value) {
 		$subj_id = $_POST['subj_id'][$key];
 		$fin_grade = $_POST['fin_grade'][$key];
@@ -24,7 +37,7 @@
 			<div class="alert alert-danger alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                 </button>
-                <strong>You entered an Invalid Final Grade.</strong>
+                <strong>You have entered an Invalid Final Grade.</strong>
             </div>
 ERROR_POP;
 			header("Location: " . $_SERVER["HTTP_REFERER"]);
