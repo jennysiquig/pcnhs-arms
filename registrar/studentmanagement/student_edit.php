@@ -56,6 +56,15 @@
 		<!-- Top Navigation -->
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
+				<div class="col-md-9">
+					<ol class="breadcrumb">
+					  <li><a href="../index.php">Home</a></li>
+					  <li><a href="#">Student Management</a></li>
+					  <li><a href="student_list.php">Student List</a></li>
+					  <li><a href="#">Student Personal Information</a></li>
+					  <li class="active">Edit Personal Information</li>
+					</ol>
+				</div>
 			<div class="clearfix"></div>
 			<form id="stud-edit" class="form-horizontal form-label-left" action="phpupdate/update_student_info.php" method="POST" novalidate>
 				<div class="x_panel">

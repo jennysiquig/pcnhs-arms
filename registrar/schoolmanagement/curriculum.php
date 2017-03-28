@@ -56,6 +56,13 @@
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
+			<div class="col-md-9">
+				<ol class="breadcrumb">
+				  <li><a href="../index.php">Home</a></li>
+				  <li><a href="#">School Management</a></li>
+				  <li class="active">Curriculum</li>
+				</ol>
+			</div>
 			<div class="">
 				<div class="row top_tiles">
 					
