@@ -104,8 +104,15 @@
 		<!-- Top Navigation -->
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
+			<div class="col-md-9">
+				<ol class="breadcrumb">
+				  <li><a href="../index.php">Home</a></li>
+				  <li><a href="#">Student Management</a></li>
+				  <li><a href="student_list.php">Student List</a></li>
+				  <li class="active">Student Personal Information</li>
+				</ol>
+			</div>
 			<div class="clearfix"></div>
-			<a href="student_list.php" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i> Back to Previous Page</a>
 			<form class="form-horizontal form-label-left">
 				<div class="x_panel">
 					<div class="x_title">

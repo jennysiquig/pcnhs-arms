@@ -57,9 +57,16 @@
 		<!-- Top Navigation -->
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
+			<div class="col-md-9">
+				<ol class="breadcrumb">
+				  <li><a href="../index.php">Home</a></li>
+				  <li><a href="#">Student Management</a></li>
+				  <li><a href="student_list.php">Student List</a></li>
+				  <li><a href="#">Student Personal Information</a></li>
+				  <li class="active">Grades</li>
+				</ol>
+			</div>
 			<div class="clearfix"></div>
-			<a href=<?php echo "student_info.php?stud_id=$stud_id"; ?> class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i> Back to Previous Page</a>
-		
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>Grades</h2>

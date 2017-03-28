@@ -55,7 +55,13 @@
     <?php include "../../resources/templates/registrar/top-nav.php"; ?>
     <!-- Content Start -->
     <div class="right_col" role="main">
-      
+      <div class="col-md-5">
+        <ol class="breadcrumb">
+          <li><a href="../index.php">Home</a></li>
+          <li class="disabled">Student Management</li>
+          <li class="active">Student List</li>
+        </ol>
+      </div>
       <form class="form-horizontal form-label-left" action="student_list.php" method="GET">
         
         <div class="form-group">
@@ -78,7 +84,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Student Management <small>Student List</small></h2>
+              <h2>Student List</h2>
               <div class="clearfix"></div>
               <br/>
               

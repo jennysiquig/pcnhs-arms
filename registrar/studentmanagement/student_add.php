@@ -56,6 +56,14 @@
 		<!-- Top Navigation -->
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
+			<div class="col-md-9">
+				<ol class="breadcrumb">
+				  <li><a href="../index.php">Home</a></li>
+				  <li class="disabled">Student Management</li>
+				  <li class="active">Add Student Record</li>
+				</ol>
+			</div>
+			
 			<div class="clearfix"></div>
 			<form id="validate-add" class="form-horizontal form-label-left" name="validate-add" data-parsley-validate action= "phpinsert/student_info_insert.php" method="POST" >
 				<div class="x_panel">
