@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	require_once "../../../resources/config.php";
 
 	if(!$conn) {
@@ -12,9 +13,22 @@
 	$total_unit = $_POST['total_unit'];
 	$insertgrades = "";
 	$comment = "";
+	$willInsert = true;
 	foreach ($_POST['subj_id'] as $key => $value) {
 		$subj_id = $_POST['subj_id'][$key];
 		$fin_grade = $_POST['fin_grade'][$key];
+
+		if($fin_grade > 99.99 || $fin_grade < 65) {
+			$willInsert = false;
+			$_SESSION['error_pop'] = <<<ERROR_POP
+			<div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <strong>You entered an Invalid Final Grade.</strong>
+            </div>
+ERROR_POP;
+			header("Location: " . $_SERVER["HTTP_REFERER"]);
+		}
 
 		if($fin_grade < 75 && $fin_grade != 0) {
 			$comment ="FAILED";
@@ -28,13 +42,16 @@
 	}
 	$insertaverage = "INSERT INTO `pcnhsdb`.`grades` (`stud_id`, `schl_name`, `schl_year`, `yr_level`, `average_grade`, `total_unit`) VALUES ('$stud_id', '$schl_name', '$schl_year', '$yr_level', '$average_grade', '$total_unit');";
 
+	if($willInsert) {
+		mysqli_query($conn, $insertaverage);
+		mysqli_multi_query($conn, $insertgrades);
+		echo "<p>Updating Database, please wait...</p>";
+		header("refresh:3;url=../grades.php?stud_id=$stud_id");
+	}
 	
-	mysqli_query($conn, $insertaverage);
-	mysqli_multi_query($conn, $insertgrades);
 
 	
-	echo "<p>Updating Database, please wait...</p>";
-	header("refresh:3;url=../grades.php?stud_id=$stud_id");
+	
 
 
 

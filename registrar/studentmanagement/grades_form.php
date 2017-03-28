@@ -94,7 +94,16 @@
         <!-- Top Navigation -->
         <?php include "../../resources/templates/registrar/top-nav.php"; ?>
         <div class="right_col" role="main">
+
             <div class="clearfix"></div>
+            <!-- Generate Error Message Here  -->
+            <?php
+                if(isset($_SESSION['error_pop'])) {
+                    echo $_SESSION['error_pop'];
+                    unset($_SESSION['error_pop']);
+                }
+            ?>
+            <!--  -->
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Grades</h2>
@@ -202,7 +211,7 @@ SUBJ;
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td>$credit_earned</td>
-                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d*" minlength="2" maxlength="2" onblur="saveToDB(this.value)" required></td>
+                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]"    onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" required></td>
                                     
                                 </tr>
                                 
@@ -304,7 +313,7 @@ SUBJ;
                 }else {
                     for (var i = 0; i < subj_id.length; i++) {
                         console.log(subj_id[i].value+" - "+fin_grade[i].value);
-                        total_finalgrade += parseInt(fin_grade[i].value);
+                        total_finalgrade += parseFloat(fin_grade[i].value);
 
                     }
                     computed_average = total_finalgrade/num_subj;
@@ -316,5 +325,17 @@ SUBJ;
             }
         </script>
         <!-- Save to DB Script -->
+        <!-- Limit to numbers only -->
+        <script type="text/javascript">
+            function isNumberKey(evt, n){
+            console.log(n);
+              var charCode = (evt.which) ? evt.which : evt.keyCode;
+              if (charCode != 46 && charCode > 31 
+                && (charCode < 48 || charCode > 57))
+                 return false;
+
+              return true;
+           }
+        </script>
     </body>
 </html>
