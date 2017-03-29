@@ -24,30 +24,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- Datatables -->
-    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-
+    <!-- NProgress -->
+    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../../css/custom.min.css" rel="stylesheet">
     <link href="../../css/tstheme/style.css" rel="stylesheet">
 
-    <!--[if lt IE 9]>
-    <script src="../../js/ie8-responsive-file-warning.js"></script>
-    <![endif]-->
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head> <body class="nav-md">
+</head> 
+<body class="nav-md">
 <!-- Sidebar -->
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
 <!-- Top Navigation -->
@@ -80,7 +68,7 @@
                                      data-parsley-pattern="^[a-zA-Z\s\0-9\-]+$"
                                      data-parsley-pattern-message="Signatory ID Invalid"
                                      data-parsley-maxlength="50"
-                                     data-parsley-maxlength-message="Error">
+                                     data-parsley-maxlength-message="Error"/>
                                      <?php
                                             if(isset($_SESSION['error_msg_signatory'])) {
                                                 $error_msg_signatory = $_SESSION['error_msg_signatory'];
@@ -95,10 +83,10 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name"
-                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s\ñ]+$"
                                     data-parsley-pattern-message="Invalid First Name"
                                     data-parsley-maxlength="50"
-                                    data-parsley-maxlength-message="Error">
+                                    data-parsley-maxlength-message="Error"/>
                             </div>
                         </div>
 
@@ -106,10 +94,10 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="mname"
-                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s\ñ]+$"
                                     data-parsley-pattern-message="Invalid Middle Name"
                                     data-parsley-maxlength="50"
-                                    data-parsley-maxlength-message="Error">
+                                    data-parsley-maxlength-message="Error"/>
                             </div>
                         </div>
 
@@ -117,21 +105,21 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name"
-                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s\ñ]+$"
                                     data-parsley-pattern-message="Invalid Last Name"
                                     data-parsley-maxlength="50"
-                                    data-parsley-maxlength-message="Error">
+                                    data-parsley-maxlength-message="Error"/>
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Academic Degree</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="title" placeholder="e.g. PhD"
-                                    data-parsley-pattern="^[a-zA-Z\s\+\-\.]+$"
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="title" placeholder="e.g. Ed.D., CESO IV"
+                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s\ñ]+$"
                                     data-parsley-pattern-message="Invalid Format"
                                     data-parsley-maxlength="50"
-                                    data-parsley-maxlength-message="Error">
+                                    data-parsley-maxlength-message="Error"/>
                             </div>
                         </div>
 
@@ -166,21 +154,13 @@
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" name="position">
-                                    <option value="">--NO SELECTED--</option>
-                                    <?php
-                                    $position= $row['position'];
-                                    echo <<<OPTION0
-                                            <option value="ADMINISTRATOR">ADMINISTRATOR</option>
-                                            <option value="HEAD TEACHER">HEAD TEACHER</option>
-                                            <option value="PRINCIPAL">PRINCIPAL</option>
-                                            <option value="REGISTRAR">REGISTRAR</option>
-                                            <option value="SUPERINTENDENT">SUPERINTENDENT</option>
-OPTION0;
-                                    ?>
-                                </select>
-                            </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="position" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position"
+                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s]+$"
+                                    data-parsley-pattern-message="Invalid Format"
+                                    data-parsley-maxlength="50"
+                                    data-parsley-maxlength-message="Error">
+                                </div>
                         </div>
 
                         <div class="form-group">
@@ -209,6 +189,8 @@ OPTION0;
 <!-- input mask -->
 <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+<!-- NProgress -->
+<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
 <script src= "../../js/custom.min.js"></script>
 <!-- Scripts -->

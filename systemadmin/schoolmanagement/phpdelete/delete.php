@@ -1,6 +1,6 @@
 <?php
-	require_once "../../../resources/config.php";
-	session_start();
+    require_once "../../../resources/config.php";
+    session_start();
 
 if(!$conn) {
     die();
