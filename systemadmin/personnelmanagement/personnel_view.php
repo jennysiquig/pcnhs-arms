@@ -25,30 +25,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- Datatables -->
-    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-
+    <!-- NProgress -->
+    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../../css/custom.min.css" rel="stylesheet">
     <link href="../../css/tstheme/style.css" rel="stylesheet">
 
-    <!--[if lt IE 9]>
-    <script src="../../js/ie8-responsive-file-warning.js"></script>
-    <![endif]-->
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>	<body class="nav-md">
+</head> 
+<body class="nav-md">
 <!-- Sidebar -->
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
 <!-- Top Navigation -->
@@ -72,7 +60,6 @@
                             <?php require_once "../../resources/config.php";
 
                             $per_id = $_GET['per_id'];
-                            //$per_id;
                             $uname;
                             $password;
                             $last_name;
@@ -87,7 +74,6 @@
                             if($result->num_rows>0) {
                                 while($row=$result->fetch_assoc()){
 
-                                    //$per_id = row['per_id'];
                                     $uname = $row['uname'];
                                     $password = $row['password'];
                                     $last_name = $row['last_name'];
@@ -104,14 +90,15 @@
                             <div class="item form-group"><br>
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id" readonly value=<?php echo "'$per_id'"; ?>>
+                                    <input id="per_id" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id" readonly value=<?php echo "'$per_id'"; ?>>
+                                    <?php $_SESSION['per_id']=$per_id?>
                                 </div>
                             </div>
 
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">User Name</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname" readonly value=<?php echo "'$uname'"; ?>>
+                                    <input id="uname" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname" readonly value=<?php echo "'$uname'"; ?>>
                                     <?php
                                             if(isset($_SESSION['error_msg_personnel_edit'])) {
                                                 $error_msg_personnel_edit = $_SESSION['error_msg_personnel_edit'];
@@ -125,42 +112,42 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$password'"; ?>>
+                                    <input id="password" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$password'"; ?>>
                                 </div>
                             </div>
 
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" readonly value=<?php echo "'$last_name'"; ?>>
+                                    <input id="last_name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" readonly value=<?php echo "'$last_name'"; ?>>
                                 </div>
                             </div>
 
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" readonly value=<?php echo "'$first_name'"; ?>>
+                                    <input id="first_name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" readonly value=<?php echo "'$first_name'"; ?>>
                                 </div>
                             </div>
 
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="mname" readonly value=<?php echo "'$mname'"; ?>>
+                                    <input id="mname" class="form-control col-md-7 col-xs-12" required="required" type="text" name="mname" readonly value=<?php echo "'$mname'"; ?>>
                                 </div>
                             </div>
 
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position" readonly value=<?php echo "'$position'"; ?>>
+                                    <input id="position" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position" readonly value=<?php echo "'$position'"; ?>>
                                 </div>
                             </div>
 
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Access Type</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="access_type" readonly value=<?php echo "'$access_type'"; ?>>
+                                    <input id="access_type" class="form-control col-md-7 col-xs-12" required="required" type="text" name="access_type" readonly value=<?php echo "'$access_type'"; ?>>
                                 </div>
 
                             </div>
@@ -168,7 +155,7 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="accnt_status" readonly value=<?php echo "'$accnt_status'"; ?>>
+                                    <input id="accnt_status" class="form-control col-md-7 col-xs-12" required="required" type="text" name="accnt_status" readonly value=<?php echo "'$accnt_status'"; ?>>
                                 </div>
 
                             </div>
@@ -178,7 +165,7 @@
                                 <div class="col-md-5 col-md-offset-3 pull-left">
                                     <a href = <?php echo "personnel_edit.php?per_id=$per_id" ?> button type="submit" class="btn btn-primary " >Edit Profile</a>
                                     <a href = "" button type="submit" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-sm" >Remove</a> &nbsp&nbsp&nbsp&nbsp
-                                    <a href = "../index.php" button type="submit" class="btn btn-primary " >View Personnels</a>
+                                    <a href = "personnels.php" button type="submit" class="btn btn-primary " >View Personnels</a>
                                 </div>
                             </div>
 
@@ -188,28 +175,42 @@
             </div>
         </div>
     </div>
+</div>
     <!-- /page content -->
     <!-- Content Here -->
-    <!-- Modal -->
-    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel2">Remove Personnel Account <?php echo $uname?> ?</h4>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                    <a href= <?php echo "phpdelete/delete.php?per_id=$per_id"?> class="btn btn-danger">Remove</a>
-                </div>
-
+<!-- Small modal -->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">Remove Personnel Account :<br>
+                    <b><?php echo "$uname";?></b>
+                </h4>
             </div>
+            <div class="modal-body">
+                    <!-- start form for validation -->
+                    <form id="change-pw" action="phpdelete/delete.php" method="DELETE" data-parsley-validate>
+                        <label for="cpw">Enter Personnel Account Password :</label>
+                        <input type="password" id="vpw" class="form-control" name="vpw" required 
+                            data-parsley-minlength="4"
+                            data-parsley-minlength-message="Password should be greater than 4 characters"
+                            data-parsley-maxlength="50"
+                            data-parsley-maxlength-message="Error"
+                            data-parsley-equalto="#password"
+                            data-parsley-equalto-message="Incorrect Personnel Account Password">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger" >Remove</button>
+                        </div>
+
+                    </form>
+                </div>
         </div>
     </div>
-    <!-- /Modal -->
+</div>
+<!-- /modals -->
     <!-- Footer -->
     <?php include "../../resources/templates/admin/footer.php"; ?>
     <!-- Scripts -->
@@ -222,6 +223,8 @@
     <!-- input mask -->
     <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
     <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+    <!-- NProgress -->
+    <script src="../../resources/libraries/nprogress/nprogress.js"></script>
     <!-- Custom Theme Scripts -->
     <script src= "../../js/custom.min.js"></script>
     <!-- Scripts -->
