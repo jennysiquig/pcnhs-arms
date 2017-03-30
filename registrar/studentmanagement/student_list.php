@@ -16,7 +16,7 @@
       header('Location: ../../login.php');
     }
    
-  ?>
+?>
 <?php require_once "../../resources/config.php"; ?>
 <html>
   <head>
@@ -90,6 +90,26 @@
               
             </div>
             <div class="x_content">
+              <div class="row">
+              <form class="form-horizontal form-label-left">
+                <div class="form-group">
+                  <label class="control-label col-md-10">Show Number Of Entries:</label>
+                  <div class="col-sm-2">
+                      <select class="form-control" onchange="changeEntries(this.value)">
+                        <option value="20" 
+                          <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 20) {echo "selected";}} ?>
+                          >20</option>
+                        <option value="50"
+                           <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 50) {echo "selected";}} ?>
+                          >50</option>
+                        <option value="100"
+                           <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 100) {echo "selected";}} ?>
+                        >100</option>
+                      </select>
+                  </div>
+                </div>
+              </form>
+              </div>
               <div class="table-responsive">
                 <table id="studList" class="table table-bordered tablesorter">
                   <thead>
@@ -107,7 +127,14 @@
                     <?php
                     $statement = "";
                     $start=0;
-                    $limit=20;
+                    $limit;
+
+                    if(isset($_SESSION['entry'])){
+                      $limit = $_SESSION['entry'];
+                    }else {
+                      $limit = 20;
+                    }
+
                     if(isset($_GET['page'])){
                       $page=$_GET['page'];
                       $start=($page-1)*$limit;
@@ -170,6 +197,8 @@ STUDLIST;
                   $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id";
                     $rows = mysqli_num_rows(mysqli_query($conn, $statement));
                     $total = ceil($rows/$limit);
+                    
+                    echo "<p>Showing $limit of $rows Entries</p>";
 
                     echo '<div class="pull-right">
                       <div class="col s12">
@@ -181,13 +210,41 @@ STUDLIST;
                       }else {
                         echo '<li class="disabled"><a>Previous</a></li>';
                       }
-                      for($i = 1;$i <= $total; $i++) {
-                        if($i==$page) {
-                          echo "<li class='active'><a href='student_list.php?page=$i'>$i</a></li>";
-                      } else {
-                          echo "<li class=''><a href='student_list.php?page=$i'>$i</a></li>";
+                      // Google Like Pagination
+                      $x = 0;
+                      $y = 0;
+                      if(($page+5) <= $total) {
+                        if($page >= 3) {
+                          $x = $page + 2;
+
+                        }else {
+                          $x = 5;
+                        }
+
+                        $y = $page;
+                        if($y <= $total) {
+                          $y -= 2;
+                          if($y < 1) {
+                            $y = 1;
+                          }
+                        }
+                      }else {
+                        $x = $total;
+                        $y = $total - 5;
+                        if($y < 1) {
+                          $y = 1;
                         }
                       }
+                      // Google Like Pagination
+                      for($i = $y;$i <= $x; $i++) {
+                        if($i==$page) {
+                          echo "<li class='active'><a href='student_list.php?page=$i'>$i</a></li>";
+                        } else {
+                            echo "<li class=''><a href='student_list.php?page=$i'>$i</a></li>";
+                          }
+                      }
+
+
                       if($total == 0) {
                         echo "<li class='disabled'><a>Next</a></li>";
                       }else if($page!=$total) {
@@ -233,6 +290,19 @@ STUDLIST;
     );
     
     </script>
-    
+    <!-- Change Entry -->
+    <script type="text/javascript">
+      function changeEntries(val) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+           location.reload();
+          }
+        };
+        xhttp.open("GET", "showentry.php?entry="+val, true);
+        xhttp.send();
+      }
+    </script>
+    <!--  -->
   </body>
 </html>
