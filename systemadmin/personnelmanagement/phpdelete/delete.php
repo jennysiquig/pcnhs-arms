@@ -1,14 +1,11 @@
 <?php
-	require_once "../../../resources/config.php";
-	session_start();
+    require_once "../../../resources/config.php";
+    session_start();
 
 if(!$conn) {
     die();
 }
-    $per_id = $_GET['per_id'];
-    
-    $_SESSION['per_id'] = $per_id;
-
+    $per_id = $_SESSION['per_id'];
     $query = 'DELETE FROM personnel WHERE per_id = ?';
     $stmt = mysqli_stmt_init($conn);
     mysqli_stmt_prepare($stmt, $query);
