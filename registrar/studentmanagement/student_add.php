@@ -32,7 +32,8 @@
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+		<!-- Date Range Picker -->
+		<link href="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
@@ -104,7 +105,7 @@ OPTION1;
 														
 												?>
 											</select>
-											<p style="color: red">Refer to the curriculum indicated on the Form 137.</p>
+											<p style="color: red">Refer to the curriculum that is indicated on the Form 137.</p>
 										</div>
 									</div>
 									<div class="x_content">
@@ -155,29 +156,9 @@ OPTION1;
 										</div>
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthday *</label>
-											<div class="col-md-2 col-sm-6 col-xs-12">
-												<select class="form-control col-md-7 col-xs-12" name="bmonth" required="">
-													<option value="">Month</option>
-													<?php
-														$month=array('January','February','March','April','May','June','July','August','September','October','November','December');
-														for ($i=0; $i < count($month) ; $i++) {
-															$dayVal = $i+1;
-															$monthName = $month[$i];
-															echo "<option value='$dayVal'>$month[$i]</option>";
-														}
-													?>
-												</select>
-											</div>
-											<div class="col-md-2 col-sm-6 col-xs-12">
-												<select class="form-control col-md-7 col-xs-12" name="bday" required="">
-													<option value="">Day</option>
-													<?php for ($day=1; $day <= 31 ; $day++) {
-														echo "<option value='$day'>$day</option>";
-													} ?>
-												</select>
-											</div>
-											<div class="col-md-2 col-sm-6 col-xs-12">
-												<input class="form-control  col-md-7 col-xs-12" type="text" name="byear" placeholder="Year" data-inputmask="'mask': '9999'" required="">
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<input class="form-control has-feedback-left" type="text" name="birthdate" onblur="validateBday(this.value)" value="01/01/2000" placeholder="Birthday" required="" />
+												 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
 											</div>
 										</div>
 										<div class="item form-group">
@@ -324,6 +305,9 @@ OPTION1;
 				<!-- Custom Theme Scripts -->
 				<script src= "../../js/custom.min.js"></script>
 				<!-- Scripts -->
+				<!-- Date Range Picker -->
+				<script src="../../resources/libraries/moment/min/moment.min.js"></script>
+				<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
 				
 				<!-- /jquery.inputmask -->
 				<script>
@@ -365,15 +349,17 @@ OPTION1;
                 <!-- /jquery.inputmask -->
 
                 <!-- Sisyphus -->
+                
                 <script type="text/javascript">
-                	// Here we'll persist the form's data into localStorage on
-					// every keystroke
-					$( function() {
-					$( "#validate-add" ).sisyphus();
-					// or you can persist all forms data at one command
-					// $( "form" ).sisyphus();
-					} );
-                </script>
+				$(function() {
+				    $('input[name="birthdate"]').daterangepicker({
+				    	autoUpdateInput: true,
+				        singleDatePicker: true,
+				        showDropdowns: true,
 
+				    });
+
+				});
+				</script>
 			</body>
 		</html>
