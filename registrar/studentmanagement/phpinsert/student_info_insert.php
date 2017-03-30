@@ -1,25 +1,12 @@
 <?php
+	require_once "../../../resources/config.php";
+	if(!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+
 	session_start();
-	// $stud_id;
-	// $first_name; 
-	// $mid_name;
-	// $last_name; 
-	// $gender; 
-	// $birth_date; 
-	// $birth_place; 
-	// $second_school_name;  
-	// $program;
-	// $curriculum; 
 
-	// $pname; 
-	// $parent_occupation; 
-	// $parent_address;
 
-	// $primary_schl_name;
-	// $primary_schl_year;
-	// $total_elem_years;
-	// $gpa;
-	// ====
 	$stud_id = test_ifset($_POST['stud_id']);
 	$first_name = test_ifset($_POST['first_name']);
 	$mid_name = test_ifset($_POST['mid_name']);
@@ -52,7 +39,7 @@
 			<div class="alert alert-danger alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                 </button>
-                <strong>You have entered an Invalid Average Grade.</strong>
+                <strong>Error: </strong>You have entered an Invalid Average Grade.
             </div>
 ERROR_POP;
 			header("Location: " . $_SERVER["HTTP_REFERER"]);
@@ -69,18 +56,29 @@ ERROR_POP;
 			<div class="alert alert-danger alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                 </button>
-                <strong>You have entered an Invalid Primary School Year.</strong>
+                <strong>Error: </strong>You have entered an Invalid Primary School Year.
             </div>
 ERROR_POP;
 		
 			header("Location: " . $_SERVER["HTTP_REFERER"]);
 	}
-	
-	require_once "../../../resources/config.php";
 
-	if(!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
+// Duplicate Checker
+	$selectStudents = "SELECT * from students where stud_id = '$stud_id' and first_name = '$first_name' and last_name = '$last_name' and birth_date = '$birth_date';";
+	$result = $conn->query($selectStudents);
+	if ($result->num_rows > 0) {
+		$willInsert = false;
+			$_SESSION['error_pop'] = <<<ERROR_POP
+			<div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <strong>Error: </strong>Duplicate Student Record.
+            </div>
+ERROR_POP;
+		header("Location: " . $_SERVER["HTTP_REFERER"]);
+	}	
+
+	
 	//1 ========================
 	$statement1 = "INSERT INTO `pcnhsdb`.`students` (`stud_id`, `first_name`, `mid_name`, `last_name`, `gender`, `birth_date`, `province`, `towncity`, `barangay`, `second_school_name`, `curr_id`, `prog_id`) VALUES ('$stud_id' , '$first_name', '$mid_name', '$last_name', '$gender', '$birth_date', '$province', '$towncity', '$barangay', '$second_school_name', '$curriculum', '$program')";
 
