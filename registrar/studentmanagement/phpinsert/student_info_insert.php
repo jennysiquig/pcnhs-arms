@@ -26,9 +26,7 @@
 	$last_name = test_ifset($_POST['last_name']);
 	$gender = test_ifset($_POST['gender']);
 
-	if(!empty(test_ifset($_POST['byear'])) && !empty(test_ifset($_POST['bmonth'])) && !empty(test_ifset($_POST['bday']))) {
-		$birth_date = $_POST['bday'].'/'.$_POST['bmonth'].'/'.$_POST['byear'];
-	}
+	$birth_date = test_ifset($_POST['birthdate']);
 
 	$province = test_ifset($_POST['birth_place_province']);
 	$towncity = test_ifset($_POST['birth_place_towncity']);
@@ -46,7 +44,37 @@
 	$primary_schl_year = test_ifset($_POST['schl_year']);
 	$total_elem_years = test_ifset($_POST['total_elem_years']);
 	$gpa = test_ifset($_POST['gpa']);
+	$willInsert = true;
+// validate gpa
+	if($gpa > 99.99) {
+		$willInsert = false;
+			$_SESSION['error_pop'] = <<<ERROR_POP
+			<div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <strong>You have entered an Invalid Average Grade.</strong>
+            </div>
+ERROR_POP;
+			header("Location: " . $_SERVER["HTTP_REFERER"]);
+		
+	}
 
+	$validate_p_schl_yr = explode("-", $primary_schl_year);
+	$year1 = $validate_p_schl_yr[0];
+	$year2 = $validate_p_schl_yr[1];
+// validate primary school year
+	if(intval($year1) > intval($year2) || intval($year2) != (intval($year1)+1) ) {
+		$willInsert = false;
+			$_SESSION['error_pop'] = <<<ERROR_POP
+			<div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <strong>You have entered an Invalid Primary School Year.</strong>
+            </div>
+ERROR_POP;
+		
+			header("Location: " . $_SERVER["HTTP_REFERER"]);
+	}
 	
 	require_once "../../../resources/config.php";
 
@@ -62,15 +90,15 @@
 	// //3 ========================
 	$statement3 = "INSERT INTO `pcnhsdb`.`primaryschool` (`stud_id`, `psname`, `pschool_year`, `total_elem_years`, `gen_average`) VALUES ('$stud_id', '$primary_schl_name', '$primary_schl_year', '$total_elem_years', '$gpa')";
 
-	$insertstmt1 = mysqli_query($conn, $statement1);
-	$insertstmt2 = mysqli_query($conn, $statement2);
-	$insertstmt3 = mysqli_query($conn, $statement3);
+	if($willInsert) {
+		$insertstmt1 = mysqli_query($conn, $statement1);
+		$insertstmt2 = mysqli_query($conn, $statement2);
+		$insertstmt3 = mysqli_query($conn, $statement3);
 
-	if($insertstmt1 && $insertstmt2 && $insertstmt3) {
-		header("location: ../student_info.php?stud_id=$stud_id");
-	}else {
-		header("location:javascript://history.go(-1)");
+		header("Location: ../student_info.php?stud_id=$stud_id");
 	}
+	
+
 	
 
 	

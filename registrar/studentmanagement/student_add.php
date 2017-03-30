@@ -66,6 +66,14 @@
 			</div>
 			
 			<div class="clearfix"></div>
+			<!-- Generate Error Message Here  -->
+            <?php
+                if(isset($_SESSION['error_pop'])) {
+                    echo $_SESSION['error_pop'];
+                    unset($_SESSION['error_pop']);
+                }
+            ?>
+            <!--  -->
 			<form id="validate-add" class="form-horizontal form-label-left" name="validate-add" data-parsley-validate action= "phpinsert/student_info_insert.php" method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
@@ -251,7 +259,7 @@ OPTION1;
 												</div>
 											</div>
 											<div class="item form-group">
-												<label class="control-label col-md-4 col-sm-4 col-xs-12">School Year *</label>
+												<label class="control-label col-md-4 col-sm-4 col-xs-12">Last School Year Attended *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
 													<input class="form-control  col-md-7 col-xs-12" type="text" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" required="">
 												</div>
@@ -259,13 +267,13 @@ OPTION1;
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">Total Elementary Years *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="number" name="total_elem_years" min="1" required="">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="total_elem_years" pattern="[6-9]" maxlength="1" required="">
 												</div>
 											</div>
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">Average Grade *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="text" name="gpa" placeholder="" data-inputmask="'mask': '99.9'">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="gpa" placeholder="" pattern="\d+(\.\d{2})?" onkeypress="return isNumberKey(event)"">
 												</div>
 											</div>
 										</div>
@@ -361,5 +369,17 @@ OPTION1;
 
 				});
 				</script>
+				<!-- Limit to numbers only -->
+		        <script type="text/javascript">
+		            function isNumberKey(evt, n){
+		            console.log(n);
+		              var charCode = (evt.which) ? evt.which : evt.keyCode;
+		              if (charCode != 46 && charCode > 31 
+		                && (charCode < 48 || charCode > 57))
+		                 return false;
+
+		              return true;
+		           }
+		        </script>
 			</body>
 		</html>
