@@ -15,7 +15,7 @@
     if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
       header('Location: ../../login.php');
     }
-   
+   	unset($_SESSION['grade']);
   ?>
 <!DOCTYPE html>
 <?php $stud_id = $_GET['stud_id'] ?>
@@ -203,17 +203,17 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 1 and stud_id = '$stud_id';";
+								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 1 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$total_unit1 = $row['total_unit'];
+										$total_credit1 = $row['total_credit'];
 									}
 								}
 							?>
-		                    <h2>Total Units: <?php if(!empty($total_unit1)){
-		                    						echo $total_unit1;
+		                    <h2>Total Credits: <?php if(!empty($total_credit1)){
+		                    						echo $total_credit1;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>	
@@ -386,17 +386,17 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 2 and stud_id = '$stud_id';";
+								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 2 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$total_unit2 = $row['total_unit'];
+										$total_credit2 = $row['total_credit'];
 									}
 								}
 							?>
-		                    <h2>Total Units: <?php if(!empty($total_unit2)){
-		                    						echo $total_unit2;
+		                    <h2>Total Credits: <?php if(!empty($total_credit2)){
+		                    						echo $total_credit2;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>	
@@ -420,7 +420,7 @@ YR1;
 								}
 							}
 
-		                  	if(!empty($average_grade2) && !empty($schl_year2) && !empty($yr_level2) && empty($schl_year3) && empty($yr_level3)) {
+		                  	if(!empty($schl_year2) && !empty($yr_level2) && empty($schl_year3) && empty($yr_level3)) {
 		                  		echo <<<REMBUT
 		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(2,'$stud_id');">Remove Record</button>
 REMBUT;
@@ -568,17 +568,17 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 3 and stud_id = '$stud_id';";
+								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 3 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$total_unit3 = $row['total_unit'];
+										$total_credit3 = $row['total_credit'];
 									}
 								}
 							?>
-		                    <h2>Total Units: <?php if(!empty($total_unit3)){
-		                    						echo $total_unit3;
+		                    <h2>Total Credits: <?php if(!empty($total_credit3)){
+		                    						echo $total_credit3;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>	
@@ -750,17 +750,17 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 4 and stud_id = '$stud_id';";
+								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 4 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$total_unit4 = $row['total_unit'];
+										$total_credit4 = $row['total_credit'];
 									}
 								}
 							?>
-		                    <h2>Total Units: <?php if(!empty($total_unit4)){
-		                    						echo $total_unit4;
+		                    <h2>Total Credits: <?php if(!empty($total_credit4)){
+		                    						echo $total_credit4;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>	

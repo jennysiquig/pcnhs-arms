@@ -192,7 +192,7 @@ SP;
                                     }
                                     ?>
                                 </select>
-                                <p style="color: red">Select to override the <b>Student Curriculum</b></p>
+                                <p style="color: red"><b>Note: </b><b>Select only</b> if the <b>Subject Curriculum</b> is different to <b>Student Curriculum</b> </p>
                             </div>
                         </div>
                         <div class="item form-group">

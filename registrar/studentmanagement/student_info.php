@@ -373,7 +373,16 @@ CREDC;
 									}
 								}
 							?>
-
+						<div class="row">
+							<div class="col-md-7 pull-right">
+							<?php
+				                if(isset($_SESSION['generatemessage'])) {
+				                    echo $_SESSION['generatemessage'];
+				                    unset($_SESSION['generatemessage']);
+				                }
+				            ?>
+				            </div>
+			            </div>
 						<!--  -->
 						<div class="form-group">
 							<div class="col-md-6">
@@ -385,11 +394,11 @@ CREDC;
 								<?php
 									if($attendancecount > 3 && $gradecount > 3) {
 										echo <<<GEN
-											<a class="btn btn-primary" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
+											<a id="generatebutton" class="btn btn-primary" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
 GEN;
 									}else {
 										echo <<<GEN1
-											<a class="btn btn-primary disabled" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
+											<a id="generatebutton" class="btn btn-primary disabled" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
 GEN1;
 									}
 								?>

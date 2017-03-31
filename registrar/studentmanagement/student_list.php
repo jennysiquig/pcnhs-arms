@@ -91,6 +91,17 @@
             </div>
             <div class="x_content">
               <div class="row">
+               <form class="form-horizontal form-label-left" action="student_list.php" method="GET">
+                <div class="form-group">
+                  <label class="control-label col-md-10">Search Student by School Year:</label>
+                  <div class="input-group">
+                      <input class="form-control" type="text" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary">Go</button>
+                      </span>
+                  </div>
+                </div>
+              </form>
               <form class="form-horizontal form-label-left">
                 <div class="form-group">
                   <label class="control-label col-md-10">Show Number Of Entries:</label>
@@ -110,6 +121,12 @@
                 </div>
               </form>
               </div>
+              <?php
+                if(isset($_GET['schl_year']) && $_GET['schl_year'] != "") {
+                  $school_year2 = $_GET['schl_year'];
+                  echo "<p>Showing Students in School Year of $school_year2</p>";
+                }
+              ?>
               <div class="table-responsive">
                 <table id="studList" class="table table-bordered tablesorter">
                   <thead>
@@ -146,14 +163,25 @@
                     die("Connection failed: " . mysqli_connect_error());
                     }
 
-                    if(isset($_GET['search_key'])) {
+                    
+
+                    if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                       $search = $_GET['search_key'];
                       $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '%$search' or first_name like '%$search' or stud_id like '%$search' or concat(first_name,' ',last_name) like '%$search' or concat(last_name,' ',first_name,' ',mid_name) like '%$search' or concat(first_name,' ',mid_name,' ',last_name) like '%$search' limit $start, $limit";
                     }else {
                       $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id limit $start, $limit";
                     }
 
-                    
+                    if(isset($_GET['schl_year']) && $_GET['schl_year'] != "") {
+                      $school_year = $_GET['schl_year'];
+                      $school_year1 = explode("-", $school_year);
+                      $from = $school_year1[0];
+                      $to = $school_year1[1];
+                      $statement = "SELECT * FROM pcnhsdb.students natural join grades where schl_year between '$from' and '$to' and yr_level = 4;";
+                      
+                    }else {
+                      $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id limit $start, $limit";
+                    }
                     
                     
 
@@ -198,7 +226,7 @@ STUDLIST;
                     $rows = mysqli_num_rows(mysqli_query($conn, $statement));
                     $total = ceil($rows/$limit);
                     
-                    echo "<p>Showing $limit of $rows Entries</p>";
+                    echo "<p>Showing $limit Entries</p>";
 
                     echo '<div class="pull-right">
                       <div class="col s12">
@@ -304,5 +332,12 @@ STUDLIST;
       }
     </script>
     <!--  -->
+    <!-- jquery.inputmask -->
+              <script>
+                  $(document).ready(function() {
+                      $(":input").inputmask();
+                  });
+              </script>
+                <!-- /jquery.inputmask -->
   </body>
 </html>

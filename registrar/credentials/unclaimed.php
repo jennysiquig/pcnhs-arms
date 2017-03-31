@@ -112,12 +112,13 @@
 												$cred_name = $row['cred_name'];
 												$req_id = $row['req_id'];
 												$request_type = $row['request_type'];
+
 												echo <<<UNCLAIMED
 												<tr class="odd pointer">
 																<td class=" ">$date_processed</td>
 																<td class=" "><a href="../studentmanagement/student_info.php?stud_id=$stud_id">$stud_name</a></td>
 																<td class=" ">$cred_name</td>
-																<td class=" last"><a class="btn btn-default btn-xs" href="release_action.php?stud_id=$stud_id&cred_id=$cred_id&req_id=$req_id&request_type=$request_type"><i class="fa fa-paper-plane"></i> Released</a></td>
+																<td class=" last"><button class="btn btn-default btn-xs" onclick="releaseAction('$stud_id', '$cred_id', '$req_id', '$request_type')"><i class="fa fa-paper-plane"></i> Released</button></td>
 												</tr>
 UNCLAIMED;
 											}
@@ -179,5 +180,24 @@ UNCLAIMED;
 			<!-- Custom Theme Scripts -->
 			<script src= "../../js/custom.min.js"></script>
 			<!-- Scripts -->
+			<script type="text/javascript">
+				function releaseAction(stud_id, cred_id, req_id, request_type) {
+					var or_no;
+					if(or_no = prompt("Please Enter the OR Number")) {
+						var xhttp = new XMLHttpRequest();
+				        xhttp.onreadystatechange = function() {
+				          if (this.readyState == 4 && this.status == 200) {
+				           location.assign("released.php");
+				          }
+				        };
+				        xhttp.open("GET", "release_action.php?stud_id="+stud_id+"&cred_id="+cred_id+"&req_id="+req_id+"&request_type="+request_type+"&or_no="+or_no, true);
+				        xhttp.send();
+					}
+			        
+      
+ 
+					
+				}
+			</script>
 		</body>
 	</html>

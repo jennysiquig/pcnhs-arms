@@ -33,7 +33,7 @@
 	$gpa = test_ifset($_POST['gpa']);
 	$willInsert = true;
 // validate gpa
-	if($gpa > 99.99) {
+	if($gpa > 99.99 || $gpa < 75) {
 		$willInsert = false;
 			$_SESSION['error_pop'] = <<<ERROR_POP
 			<div class="alert alert-danger alert-dismissible fade in" role="alert">

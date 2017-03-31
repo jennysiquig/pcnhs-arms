@@ -195,14 +195,13 @@ OPTION2;
 							
 							<div class="clearfix"></div>
 							<div class="table-responsive">
-								<table class="table table-hover">
+								<table id="subjList" class="table table-bordered tablesorter">
 									<thead>
 										<tr class="headings">
 											<th class="column-title">Subject Name</th>
 											<th class="column-title">Subject Level</th>
 											<th class="column-title">Curriculum</th>
 											<th class="column-title">Program</th>
-											<th class="column-title">Credit Earned</th>
 										</th>
 									</tr>
 								</thead>
@@ -245,14 +244,13 @@ OPTION2;
 													$subj_level = $row['subj_level'];
 													$curr_name = $row['curr_name'];
 													$prog_name = $row['prog_name'];
-													$credit_earned = $row['credit_earned'];
+													
 													echo <<<SUBJS
 														<tr>
 																<td>$subj_name</td>
 																<td>$subj_level</td>
 																<td>$curr_name</td>
 																<td>$prog_name</td>
-																<td>$credit_earned</td>
 														</tr>
 SUBJS;
 												}
@@ -334,6 +332,7 @@ SUBJS;
 		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
+		 <script type="text/javascript" src="../../resources/libraries/tablesorter/jquery.tablesorter.js" ></script>
 		<script src= "../../js/custom.min.js"></script>
 	<!-- Scripts -->
 	<script>
@@ -355,5 +354,13 @@ SUBJS;
 	xhttp.send();
 	}
 	</script>
+	<script type="text/javascript">
+    
+    $(document).ready(function(){
+    $("#subjList").tablesorter({headers: { 4:{sorter: false}, }});
+    }
+    );
+    
+    </script>
 </body>
 </html>

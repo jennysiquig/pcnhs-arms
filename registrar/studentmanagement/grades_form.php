@@ -49,7 +49,8 @@
     if($input_year1 <= $compare_year1 || $input_year2 <= $compare_year2) {
         $_SESSION['error_message'] = "<p style='color: red'><b>Invalid School Year</b></p>";
         $yr_level_check = $_GET['yr_level'];
-        header("location: add_grades.php?stud_id=$stud_id&yr_level=$yr_level_check");
+        //header("location: add_grades.php?stud_id=$stud_id&yr_level=$yr_level_check");
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
     }
 
 ?>
@@ -105,86 +106,99 @@
             ?>
             <!--  -->
             <div class="x_panel">
+
                 <div class="x_title">
                     <h2>Grades</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <!-- First -->
-                    <form id="val-gr-form" class="form-horizontal form-label-left" name="val-gr-form" action="phpinsert/grades_insert.php" method="POST" novalidate>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name:</label>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                            <?php
-                                $schl_name = $_GET['schl_name'];
-                                echo "<input class='form-control' value='$schl_name' name='schl_name' readonly>";
-                            ?>
+                    <form id="val-gr-form" class="form-horizontal form-label-left" name="val-gr-form" action="phpinsert/grades_insert.php" method="POST" data-parsley-validate>
+                        <div class="x_panel">
+                            <ul class="nav navbar-right panel_toolbox">
+                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+                              </li>
+                            </ul>
+                            <div class="x_title">
+                                Student Information
+                                <div class="clearfix"></div>
                             </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID:</label>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                        <?php
-                            $stud_id = $_GET['stud_id'];
-                            echo "<input class='form-control' value='$stud_id' name='stud_id' readonly>";
-                        ?>
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year:</label>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                        <?php
-                            $sy = $_GET['schl_year'];
-                            echo "<input class='form-control' value='$sy' name='schl_year' readonly>";
-                        ?>
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Program:</label>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                            <?php
-                                $sp = $_GET['program'];
-                                echo "<input class='form-control' value='$sp' name='program' readonly>";
-                            ?>
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum:</label>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                            <?php
-                                if(!$conn) {
-                                    die();
-                                }
-                                $curr_id = $_GET['curriculum'];
-                                $statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id";
+                            <div class="x_content">
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <?php
+                                        $schl_name = $_GET['schl_name'];
+                                        echo "<input class='form-control' value='$schl_name' name='schl_name' readonly>";
+                                    ?>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                <?php
+                                    $stud_id = $_GET['stud_id'];
+                                    echo "<input class='form-control' value='$stud_id' name='stud_id' readonly>";
+                                ?>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                <?php
+                                    $sy = $_GET['schl_year'];
+                                    echo "<input class='form-control' value='$sy' name='schl_year' readonly>";
+                                ?>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Program:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <?php
+                                        $sp = $_GET['program'];
+                                        echo "<input class='form-control' value='$sp' name='program' readonly>";
+                                    ?>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <?php
+                                        if(!$conn) {
+                                            die();
+                                        }
+                                        $curr_id = $_GET['curriculum'];
+                                        $statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id";
 
-                                $result = $conn->query($statement);
-                                if ($result->num_rows > 0) {
-                                        // output data of each row
-                                    while($row = $result->fetch_assoc()) {
-                                        $curr_name = $row['curr_name'];
-                                        echo "<h4>Curriculum: ".$curr_name."</h4>";
-                                    }
-                                }
-                            ?>
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level or Grade:</label>
-                            <div class="col-xs-1">
-                            <?php
-                                $year = $_GET['yr_level'];
-                                $grade = ((int) $year)+6;
-                                echo "<input class='form-control' value='$year' name='yr_level' readonly>";
-                            ?>
-                            </div>
+                                        $result = $conn->query($statement);
+                                        if ($result->num_rows > 0) {
+                                                // output data of each row
+                                            while($row = $result->fetch_assoc()) {
+                                                $curr_name = $row['curr_name'];
+                                                echo "<h4>".$curr_name."</h4>";
+                                            }
+                                        }
+                                    ?>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level or Grade:</label>
+                                    <div class="col-xs-1">
+                                    <?php
+                                        $year = $_GET['yr_level'];
+                                        $grade = ((int) $year)+6;
+                                        echo "<input class='form-control' value='$year' name='yr_level' readonly>";
+                                    ?>
+                                    </div>
 
-                            <div class="col-xs-1">
-                            <?php
-                                $year = $_GET['yr_level'];
-                                $grade = ((int) $year)+6;
-                                echo "<input class='form-control' value='$grade' name='grade' readonly>";
-                            ?>
+                                    <div class="col-xs-1">
+                                    <?php
+                                        $year = $_GET['yr_level'];
+                                        $grade = ((int) $year)+6;
+                                        echo "<input class='form-control' value='$grade' name='grade' readonly>";
+                                    ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <table class="table table-hover">
@@ -193,7 +207,7 @@
                                     <th>Subject ID</th>
                                     <th>Subject</th>
                                     <th>Subject Level</th>
-                                    <th>Credit Earned</th>
+                                    <th>Credits Earned</th>
                                     <th>Final Grade</th>
                                     
                                 </tr>
@@ -211,6 +225,7 @@
                                 $prog_id = $_GET['prog_id'];
                                 $total_unit = 0;
                                 $numberOfSubj = 0;
+                                $x = 0;
                                 $statement = "SELECT * from subjects NATURAL JOIN subjectcurriculum NATURAL JOIN curriculum NATURAL JOIN programs NATURAL JOIN subjectprogram WHERE subjectcurriculum.curr_id = $curriculum AND yr_level_needed = $yr_level_needed AND prog_id = $prog_id";
                                 $result = $conn->query($statement);
                                 if($result->num_rows>0) {
@@ -219,8 +234,8 @@
                                 $subj_id = $row['subj_id'];
                                 $subj_name = $row['subj_name'];
                                 $subj_level = $row['subj_level'];
-                                $credit_earned = $row['credit_earned'];
-                                $total_unit += $credit_earned;
+                                
+                                
                                 $numberOfSubj += 1;
                                 //$curr_name = $row['curr_name'];
 
@@ -242,23 +257,69 @@
 SUBJ;
 
                                 }else {
-                                    echo <<<SUBJ
+                                    $x+=1;
+                                    $y = $x-1;
+
+                                    if(isset($_SESSION['grade'])) {
+                                        $z = $_SESSION['grade'];
+                                            if(isset($z[$y])) {
+                                                echo <<<SUBJ
                                 
                                 <tr>
                                     <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
-                                    <td>$credit_earned</td>
-                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="##.##" required></td>
+                                    <td>
+                                        <input type="text" style="width: 50px; text-align:center;" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="computeCredits(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="" required>
+                                    </td>
+                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$z[$y]" required></td>
                                     
                                 </tr>
                                 
 SUBJ;
+                                            }else {
+                                                 echo <<<SUBJ
+                                
+                                <tr>
+                                    <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
+                                    <td>$subj_name</td>
+                                    <td>$subj_level</td>
+                                    <td>
+                                        <input type="text" style="width: 50px; text-align:center;" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="computeCredits(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="" required>
+                                    </td>
+                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="" required></td>
+                                    
+                                </tr>
+                                
+SUBJ;
+                                            }
+                                        
+                                    }else {
+                                        echo <<<SUBJ
+                                
+                                <tr>
+                                    <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
+                                    <td>$subj_name</td>
+                                    <td>$subj_level</td>
+                                    <td>
+                                        <input type="text" style="width: 50px; text-align:center;" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="computeCredits(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="" required>
+                                    </td>
+                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="" required></td>
+                                    
+                                </tr>
+                                
+SUBJ;
+                                    }
+                                    
+                                    
+                                
                                 }
                                 
                                     }
-                                } 
+                                }
+                                 
                                     echo "Number of Subjects: <input type='number' id='num_subj' style='width: 50px; text-align:center;'' value='$numberOfSubj' readonly>";
+                               
                                 ?>
                                 
                             </tbody>
@@ -270,12 +331,13 @@ SUBJ;
                             <input id="average" class="form-control" type="text" style="width: 70px;" value="" name="average_grade">
                         </div>
                         <div class="col-md-2 col-xs-12">
-                            <label for="total_unit">Total Units: </label>
-                            <input id="total_unit" class="form-control" type="text" style="width: 70px;" value=<?php echo $total_unit; ?> name="total_unit" readonly="">
+                            <label for="total_credits">Total Credits: </label>
+                            <input id="total_credits" class="form-control" type="text" style="width: 70px;" value="" name="total_credits" onkeypress="return isNumberKey(event)">
                         </div>
 
                         <div class="clearfix"></div>
                         <div class="col-md-2 pull-right">
+                            <button type="reset" class="btn btn-danger">Reset</button>
                             <button id="send" type="submit" class="btn btn-default">Submit</button>
                         </div>
                     </form>
@@ -302,30 +364,7 @@ SUBJ;
         <script src= "../../js/custom.min.js"></script>
         <!-- Scripts -->
        <!-- Parsley -->
-        <script>
-        $(document).ready(function() {
-        $.listen('parsley:field:validate', function() {
-        validateFront();
-        });
-        $('#val-gr-form .btn').on('click', function() {
-        $('#val-gr-form').parsley().validate();
-        validateFront();
-        });
-        var validateFront = function() {
-        if (true === $('#val-gr-form').parsley().isValid()) {
-        $('.bs-callout-info').removeClass('hidden');
-        $('.bs-callout-warning').addClass('hidden');
-        } else {
-        $('.bs-callout-info').addClass('hidden');
-        $('.bs-callout-warning').removeClass('hidden');
-        }
-        };
-        });
-        try {
-        hljs.initHighlightingOnLoad();
-        } catch (err) {}
-        </script>
-            <!-- /Parsley -->
+ 
         <!-- Sisyphus -->
         
         <!-- jquery.inputmask -->
@@ -338,6 +377,14 @@ SUBJ;
         <!-- Save to DB Script -->
         <script type="text/javascript">
             function saveToDB(x) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                   
+                  }
+                };
+                xhttp.open("GET", "tempgrade.php?grade="+x, true);
+                xhttp.send();
                 var subj_id = document.getElementsByName('subj_id[]');
                 var fin_grade = document.getElementsByName('fin_grade[]');
                 var comment = document.getElementsByName('comment[]');
@@ -360,6 +407,25 @@ SUBJ;
                     console.log(parseInt(computed_average));
                 }
 
+            }
+            function computeCredits(y) {
+                var subj_id = document.getElementsByName('subj_id[]');
+                var credit_earned = document.getElementsByName('credit_earned[]');
+                var computed_credits = 0;
+                var total_credits = document.getElementById('total_credits');
+                console.log(y);
+                if(y == "") {
+
+                }else {
+                    for (var i = 0; i < subj_id.length; i++) {
+                       
+                        computed_credits += parseFloat(credit_earned[i].value);
+
+                    }
+                    
+                    total_credits.value = computed_credits;
+                    console.log(computed_credits);
+                }
             }
         </script>
         <!-- Save to DB Script -->

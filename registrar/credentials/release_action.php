@@ -23,6 +23,8 @@
 	$req_id = $_GET['req_id'];
 	$cred_id = $_GET['cred_id'];
 	$request_type = $_GET['request_type'];
+	$or_no = intval($_GET['or_no']);
+
 	$insertstm1 = "";
 	if(!$conn) {
 		die();
@@ -34,8 +36,8 @@
 	if ($result->num_rows > 0) {
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
-			$cred_id = $row['curr_id'];
-			$cred_name = $row['curr_name'];
+			$cred_id = $row['cred_id'];
+			$cred_name = $row['cred_name'];
 			$price = $row['price'];
 		}
 	}
@@ -43,9 +45,9 @@
  	$updatestm1 = "UPDATE `pcnhsdb`.`requests` SET `status`='r', `date_released`= current_date() WHERE `req_id`= '$req_id';";
 
  	if($request_type == "individual") {
- 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `pay_amt`, `stud_id`) VALUES (current_date(), $price, '$stud_id');";
+ 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `or_no`, `pay_amt`, `stud_id`, `cred_id`) VALUES (current_date(), '$or_no', '$price', '$stud_id', '$cred_id');";
  	}else {
- 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `pay_amt`, `stud_id`) VALUES (current_date(), 0, '$stud_id');";
+ 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `pay_amt`, `or_no`, `stud_id`) VALUES (current_date(), 0, 0, '$stud_id', '$cred_id');";
  	}
 
  	mysqli_query($conn, $updatestm1);
@@ -65,6 +67,6 @@
 
 	mysqli_query($conn, $insertstm2);
 
- 	header("location: released.php");
+ 	//header("location: released.php");
 
 ?>

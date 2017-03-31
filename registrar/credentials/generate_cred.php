@@ -124,9 +124,9 @@ header('Location: ../../login.php');
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Admitted To:</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Issued To:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="admittedto" value="" placeholder="ex: Grade 11">
+							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="issuedto" value="" placeholder="ex: Grade 11">
 						</div>
 					</div>
 					<div class="form-group">
