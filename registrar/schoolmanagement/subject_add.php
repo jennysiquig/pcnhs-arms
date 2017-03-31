@@ -31,7 +31,9 @@
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+		<!-- iCheck -->
+    	<link href="../../resources/libraries/iCheck/skins/flat/green.css" rel="stylesheet">
+
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
@@ -135,11 +137,9 @@ SUBJID;
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control col-md-7 col-xs-12" name="curr_id" required="">
-										<!-- <option value="1">Regular</option>
-										-->
-										<option value="">No Selected</option>
-										<?php
+									<div class="form-group">
+				                        <div class="col-md-9 col-sm-9 col-xs-12">
+				                        	<?php
 											
 																								
 											if(!$conn) {
@@ -153,41 +153,52 @@ SUBJID;
 												$curr_id = $row['curr_id'];
 												$curr_name = $row['curr_name'];
 												echo <<<OPTION2
-																		<option value="$curr_id">$curr_name</option>
+													<div class="checkbox">
+							                            <label>
+							                              <input type="checkbox" name="curr_id[]" class="flat" value="$curr_id"> $curr_name
+							                            </label>
+							                         </div>
+
+																	
 OPTION2;
 																}
 															}
 											?>
-										</select>
+				                          
+				                        </div>
+				                      </div>
 									</div>
 								</div>
 								<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Program</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control col-md-7 col-xs-12" name="prog_id" required="">
-										<!-- <option value="1">Regular</option>
-										-->
-										<option value="">No Selected</option>
-										<?php
-											
-																								
-											if(!$conn) {
-												die("Connection failed: " . mysqli_connect_error());
-											}
-											$statement = "SELECT * FROM pcnhsdb.programs";
-											$result = $conn->query($statement);
-											if ($result->num_rows > 0) {
-											// output data of each row
-											while($row = $result->fetch_assoc()) {
-												$prog_id = $row['prog_id'];
-												$prog_name = $row['prog_name'];
-												echo <<<OPTION3
-																		<option value="$prog_id">$prog_name</option>
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Program</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<div class="form-group">
+					                        <div class="col-md-9 col-sm-9 col-xs-12">
+											<?php
+												
+																									
+												if(!$conn) {
+													die("Connection failed: " . mysqli_connect_error());
+												}
+												$statement = "SELECT * FROM pcnhsdb.programs";
+												$result = $conn->query($statement);
+												if ($result->num_rows > 0) {
+												// output data of each row
+												while($row = $result->fetch_assoc()) {
+													$prog_id = $row['prog_id'];
+													$prog_name = $row['prog_name'];
+													echo <<<OPTION3
+														<div class="checkbox">
+								                            <label>
+								                              <input type="checkbox" name="prog_id[]" class="flat" value="$prog_id"> $prog_name
+								                            </label>
+								                         </div>
 OPTION3;
+																	}
 																}
-															}
-											?>
-										</select>
+												?>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="form-group">
@@ -206,6 +217,9 @@ OPTION3;
 		<!-- Footer -->
 		<?php include "../../resources/templates/registrar/footer.php"; ?>
 		<!-- Scripts -->
+		<!-- iCheck -->
+    	<script src="../../resources/libraries/iCheck/icheck.min.js"></script>
+
 		<!-- jQuery -->
 		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 		<!-- Bootstrap -->

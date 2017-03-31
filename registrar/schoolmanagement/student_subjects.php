@@ -289,7 +289,33 @@ SUBJS;
 			                      }else {
 			                        echo '<li class="disabled"><a>Previous</a></li>';
 			                      }
-			                      for($i = 1;$i <= $total; $i++) {
+			                       // Google Like Pagination
+			                      $x = 0;
+			                      $y = 0;
+			                      if(($page+5) <= $total) {
+			                        if($page >= 3) {
+			                          $x = $page + 2;
+
+			                        }else {
+			                          $x = 5;
+			                        }
+
+			                        $y = $page;
+			                        if($y <= $total) {
+			                          $y -= 2;
+			                          if($y < 1) {
+			                            $y = 1;
+			                          }
+			                        }
+			                      }else {
+			                        $x = $total;
+			                        $y = $total - 5;
+			                        if($y < 1) {
+			                          $y = 1;
+			                        }
+			                      }
+			                      // Google Like Pagination
+			                      for($i = $y;$i <= $x; $i++) {
 			                        if($i==$page) {
 			                          echo "<li class='active'><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=$i'>$i</a></li>";
 			                      } else {

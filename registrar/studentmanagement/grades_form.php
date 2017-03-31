@@ -383,7 +383,7 @@ SUBJ;
                    
                   }
                 };
-                xhttp.open("GET", "tempgrade.php?grade="+x, true);
+                xhttp.open("GET", "phpscript/tempgrade.php?grade="+x, true);
                 xhttp.send();
                 var subj_id = document.getElementsByName('subj_id[]');
                 var fin_grade = document.getElementsByName('fin_grade[]');

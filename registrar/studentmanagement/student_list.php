@@ -327,7 +327,7 @@ STUDLIST;
            location.reload();
           }
         };
-        xhttp.open("GET", "showentry.php?entry="+val, true);
+        xhttp.open("GET", "phpscript/showentry.php?entry="+val, true);
         xhttp.send();
       }
     </script>
