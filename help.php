@@ -28,7 +28,12 @@ if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
     <!-- Custom Theme Style -->
     <link href="css/custom.min.css" rel="stylesheet">
     <link href="css/tstheme/style.css" rel="stylesheet">
-    
+    <!-- PDFObject -->
+    <script src="resources/libraries/PDFObject/pdfobject.min.js"></script>
+
+    <style>
+    .pdfobject-container { height: 600px;}
+    </style>
   </head>
   <body class="nav-md">
     <!-- Sidebar -->
@@ -36,9 +41,14 @@ if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
     <!-- Top Navigation -->
     <?php include "resources/templates/registrar/top-nav.php"; ?>
     <div class="right_col" role="main">
+      <!-- Content -->
+      <div id="pdf1">
+
+      </div>
       
       
       
+      <!-- Content -->
       <div class="clearfix"></div>
     </div>
     <!-- Footer -->
@@ -59,5 +69,8 @@ if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
     <!-- Custom Theme Scripts -->
     <script src= "js/custom.min.js"></script>
     <!-- Scripts -->
+    <script type="text/javascript">
+        PDFObject.embed("resources/files/ebook.pdf", "#pdf1");
+    </script>
   </body>
 </html>
