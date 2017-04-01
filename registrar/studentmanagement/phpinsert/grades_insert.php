@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	require_once "../../../resources/config.php";
-
+	include('../../../resources/classes/Popover.php');
 	if(!$conn) {
 		die();
 	}
@@ -18,13 +18,11 @@
 
 	if($average_grade > 99.999) {
 		$willInsert = false;
-			$_SESSION['error_pop'] = <<<ERROR_POP
-			<div class="alert alert-danger alert-dismissible fade in" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                </button>
-                <strong>You have entered an Invalid Average Grade.</strong>
-            </div>
-ERROR_POP;
+			$alert_type = "danger";
+			$error_message = "You have entered an Invalid Average Grade.";
+			$popover = new Popover();
+			$popover->set_popover($alert_type, $error_message);	
+			$_SESSION['error_pop'] = $popover->get_popover();
 			header("Location: " . $_SERVER["HTTP_REFERER"]);
 	}
 
@@ -35,13 +33,11 @@ ERROR_POP;
 // 
 		if($fin_grade > 99.99 || $fin_grade < 70) {
 			$willInsert = false;
-			$_SESSION['error_pop'] = <<<ERROR_POP
-			<div class="alert alert-danger alert-dismissible fade in" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                </button>
-                <strong>You have entered an Invalid Final Grade.</strong>
-            </div>
-ERROR_POP;
+			$alert_type = "danger";
+			$error_message = "You have entered an Invalid Final Grade.";
+			$popover = new Popover();
+			$popover->set_popover($alert_type, $error_message);	
+			$_SESSION['error_pop'] = $popover->get_popover();
 			header("Location: " . $_SERVER["HTTP_REFERER"]);
 		}
 // 
@@ -53,13 +49,11 @@ ERROR_POP;
 //
 		if($credit_earned < 1 || $credit_earned > 100) {
 			$willInsert = false;
-			$_SESSION['error_pop'] = <<<ERROR_POP
-			<div class="alert alert-danger alert-dismissible fade in" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                </button>
-                <strong>You have entered an Credits Earned.</strong>
-            </div>
-ERROR_POP;
+			$alert_type = "danger";
+			$error_message = "You have entered an Invalid Credits Earned.";
+			$popover = new Popover();
+			$popover->set_popover($alert_type, $error_message);	
+			$_SESSION['error_pop'] = $popover->get_popover();
 		} 
 
 		$insertgrades .= "INSERT INTO `pcnhsdb`.`studentsubjects` (`stud_id`, `subj_id`, `schl_year`, `yr_level`, `fin_grade`, `comment`, `credit_earned`) VALUES ('$stud_id', '$subj_id', '$schl_year', '$yr_level', '$fin_grade', '$comment', '$credit_earned');";
