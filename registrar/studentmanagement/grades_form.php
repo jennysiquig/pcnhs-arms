@@ -114,16 +114,13 @@
                 <div class="x_content">
                     <!-- First -->
                     <form id="val-gr-form" class="form-horizontal form-label-left" name="val-gr-form" action="phpinsert/grades_insert.php" method="POST" data-parsley-validate>
-                        <div class="x_panel">
-                            <ul class="nav navbar-right panel_toolbox">
-                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
-                              </li>
-                            </ul>
-                            <div class="x_title">
-                                Student Information
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="x_content">
+                        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                          <div class="panel">
+                            <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              <h4 class="panel-title">Student's School Information</h4>
+                            </a>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                              <div class="panel-body">
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name:</label>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
@@ -199,8 +196,12 @@
                                     ?>
                                     </div>
                                 </div>
+                              </div>
                             </div>
+                          </div>
                         </div>
+
+
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -213,6 +214,7 @@
                                 </tr>
                             </thead>
                             <tbody id="subj_list">
+
                                 <?php
                                 $curriculum;
                                 if($_GET['curriculum_subj'] == "none") {
@@ -246,11 +248,23 @@
                                     echo <<<SUBJ
                                 
                                 <tr>
-                                    <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
+                                    <td>
+                                        <div class="item form-group">
+                                            <div class="col-md-3">
+                                                <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td>$credit_earned</td>
-                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" value="0" readonly></td>
+                                    <td>
+                                        <div class="item form-group">
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" text-align:center;" name="fin_grade[]" value="0" readonly>
+                                            </div>
+                                        </div>
+                                    </td>
                                     
                                 </tr>
                                 
@@ -266,13 +280,29 @@ SUBJ;
                                                 echo <<<SUBJ
                                 
                                 <tr>
-                                    <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
+                                    <td>   
+                                        <div class="item form-group">
+                                            <div class="col-md-3">
+                                                <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td>
-                                        <input type="text" style="width: 50px; text-align:center;" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="computeCredits(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="" required>
+                                        <div class="item form-group">
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" text-align:center;" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="computeCredits(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="" required>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$z[$y]" required></td>
+                                    <td>
+                                        <div class="item form-group">
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$z[$y]" required>
+                                            </div>
+                                        </div>
+                                    </td>
                                     
                                 </tr>
                                 
@@ -281,13 +311,29 @@ SUBJ;
                                                  echo <<<SUBJ
                                 
                                 <tr>
-                                    <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
+                                   <td>   
+                                        <div class="item form-group">
+                                            <div class="col-md-3">
+                                                <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td>
-                                        <input type="text" style="width: 50px; text-align:center;" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="computeCredits(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="" required>
+                                        <div class="item form-group">
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" text-align:center;" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="computeCredits(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="" required>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="" required></td>
+                                    <td>
+                                        <div class="item form-group">
+                                            <div class="col-md-4">
+                                                <input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="" required>
+                                            </div>
+                                        </div>
+                                    </td>
                                     
                                 </tr>
                                 
@@ -298,7 +344,13 @@ SUBJ;
                                         echo <<<SUBJ
                                 
                                 <tr>
-                                    <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
+                                    <td>   
+                                        <div class="item form-group">
+                                            <div class="col-md-3">
+                                                <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td>
@@ -318,8 +370,14 @@ SUBJ;
                                     }
                                 }
                                  
-                                    echo "Number of Subjects: <input type='number' id='num_subj' style='width: 50px; text-align:center;'' value='$numberOfSubj' readonly>";
-                               
+                                    echo <<<NUM
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-11 col-sm-3 col-xs-12">Number of Subjects:</label>
+                                        <div class="col-md-1 col-sm-6 col-xs-12">
+                                            <input id="num_subj" class="form-control col-md-7 col-xs-12" type="text" value='$numberOfSubj' readonly>
+                                        </div>
+                                    </div>
+NUM;
                                 ?>
                                 
                             </tbody>

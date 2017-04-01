@@ -59,6 +59,7 @@
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
+
 			<div class="col-md-9">
 				<ol class="breadcrumb">
 				  <li><a href="../index.php">Home</a></li>
@@ -72,6 +73,14 @@
 					
 				</div>
 			</div>
+			<!-- Generate Error Message Here  -->
+            <?php
+                if(isset($_SESSION['error_pop'])) {
+                    echo $_SESSION['error_pop'];
+                    unset($_SESSION['error_pop']);
+                }
+            ?>
+            <!--  -->
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
@@ -122,18 +131,48 @@ SUBJID;
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="subj_name">
 								</div>
 							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="subj_level" min="1">
-								</div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level Needed</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="yr_level_needed" min="1">
-								</div>
-							</div>
+							<div class="form-group">
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level</label>
+		                        <div class="col-md-6 col-sm-6 col-xs-12">
+		                          <select class="select2_group form-control" name="subj_level" required="">
+		                            <option value="">-- No Selected --</option>
+		                            <optgroup label="Year">
+		                              <option value="1">1</option>
+		                              <option value="2">2</option>
+		                              <option value="3">3</option>
+		                              <option value="4">4</option>
+		                            </optgroup>
+		                            <optgroup label="Grade">
+		                              <option value="7">7</option>
+		                              <option value="8">8</option>
+		                              <option value="9">9</option>
+		                              <option value="10">10</option>
+		                              
+		                            </optgroup>
+		                          </select>
+		                        </div>
+		                      </div>
+							<div class="form-group">
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Level Needed</label>
+		                        <div class="col-md-6 col-sm-6 col-xs-12">
+		                          <select class="select2_group form-control" name="yr_level_needed" required="">
+		                            <option value="">-- No Selected --</option>
+		                            <optgroup label="Year">
+		                              <option value="1">1</option>
+		                              <option value="2">2</option>
+		                              <option value="3">3</option>
+		                              <option value="4">4</option>
+		                            </optgroup>
+		                            <optgroup label="Grade">
+		                              <option value="7">7</option>
+		                              <option value="8">8</option>
+		                              <option value="9">9</option>
+		                              <option value="10">10</option>
+		                              
+		                            </optgroup>
+		                          </select>
+		                        </div>
+		                      </div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">

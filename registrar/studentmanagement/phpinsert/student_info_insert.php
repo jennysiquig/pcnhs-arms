@@ -1,5 +1,6 @@
 <?php
 	require_once "../../../resources/config.php";
+	include('../../../resources/classes/Popover.php');
 	if(!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}
@@ -35,14 +36,12 @@
 // validate gpa
 	if($gpa > 99.99 || $gpa < 75) {
 		$willInsert = false;
-			$_SESSION['error_pop'] = <<<ERROR_POP
-			<div class="alert alert-danger alert-dismissible fade in" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                </button>
-                <strong>Error: </strong>You have entered an Invalid Average Grade.
-            </div>
-ERROR_POP;
-			header("Location: " . $_SERVER["HTTP_REFERER"]);
+		$alert_type = "danger";
+		$error_message = "You have entered an invalid Average Grade.";
+		$popover = new Popover();
+		$popover->set_popover($alert_type, $error_message);	
+		$_SESSION['error_pop'] = $popover->get_popover();
+		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		
 	}
 
@@ -52,13 +51,11 @@ ERROR_POP;
 // validate primary school year
 	if(intval($year1) > intval($year2) || intval($year2) != (intval($year1)+1) ) {
 		$willInsert = false;
-			$_SESSION['error_pop'] = <<<ERROR_POP
-			<div class="alert alert-danger alert-dismissible fade in" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                </button>
-                <strong>Error: </strong>You have entered an Invalid Primary School Year.
-            </div>
-ERROR_POP;
+			$alert_type = "danger";
+			$error_message = "You have entered an invalid Primary School.";
+			$popover = new Popover();
+			$popover->set_popover($alert_type, $error_message);	
+			$_SESSION['error_pop'] = $popover->get_popover();
 		
 			header("Location: " . $_SERVER["HTTP_REFERER"]);
 	}
@@ -68,13 +65,11 @@ ERROR_POP;
 	$result = $conn->query($selectStudents);
 	if ($result->num_rows > 0) {
 		$willInsert = false;
-			$_SESSION['error_pop'] = <<<ERROR_POP
-			<div class="alert alert-danger alert-dismissible fade in" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                </button>
-                <strong>Error: </strong>Duplicate Student Record.
-            </div>
-ERROR_POP;
+			$alert_type = "danger";
+			$error_message = "Duplicate Student found.";
+			$popover = new Popover();
+			$popover->set_popover($alert_type, $error_message);	
+			$_SESSION['error_pop'] = $popover->get_popover();
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 	}	
 
@@ -96,12 +91,6 @@ ERROR_POP;
 		header("Location: ../student_info.php?stud_id=$stud_id");
 	}
 	
-
-	
-
-	
-	
-	
 	$conn->close();
 
 	function test_input($data) {
@@ -119,13 +108,5 @@ ERROR_POP;
 			return "";
 		}
 	}
-
-	// function test_select_bday($data) {
-	// 	if($data == "none") {
-	// 		$_SESSION['none_selected'] = "<p style='color: red'>* Please Select</p>";
-	// 	}else{
-	// 		return $data;
-	// 	}
-	// }
 
 ?>
