@@ -177,26 +177,36 @@ UNCLAIMED;
 			<!-- input mask -->
 			<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 			<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+			<!-- Bootbox -->
+			<script src= "../../resources/libraries/bootbox/bootbox.min.js"></script>
 			<!-- Custom Theme Scripts -->
+
 			<script src= "../../js/custom.min.js"></script>
 			<!-- Scripts -->
 			<script type="text/javascript">
 				function releaseAction(stud_id, cred_id, req_id, request_type) {
-					var or_no;
-					if(or_no = prompt("Please Enter the OR Number")) {
-						var xhttp = new XMLHttpRequest();
-				        xhttp.onreadystatechange = function() {
-				          if (this.readyState == 4 && this.status == 200) {
-				           location.assign("released.php");
-				          }
-				        };
-				        xhttp.open("GET", "release_action.php?stud_id="+stud_id+"&cred_id="+cred_id+"&req_id="+req_id+"&request_type="+request_type+"&or_no="+or_no, true);
-				        xhttp.send();
-					}
-			        
-      
- 
-					
+					bootbox.prompt({
+						size: "small",
+						title: "Enter OR Number",				
+						callback: function(or_no){ 
+									if(or_no != null && !isNaN(or_no) && or_no != "") {
+										var xhttp = new XMLHttpRequest();
+								        xhttp.onreadystatechange = function() {
+								          if (this.readyState == 4 && this.status == 200) {
+								           location.assign("released.php");
+								          }
+								        };
+								        xhttp.open("GET", "release_action.php?stud_id="+stud_id+"&cred_id="+cred_id+"&req_id="+req_id+"&request_type="+request_type+"&or_no="+or_no, true);
+								        xhttp.send();
+									}else if(or_no != null && isNaN(or_no)) {
+										bootbox.alert({
+											size: "small",
+										    message: "Invalid OR Number"
+										});
+									}
+								}
+							
+						});	
 				}
 			</script>
 		</body>
