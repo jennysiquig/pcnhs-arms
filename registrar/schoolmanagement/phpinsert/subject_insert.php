@@ -3,12 +3,13 @@
 	require_once "../../../resources/config.php";
 	include('../../../resources/classes/Popover.php');
 
-	$subj_id = htmlspecialchars($_POST['subj_id'], ENT_QUOTES, 'UTF-8');
-	$subj_name = htmlspecialchars($_POST['subj_name'], ENT_QUOTES, 'UTF-8');
-	$subj_level = htmlspecialchars($_POST['subj_level'], ENT_QUOTES, 'UTF-8');
-	$curriculum = $_POST['curr_id'];
-	$program = $_POST['prog_id'];
-	$yr_level_needed = htmlspecialchars($_POST['yr_level_needed'], ENT_QUOTES, 'UTF-8');
+	$subj_id = intval(htmlspecialchars(filter_var($_POST['subj_id'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8'));
+	$subj_name = htmlspecialchars(filter_var($_POST['subj_name'], FILTER_SANITIZE_STRING), ENT_QUOTES, 'UTF-8');
+	$subj_level = htmlspecialchars(filter_var($_POST['subj_level'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8');
+	$curriculum = intval(htmlspecialchars(filter_var($_POST['curr_id'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8'));
+	$program = intval(htmlspecialchars(filter_var($_POST['prog_id'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8'));
+	$yr_level_needed = htmlspecialchars(filter_var($_POST['yr_level_needed'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8');
+	$subj_order = html_entity_decode(filter_var($_POST['subj_order'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES);
 
 	$multipleinsert = "";
 	//$insertprogram = "";
@@ -38,8 +39,15 @@
 	if($subj_level > 6 && $yr_level_needed > 6) {
 		$yr_level_needed -= 6;
 	}
+	if($subj_order < 1 || !is_int($subj_order)) {
+		$willInsert = false;
+		$popover = new Popover();
+		$popover->set_popover("danger", "Invalid Subject Order");
+		$_SESSION['error_pop'] = $popover->get_popover();
+		header("Location: ".$_SERVER['HTTP_REFERER']);
+	}
 
-	$insertsubject = "INSERT INTO `pcnhsdb`.`subjects` (`subj_id`,`subj_name`, `subj_level`, `yr_level_needed`) VALUES ('$subj_id', '$subj_name', '$subj_level', '$yr_level_needed');";
+	$insertsubject = "INSERT INTO `pcnhsdb`.`subjects` (`subj_id`,`subj_name`, `subj_level`, `yr_level_needed`, `subj_order`) VALUES ('$subj_id', '$subj_name', '$subj_level', '$yr_level_needed', '$subj_order');";
 
 
 	foreach ($curriculum as $key => $value) {

@@ -11,7 +11,7 @@
     $signatory = htmlspecialchars($_POST['signatory'], ENT_QUOTES);
 	$personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
 	$date = htmlspecialchars($_POST['date'], ENT_QUOTES);
-  $issuedto = htmlspecialchars($_POST['issuedto'], ENT_QUOTES);
+    $issuedto = htmlspecialchars($_POST['issuedto'], ENT_QUOTES);
 
 	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `issued_for`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$issuedto' ,'$signatory', '$personnel_id');";
 
@@ -19,8 +19,8 @@
     
     $_SESSION['user_activity'] = "Student $stud_id requested Credential $cred_id.";
     
-    mysqli_query($conn, $statement1);
-    mysqli_query($conn, $statement2);
+    //mysqli_query($conn, $statement1);
+    //mysqli_query($conn, $statement2);
 
 ?>
 <!DOCTYPE html>

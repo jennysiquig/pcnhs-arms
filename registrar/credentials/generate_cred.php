@@ -1,9 +1,19 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <?php
-	$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
-	$credential = htmlspecialchars($_GET['credential'], ENT_QUOTES);
-	$request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
+
+	$stud_id = "";
+	$credential = "";
+	$request_type = "";
+	
+	if(isset($_GET['stud_id']) && isset($_GET['credential']) && isset($_GET['request_type'])) {
+		$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
+		$credential = htmlspecialchars($_GET['credential'], ENT_QUOTES);
+		$request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
+	}else {
+		header("location: ../index.php");
+	}
+	
 ?>
 <!DOCTYPE html>
 <html>

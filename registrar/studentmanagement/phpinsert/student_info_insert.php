@@ -8,31 +8,33 @@
 	session_start();
 
 
-	$stud_id = test_ifset($_POST['stud_id']);
-	$first_name = test_ifset($_POST['first_name']);
-	$mid_name = test_ifset($_POST['mid_name']);
-	$last_name = test_ifset($_POST['last_name']);
-	$gender = test_ifset($_POST['gender']);
+	$stud_id = htmlspecialchars(filter_var($_POST['stud_id'], FILTER_SANITIZE_STRING));
+	$first_name = htmlspecialchars(filter_var($_POST['first_name'], FILTER_SANITIZE_STRING));
+	$mid_name = htmlspecialchars(filter_var($_POST['mid_name'], FILTER_SANITIZE_STRING));
+	$last_name = htmlspecialchars(filter_var($_POST['last_name'], FILTER_SANITIZE_STRING));
+	$gender = htmlspecialchars(filter_var($_POST['gender'], FILTER_SANITIZE_STRING));
 
-	$birth_date = test_ifset($_POST['birthdate']);
+	$birth_date = htmlspecialchars(filter_var($_POST['birthdate']));
 
-	$province = test_ifset($_POST['birth_place_province']);
-	$towncity = test_ifset($_POST['birth_place_towncity']);
-	$barangay = test_ifset($_POST['birth_place_barangay']);
+	$province = htmlspecialchars(filter_var($_POST['birth_place_province'], FILTER_SANITIZE_STRING));
+	$towncity = htmlspecialchars(filter_var($_POST['birth_place_towncity'], FILTER_SANITIZE_STRING));
+	$barangay = htmlspecialchars(filter_var($_POST['birth_place_barangay'], FILTER_SANITIZE_STRING));
 
-	$second_school_name = test_ifset($_POST['second_school_name']);
-	$program = test_ifset($_POST['program']);
-	$curriculum = test_ifset($_POST['curriculum']);
+	$second_school_name = htmlspecialchars(filter_var($_POST['second_school_name'], FILTER_SANITIZE_STRING));
+	$program = htmlspecialchars(filter_var($_POST['program'], FILTER_SANITIZE_STRING));
+	$curriculum = htmlspecialchars(filter_var($_POST['curriculum'], FILTER_SANITIZE_STRING));
 
-	$pname = test_ifset($_POST['pname']);
-	$parent_occupation = test_ifset($_POST['occupation']);
-	$parent_address = test_ifset($_POST['parent_address']);
+	$pname = htmlspecialchars(filter_var($_POST['pname'], FILTER_SANITIZE_STRING));
+	$parent_occupation = htmlspecialchars(filter_var($_POST['occupation'], FILTER_SANITIZE_STRING));
+	$parent_address = htmlspecialchars(filter_var($_POST['parent_address'], FILTER_SANITIZE_STRING));
 
-	$primary_schl_name = test_ifset($_POST['schl_name']);
-	$primary_schl_year = test_ifset($_POST['schl_year']);
-	$total_elem_years = test_ifset($_POST['total_elem_years']);
-	$gpa = test_ifset($_POST['gpa']);
+	$primary_schl_name = htmlspecialchars(filter_var($_POST['schl_name'], FILTER_SANITIZE_STRING));
+	$primary_schl_year = htmlspecialchars($_POST['schl_year'], FILTER_SANITIZE_STRING);
+	$total_elem_years = htmlspecialchars(filter_var($_POST['total_elem_years'], FILTER_SANITIZE_STRING));
+	$gpa = htmlspecialchars(filter_var($_POST['gpa'], FILTER_SANITIZE_STRING));
 	$willInsert = true;
+	
+	
 // validate gpa
 	if($gpa > 99.99 || $gpa < 75) {
 		$willInsert = false;
@@ -98,21 +100,5 @@
 	}
 	
 	$conn->close();
-
-	function test_input($data) {
-	  $data = trim($data);
-	  $data = stripslashes($data);
-	  $data = htmlspecialchars($data);
-	  return $data;
-	}
-
-	function test_ifset($data) {
-		if(isset($data)) {
-			test_input($data);
-			return $data;
-		}else {
-			return "";
-		}
-	}
 
 ?>

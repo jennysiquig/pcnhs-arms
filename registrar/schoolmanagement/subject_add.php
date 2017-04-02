@@ -119,7 +119,7 @@ SUBJID;
 							<div class="form-group">
 		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level</label>
 		                        <div class="col-md-6 col-sm-6 col-xs-12">
-		                          <select class="select2_group form-control" name="subj_level" required="">
+		                          <select class="form-control" name="subj_level" required="">
 		                            <option value="">-- No Selected --</option>
 		                            <optgroup label="Year">
 		                              <option value="1">1</option>
@@ -140,7 +140,7 @@ SUBJID;
 							<div class="form-group">
 		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Level Needed</label>
 		                        <div class="col-md-6 col-sm-6 col-xs-12">
-		                          <select class="select2_group form-control" name="yr_level_needed" required="">
+		                          <select class="form-control" name="yr_level_needed" required="">
 		                            <option value="">-- No Selected --</option>
 		                            <optgroup label="Year">
 		                              <option value="1">1</option>
@@ -157,7 +157,13 @@ SUBJID;
 		                            </optgroup>
 		                          </select>
 		                        </div>
-		                      </div>
+		                    </div>
+		                    <div class="form-group">
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Order</label>
+		                        <div class="col-md-6 col-sm-6 col-xs-12">
+		                          <input class="form-control" name="subj_order" pattern"\d" required="">
+		                        </div>
+		                    </div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">

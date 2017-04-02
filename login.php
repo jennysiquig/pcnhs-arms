@@ -78,7 +78,7 @@
 
               <div class="clearfix"></div>
               <div class="separator">
-                <a class="" href="#">Forgot your password?</a>
+                
                 <div class="clearfix"></div>
                 <br />
                 <div>

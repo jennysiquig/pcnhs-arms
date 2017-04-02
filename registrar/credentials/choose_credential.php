@@ -1,7 +1,15 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
-<?php $stud_id = $_GET['stud_id'] ?>
 <!DOCTYPE html>
+<?php 
+	$stud_id = "";
+	if(isset($_GET['stud_id'])) {
+		$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
+	}else {
+		header("location: ../index.php");
+	}
+	
+?>
 <html>
 	<head>
 		<title>Choose Credential</title>

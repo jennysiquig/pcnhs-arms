@@ -8,9 +8,9 @@
 	$stud_id = htmlspecialchars($_POST['stud_id'], ENT_QUOTES);
 	$lastName = htmlspecialchars($_POST['lastName'], ENT_QUOTES);
 	$firstName = htmlspecialchars($_POST['firstName'], ENT_QUOTES);
-	$middleName = $_POST['middleName'], ENT_QUOTES);
+	$middleName = htmlspecialchars($_POST['middleName'], ENT_QUOTES);
 	$gender = htmlspecialchars($_POST['gender'], ENT_QUOTES);
-	$birthdate = htmlspecialchars($_POST['birthdate'];
+	$birthdate = htmlspecialchars($_POST['birthdate']);
 	$barangay = htmlspecialchars($_POST['barangay'], ENT_QUOTES);
 	$towncity = htmlspecialchars($_POST['towncity'], ENT_QUOTES);
 	$province = htmlspecialchars($_POST['province'], ENT_QUOTES);
