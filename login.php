@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- Session Check -->
+
   <?php
     date_default_timezone_set('Asia/Manila');
     session_start();
@@ -12,7 +13,6 @@
       header("Location: $account_type/index.php");
     }
     
-
     
 
   ?>

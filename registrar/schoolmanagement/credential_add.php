@@ -1,22 +1,6 @@
-<?php
-    session_start();
-     // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-   
-  ?>
 <!DOCTYPE html>
+<?php require_once "../../resources/config.php"; ?>
+<?php include('include_files/session_check.php'); ?>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -85,7 +69,30 @@
 						<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Credential ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="cred_id">
+									<?php
+												
+																								
+											if(!$conn) {
+												die("Connection failed: " . mysqli_connect_error());
+											}
+											$statement = "SELECT * FROM pcnhsdb.credentials order by cred_id desc limit 1;";
+											$result = $conn->query($statement);
+											if ($result->num_rows > 0) {
+											// output data of each row
+												while($row = $result->fetch_assoc()) {
+													$cred_id = $row['cred_id'];
+													$cred_id = $cred_id+1;
+													echo <<<CREDID
+														<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="cred_id" value="$cred_id" readonly="">
+CREDID;
+												}
+											}else {
+												$cred_id = 1;
+													echo <<<CREDID
+														<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="cred_id" value="$cred_id" readonly="">
+CREDID;
+											}
+									?>
 								</div>
 							</div>
 							

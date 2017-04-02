@@ -5,12 +5,12 @@
 		die();
 	}
 
-	$stud_id = $_GET['stud_id'];
+	$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
 
-	$yr_lvl = $_POST['yr_level'];
-	$schl_yr = $_POST['schl_year'];
-	$school_days = $_POST['school_days'];
-	$days_attended = $_POST['days_attended'];
+	$yr_lvl = htmlspecialchars($_POST['yr_level'], ENT_QUOTES);
+	$schl_yr = htmlspecialchars($_POST['schl_year'], ENT_QUOTES);
+	$school_days = htmlspecialchars($_POST['school_days'], ENT_QUOTES);
+	$days_attended = htmlspecialchars($_POST['days_attended'], ENT_QUOTES);
 
 
 

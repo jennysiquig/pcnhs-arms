@@ -9,26 +9,31 @@
       session_destroy();
       session_start();
     }
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
+    if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
+      if($_SESSION['account_type'] != "registrar") {
+        echo "<p>Access Failed <a href='../index.php'>Back to Home</a></p>";
+        die();
+      }
+    }else {
+            header('Location: ../../login.php');
+      }
    
 
     $_SESSION['last_activity'] = $time;
   ?>
 <?php require_once "../../resources/config.php"; ?>
-<?php $stud_id = $_GET['stud_id'] ?>
+<?php $stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES) ?>
 <!-- Update Database -->
 <?php
 	if(!$conn) {
 		die();
 	}
-	$cred_id = $_POST['credential'];
-	$request_type = $_POST['request_type'];
-    $signatory = $_POST['signatory'];
-	$personnel_id = $_SESSION['per_id'];
-	$date = $_POST['date'];
-  $issuedto = $_POST['issuedto'];
+	$cred_id = htmlspecialchars($_POST['credential'], ENT_QUOTES);
+	$request_type = htmlspecialchars($_POST['request_type'], ENT_QUOTES);
+    $signatory = htmlspecialchars($_POST['signatory'], ENT_QUOTES);
+	$personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
+	$date = htmlspecialchars($_POST['date'], ENT_QUOTES);
+  $issuedto = htmlspecialchars($_POST['issuedto'], ENT_QUOTES);
 
 	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `issued_for`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$issuedto' ,'$signatory', '$personnel_id');";
 
@@ -70,11 +75,11 @@
 		<div class="right_col" role="main">
 
 			<?php
-				$DAmonth = $_POST['month'];
-                $DAday = $_POST['day'];
-                $DAyear = $_POST['year'];
-				$issuedto = $_POST['issuedto'];
-				$remarks = $_POST['remarks'];
+				$DAmonth = htmlspecialchars($_POST['month'], ENT_QUOTES);
+                $DAday = htmlspecialchars($_POST['day'], ENT_QUOTES);
+                $DAyear = htmlspecialchars($_POST['year'], ENT_QUOTES);
+				$issuedto = htmlspecialchars($_POST['issuedto'], ENT_QUOTES);
+				$remarks = htmlspecialchars($_POST['remarks'], ENT_QUOTES);
 			?>
 
              <?php

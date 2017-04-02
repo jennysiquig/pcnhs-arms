@@ -10,14 +10,21 @@ session_start();
       session_destroy();
       session_start();
     }
-if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-header('Location: ../../login.php');
-}
+	if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
+    	if($_SESSION['account_type'] != "registrar") {
+    		echo "<p>Access Failed <a href='../index.php'>Back to Home</a></p>";
+    		die();
+    	}
+	}else {
+	    	header('Location: ../../login.php');
+	}
+
+	$_SESSION['last_activity'] = $time;
 ?>
 <?php
-	$stud_id = $_GET['stud_id'];
-	$credential = $_GET['credential'];
-	$request_type = $_GET['request_type'];
+	$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
+	$credential = htmlspecialchars($_GET['credential'], ENT_QUOTES);
+	$request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
 ?>
 <!DOCTYPE html>
 <html>

@@ -3,12 +3,12 @@
 	require_once "../../../resources/config.php";
 	include('../../../resources/classes/Popover.php');
 
-	$subj_id = $_POST['subj_id'];
-	$subj_name = $_POST['subj_name'];
-	$subj_level = $_POST['subj_level'];
-	$curriculum = $_POST['curr_id'];
-	$program = $_POST['prog_id'];
-	$yr_level_needed = $_POST['yr_level_needed'];
+	$subj_id = htmlspecialchars($_POST['subj_id'], ENT_QUOTES, 'UTF-8');
+	$subj_name = htmlspecialchars($_POST['subj_name'], ENT_QUOTES, 'UTF-8');
+	$subj_level = htmlspecialchars($_POST['subj_level'], ENT_QUOTES, 'UTF-8');
+	$curriculum = htmlspecialchars($_POST['curr_id'], ENT_QUOTES, 'UTF-8');
+	$program = htmlspecialchars($_POST['prog_id'], ENT_QUOTES, 'UTF-8');
+	$yr_level_needed = htmlspecialchars($_POST['yr_level_needed'], ENT_QUOTES, 'UTF-8');
 
 	$multipleinsert = "";
 	//$insertprogram = "";
@@ -53,12 +53,12 @@
 		$prog_id = $program[$key];
 		$multipleinsert .= "INSERT INTO `pcnhsdb`.`subjectprogram` (`subj_id`,`prog_id`) VALUES ('$subj_id', '$prog_id');";
 	}
-	// if($willInsert) {
-	// 	mysqli_query($conn, $insertsubject);
-	// 	mysqli_multi_query($conn, $multipleinsert);
-	// 	//mysqli_multi_query($conn, $insertprogram);
-	// 	header("location: ../student_subjects.php");
-	// }
+	if($willInsert) {
+		mysqli_query($conn, $insertsubject);
+		mysqli_multi_query($conn, $multipleinsert);
+		//mysqli_multi_query($conn, $insertprogram);
+		header("location: ../student_subjects.php");
+	}
 	
 
 	$conn->close();

@@ -11,19 +11,25 @@
       session_start();
     }
     $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-   
+	if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
+    	if($_SESSION['account_type'] != "registrar") {
+    		echo "<p>Access Failed <a href='../index.php'>Back to Home</a></p>";
+    		die();
+    	}
+	}else {
+	    	header('Location: ../../login.php');
+	}
+	
+   $_SESSION['last_activity'] = $time;
 
     
   ?>
 <?php
-	$stud_id = $_GET['stud_id']; 
-	$req_id = $_GET['req_id'];
-	$cred_id = $_GET['cred_id'];
-	$request_type = $_GET['request_type'];
-	$or_no = intval($_GET['or_no']);
+	$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES); 
+	$req_id = htmlspecialchars($_GET['req_id'], ENT_QUOTES);
+	$cred_id = htmlspecialchars($_GET['cred_id'], ENT_QUOTES);
+	$request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
+	$or_no = htmlspecialchars(intval($_GET['or_no']), ENT_QUOTES);
 
 	$insertstm1 = "";
 	if(!$conn) {

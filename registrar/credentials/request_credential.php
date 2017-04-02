@@ -10,9 +10,15 @@ session_unset();
 session_destroy();
 session_start();
 }
-if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-header('Location: ../../login.php');
-}
+	if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
+    	if($_SESSION['account_type'] != "REGISTRAR") {
+    		echo "<p>Access Failed <a href='../index.php'>Back to Home</a></p>";
+    		die();
+    	}
+	}else {
+	    	header('Location: ../../login.php');
+	}
+	$_SESSION['last_activity'] = $time;
 ?>
 <html>
 	<head>

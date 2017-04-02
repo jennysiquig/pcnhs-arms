@@ -3,8 +3,8 @@
 	if(!$conn) {
 		die();
 	}	
-	$stud_id = $_GET['stud_id'];
-	$yr_level = $_GET['yr_level'];
+	$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
+	$yr_level = htmlspecialchars($_GET['yr_level'], ENT_QUOTES);
 
 
 	$statement1 = "DELETE FROM `pcnhsdb`.`grades` WHERE `stud_id`='$stud_id' and yr_level = $yr_level;";

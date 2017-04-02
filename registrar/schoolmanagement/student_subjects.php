@@ -1,28 +1,11 @@
+<!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    
-  ?>
+<?php include('include_files/session_check.php'); ?>
 <?php
 	if(!isset($_GET['curriculum']) && !isset($_GET['program']) ) {
 		header("location: student_subjects.php?curriculum=all&program=all");
 	}
 ?>
-<!DOCTYPE html>
 <html>
 	<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

@@ -12,9 +12,14 @@
     }
 
     $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
+  if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
+      if($_SESSION['account_type'] != "REGISTRAR" || $_SESSION['account_type'] != "registrar") {
+        echo "<p>Access Failed <a href='../index.php'>Back to Home</a></p>";
+        die();
+      }
+  }else {
+        header('Location: ../../login.php');
+  }
    
 ?>
 <?php require_once "../../resources/config.php"; ?>
@@ -97,9 +102,9 @@
 
 GENMSG;
                     if($_GET['last-name'] != null && $_GET['first-name'] != null) {
-                      $search = $_GET['first-name']." ".$_GET['last-name'];
-                      $first_name = $_GET['first-name'];
-                      $last_name = $_GET['last-name'];
+                      $search = htmlspecialchars($_GET['first-name']." ".$_GET['last-name'], ENT_QUOTES);
+                      $first_name = htmlspecialchars($_GET['first-name'], ENT_QUOTES);
+                      $last_name = htmlspecialchars($_GET['last-name'], ENT_QUOTES);
                       $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '%$last_name' or first_name like '%$first_name' or stud_id like '%$search' or concat(first_name,' ',last_name) like '%$search' or concat(last_name,' ',first_name,' ',mid_name) like '%$search' or concat(first_name,' ',mid_name,' ',last_name) like '%$search'";
 
 

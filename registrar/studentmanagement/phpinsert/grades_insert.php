@@ -5,15 +5,15 @@
 	if(!$conn) {
 		die();
 	}
-	$stud_id = $_POST['stud_id'];
-	$schl_year = $_POST['schl_year'];
-	$yr_level = $_POST['yr_level'];
-	$average_grade = $_POST['average_grade'];
-	$schl_name = $_POST['schl_name'];
-	$total_credit = $_POST['total_credits'];
+	$stud_id = htmlspecialchars($_POST['stud_id'], ENT_QUOTES);
+	$schl_year = htmlspecialchars($_POST['schl_year'], ENT_QUOTES);
+	$yr_level = htmlspecialchars($_POST['yr_level'], ENT_QUOTES);
+	$average_grade = htmlspecialchars($_POST['average_grade'], ENT_QUOTES);
+	$schl_name = htmlspecialchars($_POST['schl_name'], ENT_QUOTES);
+	$total_credit = htmlspecialchars($_POST['total_credits'], ENT_QUOTES);
 	$insertgrades = "";
 	$comment = "";
-	$credit_earned = $_POST['credit_earned'];
+	$credit_earned = htmlspecialchars($_POST['credit_earned'], ENT_QUOTES);
 	$willInsert = true;
 
 	if($average_grade > 99.999) {

@@ -1,9 +1,9 @@
 <?php 
 	require_once "../../../resources/config.php"; 
 
-	$curr_id = $_POST['curr_id'];
-	$curr_name = $_POST['curr_name'];
-	$year_ended = $_POST['year_ended'];
+	$curr_id = htmlspecialchars($_POST['curr_id'], ENT_QUOTES);
+	$curr_name = htmlspecialchars($_POST['curr_name'], ENT_QUOTES);
+	$year_ended = htmlspecialchars($_POST['year_ended'], ENT_QUOTES);
 
 	$updatestm = "UPDATE `pcnhsdb`.`curriculum` SET `curr_name`='$curr_name', `year_ended`='$year_ended' WHERE `curr_id`='$curr_id';";
 

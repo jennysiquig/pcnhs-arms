@@ -1,22 +1,5 @@
 <!DOCTYPE html>
-<?php
-    session_start();
-     // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-   
-?>
+<?php include('include_files/session_check.php'); ?>
 <?php require_once "../../resources/config.php"; ?>
 <html>
   <head>
@@ -179,8 +162,6 @@
                       $to = $school_year1[1];
                       $statement = "SELECT * FROM pcnhsdb.students natural join grades where schl_year between '$from' and '$to' and yr_level = 4;";
                       
-                    }else {
-                      $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id limit $start, $limit";
                     }
                     
                     

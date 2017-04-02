@@ -7,8 +7,8 @@
     $_SESSION['sDate'] = date("d/m/Y");
     $_SESSION['liTime'] = date("h:i:sa");
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = htmlspecialchars($_POST['username'], ENT_QUOTES);
+    $password = htmlspecialchars($_POST['password'], ENT_QUOTES);
 
     $queryStatement = "";
     /*   */

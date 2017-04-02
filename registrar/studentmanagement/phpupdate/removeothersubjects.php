@@ -3,7 +3,7 @@
 	if(!$conn) {
 		die();
 	}	
-	$stud_id = $_GET['stud_id'];
+	$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
 	//$yr_level = $_GET['yr_level'];
 
 
