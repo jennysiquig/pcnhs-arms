@@ -19,7 +19,7 @@
 <!-- Session Check -->
 <html lang="en">
   <head>
-    <title>User Login</title>
+    <title>PCNHS - ARMS | User Login</title>
     <link rel="shortcut icon" href="images/pines.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
