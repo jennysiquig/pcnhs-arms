@@ -67,35 +67,6 @@
 					<div class="x_content">
 						<form id="curriculum-val" class="form-horizontal form-label-left" action="phpinsert/curriculum_insert.php" method="POST" novalidate>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum ID</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<?php
-												
-																								
-											if(!$conn) {
-												die("Connection failed: " . mysqli_connect_error());
-											}
-											$statement = "SELECT * FROM pcnhsdb.curriculum order by curr_id desc limit 1;";
-											$result = $conn->query($statement);
-											if ($result->num_rows > 0) {
-											// output data of each row
-												while($row = $result->fetch_assoc()) {
-													$curr_id = $row['curr_id'];
-													$curr_id = $curr_id+1;
-													echo <<<CURRID
-														<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="curr_id" value="$curr_id" readonly="">
-CURRID;
-												}
-											}else {
-												$curr_id = 1;
-													echo <<<CURRID
-														<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="curr_id" value="$curr_id" readonly="">
-CURRID;
-											}
-									?>
-								</div>
-							</div>
-							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum Code</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="curr_code" placeholder="ex: BEC">

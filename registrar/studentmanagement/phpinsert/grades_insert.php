@@ -65,6 +65,7 @@
 		unset($_SESSION['grade']);
 		mysqli_query($conn, $insertaverage);
 		mysqli_multi_query($conn, $insertgrades);
+		$_SESSION['user_activity'][] = "Added New Grades for: $stud_id";
 		echo "<p>Updating Database, please wait...</p>";
 		header("refresh:3;url=../grades.php?stud_id=$stud_id");
 	}

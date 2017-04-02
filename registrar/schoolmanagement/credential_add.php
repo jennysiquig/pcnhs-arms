@@ -74,36 +74,6 @@
 					</div>
 					<div class="x_content">
 						<form id="credential-val" class="form-horizontal form-label-left" action="phpinsert/credential_insert.php" method="POST" novalidate>
-						<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Credential ID</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<?php
-												
-																								
-											if(!$conn) {
-												die("Connection failed: " . mysqli_connect_error());
-											}
-											$statement = "SELECT * FROM pcnhsdb.credentials order by cred_id desc limit 1;";
-											$result = $conn->query($statement);
-											if ($result->num_rows > 0) {
-											// output data of each row
-												while($row = $result->fetch_assoc()) {
-													$cred_id = $row['cred_id'];
-													$cred_id = $cred_id+1;
-													echo <<<CREDID
-														<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="cred_id" value="$cred_id" readonly="">
-CREDID;
-												}
-											}else {
-												$cred_id = 1;
-													echo <<<CREDID
-														<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="cred_id" value="$cred_id" readonly="">
-CREDID;
-											}
-									?>
-								</div>
-							</div>
-							
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Credential Name</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">

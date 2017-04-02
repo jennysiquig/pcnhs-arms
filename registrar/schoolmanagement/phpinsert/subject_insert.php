@@ -3,7 +3,26 @@
 	require_once "../../../resources/config.php";
 	include('../../../resources/classes/Popover.php');
 
-	$subj_id = intval(htmlspecialchars(filter_var($_POST['subj_id'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8'));
+
+	if(!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+	
+	$subj_id = 1;
+	$statement = "SELECT * FROM pcnhsdb.subjects order by subj_id desc limit 1;";
+	$result = $conn->query($statement);
+	if ($result->num_rows > 0) {
+	// output data of each row
+		while($row = $result->fetch_assoc()) {
+		$subj_id = $row['subj_id'];
+		$subj_id = $subj_id+1;
+
+		}
+	}else {
+		$subj_id = 1;
+	}
+
+
 	$subj_name = htmlspecialchars(filter_var($_POST['subj_name'], FILTER_SANITIZE_STRING), ENT_QUOTES, 'UTF-8');
 	$subj_level = htmlspecialchars(filter_var($_POST['subj_level'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8');
 	$curriculum = intval(htmlspecialchars(filter_var($_POST['curr_id'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8'));
@@ -64,6 +83,7 @@
 	if($willInsert) {
 		mysqli_query($conn, $insertsubject);
 		mysqli_multi_query($conn, $multipleinsert);
+		$_SESSION['user_activity'][] = "Added New Subject: $subj_name";
 		//mysqli_multi_query($conn, $insertprogram);
 		echo "<p>Updating Database, please wait...</p>";
 		header("Refresh:3; url=../student_subjects.php");

@@ -80,37 +80,6 @@
 					<div class="x_content">
 						<form id="subject-val" class="form-horizontal form-label-left" action="phpinsert/subject_insert.php" method="POST" novalidate>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Subject ID</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<?php
-											
-																								
-											if(!$conn) {
-												die("Connection failed: " . mysqli_connect_error());
-											}
-
-											$statement = "SELECT * FROM pcnhsdb.subjects order by subj_id desc limit 1;";
-											$result = $conn->query($statement);
-											if ($result->num_rows > 0) {
-											// output data of each row
-												while($row = $result->fetch_assoc()) {
-													$subj_id = $row['subj_id'];
-													$subj_id = $subj_id+1;
-													echo <<<SUBJID
-														<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="subj_id" value="$subj_id" readonly="">
-SUBJID;
-												}
-											}else {
-												$subj_id = 1;
-													echo <<<SUBJID
-														<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="subj_id" value="$subj_id" readonly="">
-SUBJID;
-											}
-									?>
-									
-								</div>
-							</div>
-							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Name</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="subj_name">
@@ -161,7 +130,7 @@ SUBJID;
 		                    <div class="form-group">
 		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Order</label>
 		                        <div class="col-md-6 col-sm-6 col-xs-12">
-		                          <input class="form-control" name="subj_order" pattern"\d" required="">
+		                          <input class="form-control" name="subj_order" pattern="\d+" required="">
 		                        </div>
 		                    </div>
 							<div class="item form-group">

@@ -6,9 +6,7 @@
     $session_timeout = 1800; //seconds
     
     if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
+      header("location: ../../logout.php");
     }
 
    if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){

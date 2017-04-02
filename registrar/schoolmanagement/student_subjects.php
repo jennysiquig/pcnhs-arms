@@ -76,9 +76,6 @@
 									<label class="control-label col-md-3 col-sm-3 col-xs-12">Filter Curriculum</label>
 									<div class="col-md-3 col-sm-4 col-xs-12">
 										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="curriculum">
-
-											<!-- <option value="1">Regular</option>
-											-->
 											<option value="all">All</option>
 											<?php
 												if(!$conn) {
@@ -111,9 +108,6 @@
 									<label class="control-label col-md-3 col-sm-3 col-xs-12">Filter Program</label>
 									<div class="col-md-3 col-sm-4 col-xs-12">
 										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="program">
-
-											<!-- <option value="1">Regular</option>
-											-->
 											<option value="all">All</option>
 											<?php
 												if(!$conn) {
@@ -121,7 +115,6 @@
 												}
 
 												$statement = "SELECT * FROM pcnhsdb.programs";
-
 												$result = $conn->query($statement);
 												if ($result->num_rows > 0) {
 												// output data of each row
@@ -214,7 +207,6 @@
 											}
 											
 											$result = $conn->query($statement);
-
 											if($result->num_rows>0) {
 												while ($row = $result->fetch_assoc()) {
 													# code...

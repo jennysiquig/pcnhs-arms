@@ -156,7 +156,7 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthday</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" type="text" name="birthdate" data-inputmask="'mask': '9999-99-99'"  value=<?php echo "'$birth_date'"; ?>>
+											<input class="form-control col-md-7 col-xs-12" type="text" name="birthdate" data-inputmask="'mask': '99-99-9999'"  value=<?php echo "'$birth_date'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
