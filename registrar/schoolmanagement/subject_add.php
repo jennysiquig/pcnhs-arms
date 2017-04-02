@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Add Student Subject</title>
+		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +17,7 @@
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 		<!-- iCheck -->
-    	<link href="../../resources/libraries/iCheck/skins/flat/green.css" rel="stylesheet">
+		<link href=".../../../../resources/libraries/iCheck/skins/flat/green.css" rel="stylesheet">
 
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -162,7 +164,7 @@ SUBJID;
 									<div class="form-group">
 				                        <div class="col-md-9 col-sm-9 col-xs-12">
 				                        	<?php
-											
+												
 																								
 											if(!$conn) {
 												die("Connection failed: " . mysqli_connect_error());
@@ -238,10 +240,6 @@ OPTION3;
 		<!-- Content Here -->
 		<!-- Footer -->
 		<?php include "../../resources/templates/registrar/footer.php"; ?>
-		<!-- Scripts -->
-		<!-- iCheck -->
-    	<script src="../../resources/libraries/iCheck/icheck.min.js"></script>
-
 		<!-- jQuery -->
 		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 		<!-- Bootstrap -->
@@ -253,32 +251,33 @@ OPTION3;
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../js/custom.min.js"></script>
+		<!-- iCheck -->
+		<script src="../../resources/libraries/iCheck/icheck.min.js"></script>
 		<!-- Scripts -->
 		<!-- Parsley -->
-			    <script>
-			      $(document).ready(function() {
-			        $.listen('parsley:field:validate', function() {
-			          validateFront();
-			        });
-			        $('#subject-val .btn').on('click', function() {
-			          $('#subject-val').parsley().validate();
-			          validateFront();
-			        });
-			        var validateFront = function() {
-			          if (true === $('#subject-val').parsley().isValid()) {
-			            $('.bs-callout-info').removeClass('hidden');
-			            $('.bs-callout-warning').addClass('hidden');
-			          } else {
-			            $('.bs-callout-info').addClass('hidden');
-			            $('.bs-callout-warning').removeClass('hidden');
-			          }
-			        };
-			      });
-
-			      try {
-			        hljs.initHighlightingOnLoad();
-			      } catch (err) {}
-			    </script>
+		<script>
+			$(document).ready(function() {
+			$.listen('parsley:field:validate', function() {
+			validateFront();
+			});
+			$('#subject-val .btn').on('click', function() {
+			$('#subject-val').parsley().validate();
+			validateFront();
+			});
+			var validateFront = function() {
+			if (true === $('#subject-val').parsley().isValid()) {
+			$('.bs-callout-info').removeClass('hidden');
+			$('.bs-callout-warning').addClass('hidden');
+			} else {
+			$('.bs-callout-info').addClass('hidden');
+			$('.bs-callout-warning').removeClass('hidden');
+			}
+			};
+			});
+			try {
+			hljs.initHighlightingOnLoad();
+			} catch (err) {}
+		</script>
 	<!-- /Parsley -->
 	</body>
 </html>

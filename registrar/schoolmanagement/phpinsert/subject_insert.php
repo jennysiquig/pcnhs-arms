@@ -6,8 +6,8 @@
 	$subj_id = htmlspecialchars($_POST['subj_id'], ENT_QUOTES, 'UTF-8');
 	$subj_name = htmlspecialchars($_POST['subj_name'], ENT_QUOTES, 'UTF-8');
 	$subj_level = htmlspecialchars($_POST['subj_level'], ENT_QUOTES, 'UTF-8');
-	$curriculum = htmlspecialchars($_POST['curr_id'], ENT_QUOTES, 'UTF-8');
-	$program = htmlspecialchars($_POST['prog_id'], ENT_QUOTES, 'UTF-8');
+	$curriculum = $_POST['curr_id'];
+	$program = $_POST['prog_id'];
 	$yr_level_needed = htmlspecialchars($_POST['yr_level_needed'], ENT_QUOTES, 'UTF-8');
 
 	$multipleinsert = "";
@@ -57,7 +57,8 @@
 		mysqli_query($conn, $insertsubject);
 		mysqli_multi_query($conn, $multipleinsert);
 		//mysqli_multi_query($conn, $insertprogram);
-		header("location: ../student_subjects.php");
+		echo "<p>Updating Database, please wait...</p>";
+		header("Refresh:3; url=../student_subjects.php");
 	}
 	
 

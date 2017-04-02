@@ -1,8 +1,10 @@
-<?php require_once "../../resources/config.php"; ?>
+<?php require_once "../../resources/config.php";?>
 <?php include('include_files/session_check.php'); ?>
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Student Info</title>
+        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -96,6 +98,12 @@
 				</ol>
 			</div>
 			<div class="clearfix"></div>
+			<?php
+				if(isset($_SESSION['success'])) {
+					echo $_SESSION['success'];
+					unset($_SESSION['success']);
+				}
+			?>
 			<form class="form-horizontal form-label-left">
 				<div class="x_panel">
 					<div class="x_title">

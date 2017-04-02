@@ -18,12 +18,12 @@
 
 	if($average_grade > 99.999) {
 		$willInsert = false;
-			$alert_type = "danger";
-			$error_message = "You have entered an Invalid Average Grade.";
-			$popover = new Popover();
-			$popover->set_popover($alert_type, $error_message);	
-			$_SESSION['error_pop'] = $popover->get_popover();
-			header("Location: " . $_SERVER["HTTP_REFERER"]);
+		$alert_type = "danger";
+		$error_message = "You have entered an Invalid Average Grade.";
+		$popover = new Popover();
+		$popover->set_popover($alert_type, $error_message);	
+		$_SESSION['error_pop'] = $popover->get_popover();
+		header("Location: " . $_SERVER["HTTP_REFERER"]);
 	}
 
 	foreach ($_POST['subj_id'] as $key => $value) {

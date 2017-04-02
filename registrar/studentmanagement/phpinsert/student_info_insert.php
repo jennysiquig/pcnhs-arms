@@ -52,7 +52,7 @@
 	if(intval($year1) > intval($year2) || intval($year2) != (intval($year1)+1) ) {
 		$willInsert = false;
 			$alert_type = "danger";
-			$error_message = "You have entered an invalid Primary School.";
+			$error_message = "You have entered an invalid Primary School Year.";
 			$popover = new Popover();
 			$popover->set_popover($alert_type, $error_message);	
 			$_SESSION['error_pop'] = $popover->get_popover();
@@ -87,6 +87,12 @@
 		$insertstmt1 = mysqli_query($conn, $statement1);
 		$insertstmt2 = mysqli_query($conn, $statement2);
 		$insertstmt3 = mysqli_query($conn, $statement3);
+// Generate Success Popover
+		$alert_type = "success";
+		$message = "Added Student Successfully.";
+		$popover = new Popover();
+		$popover->set_popover($alert_type, $message);	
+		$_SESSION['success'] = $popover->get_popover();
 
 		header("Location: ../student_info.php?stud_id=$stud_id");
 	}

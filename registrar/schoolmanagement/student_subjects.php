@@ -8,6 +8,8 @@
 ?>
 <html>
 	<head>
+	<title>Student Subjects</title>
+	<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,19 +90,23 @@
 												$result = $conn->query($statement);
 												if ($result->num_rows > 0) {
 												// output data of each row
-												while($row = $result->fetch_assoc()) {
-													$curr_id = $row['curr_id'];
-													$curr_name = $row['curr_name'];
-													echo <<<OPTION2
-																		<option value="$curr_id">$curr_name</option>
-OPTION2;
-																}
+													while($row = $result->fetch_assoc()) {
+														$curr_id = $row['curr_id'];
+														$curr_name = $row['curr_name'];
+														if(isset($_GET['curriculum'])) {
+															if($_GET['curriculum'] == $curr_id) {
+																echo "<option value='$curr_id' selected>$curr_name</option>";
+															}else {
+																echo "<option value='$curr_id'>$curr_name</option>";
 															}
+														}
+														
+													}
+												}
 											?>
 											</select>
 										</div>
-										
-								</div>
+									</div>
 								<div class="item form-group">
 									<label class="control-label col-md-3 col-sm-3 col-xs-12">Filter Program</label>
 									<div class="col-md-3 col-sm-4 col-xs-12">
@@ -119,14 +125,18 @@ OPTION2;
 												$result = $conn->query($statement);
 												if ($result->num_rows > 0) {
 												// output data of each row
-												while($row = $result->fetch_assoc()) {
-													$prog_id = $row['prog_id'];
-													$prog_name = $row['prog_name'];
-													echo <<<OPTION2
-																		<option value="$prog_id">$prog_name</option>
-OPTION2;
-																}
+													while($row = $result->fetch_assoc()) {
+														$prog_id = $row['prog_id'];
+														$prog_name = $row['prog_name'];
+														if(isset($_GET['program'])) {
+															if($_GET['program'] == $prog_id) {
+																echo "<option value='$prog_id' selected>$prog_name</option>";
+															}else {
+																echo "<option value='$prog_id'>$prog_name</option>";
 															}
+														}
+													}
+												}
 											?>
 											</select>
 										</div>
@@ -135,47 +145,9 @@ OPTION2;
 								<div class="item form-group">
 									<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
 									<div class="col-md-3 col-sm-4 col-xs-12">
-										<button class="btn btn-primary pull-right">Go</button>
+										<button class="btn btn-primary pull-right">Filter</button>
 									</div>
 								</div>
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12">Showing:</label>
-									<?php
-												if(!$conn) {
-													die("Connection failed: " . mysqli_connect_error());
-												}
-												if(isset($_GET['curriculum']) && isset($_GET['program']) ) {
-													$get_curr_id = $_GET['curriculum'];
-													$get_prog_id = $_GET['curriculum'];
-								                	if($get_curr_id === "all" && $get_prog_id === "all") {
-														$statement = "SELECT * FROM pcnhsdb.curriculum";
-													}else {
-														$statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $get_curr_id";
-													}
-												}else {
-													$statement = "SELECT * FROM pcnhsdb.curriculum";
-												}
-												$result = $conn->query($statement);
-												if ($result->num_rows > 0) {
-													// output data of each row
-													while($row = $result->fetch_assoc()) {
-														$curr_id = $row['curr_id'];
-														$curr_name = $row['curr_name'];
-													}
-												}
-										?>
-										<div class="col-md-3 col-sm-3 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text" value=<?php 
-												if(isset($_GET['curriculum']) && $_GET['curriculum'] <> "all"){
-													$get_curr_id = $_GET['curriculum'];
-													echo "'$curr_name'";
-												}else{
-													echo "All";
-												}
-											?> readonly="">
-										</div>
-								</div>
-							
 							<div class="clearfix"></div>
 							<div class="table-responsive">
 								<table id="subjList" class="table table-bordered tablesorter">
@@ -189,6 +161,30 @@ OPTION2;
 									</tr>
 								</thead>
 								<tbody id="subjlist">
+									<?php
+										if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+										}
+										if(isset($_GET['curriculum']) && isset($_GET['program']) ) {
+										$get_curr_id = $_GET['curriculum'];
+										$get_prog_id = $_GET['curriculum'];
+										if($get_curr_id === "all" && $get_prog_id === "all") {
+										$statement = "SELECT * FROM pcnhsdb.curriculum";
+										}else {
+										$statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $get_curr_id";
+										}
+										}else {
+										$statement = "SELECT * FROM pcnhsdb.curriculum";
+										}
+										$result = $conn->query($statement);
+										if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+										$curr_id = $row['curr_id'];
+										$curr_name = $row['curr_name'];
+										}
+										}
+									?>
 									<?php
 											$statement = "";
 							                    $start=0;
@@ -272,7 +268,7 @@ SUBJS;
 			                      }else {
 			                        echo '<li class="disabled"><a>Previous</a></li>';
 			                      }
-			                       // Google Like Pagination
+								// Google Like Pagination
 			                      $x = 0;
 			                      $y = 0;
 			                      if(($page+5) <= $total) {
@@ -301,8 +297,8 @@ SUBJS;
 			                      for($i = $y;$i <= $x; $i++) {
 			                        if($i==$page) {
 			                          echo "<li class='active'><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=$i'>$i</a></li>";
-			                      } else {
-			                          echo "<li class=''><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=$i'>$i</a></li>";
+			                      	} else {
+			                          	echo "<li class=''><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=$i'>$i</a></li>";
 			                        }
 			                      }
 			                      if($total == 0) {
