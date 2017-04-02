@@ -6,12 +6,13 @@
 	$cred_id = htmlspecialchars($_GET['cred_id'], ENT_QUOTES);
 	$request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
 	$or_no = htmlspecialchars(intval($_GET['or_no']), ENT_QUOTES);
-
+	
 	$insertstm1 = "";
 	if(!$conn) {
 		die();
 	}
-
+	$_SESSION['user_activity'] = "Released Credential of $stud_id";
+	
 	$selectstm1 = "SELECT * from credentials where cred_id = $cred_id";
 
 	$result = $conn->query($selectstm1);

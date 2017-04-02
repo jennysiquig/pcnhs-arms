@@ -16,9 +16,11 @@
 	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `issued_for`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$issuedto' ,'$signatory', '$personnel_id');";
 
 	$statement2 = "INSERT INTO `pcnhsdb`.`unclaimed` (`date_processed`) VALUES ('$date');";
-
-	mysqli_query($conn, $statement1);
-  mysqli_query($conn, $statement2);
+    
+    $_SESSION['user_activity'] = "Student $stud_id requested Credential $cred_id.";
+    
+    mysqli_query($conn, $statement1);
+    mysqli_query($conn, $statement2);
 
 ?>
 <!DOCTYPE html>
