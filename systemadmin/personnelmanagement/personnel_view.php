@@ -1,42 +1,53 @@
-<?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
+<?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
+
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap -->
-    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
-    <!-- Custom Theme Style -->
-    <link href="../../css/custom.min.css" rel="stylesheet">
-    <link href="../../css/tstheme/style.css" rel="stylesheet">
+        <!-- Bootstrap -->
+        <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <!-- NProgress -->
+        <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+        <!-- Custom Theme Style -->
+        <link href="../../css/custom.min.css" rel="stylesheet">
+        <link href="../../css/tstheme/style.css" rel="stylesheet">
 
-</head> 
-<body class="nav-md">
-<!-- Sidebar -->
-<?php include "../../resources/templates/admin/sidebar.php"; ?>
-<!-- Top Navigation -->
-<?php include "../../resources/templates/admin/top-nav.php"; ?>
-<!-- Content Here -->
-<!-- page content -->
-<div class="right_col" role="main">
-    <div class="row top_tiles">
+    </head> 
+        <body class="nav-md">
+            <?php include "../../resources/templates/admin/sidebar.php"; ?>
+            <?php include "../../resources/templates/admin/top-nav.php"; ?>
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="col-md-5">
+                    <ol class="breadcrumb">
+                      <li><a href="../index.php">Home</a></li>
+                      <li class="disabled">Personnel Accounts</li>
+                      <li class="active">View Personnel Account</li>
+                    </ol>
+                </div>
 
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2><i class="fa fa-user"> </i> View Personnel Account</h2>
-                    <div class="clearfix"></div>
-                    <br>
+            <div class="row top_tiles">
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <?php
+                                    if(isset($_SESSION['success_edit'])) {
+                                        $success_msg = $_SESSION['success_edit'];
+                                        echo $success_msg;
+                                        session_unset();
+                                    }
+                                ?>
+                                <h2><i class="fa fa-user"> </i> View Personnel Account</h2>
+                                    <div class="clearfix"></div><br>
 
                     <div class="x_content">
                         <form class="form-horizontal form-label-left" action="phpupdate/personnel_update_info.php" method="POST" novalidate>
@@ -187,9 +198,8 @@
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-danger" >Remove</button>
                         </div>
-
                     </form>
-                </div>
+            </div>
         </div>
     </div>
 </div>

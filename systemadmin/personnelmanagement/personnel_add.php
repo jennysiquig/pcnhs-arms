@@ -1,6 +1,7 @@
-<?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
+<?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -24,6 +25,13 @@
         <?php include "../../resources/templates/admin/top-nav.php"; ?>
         <!-- Content Start -->
         <div class="right_col" role="main">
+         <div class="col-md-5">
+        <ol class="breadcrumb">
+          <li><a href="../index.php">Home</a></li>
+          <li class="disabled">Personnel Accounts</li>
+          <li class="active">Add Personnel Account</li>
+        </ol>
+      </div>
             <div class="row top_tiles"></div>
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
