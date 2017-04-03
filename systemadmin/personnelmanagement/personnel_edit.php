@@ -1,6 +1,7 @@
-<?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
+<?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,6 +24,15 @@
             <?php include "../../resources/templates/admin/top-nav.php"; ?>
             <!-- page content -->
             <div class="right_col" role="main">
+              
+              <div class="col-md-5">
+                <ol class="breadcrumb">
+                  <li><a href="../index.php">Home</a></li>
+                  <li class="disabled">Personnel Accounts</li>
+                  <li class="active">Edit Personnel Account</li>
+                </ol>
+              </div>
+                
                 <div class="row top_tiles"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -209,7 +219,7 @@ OPTION2;
                 </div>
             </div>
 <!-- /page content -->
-<!-- Content Here -->
+
 <!-- Small modal -->
         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-sm">
@@ -307,6 +317,9 @@ OPTION2;
     <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
     <!-- NProgress -->
     <script src="../../resources/libraries/nprogress/nprogress.js"></script>
+    <!-- Date Range Picker -->
+    <script src="../../resources/libraries/moment/min/moment.min.js"></script>
+    <script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
     <script src= "../../js/custom.min.js"></script>
     <!-- Scripts -->

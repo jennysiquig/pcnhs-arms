@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <html>
 <head>
@@ -26,6 +27,13 @@
 <!-- Content Here -->
 <!-- page content -->
 <div class="right_col" role="main">
+                     <div class="col-md-5">
+        <ol class="breadcrumb">
+          <li><a href="../index.php">Home</a></li>
+          <li class="disabled">Signatories</li>
+          <li class="active">View Signatory</li>
+        </ol>
+      </div>
     <div class="">
         <div class="row top_tiles">
 
