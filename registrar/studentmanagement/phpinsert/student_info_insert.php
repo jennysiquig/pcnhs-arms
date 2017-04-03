@@ -53,15 +53,25 @@
 // validate primary school year
 	if(intval($year1) > intval($year2) || intval($year2) != (intval($year1)+1) ) {
 		$willInsert = false;
-			$alert_type = "danger";
-			$error_message = "You have entered an invalid Primary School Year.";
-			$popover = new Popover();
-			$popover->set_popover($alert_type, $error_message);	
-			$_SESSION['error_pop'] = $popover->get_popover();
-		
-			header("Location: " . $_SERVER["HTTP_REFERER"]);
+		$alert_type = "danger";
+		$error_message = "You have entered an invalid Primary School Year.";
+		$popover = new Popover();
+		$popover->set_popover($alert_type, $error_message);	
+		$_SESSION['error_pop'] = $popover->get_popover();
+		header("Location: " . $_SERVER["HTTP_REFERER"]);
 	}
+// validate empty inputs
+	if(empty($stud_id) || empty($first_name) || empty($last_name) || empty($province) || empty($towncity) || empty($pname) || empty($parent_occupation) || empty($parent_address) || empty($primary_schl_name) || empty($primary_schl_year) || empty($total_elem_years) || empty($gender) || empty($second_school_name)) {
 
+		$willInsert = false;
+		$alert_type = "danger";
+		$error_message = "Cannot insert to database. Please make sure that you have input a valid value.";
+		$popover = new Popover();
+		$popover->set_popover($alert_type, $error_message);	
+		$_SESSION['error_pop'] = $popover->get_popover();
+		header("Location: " . $_SERVER["HTTP_REFERER"]);
+
+	}
 // Duplicate Checker
 	$selectStudents = "SELECT * from students where stud_id = '$stud_id' and first_name = '$first_name' and last_name = '$last_name' and birth_date = '$birth_date';";
 	$result = $conn->query($selectStudents);
