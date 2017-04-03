@@ -4,7 +4,7 @@
 ?>
 <?php
 echo <<<SB
-		<div class="container body">
+    <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
@@ -47,7 +47,7 @@ echo <<<SB
                     </ul>
                   </li>
                   
-                  <li><a><i class="fa fa-users"></i>Signatory Management<span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i>Signatory Management<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="$base_url/systemadmin/schoolmanagement/signatories.php">View Signatories</a></li>
                       <li><a href="$base_url/systemadmin/schoolmanagement/signatory_add.php">Add Signatory</a></li>
