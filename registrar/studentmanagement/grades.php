@@ -2,7 +2,14 @@
 <?php include('include_files/session_check.php'); ?>
 <? unset($_SESSION['grade']); ?>
 <!DOCTYPE html>
-<?php $stud_id = $_GET['stud_id'] ?>
+<?php 
+	if(isset($_GET['stud_id'])) {
+		$stud_id = $_GET['stud_id'];
+	}else {
+		header("location: student_list.php");
+	}
+	
+?>
 <html>
 	<head>
 		<title>Student Grades</title>
@@ -53,6 +60,12 @@
 				</ol>
 			</div>
 			<div class="clearfix"></div>
+			<?php
+				if(isset($_SESSION['hasgrades'])) {
+					echo $_SESSION['hasgrades'];
+					unset($_SESSION['hasgrades']);
+				}
+			?>
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>Grades</h2>
@@ -858,6 +871,64 @@ REMBUT;
 		              </div>
 		            </div>
 		           </div>
+		    <!-- Failed Subjects -->
+			<div class="col-md-12 col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<ul class="nav navbar-right panel_toolbox">
+		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+		                      </li>
+		                    </ul>
+				<div class="x_title">
+					<h2>Failed Subjects</h2>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content">
+					<!--  -->
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Subject</th>
+							<th>Subject Level</th>
+							<th>Year Level</th>
+						</tr>
+					</thead>
+					<tbody>
+		                      	<?php
+
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id where stud_id = '$stud_id' AND comment = 'FAILED' ;";
+
+									$result = $conn->query($query);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$yr_level = $row['yr_level'];
+											$subj_name = $row['subj_name'];
+											$subj_level = $row['subj_level'];
+
+											echo <<<YR1
+												<tr>
+						                          <td>$subj_name</td>
+						                          <td>$subj_level</td>
+						                          <td>$yr_level</td>
+						                        </tr>
+
+YR1;
+										}
+									}
+									
+
+								?>
+		                        
+		                      </tbody>
+		                    </table>	
+		                </div>
+		              </div>
+		            </div>
+		           </div>
 		          </div>
 				<!-- -->
 				<div class="clearfix"></div>
@@ -865,6 +936,7 @@ REMBUT;
 				</div>
 			</div>
 			<!-- Other Subjects -->
+
 		</div>
 		<?php include "../../resources/templates/registrar/footer.php"; ?>
 		<!-- Scripts -->

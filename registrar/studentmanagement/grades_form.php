@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
+<?php include('../../resources/classes/Popover.php'); ?>
+
 <!-- Validations -->
 <?php
     $stud_id = $_GET['stud_id'];
+    $yr_level = $_GET['yr_level'];
+    $prog_id = $_GET['prog_id'];
+    $curriculum = $_GET['curriculum'];
+    $curriculum_subj = $_GET['curriculum_subj'];
+    $schl_name = $_GET['schl_name'];
+    $schl_year = $_GET['schl_year'];
+
     if(!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
@@ -16,6 +25,9 @@
         while($row = $result->fetch_assoc()) {
             $pschool_year = $row['pschool_year'];
         }
+    }else {
+        header("location: ../../index.php");
+        die();
     }
 
     $explode_date_input = explode("-", $getsy);
@@ -34,8 +46,20 @@
         $yr_level_check = $_GET['yr_level'];
         //header("location: add_grades.php?stud_id=$stud_id&yr_level=$yr_level_check");
         header("Location: " . $_SERVER["HTTP_REFERER"]);
+        die();
     }
 
+    $checkgrade = "SELECT * from pcnhsdb.grades where stud_id = '$stud_id' AND yr_level = '$yr_level'";
+    $result = $conn->query($checkgrade);
+    if ($result->num_rows > 0) {
+        $alert_type = "danger";
+        $error_message = "Student $stud_id grades for year level $yr_level is already existing.";
+        $popover = new Popover();
+        $popover->set_popover($alert_type, $error_message); 
+        $_SESSION['hasgrades'] = $popover->get_popover();
+        header("location: grades.php?stud_id=".$stud_id);
+        die();
+    }
 ?>
 
 
@@ -215,6 +239,9 @@
                                 $x = 0;
                                 $statement = "SELECT * from subjects NATURAL JOIN subjectcurriculum NATURAL JOIN curriculum NATURAL JOIN programs NATURAL JOIN subjectprogram WHERE subjectcurriculum.curr_id = $curriculum AND yr_level_needed = $yr_level_needed AND prog_id = $prog_id";
                                 $result = $conn->query($statement);
+                                if(!$result) {
+                                    die();
+                                }
                                 if($result->num_rows>0) {
                                 while ($row = $result->fetch_assoc()) {
                                 //$subj_id = $row['subj_id'];
@@ -226,48 +253,16 @@
                                 $numberOfSubj += 1;
                                 //$curr_name = $row['curr_name'];
 
-                                if(strtolower($subj_name) == "makabayan i" || strtolower($subj_name) == "makabayan ii" || strtolower($subj_name) == "makabayan iii" || strtolower($subj_name) == "makabayan iv") {
+                                // if(strtolower($subj_name) == "makabayan i" || strtolower($subj_name) == "makabayan ii" || strtolower($subj_name) == "makabayan iii" || strtolower($subj_name) == "makabayan iv") {
                                     
-                                    $numberOfSubj -= 1;
+                                //     $numberOfSubj -= 1;
 
-                                    echo <<<SUBJ
-                                
-                                <tr>
-                                    <td>
-                                        <div class="item form-group">
-                                            <div class="col-md-3">
-                                                <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>$subj_name</td>
-                                    <td>$subj_level</td>
-                                    <td>$credit_earned</td>
-                                    <td>
-                                        <div class="item form-group">
-                                            <div class="col-md-3">
-                                                <input type="text" class="form-control" text-align:center;" name="fin_grade[]" value="0" readonly>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    
-                                </tr>
-                                
-SUBJ;
-
-                                }else {
-                                    $x+=1;
-                                    $y = $x-1;
-
-                                    if(isset($_SESSION['grade'])) {
-                                        $z = $_SESSION['grade'];
-                                            if(isset($z[$y])) {
-                                                echo <<<SUBJ
+                                echo <<<SUBJ
                                 
                                 <tr>
                                     <td>   
                                         <div class="item form-group">
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
                                             </div>
                                         </div>
@@ -275,86 +270,21 @@ SUBJ;
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
                                     <td>
-                                        <div class="item form-group">
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" text-align:center;" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="computeCredits(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="" required>
-                                            </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="item form-group">
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$z[$y]" required>
-                                            </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="">
                                         </div>
                                     </td>
-                                    
-                                </tr>
-                                
-SUBJ;
-                                            }else {
-                                                 echo <<<SUBJ
-                                
-                                <tr>
-                                   <td>   
-                                        <div class="item form-group">
-                                            <div class="col-md-3">
-                                                <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>$subj_name</td>
-                                    <td>$subj_level</td>
-                                    <td>
-                                        <div class="item form-group">
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" text-align:center;" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="computeCredits(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="" required>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="item form-group">
-                                            <div class="col-md-4">
-                                                <input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="" required>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    
-                                </tr>
-                                
-SUBJ;
-                                            }
-                                        
-                                    }else {
-                                        echo <<<SUBJ
-                                
-                                <tr>
-                                    <td>   
-                                        <div class="item form-group">
-                                            <div class="col-md-3">
-                                                <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>$subj_name</td>
-                                    <td>$subj_level</td>
-                                    <td>
-                                        <input type="text" style="width: 50px; text-align:center;" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="computeCredits(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="" required>
-                                    </td>
-                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="saveToDB(this.value)" onkeypress="return isNumberKey(event)" placeholder="" required></td>
                                     
                                 </tr>
                                 
 SUBJ;
                                     }
-                                    
-                                    
-                                
                                 }
-                                
-                                    }
-                                }
-                                 
                                     echo <<<NUM
                                     <div class="item form-group">
                                         <label class="control-label col-md-11 col-sm-3 col-xs-12">Number of Subjects:</label>
@@ -379,9 +309,10 @@ NUM;
                         </div>
 
                         <div class="clearfix"></div>
-                        <div class="col-md-2 pull-right">
-                            <button type="reset" class="btn btn-danger">Reset</button>
-                            <button id="send" type="submit" class="btn btn-default">Submit</button>
+                        <br>
+                        <div class="col-md-5">
+                            <button id="send" class="btn btn-success" onclick="saveToFile();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
+                            <button id="send" type="submit" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
                         </div>
                     </form>
                 </div>
@@ -419,7 +350,7 @@ NUM;
                 <!-- /jquery.inputmask -->
         <!-- Save to DB Script -->
         <script type="text/javascript">
-            function saveToDB(x) {
+            function persistFinal(x) {
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                   if (this.readyState == 4 && this.status == 200) {
@@ -451,12 +382,23 @@ NUM;
                 }
 
             }
-            function computeCredits(y) {
+            function persistCredit(y) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                   
+                  }
+                };
+                xhttp.open("GET", "phpscript/tempcredits.php?credits="+y, true);
+                xhttp.send();
+
                 var subj_id = document.getElementsByName('subj_id[]');
                 var credit_earned = document.getElementsByName('credit_earned[]');
                 var computed_credits = 0;
                 var total_credits = document.getElementById('total_credits');
                 console.log(y);
+
+
                 if(y == "") {
 
                 }else {
@@ -470,10 +412,6 @@ NUM;
                     console.log(computed_credits);
                 }
             }
-        </script>
-        <!-- Save to DB Script -->
-        <!-- Limit to numbers only -->
-        <script type="text/javascript">
             function isNumberKey(evt, n){
             console.log(n);
               var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -482,7 +420,29 @@ NUM;
                  return false;
 
               return true;
-           }
+            }
+            function saveToFile() {
+                console.log("saved to file.");
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                   
+                  }
+                };
+                xhttp.open("GET", "phpscript/saveToFile.php", true);
+                xhttp.send();
+            }
+            function saveToDB() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                   
+                  }
+                };
+                xhttp.open("GET", "phpscript/saveToDB.php", true);
+                xhttp.send();
+                console.log("saved to database.");
+            }
         </script>
     </body>
 </html>

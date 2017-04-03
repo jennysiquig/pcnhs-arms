@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
+<?php         
+    ob_start();
+?>
 <html>
     <head>
         <title>Add Student Grades</title>
@@ -100,6 +103,9 @@ SP;
                                         
 SP;
                                     }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
                                     }
                                     ?>
                                 
@@ -126,6 +132,9 @@ SP;
                                         
 SP;
                                     }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
                                     }
                                     ?>
                                 
@@ -149,6 +158,9 @@ SP;
                                     $curr_id = $row['curr_id'];
                                     echo "<option value='$curr_id' selected>$curr_name</option>";
                                     }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
                                     }
                                     ?>
                                 </select>
@@ -174,6 +186,9 @@ SP;
                                     $curr_id = $row['curr_id'];
                                     echo "<option value='$curr_id'>$curr_name</option>";
                                     }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
                                     }
                                     ?>
                                 </select>
@@ -198,6 +213,9 @@ SP;
                                     <input class="form-control col-md-7 col-xs-12" required="required" type="text" name="schl_name" value="$second_school_name" placeholder="School Name">
 OPTION2;
                                     }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
                                     }
                                     ?>
                                 </div>
@@ -227,6 +245,9 @@ OPTION2;
                                                 while($row = $result->fetch_assoc()) {
                                                     $pschool_year = $row['schl_year'];
                                                 }
+                                            }else {
+                                                header("location: ../../index.php");
+                                                die();
                                             }
 
                                             $explode_pschool_year = explode("-", $pschool_year);
@@ -248,6 +269,9 @@ OPTION2;
                                                 while($row = $result->fetch_assoc()) {
                                                     $pschool_year = $row['pschool_year'];
                                                 }
+                                            }else {
+                                                header("location: ../../index.php");
+                                                die();
                                             }
 
                                             
@@ -337,3 +361,6 @@ OPTION2;
 
         </body>
     </html>
+<?php
+    ob_end_flush();
+?>

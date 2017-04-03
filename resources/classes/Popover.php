@@ -9,12 +9,9 @@
                 $message
             </div>
 ERROR_POP;
-			
-			
 		}
 		function get_popover() {
 			return $this->message;
 		}
 	}
-
 ?>
