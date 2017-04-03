@@ -2,7 +2,5 @@
 ## Academic Records Management System ##
 
 ### Features ###
-** Registrar Module **
-
-1. 
-2.
+1. ** Registrar Module **
+2. ** System Admin Module **
