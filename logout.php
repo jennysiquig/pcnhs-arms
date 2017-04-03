@@ -5,9 +5,13 @@
         date_default_timezone_set('Asia/Manila');
         $loTime = date("h:i:sa");
         $_SESSION ['loTime'] = $loTime;
+        $timeout_message;
 
         if(!$conn) {
             die("Connection failed: " . mysqli_connect_error());
+        }
+        if(isset($_SESSION['timeout_message'])) {
+            $timeout_message = $_SESSION['timeout_message'];
         }
 
         $log_id = $_SESSION['log_id'];
@@ -30,5 +34,7 @@
 
     session_unset();
 	session_destroy();
+    session_start();
+    $_SESSION['timeout_message'] = $timeout_message;
 	header("location: login.php");
 ?>

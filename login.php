@@ -55,7 +55,15 @@
                 <?php
                   if(isset($_SESSION['error_message'])) {
                     $error_message = $_SESSION['error_message'];
-                    echo "<p style='color: red'>$error_message</p>";
+                    echo $error_message;
+
+                    session_unset();
+                    session_destroy();
+                  }
+
+                  if(isset($_SESSION['timeout_message'])) {
+                    $timeout_message = $_SESSION['timeout_message'];
+                    echo "<p style='color: red'>$timeout_message</p>";
 
                     session_unset();
                     session_destroy();

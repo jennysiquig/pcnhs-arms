@@ -23,7 +23,7 @@
 		}
 	}else {
 		header("location: curriculum.php");
-			die();
+		die();
 	}
 ?>
 <html>

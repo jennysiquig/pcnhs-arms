@@ -68,8 +68,8 @@
         }
         
         else {
-            $_SESSION['error_message'] = "Invalid Login <br>
-                                          Contact System Admin";
+            $_SESSION['error_message'] = "<p style='color: red'>You have entered an Invalid Username or Password</p>
+                                          <p style='color: red'>Please contact System Admin if you forgot your Username or Password.</p>";
             die(header("Location: ../login.php"));
         }
         $conn->close();

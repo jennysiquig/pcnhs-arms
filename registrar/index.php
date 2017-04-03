@@ -6,9 +6,11 @@
     $session_timeout = 1800; //seconds
     
     if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      header("location: ../../logout.php");
+    	$_SESSION['timeout_message'] = "<p style='color: red'>You have been logged out due to inactivity.</p>
+    										<p style='color: red'>Please Login Again.</p>";
+    	header("location: ../../logout.php");
     }
-
+   $_SESSION['last_activity'] = $time;
    if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
     	if($_SESSION['account_type'] != "registrar") {
     		echo "<p>Access Failed <a href='../index.php'>Back to Home</a></p>";
@@ -19,6 +21,7 @@
     }
     
  ?>
+
 <?php require_once '../resources/config.php' ?>
 <html>
 	<head>
@@ -189,7 +192,6 @@
 				</div>
 			</div>
 			
-			
 		<div class="clearfix"></div>
 	</div>
 	<!-- /page content -->
@@ -209,6 +211,18 @@
 	<script src= "../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 	<!-- NProgress -->
     <script src="../resources/libraries/nprogress/nprogress.js"></script>
+    <!-- Flot -->
+    <script src="../resources/libraries/Flot/jquery.flot.js"></script>
+    <script src="../resources/libraries/Flot/jquery.flot.pie.js"></script>
+    <script src="../resources/libraries/Flot/jquery.flot.time.js"></script>
+    <script src="../resources/libraries/Flot/jquery.flot.stack.js"></script>
+    <script src="../resources/libraries/Flot/jquery.flot.resize.js"></script>
+    <!-- DateJS -->
+    <script src="../resources/libraries/DateJS/build/date.js"></script>
+    <!-- Flot plugins -->
+    <script src="../resources/libraries/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="../resources/libraries/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="../resources/libraries/flot.curvedlines/curvedLines.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src= "../js/custom.min.js"></script>
 	<!-- Scripts -->

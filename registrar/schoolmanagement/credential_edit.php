@@ -1,6 +1,29 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <!DOCTYPE html>
+<?php
+	$cred_id = $_GET['cred_id'];
+	if(!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+	$statement = "SELECT * FROM pcnhsdb.credentials where cred_id = $cred_id";
+	$result = $conn->query($statement);
+	if(!$result) {
+		header("location: credentials.php");
+		die();
+	}
+	if ($result->num_rows > 0) {
+		// output data of each row
+		while($row = $result->fetch_assoc()) {
+			$cred_id = $row['cred_id'];
+			$cred_name = $row['cred_name'];
+			$price = $row['price'];
+		}
+	}else {
+		header("location: credentials.php");
+		die();
+	}
+?>
 <html>
 	<head>
 		<title>Edit Credential</title>
@@ -67,23 +90,8 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<?php
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$statement = "SELECT * FROM pcnhsdb.credentials";
-							$result = $conn->query($statement);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$cred_id = $row['cred_id'];
-									$cred_name = $row['cred_name'];
-									$price = $row['price'];
-								}
-							}
-						?>
 						<form id="credential-val" class="form-horizontal form-label-left" action="phpupdate/credential_update.php" method="POST" novalidate>
-						<div class="item form-group">
+							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Credential ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="cred_id" value=<?php echo $cred_id; ?> readonly="">
