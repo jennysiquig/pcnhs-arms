@@ -1,5 +1,11 @@
+<!DOCTYPE html>
 <?php include('include_files/session_check.php'); ?>
 <?php require_once "../../resources/config.php"; ?>
+<?php 
+  if(!isset($_GET['first-name']) || !isset($_GET['last-name'])) {
+    header("location: request_credential.php");
+  }
+?>
 <html>
   <head>
     <title>Validate Request</title>

@@ -5,6 +5,16 @@
 	if(!isset($_GET['curriculum']) && !isset($_GET['program']) ) {
 		header("location: student_subjects.php?curriculum=all&program=all");
 	}
+	if(isset($_GET['curriculum']) && isset($_GET['program']) ) {
+		//header("location: student_subjects.php?curriculum=all&program=all");
+		if($_GET['curriculum'] != "all" && !is_numeric($_GET['curriculum'])) {
+			header("location: student_subjects.php?curriculum=all&program=all");
+		}
+		if($_GET['program'] != "all" && !is_numeric($_GET['program'])) {
+			header("location: student_subjects.php?curriculum=all&program=all");
+		}
+	}
+
 ?>
 <html>
 	<head>
@@ -41,9 +51,14 @@
   </head>
 	<body class="nav-md">
 		<!-- Sidebar -->
-		<?php include "../../resources/templates/registrar/sidebar.php"; ?>
+		<?php
+			include "../../resources/templates/registrar/sidebar.php";
+		?>
 		<!-- Top Navigation -->
-		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
+		<?php
+			include "../../resources/templates/registrar/top-nav.php";
+		?>
+
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
