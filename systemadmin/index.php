@@ -20,10 +20,13 @@
     }else {
         header('Location: ../../../login.php');
     }
-    
+        date_default_timezone_set('Asia/Manila');
+        $loTime = date("h:i:sa");
 ?>
 <html>
     <head>
+        <title>Activity Logs</title>
+        <link rel="shortcut icon" href="../images/pines.png" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -81,7 +84,7 @@
                             <div class="clearfix"></div>
                             <br/>
                          </div>
-                                                <!-- Date Picker -->
+                          <!-- Date Picker -->
                           <div class="col-md-4">
                             Sort by Date
                             <form class="form-horizontal" action="transaction.php" method="get">
@@ -90,7 +93,7 @@
                                   <div class="controls">
                                     <div class="input-prepend input-group">
                                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                      <input type="text" style="width: 200px" name="transaction_date" id="reservation" class="form-control" value="03/11/2017 - 03/11/2017" />
+                                      <input type="text" style="width: 200px" name="log_date" id="reservation" class="form-control" value=<?php echo "'$loTime'";?>/>
                                     </div>
 
                                   </div>
@@ -152,6 +155,40 @@
                               $start=($page-1)*$limit;
                             }else{
                               $page=1;
+                            }
+
+                              if(isset($_GET['log_date'])) {
+                              
+                              $log_date = $_GET['log_date'];
+                              $from_and_to_date = explode("-", $log_date);
+                              $sqldate_format_from = explode("/", $from_and_to_date[0]);
+                              $m = $sqldate_format_from[0];
+                              $d = $sqldate_format_from[1];
+                              $y = $sqldate_format_from[2];
+                              $m = preg_replace('/\s+/', '', $m);
+                              $d = preg_replace('/\s+/', '', $d);
+                              $y = preg_replace('/\s+/', '', $y);
+
+                              $from = $y."-".$m."-".$d;
+
+                              $sqldate_format_to = explode("/", $from_and_to_date[1]);
+                              $m = $sqldate_format_to[0];
+                              $d = $sqldate_format_to[1];
+                              $y = $sqldate_format_to[2];
+                              $m = preg_replace('/\s+/', '', $m);
+                              $d = preg_replace('/\s+/', '', $d);
+                              $y = preg_replace('/\s+/', '', $y);
+
+                              $to = $y."-".$m."-".$d;
+
+                              $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                            WHERE log_date 
+                                            BETWEEN '$from' and '$to' 
+                                            LIMIT $start, $limit;";
+                            }else{
+                              $log_date = date('m/d/y').'-'.date('m/d/y');
+                              $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                            LIMIT $start, $limit";
                             }
 
                             if(!$conn) {
