@@ -243,55 +243,55 @@
                                     die();
                                 }
                                 if($result->num_rows>0) {
-                                while ($row = $result->fetch_assoc()) {
-                                //$subj_id = $row['subj_id'];
-                                $subj_id = $row['subj_id'];
-                                $subj_name = $row['subj_name'];
-                                $subj_level = $row['subj_level'];
-                                
-                                
-                                $numberOfSubj += 1;
+                                    while ($row = $result->fetch_assoc()) {
+                                    //$subj_id = $row['subj_id'];
+                                    $subj_id = $row['subj_id'];
+                                    $subj_name = $row['subj_name'];
+                                    $subj_level = $row['subj_level'];
+                                    
+                                    
+                                    $numberOfSubj += 1;
                                 //$curr_name = $row['curr_name'];
 
                                 // if(strtolower($subj_name) == "makabayan i" || strtolower($subj_name) == "makabayan ii" || strtolower($subj_name) == "makabayan iii" || strtolower($subj_name) == "makabayan iv") {
                                     
                                 //     $numberOfSubj -= 1;
-
-                                echo <<<SUBJ
-                                
-                                <tr>
-                                    <td>   
-                                        <div class="item form-group">
-                                            <div class="col-md-4">
-                                                <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>$subj_name</td>
-                                    <td>$subj_level</td>
-                                    <td>
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="">
-                                        </div>
-                                    </td>
                                     
-                                </tr>
+                                    echo <<<SUBJ
+                                    
+                                    <tr>
+                                        <td>   
+                                            <div class="item form-group">
+                                                <div class="col-md-4">
+                                                    <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>$subj_name</td>
+                                        <td>$subj_level</td>
+                                        <td>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="">
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
                                 
 SUBJ;
+                                        }
                                     }
-                                }
-                                    echo <<<NUM
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-11 col-sm-3 col-xs-12">Number of Subjects:</label>
-                                        <div class="col-md-1 col-sm-6 col-xs-12">
-                                            <input id="num_subj" class="form-control col-md-7 col-xs-12" type="text" value='$numberOfSubj' readonly>
+                                        echo <<<NUM
+                                        <div class="item form-group">
+                                            <label class="control-label col-md-11 col-sm-3 col-xs-12">Number of Subjects:</label>
+                                            <div class="col-md-1 col-sm-6 col-xs-12">
+                                                <input id="num_subj" class="form-control col-md-7 col-xs-12" type="text" value='$numberOfSubj' readonly>
+                                            </div>
                                         </div>
-                                    </div>
 NUM;
                                 ?>
                                 
@@ -312,7 +312,7 @@ NUM;
                         <br>
                         <div class="col-md-5">
                             <button id="send" class="btn btn-success" onclick="saveToFile();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
-                            <button id="send" type="submit" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
+                            <button id="send" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
                         </div>
                     </form>
                 </div>
@@ -357,7 +357,7 @@ NUM;
                    
                   }
                 };
-                xhttp.open("GET", "phpscript/tempgrade.php?grade="+x, true);
+                xhttp.open("GET", "phpscript/tempgrade.php?grade="+x, false);
                 xhttp.send();
                 var subj_id = document.getElementsByName('subj_id[]');
                 var fin_grade = document.getElementsByName('fin_grade[]');
@@ -389,7 +389,7 @@ NUM;
                    
                   }
                 };
-                xhttp.open("GET", "phpscript/tempcredits.php?credits="+y, true);
+                xhttp.open("GET", "phpscript/tempcredits.php?credits="+y, false);
                 xhttp.send();
 
                 var subj_id = document.getElementsByName('subj_id[]');
@@ -422,26 +422,26 @@ NUM;
               return true;
             }
             function saveToFile() {
-                console.log("saved to file.");
+                
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                   if (this.readyState == 4 && this.status == 200) {
-                   
+                   console.log("saved to file.");
                   }
                 };
-                xhttp.open("GET", "phpscript/saveToFile.php", true);
-                xhttp.send();
+                xhttp.open("GET", "phpscript/saveToFile.php", false);
+                xhttp.send(null);
             }
             function saveToDB() {
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                   if (this.readyState == 4 && this.status == 200) {
-                   
+                   console.log("saved to database.");
                   }
                 };
-                xhttp.open("GET", "phpscript/saveToDB.php", true);
-                xhttp.send();
-                console.log("saved to database.");
+                xhttp.open("GET", "phpscript/saveToDB.php", false);
+                xhttp.send(null);
+                
             }
         </script>
     </body>

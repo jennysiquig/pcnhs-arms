@@ -8,7 +8,7 @@
     if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
     	$_SESSION['timeout_message'] = "<p style='color: red'>You have been logged out due to inactivity.</p>
     										<p style='color: red'>Please Login Again.</p>";
-    	header("location: ../../logout.php");
+    	header("location: ../logout.php");
     }
    $_SESSION['last_activity'] = $time;
    if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
@@ -17,7 +17,7 @@
     		die();
     	}
     }else {
-    	header('Location: ../../login.php');
+    	header('Location: ../login.php');
     }
     
  ?>

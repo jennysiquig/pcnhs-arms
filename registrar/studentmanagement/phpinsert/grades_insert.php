@@ -3,7 +3,8 @@
 	include('../../../resources/classes/Popover.php');
 ?>
 <?php
-	if ($_SESSION['save-type'] == "save-to-file") {
+	if(isset($_SESSION['save-type'])) {
+		if ($_SESSION['save-type'] == "save-to-file") {
 			$out = fopen('php://output', 'a');
 			$stud_id = htmlspecialchars($_POST['stud_id'], ENT_QUOTES);
 			$schl_year = htmlspecialchars($_POST['schl_year'], ENT_QUOTES);
@@ -15,8 +16,8 @@
 			$comment = "";
 			$credit_earned = filter_var($_POST['credit_earned'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-			header('Content-type:application/csv');
-			header("Content-Disposition: attachment; filename='$stud_id-$yr_level-$schl_year.csv'");
+			header('Content-type:text/csv');
+			header("Content-Disposition: attachment; filename=$stud_id-$yr_level-$schl_year-partial-save.csv");
 			header("Content-Transfer-Encoding: UTF-8");
 
 			
@@ -25,8 +26,7 @@
 				fputcsv($out, $fields);
 			}
 			fclose($out);
-	}elseif(isset($_SESSION['save-type'])) {
-		if($_SESSION['save-type'] == "save-to-db") {
+		}elseif($_SESSION['save-type'] == "save-to-db") {
 			require_once "../../../resources/config.php";
 			if(!$conn) {
 				die();
