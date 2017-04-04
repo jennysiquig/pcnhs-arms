@@ -52,6 +52,11 @@
 				</ol>
 			</div>
 			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-9">
+					<a class="btn btn-default" href=<?php echo "student_info.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+				</div>
+			</div>
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>Attendance</h2>

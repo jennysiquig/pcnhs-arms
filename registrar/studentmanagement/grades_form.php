@@ -311,6 +311,7 @@ NUM;
                         <div class="clearfix"></div>
                         <br>
                         <div class="col-md-5">
+                            <a href=<?php echo "grades.php?stud_id=$stud_id"; ?> class="btn btn-default">Cancel</a>
                             <button id="send" class="btn btn-success" onclick="saveToFile();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
                             <button id="send" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
                         </div>

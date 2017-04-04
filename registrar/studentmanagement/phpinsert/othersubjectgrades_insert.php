@@ -21,7 +21,7 @@
 	mysqli_query($conn, $insertothersubj);
 	
 
-	$_SESSION['user_activity'][] = "Added New Other Subject grade for: $stud_id";
+	$_SESSION['user_activity'][] = "Added New Other Subject grade of $stud_id";
 
 	header("location: ../grades.php?stud_id=$stud_id");
 

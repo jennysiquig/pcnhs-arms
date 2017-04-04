@@ -193,9 +193,9 @@
                       <td>$mid_name</td>
                       <td>$curr_code</td>
                       <td>
-                        <span class="">
+                        <center>
                           <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
-                        </span>
+                        </center>
                       </td>
                     </tr>
 STUDLIST;

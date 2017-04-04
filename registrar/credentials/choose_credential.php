@@ -109,8 +109,8 @@
 			</div>
 			<div class="row no-print">
 				<div class="col-xs-12">
-					<button class="btn btn-success pull-right">Next</button>
-					<button class="btn btn-primary pull-right" onclick="history.go(-1);return true;">Back</button>
+					<button type="submit" class="btn btn-success pull-right">Next</button>
+					<a class="btn btn-default pull-right" href=<?php echo "../studentmanagement/student_info.php?stud_id=$stud_id"; ?>>Cancel</a>
 				</div>
 			</div>
 		</form>

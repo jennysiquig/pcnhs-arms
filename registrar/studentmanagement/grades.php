@@ -66,875 +66,99 @@
 					unset($_SESSION['hasgrades']);
 				}
 			?>
+			<div class="row">
+				<div class="col-md-9">
+					<a class="btn btn-default" href=<?php echo "../studentmanagement/student_info.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+				</div>
+			</div>
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>Grades</h2>
 					<div class="clearfix"></div>
 				</div>
-
 				<div class="x_content">
-				<!-- First Year -->
 					<div class="col-md-12 col-sm-6 col-xs-12">
-					
-
-						<?php
-
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$schl_name1 = "";
-							$yr_level1 = "";
-							$schl_year1 = "";
-							$stud_id = $_GET['stud_id'];
-							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 1 and studentsubjects.stud_id = '$stud_id';";
-							$result = $conn->query($query);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$schl_name1 = $row['schl_name'];
-									$yr_level1 = $row['yr_level'];
-									$schl_year1 = $row['schl_year'];
-								}
-							}
-							
-						if(empty($schl_year1) || $schl_year1 == "" || is_null($schl_year1)) {
-							echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=1'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-						}else {
-							echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=1'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-						}
-
-						?>
-		                <div class="x_panel">
-		                	<ul class="nav navbar-right panel_toolbox">
-		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
-		                      </li>
-		                    </ul>
-		                  <div class="x_title">
-		                    <h2>Year Level: <?php if(!empty($yr_level1)){
-		                    						echo $yr_level1;
-		                    						}else {
-		                    							echo "None";
-		                    						} 
-											?><small>School Year: 
-													<?php if(!empty($schl_year1)){
-			                    						echo $schl_year1;
-			                    						}else {
-			                    							echo "None";
-			                    						} 
-													?></small></h2>
-		                    <div class="clearfix"></div>
-		                    <h2>School: <?php if(!empty($schl_name1)){
-		                    						echo $schl_name1;
-		                    						}else {
-		                    							echo "None";
-		                    						} 
-											?></h2>
-		                    <div class="clearfix"></div>
-		                  </div>
-		                  <div class="x_content">
-		                  	
-		                    <table class="table table-bordered">
-		                      <thead>
-		                        <tr>
-		                          <th>Subject</th>
-		                          <th>Subject Level</th>
-		                          <th>Final Grade</th>
-		                          <th>Credit Earned</th>
-		                          <th>Remarks</th>
-		                        </tr>
-		                      </thead>
-		                      <tbody>
-		                      	<?php
-
-									if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
+					<table class="table table-bordered">
+		                <thead>
+		                <tr>
+		                	<th>School Name</th>
+		                    <th>Year Level</th>
+		                    <th>School Year</th>
+		                    <th>Average Grade</th>
+		                    <th>Total Credits Earned</th>
+		                    <th>Action</th>
+		                </tr>
+		                </thead>
+		                <tbody>
+							<?php
+								if(!$conn) {
+									die();
+								}else {
+									$already_generated =  false;
+									$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
+									$result = $conn->query($statement);
+									if($result->num_rows > 0) {
+										$already_generated =  true;
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = '$stud_id';";
-									$result = $conn->query($query);
-									if ($result->num_rows > 0) {
+
+									$statement = "SELECT * FROM pcnhsdb.grades WHERE stud_id = '$stud_id' order by yr_level asc;";
+									$result = $conn->query($statement);
+									$grade_count = 0;
+									if($result->num_rows > 0) {
 										// output data of each row
 										while($row = $result->fetch_assoc()) {
-											$subj_name1 = $row['subj_name'];
-											$subj_level1 = $row['subj_level'];
-											$fin_grade1 = $row['fin_grade'];
-											$credit_earned1 = $row['credit_earned'];
-											$comment1 = $row['comment'];
-
-											echo <<<YR1
-												<tr>
-						                          <th scope="row">$subj_name1</th>
-						                          <td>$subj_level1</td>
-						                          <td>$fin_grade1</td>
-						                          <td>$credit_earned1</td>
-						                          <td>$comment1</td>
-						                        </tr>
-
-YR1;
-										}
-									}
-									
-
-								?>
-		                        
-		                      </tbody>
-		                    </table>
-		                    <?php
-
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 1 and stud_id = '$stud_id';";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$average_grade1 = $row['average_grade'];
-									}
-								}
-							?>
-		                    <h2>Average Grade: <?php if(!empty($average_grade1)){
-		                    						echo substr($average_grade1, 0,5);
-		                    						}else {
-		                    							echo "None";
-		                    						} ?></h2>
-		                    						 <?php
-
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 1 and stud_id = '$stud_id';";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$total_credit1 = $row['total_credit'];
-									}
-								}
-							?>
-		                    <h2>Total Credits: <?php if(!empty($total_credit1)){
-		                    						echo $total_credit1;
-		                    						}else {
-		                    							echo "None";
-		                    						} ?></h2>	
-		                  </div>
-		                  <?php 
-		                  // Check if year 2 has record, if true, previous record cannot be deleted.
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$schl_name2 = "";
-							$yr_level2 = "";
-							$schl_year2 = "";
-							$stud_id = $_GET['stud_id'];
-							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 2 and studentsubjects.stud_id = '$stud_id';";
-							$result = $conn->query($query);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$schl_name2 = $row['schl_name'];
-									$yr_level2 = $row['yr_level'];
-									$schl_year2 = $row['schl_year'];
-								}
-							}
-
-		                  	if(!empty($average_grade1) && !empty($schl_year1) && !empty($yr_level1) && empty($schl_year2) && empty($yr_level2)) {
-		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(1,'$stud_id');">Remove Record</button>
-REMBUT;
-		                  	}else {
-		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(1,'$stud_id';);" disabled="">Remove Record</button>
-REMBUT;
-		                  	}
-		                  ?>
-		                    
-		                </div>
-		              </div>
-				<!-- First Year -->
-				<!-- Second Year -->
-					<div class="col-md-12 col-sm-6 col-xs-12">
-					
-
-						<?php
-
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$schl_name2 = "";
-							$yr_level2 = "";
-							$schl_year2 = "";
-							$stud_id = $_GET['stud_id'];
-							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 2 and studentsubjects.stud_id = '$stud_id';";
-							$result = $conn->query($query);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$schl_name2 = $row['schl_name'];
-									$yr_level2 = $row['yr_level'];
-									$schl_year2 = $row['schl_year'];
-								}
-							}
-							
-						if(empty($schl_year1) || $schl_year1 == "" || is_null($schl_year1)) {
-							echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=2'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-						}else {
-							if(empty($schl_year2) || $schl_year2 == "" || is_null($schl_year2)) {
-								echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=2'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}else {
-								echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=2'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}
-							
-						}
-
-						?>
-		                <div class="x_panel">
-		                	<ul class="nav navbar-right panel_toolbox">
-		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
-		                      </li>
-		                    </ul>
-		                  <div class="x_title">
-		                    <h2>Year Level: <?php if(!empty($yr_level2)){
-		                    						echo $yr_level2;
-		                    						}else {
-		                    							echo "None";
-		                    						} 
-											?><small>School Year: 
-													<?php if(!empty($schl_year2)){
-			                    						echo $schl_year2;
-			                    						}else {
-			                    							echo "None";
-			                    						} 
-													?></small></h2>
-		                    <div class="clearfix"></div>
-		                    <h2>School: <?php if(!empty($schl_name2)){
-		                    						echo $schl_name2;
-		                    						}else {
-		                    							echo "None";
-		                    						} 
-											?></h2>
-		                    <div class="clearfix"></div>
-		                  </div>
-		                  <div class="x_content">
-		                  	
-		                    <table class="table table-bordered">
-		                      <thead>
-		                        <tr>
-		                          <th>Subject</th>
-		                          <th>Subject Level</th>
-		                          <th>Final Grade</th>
-		                          <th>Credit Earned</th>
-		                          <th>Remarks</th>
-		                        </tr>
-		                      </thead>
-		                      <tbody>
-		                      	<?php
-
-									if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
-									}
-									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
-									$result = $conn->query($query);
-									if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
-											$subj_name2 = $row['subj_name'];
-											$subj_level2 = $row['subj_level'];
-											$fin_grade2 = $row['fin_grade'];
-											$credit_earned2 = $row['credit_earned'];
-											$comment2 = $row['comment'];
-
-											echo <<<YR1
-												<tr>
-						                          <th scope="row">$subj_name2</th>
-						                          <td>$subj_level2</td>
-						                          <td>$fin_grade2</td>
-						                          <td>$credit_earned2</td>
-						                          <td>$comment2</td>
-						                        </tr>
-
-YR1;
-										}
-									}
-									
-
-								?>
-		                        
-		                      </tbody>
-		                    </table>
-		                    <?php
-
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 2 and stud_id = '$stud_id';";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$average_grade2 = $row['average_grade'];
-									}
-								}
-							?>
-		                    <h2>Average Grade: <?php if(!empty($average_grade2)){
-		                    						echo substr($average_grade2, 0,5);
-		                    						}else {
-		                    							echo "None";
-		                    						} ?></h2>
-		                    						 <?php
-
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 2 and stud_id = '$stud_id';";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$total_credit2 = $row['total_credit'];
-									}
-								}
-							?>
-		                    <h2>Total Credits: <?php if(!empty($total_credit2)){
-		                    						echo $total_credit2;
-		                    						}else {
-		                    							echo "None";
-		                    						} ?></h2>	
-		                  </div>
-		                  <?php 
-		                  	if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$schl_name3 = "";
-							$yr_level3 = "";
-							$schl_year3 = "";
-							$stud_id = $_GET['stud_id'];
-							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 3 and studentsubjects.stud_id = '$stud_id';";
-							$result = $conn->query($query);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$schl_name3 = $row['schl_name'];
-									$yr_level3 = $row['yr_level'];
-									$schl_year3 = $row['schl_year'];
-								}
-							}
-
-		                  	if(!empty($schl_year2) && !empty($yr_level2) && empty($schl_year3) && empty($yr_level3)) {
-		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(2,'$stud_id');">Remove Record</button>
-REMBUT;
-		                  	}else {
-		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(2,'$stud_id';);" disabled="">Remove Record</button>
-REMBUT;
-		                  	}
-		                  ?>
-		                    
-		                </div>
-		              </div>
-				<!-- Second Year -->
-				<!-- Third Year -->
-					<div class="col-md-12 col-sm-6 col-xs-12">
-					
-
-						<?php
-
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$schl_name3 = "";
-							$yr_level3 = "";
-							$schl_year3 = "";
-							$stud_id = $_GET['stud_id'];
-							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 3 and studentsubjects.stud_id = '$stud_id';";
-							$result = $conn->query($query);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$schl_name3 = $row['schl_name'];
-									$yr_level3 = $row['yr_level'];
-									$schl_year3 = $row['schl_year'];
-								}
-							}
-							
-						if(empty($schl_year2) || $schl_year2 == "" || is_null($schl_year2)) {
-							echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=3'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-						}else {
-							if(empty($schl_year3) || $schl_year3 == "" || is_null($schl_year3)) {
-								echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=3'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}else {
-								echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=3'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}
-							
-						}
-
-						?>
-		                <div class="x_panel">
-		                	<ul class="nav navbar-right panel_toolbox">
-		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
-		                      </li>
-		                    </ul>
-		                  <div class="x_title">
-		                    <h2>Year Level: <?php if(!empty($yr_level3)){
-		                    						echo $yr_level3;
-		                    						}else {
-		                    							echo "None";
-		                    						} 
-											?><small>School Year: 
-													<?php if(!empty($schl_year3)){
-			                    						echo $schl_year3;
-			                    						}else {
-			                    							echo "None";
-			                    						} 
-													?></small></h2>
-		                    <div class="clearfix"></div>
-		                    <h2>School: <?php if(!empty($schl_name3)){
-		                    						echo $schl_name3;
-		                    						}else {
-		                    							echo "None";
-		                    						} 
-											?></h2>
-		                    <div class="clearfix"></div>
-		                  </div>
-		                  <div class="x_content">
-		                  	
-		                    <table class="table table-bordered">
-		                      <thead>
-		                        <tr>
-		                          <th>Subject</th>
-		                          <th>Subject Level</th>
-		                          <th>Final Grade</th>
-		                          <th>Credit Earned</th>
-		                          <th>Remarks</th>
-		                        </tr>
-		                      </thead>
-		                      <tbody>
-		                      	<?php
-
-									if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
-									}
-									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
-									$result = $conn->query($query);
-									if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
-											$subj_name3 = $row['subj_name'];
-											$subj_level3 = $row['subj_level'];
-											$fin_grade3 = $row['fin_grade'];
-											$credit_earned3 = $row['credit_earned'];
-											$comment3 = $row['comment'];
-
-											echo <<<YR1
-												<tr>
-						                          <th scope="row">$subj_name3</th>
-						                          <td>$subj_level3</td>
-						                          <td>$fin_grade3</td>
-						                          <td>$credit_earned3</td>
-						                          <td>$comment3</td>
-						                        </tr>
-
-YR1;
-										}
-									}
-									
-
-								?>
-		                        
-		                      </tbody>
-		                    </table>
-		                    <?php
-
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 3 and stud_id = '$stud_id';";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$average_grade3 = $row['average_grade'];
-									}
-								}
-							?>
-		                    <h2>Average Grade: <?php if(!empty($average_grade3)){
-		                    						echo substr($average_grade3, 0,5);
-		                    						}else {
-		                    							echo "None";
-		                    						} ?></h2>
-		                    						 <?php
-
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 3 and stud_id = '$stud_id';";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$total_credit3 = $row['total_credit'];
-									}
-								}
-							?>
-		                    <h2>Total Credits: <?php if(!empty($total_credit3)){
-		                    						echo $total_credit3;
-		                    						}else {
-		                    							echo "None";
-		                    						} ?></h2>	
-		                  </div>
-		                  <?php
-		                  	if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$schl_name4 = "";
-							$yr_level4 = "";
-							$schl_year4 = "";
-							$stud_id = $_GET['stud_id'];
-							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 4 and studentsubjects.stud_id = '$stud_id';";
-							$result = $conn->query($query);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$schl_name4 = $row['schl_name'];
-									$yr_level4 = $row['yr_level'];
-									$schl_year4 = $row['schl_year'];
-								}
-							}
-
-		                  	if(!empty($average_grade3) && !empty($schl_year3) && !empty($yr_level3) && empty($schl_year4) && empty($yr_level4)) {
-		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(3,'$stud_id');">Remove Record</button>
-REMBUT;
-		                  	}else {
-		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(3,'$stud_id';);" disabled="">Remove Record</button>
-REMBUT;
-		                  	}
-		                  ?>
-		                    
-		                </div>
-		              </div>
-				<!-- Third Year -->
-				<!-- Fourth Year -->
-					<div class="col-md-12 col-sm-6 col-xs-12">
-					
-
-						<?php
-
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$schl_name4 = "";
-							$yr_level4 = "";
-							$schl_year4 = "";
-							$stud_id = $_GET['stud_id'];
-							$query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 4 and studentsubjects.stud_id = '$stud_id';";
-							$result = $conn->query($query);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$schl_name4 = $row['schl_name'];
-									$yr_level4 = $row['yr_level'];
-									$schl_year4 = $row['schl_year'];
-								}
-							}
-							
-						if(empty($schl_year3) || $schl_year3 == "" || is_null($schl_year3)) {
-							echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=4'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-						}else {
-							if(empty($schl_year4) || $schl_year4 == "" || is_null($schl_year4)) {
-								echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=4'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}else {
-								echo "<a class='btn btn-success pull-right disabled' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=4'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-							}
-							
-						}
-
-						?>
-		                <div class="x_panel">
-		                	<ul class="nav navbar-right panel_toolbox">
-		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
-		                      </li>
-		                    </ul>
-		                  <div class="x_title">
-		                    <h2>Year Level: <?php if(!empty($yr_level4)){
-		                    						echo $yr_level4;
-		                    						}else {
-		                    							echo "None";
-		                    						} 
-											?><small>School Year: 
-													<?php if(!empty($schl_year4)){
-			                    						echo $schl_year4;
-			                    						}else {
-			                    							echo "None";
-			                    						} 
-													?></small></h2>
-		                    <div class="clearfix"></div>
-		                    <h2>School: <?php if(!empty($schl_name4)){
-		                    						echo $schl_name4;
-		                    						}else {
-		                    							echo "None";
-		                    						} 
-											?></h2>
-		                    <div class="clearfix"></div>
-		                  </div>
-		                  <div class="x_content">
-		                  	
-		                    <table class="table table-bordered">
-		                      <thead>
-		                        <tr>
-		                          <th>Subject</th>
-		                          <th>Subject Level</th>
-		                          <th>Final Grade</th>
-		                          <th>Credit Earned</th>
-		                          <th>Remarks</th>
-		                        </tr>
-		                      </thead>
-		                      <tbody>
-		                      	<?php
-
-									if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
-									}
-									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = '$stud_id';";
-									$result = $conn->query($query);
-									if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
-											$subj_name4 = $row['subj_name'];
-											$subj_level4 = $row['subj_level'];
-											$fin_grade4 = $row['fin_grade'];
-											$credit_earned4 = $row['credit_earned'];
-											$comment4 = $row['comment'];
-
-											echo <<<YR1
-												<tr>
-						                          <th scope="row">$subj_name4</th>
-						                          <td>$subj_level4</td>
-						                          <td>$fin_grade4</td>
-						                          <td>$credit_earned4</td>
-						                          <td>$comment4</td>
-						                        </tr>
-
-YR1;
-										}
-									}
-									
-
-								?>
-		                        
-		                      </tbody>
-		                    </table>
-		                    <?php
-
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT average_grade FROM pcnhsdb.grades where yr_level = 4 and stud_id = '$stud_id';";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$average_grade4 = $row['average_grade'];
-									}
-								}
-							?>
-		                    <h2>Average Grade: <?php if(!empty($average_grade4)){
-		                    						echo substr($average_grade4, 0,5);
-		                    						}else {
-		                    							echo "None";
-		                    						} ?></h2>
-		                    						 <?php
-
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 4 and stud_id = '$stud_id';";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$total_credit4 = $row['total_credit'];
-									}
-								}
-							?>
-		                    <h2>Total Credits: <?php if(!empty($total_credit4)){
-		                    						echo $total_credit4;
-		                    						}else {
-		                    							echo "None";
-		                    						} ?></h2>	
-		                  </div>
-		                  <?php 
-		                  	if(!empty($average_grade4) || !empty($schl_year4) || !empty($yr_level4)) {
-		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(4,'$stud_id');">Remove Record</button>
-REMBUT;
-		                  	}else {
-		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(4,'$stud_id';);" disabled="">Remove Record</button>
-REMBUT;
-		                  	}
-		                  ?>
-		                    
-		                </div>
-		              </div>
-				<!-- Fourth Year -->
-			
-			<!-- Other Subjects -->
-			<div class="col-md-12 col-sm-6 col-xs-12">
-			<div class="x_panel">
-				<ul class="nav navbar-right panel_toolbox">
-		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
-		                      </li>
-		                    </ul>
-				<div class="x_title">
-					<h2>Other Subjects</h2>
-					<div class="clearfix"></div>
-				</div>
-
-				<div class="x_content">
-					<!--  -->
-					<div class="col-md-12 col-sm-6 col-xs-12">
-					<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
-		                
-		                  	
-		                    <table class="table table-bordered">
-		                      <thead>
-		                        <tr>
-		                          <th>School Name</th>
-		                          <th>School Year</th>
-		                          <th>Year Level</th>
-		                          <th>Subject</th>
-		                          <th>Subject Level</th>
-		                          <th>Subject Type</th>
-		                          <th>Final Grade</th>
-		                          <th>Credit Earned</th>
-		                          <th>Remarks</th>
-		                        </tr>
-		                      </thead>
-		                      <tbody>
-		                      	<?php
-
-									if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
-									}
-									$query = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id';";
-									$result = $conn->query($query);
-									if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
+											$grade_count += 1;
 											$schl_name = $row['schl_name'];
-											$schl_year = $row['schl_year'];
 											$yr_level = $row['yr_level'];
-											$subj_name = $row['subj_name'];
-											$subj_level = $row['subj_level'];
-											$subj_type = $row['subj_type'];
-											$fin_grade = $row['fin_grade'];
-											$credit_earned = $row['credit_earned'];
-											$comment = $row['comment'];
-
-											echo <<<YR1
+											$schl_year = $row['schl_year'];
+											$average_grade = $row['average_grade'];
+											$average_grade = number_format($average_grade, 2);
+											$total_credit = $row['total_credit'];
+											echo <<<GRADES
 												<tr>
 						                          <th scope="row">$schl_name</th>
+						                          <td>$yr_level</td>
 						                          <td>$schl_year</td>
-						                          <td>$yr_level</td>
-						                          <td>$subj_name</td>
-						                          <td>$subj_level</td>
-						                          <td>$subj_type</td>
-						                          <td>$fin_grade</td>
-						                          <td>$credit_earned</td>
-						                          <td>$comment</td>
-						                        </tr>
-
-YR1;
+						                          <td>$average_grade</td>
+						                          <td>$total_credit</td>
+						                          <td>
+													<center>
+													<a class="btn btn-primary btn-xs" href="subject_grades.php?stud_id=$stud_id&yr_level=$yr_level">View Grades</a>
+GRADES;
+											if($result->num_rows == $yr_level && !$already_generated) {
+												echo <<<REMOVE
+													<button class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');">Remove Record</button>
+REMOVE;
+												}else {
+													echo <<<REMOVE
+													<button class="btn btn-danger btn-xs" disabled>Remove Record</button>
+REMOVE;
+												}
+											
+											echo "</center>
+						                          </td>
+						                        </tr>";
 										}
 									}
-									
 
-								?>
-		                        
-		                      </tbody>
-		                    </table>	
-		                  
-		                  <?php 
-		                  	if(!empty($schl_name)) {
-		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger btn-xs" onclick="removeOtherSubjects('$stud_id');">Remove Record</button>
-REMBUT;
-		                  	}else {
-		                  		echo <<<REMBUT
-		                  			<button class="btn btn-danger btn-xs" onclick="removeOtherSubjects('$stud_id';);" disabled="">Remove Record</button>
-REMBUT;
-		                  	}
-		                  ?>
-		                </div>
-		              </div>
-		            </div>
-		           </div>
-		    <!-- Failed Subjects -->
-			<div class="col-md-12 col-sm-6 col-xs-12">
-			<div class="x_panel">
-				<ul class="nav navbar-right panel_toolbox">
-		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
-		                      </li>
-		                    </ul>
-				<div class="x_title">
-					<h2>Failed Subjects</h2>
-					<div class="clearfix"></div>
-				</div>
-
-				<div class="x_content">
-					<!--  -->
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>Subject</th>
-							<th>Subject Level</th>
-							<th>Year Level</th>
-						</tr>
-					</thead>
-					<tbody>
-		                      	<?php
-
-									if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
-									}
-									$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id where stud_id = '$stud_id' AND comment = 'FAILED' ;";
-
-									$result = $conn->query($query);
-									if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
-											$yr_level = $row['yr_level'];
-											$subj_name = $row['subj_name'];
-											$subj_level = $row['subj_level'];
-
-											echo <<<YR1
-												<tr>
-						                          <td>$subj_name</td>
-						                          <td>$subj_level</td>
-						                          <td>$yr_level</td>
-						                        </tr>
-
-YR1;
-										}
-									}
-									
-
-								?>
-		                        
-		                      </tbody>
-		                    </table>	
-		                </div>
-		              </div>
-		            </div>
-		           </div>
-		          </div>
-				<!-- -->
-				<div class="clearfix"></div>
-              		
+								}
+							?>
+						</tbody>
+					</table>
+					</div>
+					<?php
+						$next_grade = $grade_count+1;
+						if($grade_count < 4) {
+							echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=$next_grade'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
+						}else {
+							echo "<a class='btn btn-success pull-right disabled' href='#'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
+						}
+					?>
 				</div>
 			</div>
+			<div class="clearfix"></div>
+              		<!-- END -->
+			</div> 
 			<!-- Other Subjects -->
 
 		</div>

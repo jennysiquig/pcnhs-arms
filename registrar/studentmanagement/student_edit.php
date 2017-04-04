@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php include('include_files/session_check.php'); ?>
 <?php require_once "../../resources/config.php" ?>
+<?php $stud_id = $_GET['stud_id']; ?>
+<?php ob_start(); ?>
 <html>
 	<head>
 		<title>Edit Student</title>
@@ -51,6 +53,11 @@
 					</ol>
 				</div>
 			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-9">
+					<a class="btn btn-default" href=<?php echo "student_info.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+				</div>
+			</div>
 			<form id="stud-edit" class="form-horizontal form-label-left" action="phpupdate/update_student_info.php" method="POST" novalidate>
 				<div class="x_panel">
 					<div class="x_title">
@@ -68,7 +75,7 @@
 									<!--  -->
 										<?php
 
-											$stud_id = $_GET['stud_id'];
+											
 											$first_name;
 											$mid_name;
 											$last_name;
@@ -112,6 +119,8 @@
 													$total_elem_years = $row['total_elem_years'];
 													$gpa = $row['gen_average'];
 												}
+											}else {
+												header("location: student_list.php");
 											}
 										?>
 									<!--  -->

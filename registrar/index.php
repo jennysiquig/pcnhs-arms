@@ -67,7 +67,7 @@
 		<div class="right_col" role="main">
 			<div class="row">
 				<div class="col-md-12">
-					<a href="credentials/request_credential.php" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Student Credential Request</a>
+					<a href="credentials/request_credential.php" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Student Credential Request</a>
 				</div>
 			</div>
 			<div class="row">

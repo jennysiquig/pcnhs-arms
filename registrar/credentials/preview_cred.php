@@ -1,33 +1,43 @@
+<!DOCTYPE html>
 <?php include('include_files/session_check.php'); ?>
 <?php require_once "../../resources/config.php"; ?>
+<?php ob_start(); ?>
 <?php $stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES) ?>
 <!-- Update Database -->
 <?php
-	if(!$conn) {
-		die();
-	}
-	$cred_id = htmlspecialchars($_POST['credential'], ENT_QUOTES);
-	$request_type = htmlspecialchars($_POST['request_type'], ENT_QUOTES);
+    if(!$conn) {
+        die();
+    }
+    if(!isset($_SESSION['generated'])) {
+        $_SESSION['generated'] = true;
+    }else {
+        if($_SESSION['generated']) {
+            unset($_SESSION['generated']);
+            header("location: ../../index.php");
+            die();
+        }
+    }
+    
+
+    $cred_id = htmlspecialchars($_POST['credential'], ENT_QUOTES);
+    $request_type = htmlspecialchars($_POST['request_type'], ENT_QUOTES);
     $signatory = htmlspecialchars($_POST['signatory'], ENT_QUOTES);
-	$personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
-	$date = htmlspecialchars($_POST['date'], ENT_QUOTES);
+    $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
+    $date = htmlspecialchars($_POST['date'], ENT_QUOTES);
     $issuedto = htmlspecialchars($_POST['issuedto'], ENT_QUOTES);
     $request_purpose = htmlspecialchars($_POST['request_purpose']);
 
-	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `issued_for`, `request_purpose`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$issuedto', '$request_purpose' ,'$signatory', '$personnel_id');";
+    $statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `issued_for`, `request_purpose`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$issuedto', '$request_purpose' ,'$signatory', '$personnel_id');";
 
-	$statement2 = "INSERT INTO `pcnhsdb`.`unclaimed` (`date_processed`) VALUES ('$date');";
-    
+    $statement2 = "INSERT INTO `pcnhsdb`.`unclaimed` (`date_processed`) VALUES ('$date');";    
+    mysqli_query($conn, $statement1);
     $_SESSION['user_activity'][] = "Student $stud_id requested Credential $cred_id.";
-    
-    //mysqli_query($conn, $statement1);
 
 ?>
-<!DOCTYPE html>
 <html>
 	<head>
-    <title>Preview Credential</title>
-    <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+        <title>Preview Credential</title>
+        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,7 +56,7 @@
 		<!-- Custom Theme Style -->
 		<link href="../../css/custom.min.css" rel="stylesheet">
 		<link href="../../css/tstheme/style.css" rel="stylesheet">
-		<link rel="stylesheet" href="../../css/form137print.css">
+		<link href="../../css/form137.css" rel="stylesheet">
 
 		<style type="text/css" media="print">
 		   .no-print { display: none; }
@@ -58,16 +68,25 @@
 
 			<?php
 				$DAmonth = htmlspecialchars($_POST['month'], ENT_QUOTES);
-                $DAday = htmlspecialchars($_POST['day'], ENT_QUOTES);
+                $DADay = htmlspecialchars($_POST['day'], ENT_QUOTES);
                 $DAyear = htmlspecialchars($_POST['year'], ENT_QUOTES);
 				$issuedto = htmlspecialchars($_POST['issuedto'], ENT_QUOTES);
 				$remarks = htmlspecialchars($_POST['remarks'], ENT_QUOTES);
+
+                $locale = 'en_US';
+                $nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
+                $DADay = $nf->format($DADay);
+
 			?>
 
              <?php
              $birth_date = "";
              $box1 = "SELECT *, concat(last_name, ', ', first_name, ' ', upper(left(mid_name, 1)), '.') as 'full_name' FROM students NATURAL JOIN parent NATURAL JOIN primaryschool WHERE students.stud_id = '$stud_id';";
              $result = $conn->query($box1);
+             if(!$result) {
+                header("location: ../../index.php");
+                die();
+             }
              if ($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
                     $name = $row['full_name'];
@@ -84,6 +103,9 @@
                     $birth_date = $row['birth_date'];
                     $gender = $row['gender'];
                 }
+             }else {
+                header("location: ../../index.php");
+                die();
              }
 
              $birthday = explode("/", $birth_date);
@@ -788,7 +810,7 @@ YR1;
 
                         <div id="box-7">
 
-                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> the <div id="day-cert"> <?php echo $DAday; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $issuedto; ?> </div> as a <div id="reg-cert"> <?php echo $stat; ?> </div> student and <div id="gender-cert"> <?php echo $formgender; ?> </div> has no</br> property and/or money accountability in this school.</div>
+                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> the <div id="day-cert"> <?php echo $DADay; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $issuedto; ?> </div> as a <div id="reg-cert"> <?php echo $stat; ?> </div> student and <div id="gender-cert"> <?php echo $formgender; ?> </div> has no</br> property and/or money accountability in this school.</div>
 
                             <p id="b7-r1-p1">REMARKS:</p>
                             <div id="b7-r1-d1"></div>
