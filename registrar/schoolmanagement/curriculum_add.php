@@ -1,24 +1,10 @@
 <!DOCTYPE html>
-<?php
-    session_start();
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    
-  ?>
+<?php require_once "../../resources/config.php"; ?>
+<?php include('include_files/session_check.php'); ?>
 <html>
 	<head>
+		<title>Add Curriculum</title>
+		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,6 +47,12 @@
 					
 				</div>
 			</div>
+			<?php
+				if(isset($_SESSION['error_pop'])) {
+					echo $_SESSION['error_pop'];
+					unset($_SESSION['error_pop']);
+				}
+			?>
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
@@ -74,34 +66,51 @@
 					</div>
 					<div class="x_content">
 						<form id="curriculum-val" class="form-horizontal form-label-left" action="phpinsert/curriculum_insert.php" method="POST" novalidate>
-						<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum ID</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="curr_id">
-								</div>
-							</div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum Code</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="curr_code">
+									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="curr_code" placeholder="ex: BEC">
 								</div>
 							</div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum Name</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="curr_name">
+									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="curr_name" >
 								</div>
 							</div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Year Started</label>
+								
+
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="year_started">
+									<select class="form-control" name="year_started">
+										<option value="">-- Choose Year Started --</option>
+										<?php 
+											$year_today = date('Y');
+											echo $year_today;
+											for($year_start = 1990; $year_start <= $year_today; $year_start++) {
+												echo "<option value='$year_start'>$year_start</option>";
+											}
+
+										?>
+									</select>
 								</div>
 							</div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Year Ended</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" type="text" name="year_ended">
+									<select class="form-control" name="year_ended">
+										<option value="">-- Choose Year Ended --</option>
+										<option value="PRESENT">Present</option>
+										<?php 
+											$year_today = date('Y');
+											echo $year_today;
+											for($year_start = 1990; $year_start <= $year_today; $year_start++) {
+												echo "<option value='$year_start'>$year_start</option>";
+											}
+
+										?>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">

@@ -1,23 +1,6 @@
 <!DOCTYPE html>
-<?php
-    session_start();
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    
-  ?>
-<?php require_once "../../resources/config.php" ?>
+<?php require_once "../../resources/config.php"; ?>
+<?php include('include_files/session_check.php'); ?>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -48,7 +31,7 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-</head>	<body class="nav-md">
+</head> <body class="nav-md">
 <!-- Sidebar -->
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
 <!-- Top Navigation -->
@@ -56,6 +39,13 @@
 <!-- Content Here -->
 <!-- page content -->
 <div class="right_col" role="main">
+                 <div class="col-md-5">
+        <ol class="breadcrumb">
+          <li><a href="../index.php">Home</a></li>
+          <li class="disabled">Signatories</li>
+          <li class="active">Edit Signatory</li>
+        </ol>
+      </div>
     <div class="">
         <div class="row top_tiles">
 
@@ -90,7 +80,6 @@
                         $result = $conn->query($statement);
                         if($result->num_rows>0) {
                             while($row=$result->fetch_assoc()) {
-                                //$sign_id = $row['sign_id'];
                                 $first_name = $row['first_name'];
                                 $mname = $row['mname'];
                                 $last_name = $row['last_name'];
@@ -113,7 +102,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="first_name" value=<?php echo "'$first_name'"; ?>
-                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s\ñ]+$"
                                     data-parsley-pattern-message="Invalid First Name"
                                     data-parsley-maxlength="50"
                                     data-parsley-maxlength-message="Error">
@@ -124,7 +113,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="mname" value=<?php echo "'$mname'"; ?>
-                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s\ñ]+$"
                                     data-parsley-pattern-message="Invalid Middle Name"
                                     data-parsley-maxlength="50"
                                     data-parsley-maxlength-message="Error">
@@ -135,7 +124,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="last_name" value=<?php echo "'$last_name'"; ?>
-                                    data-parsley-pattern="^[a-zA-Z\s\+\-\ñ]+$"
+                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s\ñ]+$"
                                     data-parsley-pattern-message="Invalid Last Name"
                                     data-parsley-maxlength="50"
                                     data-parsley-maxlength-message="Error">
@@ -146,7 +135,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Academic Degree</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="title" value=<?php echo "'$title'"; ?>
-                                    data-parsley-pattern="^[a-zA-Z\s\+\-\.]+$"
+                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s\ñ]+$"
                                     data-parsley-pattern-message="Invalid Format"
                                     data-parsley-maxlength="50"
                                     data-parsley-maxlength-message="Error">
@@ -185,21 +174,13 @@
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position" value=<?php echo "'$position'"; ?>>
-                                    <option value="<?php echo $position?>"> <?php echo $position?></option>
-                                    <?php
-                                    $position= $row['position'];
-                                    echo <<<OPTION0
-                                            <option value="ADMINISTRATOR">ADMINISTRATOR</option>
-                                            <option value="HEAD TEACHER">HEAD TEACHER</option>
-                                            <option value="PRINCIPAL">PRINCIPAL</option>
-                                            <option value="REGISTRAR">REGISTRAR</option>
-                                            <option value="SUPERINTENDENT">SUPERINTENDENT</option>
-OPTION0;
-                                    ?>
-                                </select>
-                            </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="position" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position" value=<?php echo "'$position'";?>
+                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s]+$"
+                                    data-parsley-pattern-message="Invalid Format"
+                                    data-parsley-maxlength="50"
+                                    data-parsley-maxlength-message="Error">
+                                </div>
                         </div>
 
                         <div class="form-group">

@@ -6,21 +6,27 @@
     $session_timeout = 1800; //seconds
     
     if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
+    	$_SESSION['timeout_message'] = "<p style='color: red'>You have been logged out due to inactivity.</p>
+    										<p style='color: red'>Please Login Again.</p>";
+    	header("location: ../../logout.php");
     }
+   $_SESSION['last_activity'] = $time;
+   if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
+    	if($_SESSION['account_type'] != "registrar") {
+    		echo "<p>Access Failed <a href='../index.php'>Back to Home</a></p>";
+    		die();
+    	}
+    }else {
+    	header('Location: ../../login.php');
+    }
+    
+ ?>
 
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../login.php');
-    }
-    
-    
-  ?>
 <?php require_once '../resources/config.php' ?>
 <html>
 	<head>
+		<title>Home</title>
+		<link rel="shortcut icon" href="../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,6 +65,11 @@
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
+			<div class="row">
+				<div class="col-md-12">
+					<a href="credentials/request_credential.php" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Student Credential Request</a>
+				</div>
+			</div>
 			<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="x_panel">
@@ -181,7 +192,6 @@
 				</div>
 			</div>
 			
-			
 		<div class="clearfix"></div>
 	</div>
 	<!-- /page content -->
@@ -201,6 +211,18 @@
 	<script src= "../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 	<!-- NProgress -->
     <script src="../resources/libraries/nprogress/nprogress.js"></script>
+    <!-- Flot -->
+    <script src="../resources/libraries/Flot/jquery.flot.js"></script>
+    <script src="../resources/libraries/Flot/jquery.flot.pie.js"></script>
+    <script src="../resources/libraries/Flot/jquery.flot.time.js"></script>
+    <script src="../resources/libraries/Flot/jquery.flot.stack.js"></script>
+    <script src="../resources/libraries/Flot/jquery.flot.resize.js"></script>
+    <!-- DateJS -->
+    <script src="../resources/libraries/DateJS/build/date.js"></script>
+    <!-- Flot plugins -->
+    <script src="../resources/libraries/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="../resources/libraries/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="../resources/libraries/flot.curvedlines/curvedLines.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src= "../js/custom.min.js"></script>
 	<!-- Scripts -->

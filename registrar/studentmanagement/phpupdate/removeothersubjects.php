@@ -3,7 +3,7 @@
 	if(!$conn) {
 		die();
 	}	
-	$stud_id = $_GET['stud_id'];
+	$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
 	//$yr_level = $_GET['yr_level'];
 
 
@@ -12,7 +12,7 @@
 	
 	mysqli_query($conn, $statement1);
 	
-
+	$_SESSION['user_activity'][] = "Removed Other Subject Grades of: $stud_id";
 	header("location: ../grades.php?stud_id=$stud_id");
 
 

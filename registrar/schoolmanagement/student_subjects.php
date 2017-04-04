@@ -1,30 +1,25 @@
+<!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    
-  ?>
+<?php include('include_files/session_check.php'); ?>
 <?php
 	if(!isset($_GET['curriculum']) && !isset($_GET['program']) ) {
 		header("location: student_subjects.php?curriculum=all&program=all");
 	}
+	if(isset($_GET['curriculum']) && isset($_GET['program']) ) {
+		//header("location: student_subjects.php?curriculum=all&program=all");
+		if($_GET['curriculum'] != "all" && !is_numeric($_GET['curriculum'])) {
+			header("location: student_subjects.php?curriculum=all&program=all");
+		}
+		if($_GET['program'] != "all" && !is_numeric($_GET['program'])) {
+			header("location: student_subjects.php?curriculum=all&program=all");
+		}
+	}
+
 ?>
-<!DOCTYPE html>
 <html>
 	<head>
+	<title>Student Subjects</title>
+	<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,9 +51,14 @@
   </head>
 	<body class="nav-md">
 		<!-- Sidebar -->
-		<?php include "../../resources/templates/registrar/sidebar.php"; ?>
+		<?php
+			include "../../resources/templates/registrar/sidebar.php";
+		?>
 		<!-- Top Navigation -->
-		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
+		<?php
+			include "../../resources/templates/registrar/top-nav.php";
+		?>
+
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
@@ -91,9 +91,6 @@
 									<label class="control-label col-md-3 col-sm-3 col-xs-12">Filter Curriculum</label>
 									<div class="col-md-3 col-sm-4 col-xs-12">
 										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="curriculum">
-
-											<!-- <option value="1">Regular</option>
-											-->
 											<option value="all">All</option>
 											<?php
 												if(!$conn) {
@@ -105,26 +102,27 @@
 												$result = $conn->query($statement);
 												if ($result->num_rows > 0) {
 												// output data of each row
-												while($row = $result->fetch_assoc()) {
-													$curr_id = $row['curr_id'];
-													$curr_name = $row['curr_name'];
-													echo <<<OPTION2
-																		<option value="$curr_id">$curr_name</option>
-OPTION2;
-																}
+													while($row = $result->fetch_assoc()) {
+														$curr_id = $row['curr_id'];
+														$curr_name = $row['curr_name'];
+														if(isset($_GET['curriculum'])) {
+															if($_GET['curriculum'] == $curr_id) {
+																echo "<option value='$curr_id' selected>$curr_name</option>";
+															}else {
+																echo "<option value='$curr_id'>$curr_name</option>";
 															}
+														}
+														
+													}
+												}
 											?>
 											</select>
 										</div>
-										
-								</div>
+									</div>
 								<div class="item form-group">
 									<label class="control-label col-md-3 col-sm-3 col-xs-12">Filter Program</label>
 									<div class="col-md-3 col-sm-4 col-xs-12">
 										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="program">
-
-											<!-- <option value="1">Regular</option>
-											-->
 											<option value="all">All</option>
 											<?php
 												if(!$conn) {
@@ -132,18 +130,21 @@ OPTION2;
 												}
 
 												$statement = "SELECT * FROM pcnhsdb.programs";
-
 												$result = $conn->query($statement);
 												if ($result->num_rows > 0) {
 												// output data of each row
-												while($row = $result->fetch_assoc()) {
-													$prog_id = $row['prog_id'];
-													$prog_name = $row['prog_name'];
-													echo <<<OPTION2
-																		<option value="$prog_id">$prog_name</option>
-OPTION2;
-																}
+													while($row = $result->fetch_assoc()) {
+														$prog_id = $row['prog_id'];
+														$prog_name = $row['prog_name'];
+														if(isset($_GET['program'])) {
+															if($_GET['program'] == $prog_id) {
+																echo "<option value='$prog_id' selected>$prog_name</option>";
+															}else {
+																echo "<option value='$prog_id'>$prog_name</option>";
 															}
+														}
+													}
+												}
 											?>
 											</select>
 										</div>
@@ -152,61 +153,46 @@ OPTION2;
 								<div class="item form-group">
 									<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
 									<div class="col-md-3 col-sm-4 col-xs-12">
-										<button class="btn btn-primary pull-right">Go</button>
+										<button class="btn btn-primary pull-right">Filter</button>
 									</div>
 								</div>
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12">Showing:</label>
-									<?php
-												if(!$conn) {
-													die("Connection failed: " . mysqli_connect_error());
-												}
-												if(isset($_GET['curriculum']) && isset($_GET['program']) ) {
-													$get_curr_id = $_GET['curriculum'];
-													$get_prog_id = $_GET['curriculum'];
-								                	if($get_curr_id === "all" && $get_prog_id === "all") {
-														$statement = "SELECT * FROM pcnhsdb.curriculum";
-													}else {
-														$statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $get_curr_id";
-													}
-												}else {
-													$statement = "SELECT * FROM pcnhsdb.curriculum";
-												}
-												$result = $conn->query($statement);
-												if ($result->num_rows > 0) {
-													// output data of each row
-													while($row = $result->fetch_assoc()) {
-														$curr_id = $row['curr_id'];
-														$curr_name = $row['curr_name'];
-													}
-												}
-										?>
-										<div class="col-md-3 col-sm-3 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" required="required" type="text" value=<?php 
-												if(isset($_GET['curriculum']) && $_GET['curriculum'] <> "all"){
-													$get_curr_id = $_GET['curriculum'];
-													echo "'$curr_name'";
-												}else{
-													echo "All";
-												}
-											?> readonly="">
-										</div>
-								</div>
-							
 							<div class="clearfix"></div>
 							<div class="table-responsive">
-								<table class="table table-hover">
+								<table id="subjList" class="table table-bordered tablesorter">
 									<thead>
 										<tr class="headings">
 											<th class="column-title">Subject Name</th>
 											<th class="column-title">Subject Level</th>
 											<th class="column-title">Curriculum</th>
 											<th class="column-title">Program</th>
-											<th class="column-title">Unit</th>
 										</th>
 									</tr>
 								</thead>
 								<tbody id="subjlist">
+									<?php
+										if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+										}
+										if(isset($_GET['curriculum']) && isset($_GET['program']) ) {
+										$get_curr_id = $_GET['curriculum'];
+										$get_prog_id = $_GET['curriculum'];
+										if($get_curr_id === "all" && $get_prog_id === "all") {
+										$statement = "SELECT * FROM pcnhsdb.curriculum";
+										}else {
+										$statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $get_curr_id";
+										}
+										}else {
+										$statement = "SELECT * FROM pcnhsdb.curriculum";
+										}
+										$result = $conn->query($statement);
+										if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+										$curr_id = $row['curr_id'];
+										$curr_name = $row['curr_name'];
+										}
+										}
+									?>
 									<?php
 											$statement = "";
 							                    $start=0;
@@ -236,7 +222,6 @@ OPTION2;
 											}
 											
 											$result = $conn->query($statement);
-
 											if($result->num_rows>0) {
 												while ($row = $result->fetch_assoc()) {
 													# code...
@@ -245,14 +230,13 @@ OPTION2;
 													$subj_level = $row['subj_level'];
 													$curr_name = $row['curr_name'];
 													$prog_name = $row['prog_name'];
-													$unit = $row['unit'];
+													
 													echo <<<SUBJS
 														<tr>
 																<td>$subj_name</td>
 																<td>$subj_level</td>
 																<td>$curr_name</td>
 																<td>$prog_name</td>
-																<td>$unit</td>
 														</tr>
 SUBJS;
 												}
@@ -291,11 +275,37 @@ SUBJS;
 			                      }else {
 			                        echo '<li class="disabled"><a>Previous</a></li>';
 			                      }
-			                      for($i = 1;$i <= $total; $i++) {
+								// Google Like Pagination
+			                      $x = 0;
+			                      $y = 0;
+			                      if(($page+5) <= $total) {
+			                        if($page >= 3) {
+			                          $x = $page + 2;
+
+			                        }else {
+			                          $x = 5;
+			                        }
+
+			                        $y = $page;
+			                        if($y <= $total) {
+			                          $y -= 2;
+			                          if($y < 1) {
+			                            $y = 1;
+			                          }
+			                        }
+			                      }else {
+			                        $x = $total;
+			                        $y = $total - 5;
+			                        if($y < 1) {
+			                          $y = 1;
+			                        }
+			                      }
+			                      // Google Like Pagination
+			                      for($i = $y;$i <= $x; $i++) {
 			                        if($i==$page) {
 			                          echo "<li class='active'><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=$i'>$i</a></li>";
-			                      } else {
-			                          echo "<li class=''><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=$i'>$i</a></li>";
+			                      	} else {
+			                          	echo "<li class=''><a href='student_subjects.php?curriculum=$get_curr_id&program=$get_prog_id&page=$i'>$i</a></li>";
 			                        }
 			                      }
 			                      if($total == 0) {
@@ -334,6 +344,7 @@ SUBJS;
 		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
+		 <script type="text/javascript" src="../../resources/libraries/tablesorter/jquery.tablesorter.js" ></script>
 		<script src= "../../js/custom.min.js"></script>
 	<!-- Scripts -->
 	<script>
@@ -355,5 +366,13 @@ SUBJS;
 	xhttp.send();
 	}
 	</script>
+	<script type="text/javascript">
+    
+    $(document).ready(function(){
+    $("#subjList").tablesorter({headers: { 4:{sorter: false}, }});
+    }
+    );
+    
+    </script>
 </body>
 </html>

@@ -1,25 +1,70 @@
-<?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-     // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-   
-  ?>
+<?php require_once "../../resources/config.php";?>
+<?php include('include_files/session_check.php'); ?>
 <!DOCTYPE html>
+						<?php
+							if (isset($_GET['stud_id'])) {
+								$stud_id = $_GET['stud_id'];
+							}else {
+								$stud_id = "";
+							}
+							
+
+							$first_name;
+							$mid_name;
+							$last_name;
+							$gender;
+							$birth_date;
+							$birth_place;
+							$schl_location;
+							$yr_grad;
+							$program;
+							$curriculum;
+							$pname;
+							$parent_occupation;
+							$parent_address;
+							$primary_schl_name;
+							$primary_schl_year;
+							$total_elem_years;
+							$gpa;
+							$statement = "SELECT * FROM pcnhsdb.students left join parent on students.stud_id = parent.stud_id left join primaryschool on students.stud_id = primaryschool.stud_id left join programs on students.prog_id = programs.prog_id left join curriculum on students.curr_id = curriculum.curr_id left join grades on students.stud_id = grades.stud_id where students.stud_id = '$stud_id' order by schl_year desc limit 1";
+							$result = $conn->query($statement);
+							if(!$result) {
+								echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
+								header("location: student_list.php");
+								die();
+							}
+							if($result->num_rows>0) {
+								while($row=$result->fetch_assoc()) {
+									$curriculum = $row['curr_name'];
+									$first_name = $row['first_name'];
+									$mid_name = $row['mid_name'];
+									$last_name = $row['last_name'];
+									$gender = $row['gender'];
+									$birth_date = $row['birth_date'];
+									$province = $row['province'];
+									$towncity = $row['towncity'];
+									$barangay = $row['barangay'];
+									$last_schyear_attended = $row['schl_year'];
+									$second_school_name = $row['second_school_name'];
+									$program = $row['prog_name'];
+									$pname = $row['pname'];
+									$parent_occupation = $row['occupation'];
+									$parent_address = $row['address'];
+									$primary_schl_name = $row['psname'];
+									$primary_schl_year = $row['pschool_year'];
+									$total_elem_years = $row['total_elem_years'];
+									$gpa = $row['gen_average'];
+								}
+							}else {
+								echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
+								header("location: student_list.php");
+								die();
+							}
+						?>
 <html>
 	<head>
+		<title>Student Info</title>
+        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,54 +96,6 @@
 		<![endif]-->
 	</head>
 	<body class="nav-md">
-		<?php 
-		
-			$stud_id = $_GET['stud_id'];
-			
-			$first_name;
-			$mid_name;
-			$last_name;
-			$gender;
-			$birth_date;
-			$birth_place;
-			$schl_location;
-			$yr_grad;
-			$program;
-			$curriculum;
-			$pname;
-			$parent_occupation;
-			$parent_address;
-			$primary_schl_name;
-			$primary_schl_year;
-			$total_elem_years;
-			$gpa;
-			$statement = "SELECT * FROM pcnhsdb.students left join parent on students.stud_id = parent.stud_id left join primaryschool on students.stud_id = primaryschool.stud_id left join programs on students.prog_id = programs.prog_id left join curriculum on students.curr_id = curriculum.curr_id left join grades on students.stud_id = grades.stud_id where students.stud_id = '$stud_id' order by schl_year desc limit 1";
-
-			$result = $conn->query($statement);
-			if($result->num_rows>0) {
-				while($row=$result->fetch_assoc()) {
-					$curriculum = $row['curr_name'];
-					$first_name = $row['first_name'];
-					$mid_name = $row['mid_name'];
-					$last_name = $row['last_name'];
-					$gender = $row['gender'];
-					$birth_date = $row['birth_date'];
-					$province = $row['province'];
-					$towncity = $row['towncity'];
-					$barangay = $row['barangay'];
-					$last_schyear_attended = $row['schl_year'];
-					$second_school_name = $row['second_school_name'];
-					$program = $row['prog_name'];
-					$pname = $row['pname'];
-					$parent_occupation = $row['occupation'];
-					$parent_address = $row['address'];
-					$primary_schl_name = $row['psname'];
-					$primary_schl_year = $row['pschool_year'];
-					$total_elem_years = $row['total_elem_years'];
-					$gpa = $row['gen_average'];
-				}
-			}
-		?>
 		<!-- Sidebar -->
 		<?php include "../../resources/templates/registrar/sidebar.php"; ?>
 		<!-- Top Navigation -->
@@ -113,6 +110,12 @@
 				</ol>
 			</div>
 			<div class="clearfix"></div>
+			<?php
+				if(isset($_SESSION['success'])) {
+					echo $_SESSION['success'];
+					unset($_SESSION['success']);
+				}
+			?>
 			<form class="form-horizontal form-label-left">
 				<div class="x_panel">
 					<div class="x_title">
@@ -373,7 +376,16 @@ CREDC;
 									}
 								}
 							?>
-
+						<div class="row">
+							<div class="col-md-7 pull-right">
+							<?php
+				                if(isset($_SESSION['generatemessage'])) {
+				                    echo $_SESSION['generatemessage'];
+				                    unset($_SESSION['generatemessage']);
+				                }
+				            ?>
+				            </div>
+			            </div>
 						<!--  -->
 						<div class="form-group">
 							<div class="col-md-6">
@@ -385,11 +397,11 @@ CREDC;
 								<?php
 									if($attendancecount > 3 && $gradecount > 3) {
 										echo <<<GEN
-											<a class="btn btn-primary" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
+											<a id="generatebutton" class="btn btn-primary" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
 GEN;
 									}else {
 										echo <<<GEN1
-											<a class="btn btn-primary disabled" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
+											<a id="generatebutton" class="btn btn-primary disabled" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
 GEN1;
 									}
 								?>

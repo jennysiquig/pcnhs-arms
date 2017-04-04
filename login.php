@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- Session Check -->
+
   <?php
     date_default_timezone_set('Asia/Manila');
     session_start();
@@ -12,13 +13,14 @@
       header("Location: $account_type/index.php");
     }
     
-
     
 
   ?>
 <!-- Session Check -->
 <html lang="en">
   <head>
+    <title>PCNHS - ARMS | User Login</title>
+    <link rel="shortcut icon" href="images/pines.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,7 +55,15 @@
                 <?php
                   if(isset($_SESSION['error_message'])) {
                     $error_message = $_SESSION['error_message'];
-                    echo "<p style='color: red'>$error_message</p>";
+                    echo $error_message;
+
+                    session_unset();
+                    session_destroy();
+                  }
+
+                  if(isset($_SESSION['timeout_message'])) {
+                    $timeout_message = $_SESSION['timeout_message'];
+                    echo "<p style='color: red'>$timeout_message</p>";
 
                     session_unset();
                     session_destroy();
@@ -76,7 +86,7 @@
 
               <div class="clearfix"></div>
               <div class="separator">
-                <a class="" href="#">Forgot your password?</a>
+                
                 <div class="clearfix"></div>
                 <br />
                 <div>

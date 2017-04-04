@@ -13,14 +13,20 @@
     }
 
     $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
+    if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
+    	if($_SESSION['account_type'] != "registrar") {
+    		echo "<p>Access Failed <a href='../index.php'>Back to Home</a></p>";
+    	}
+    }else {
+    	header('Location: ../../login.php');
     }
     date_default_timezone_set('Asia/Manila');
     
   ?>
 <html>
 	<head>
+		<title>Accomplishment Report</title>
+		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,7 +64,13 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			
+			<div class="col-md-9">
+				<ol class="breadcrumb">
+				  <li><a href="../index.php">Home</a></li>
+				  <li><a href="#">Reports</a></li>
+				  <li class="active">Accomplishment Reports</li>
+				</ol>
+			</div>
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
@@ -144,10 +156,11 @@
 											$to = $y."-".$m."-".$d;
 										//echo $accomplishment_date;
 
-				                    	$statement = "SELECT *, count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to' limit 0, 25;";
+				                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to' limit 0, 25;";
 				                    }else {
 				                    	$accomplishment_date = date('m/d/y').'-'.date('m/d/y');
-				                    	$statement = "SELECT *, count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null limit $start, $limit";
+
+				                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null limit $start, $limit";
 				                    }
 
 
@@ -156,8 +169,7 @@
 					                    // output data of each row
 					                    while($row = $result->fetch_assoc()) {
 					                    	
-					                    	$credential = $row['cred_name'];
-					                    	$date_processed_count = $row['date_processed_count'];
+					                   		$date_processed_count = $row['date_processed_count'];
 					                    	$date_released_count = $row['date_released_count'];
 					                    echo <<<REQ
 					                    	
@@ -201,10 +213,10 @@ REQ;
 											$to = $y."-".$m."-".$d;
 											//echo $accomplishment_date;
 
-					                    	$statement = "SELECT *, count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to';";
+					                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to';";
 					                    }else {
 					                    	$accomplishment_date = date('m/d/y').'-'.date('m/d/y');
-					                    	$statement = "SELECT *, count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
+					                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
 					                    }
 					        $rows = mysqli_num_rows(mysqli_query($conn, $statement));
 							$total = ceil($rows/$limit);

@@ -1,26 +1,19 @@
 <?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-     // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-   
-  ?>
+<?php include('include_files/session_check.php'); ?>
+<? unset($_SESSION['grade']); ?>
 <!DOCTYPE html>
-<?php $stud_id = $_GET['stud_id'] ?>
+<?php 
+	if(isset($_GET['stud_id'])) {
+		$stud_id = $_GET['stud_id'];
+	}else {
+		header("location: student_list.php");
+	}
+	
+?>
 <html>
 	<head>
+		<title>Student Grades</title>
+        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -67,6 +60,12 @@
 				</ol>
 			</div>
 			<div class="clearfix"></div>
+			<?php
+				if(isset($_SESSION['hasgrades'])) {
+					echo $_SESSION['hasgrades'];
+					unset($_SESSION['hasgrades']);
+				}
+			?>
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>Grades</h2>
@@ -140,7 +139,7 @@
 		                          <th>Subject</th>
 		                          <th>Subject Level</th>
 		                          <th>Final Grade</th>
-		                          <th>Unit</th>
+		                          <th>Credit Earned</th>
 		                          <th>Remarks</th>
 		                        </tr>
 		                      </thead>
@@ -150,7 +149,7 @@
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = '$stud_id';";
+									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -158,7 +157,7 @@
 											$subj_name1 = $row['subj_name'];
 											$subj_level1 = $row['subj_level'];
 											$fin_grade1 = $row['fin_grade'];
-											$unit1 = $row['unit'];
+											$credit_earned1 = $row['credit_earned'];
 											$comment1 = $row['comment'];
 
 											echo <<<YR1
@@ -166,7 +165,7 @@
 						                          <th scope="row">$subj_name1</th>
 						                          <td>$subj_level1</td>
 						                          <td>$fin_grade1</td>
-						                          <td>$unit1</td>
+						                          <td>$credit_earned1</td>
 						                          <td>$comment1</td>
 						                        </tr>
 
@@ -203,17 +202,17 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 1 and stud_id = '$stud_id';";
+								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 1 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$total_unit1 = $row['total_unit'];
+										$total_credit1 = $row['total_credit'];
 									}
 								}
 							?>
-		                    <h2>Total Units: <?php if(!empty($total_unit1)){
-		                    						echo $total_unit1;
+		                    <h2>Total Credits: <?php if(!empty($total_credit1)){
+		                    						echo $total_credit1;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>	
@@ -323,7 +322,7 @@ REMBUT;
 		                          <th>Subject</th>
 		                          <th>Subject Level</th>
 		                          <th>Final Grade</th>
-		                          <th>Unit</th>
+		                          <th>Credit Earned</th>
 		                          <th>Remarks</th>
 		                        </tr>
 		                      </thead>
@@ -333,7 +332,7 @@ REMBUT;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
+									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -341,7 +340,7 @@ REMBUT;
 											$subj_name2 = $row['subj_name'];
 											$subj_level2 = $row['subj_level'];
 											$fin_grade2 = $row['fin_grade'];
-											$unit2 = $row['unit'];
+											$credit_earned2 = $row['credit_earned'];
 											$comment2 = $row['comment'];
 
 											echo <<<YR1
@@ -349,7 +348,7 @@ REMBUT;
 						                          <th scope="row">$subj_name2</th>
 						                          <td>$subj_level2</td>
 						                          <td>$fin_grade2</td>
-						                          <td>$unit2</td>
+						                          <td>$credit_earned2</td>
 						                          <td>$comment2</td>
 						                        </tr>
 
@@ -386,17 +385,17 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 2 and stud_id = '$stud_id';";
+								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 2 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$total_unit2 = $row['total_unit'];
+										$total_credit2 = $row['total_credit'];
 									}
 								}
 							?>
-		                    <h2>Total Units: <?php if(!empty($total_unit2)){
-		                    						echo $total_unit2;
+		                    <h2>Total Credits: <?php if(!empty($total_credit2)){
+		                    						echo $total_credit2;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>	
@@ -420,7 +419,7 @@ YR1;
 								}
 							}
 
-		                  	if(!empty($average_grade2) && !empty($schl_year2) && !empty($yr_level2) && empty($schl_year3) && empty($yr_level3)) {
+		                  	if(!empty($schl_year2) && !empty($yr_level2) && empty($schl_year3) && empty($yr_level3)) {
 		                  		echo <<<REMBUT
 		                  			<button class="btn btn-danger btn-xs" onclick="removeGrade(2,'$stud_id');">Remove Record</button>
 REMBUT;
@@ -505,7 +504,7 @@ REMBUT;
 		                          <th>Subject</th>
 		                          <th>Subject Level</th>
 		                          <th>Final Grade</th>
-		                          <th>Unit</th>
+		                          <th>Credit Earned</th>
 		                          <th>Remarks</th>
 		                        </tr>
 		                      </thead>
@@ -515,7 +514,7 @@ REMBUT;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
+									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -523,7 +522,7 @@ REMBUT;
 											$subj_name3 = $row['subj_name'];
 											$subj_level3 = $row['subj_level'];
 											$fin_grade3 = $row['fin_grade'];
-											$unit3 = $row['unit'];
+											$credit_earned3 = $row['credit_earned'];
 											$comment3 = $row['comment'];
 
 											echo <<<YR1
@@ -531,7 +530,7 @@ REMBUT;
 						                          <th scope="row">$subj_name3</th>
 						                          <td>$subj_level3</td>
 						                          <td>$fin_grade3</td>
-						                          <td>$unit3</td>
+						                          <td>$credit_earned3</td>
 						                          <td>$comment3</td>
 						                        </tr>
 
@@ -568,17 +567,17 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 3 and stud_id = '$stud_id';";
+								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 3 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$total_unit3 = $row['total_unit'];
+										$total_credit3 = $row['total_credit'];
 									}
 								}
 							?>
-		                    <h2>Total Units: <?php if(!empty($total_unit3)){
-		                    						echo $total_unit3;
+		                    <h2>Total Credits: <?php if(!empty($total_credit3)){
+		                    						echo $total_credit3;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>	
@@ -687,7 +686,7 @@ REMBUT;
 		                          <th>Subject</th>
 		                          <th>Subject Level</th>
 		                          <th>Final Grade</th>
-		                          <th>Unit</th>
+		                          <th>Credit Earned</th>
 		                          <th>Remarks</th>
 		                        </tr>
 		                      </thead>
@@ -697,7 +696,7 @@ REMBUT;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, unit, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = '$stud_id';";
+									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -705,7 +704,7 @@ REMBUT;
 											$subj_name4 = $row['subj_name'];
 											$subj_level4 = $row['subj_level'];
 											$fin_grade4 = $row['fin_grade'];
-											$unit4 = $row['unit'];
+											$credit_earned4 = $row['credit_earned'];
 											$comment4 = $row['comment'];
 
 											echo <<<YR1
@@ -713,7 +712,7 @@ REMBUT;
 						                          <th scope="row">$subj_name4</th>
 						                          <td>$subj_level4</td>
 						                          <td>$fin_grade4</td>
-						                          <td>$unit4</td>
+						                          <td>$credit_earned4</td>
 						                          <td>$comment4</td>
 						                        </tr>
 
@@ -750,17 +749,17 @@ YR1;
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT total_unit FROM pcnhsdb.grades where yr_level = 4 and stud_id = '$stud_id';";
+								$statement = "SELECT total_credit FROM pcnhsdb.grades where yr_level = 4 and stud_id = '$stud_id';";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
 									while($row = $result->fetch_assoc()) {
-										$total_unit4 = $row['total_unit'];
+										$total_credit4 = $row['total_credit'];
 									}
 								}
 							?>
-		                    <h2>Total Units: <?php if(!empty($total_unit4)){
-		                    						echo $total_unit4;
+		                    <h2>Total Credits: <?php if(!empty($total_credit4)){
+		                    						echo $total_credit4;
 		                    						}else {
 		                    							echo "None";
 		                    						} ?></h2>	
@@ -809,7 +808,7 @@ REMBUT;
 		                          <th>Subject Level</th>
 		                          <th>Subject Type</th>
 		                          <th>Final Grade</th>
-		                          <th>Unit</th>
+		                          <th>Credit Earned</th>
 		                          <th>Remarks</th>
 		                        </tr>
 		                      </thead>
@@ -831,7 +830,7 @@ REMBUT;
 											$subj_level = $row['subj_level'];
 											$subj_type = $row['subj_type'];
 											$fin_grade = $row['fin_grade'];
-											$unit = $row['unit'];
+											$credit_earned = $row['credit_earned'];
 											$comment = $row['comment'];
 
 											echo <<<YR1
@@ -843,7 +842,7 @@ REMBUT;
 						                          <td>$subj_level</td>
 						                          <td>$subj_type</td>
 						                          <td>$fin_grade</td>
-						                          <td>$unit</td>
+						                          <td>$credit_earned</td>
 						                          <td>$comment</td>
 						                        </tr>
 
@@ -872,6 +871,64 @@ REMBUT;
 		              </div>
 		            </div>
 		           </div>
+		    <!-- Failed Subjects -->
+			<div class="col-md-12 col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<ul class="nav navbar-right panel_toolbox">
+		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+		                      </li>
+		                    </ul>
+				<div class="x_title">
+					<h2>Failed Subjects</h2>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content">
+					<!--  -->
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Subject</th>
+							<th>Subject Level</th>
+							<th>Year Level</th>
+						</tr>
+					</thead>
+					<tbody>
+		                      	<?php
+
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id where stud_id = '$stud_id' AND comment = 'FAILED' ;";
+
+									$result = $conn->query($query);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$yr_level = $row['yr_level'];
+											$subj_name = $row['subj_name'];
+											$subj_level = $row['subj_level'];
+
+											echo <<<YR1
+												<tr>
+						                          <td>$subj_name</td>
+						                          <td>$subj_level</td>
+						                          <td>$yr_level</td>
+						                        </tr>
+
+YR1;
+										}
+									}
+									
+
+								?>
+		                        
+		                      </tbody>
+		                    </table>	
+		                </div>
+		              </div>
+		            </div>
+		           </div>
 		          </div>
 				<!-- -->
 				<div class="clearfix"></div>
@@ -879,6 +936,7 @@ REMBUT;
 				</div>
 			</div>
 			<!-- Other Subjects -->
+
 		</div>
 		<?php include "../../resources/templates/registrar/footer.php"; ?>
 		<!-- Scripts -->

@@ -1,25 +1,35 @@
-<?php require_once "../../resources/config.php"; ?>
 <!DOCTYPE html>
+<?php require_once "../../resources/config.php"; ?>
+<?php include('include_files/session_check.php'); ?>
 <?php
-    session_start();
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    
-  ?>
+	$curr_id = $_GET['curr_id'];
+	if(!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+	$statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id";
+	$result = $conn->query($statement);
+	if(!$result) {
+		header("location: curriculum.php");
+		die();
+	}
+	if ($result->num_rows > 0) {
+		// output data of each row
+		while($row = $result->fetch_assoc()) {
+			$curr_id = $row['curr_id'];
+			$curr_name = $row['curr_name'];
+			$curr_code = $row['curr_code'];
+			$year_started = $row['year_started'];
+			$year_ended = $row['year_ended'];
+		}
+	}else {
+		header("location: curriculum.php");
+		die();
+	}
+?>
 <html>
 	<head>
+		<title>Edit Curriculum</title>
+		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -74,26 +84,8 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<?php
-							$curr_id = $_GET['curr_id'];
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id";
-							$result = $conn->query($statement);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$curr_id = $row['curr_id'];
-									$curr_name = $row['curr_name'];
-									$curr_code = $row['curr_code'];
-									$year_started = $row['year_started'];
-									$year_ended = $row['year_ended'];
-								}
-							}
-						?>
 						<form id="curriculum-val" class="form-horizontal form-label-left" action="phpupdate/curriculum_update.php" method="POST" novalidate>
-						<div class="item form-group">
+							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="curr_id" value=<?php echo $curr_id; ?> readonly="">
@@ -140,44 +132,42 @@
 	<!-- Footer -->
 	<?php include "../../resources/templates/registrar/footer.php"; ?>
 	<!-- Scripts -->
-		<!-- jQuery -->
-		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
-		<!-- Bootstrap -->
-		<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
-		<!-- FastClick -->
-		<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
-		<!-- input mask -->
-		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
-		<!-- Custom Theme Scripts -->
-		<script src= "../../js/custom.min.js"></script>
+	<!-- jQuery -->
+	<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+	<!-- Bootstrap -->
+	<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
+	<!-- input mask -->
+	<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src= "../../js/custom.min.js"></script>
 	<!-- Scripts -->
-
 	<!-- Parsley -->
-			    <script>
-			      $(document).ready(function() {
-			        $.listen('parsley:field:validate', function() {
-			          validateFront();
-			        });
-			        $('#curriculum-val .btn').on('click', function() {
-			          $('#curriculum-val').parsley().validate();
-			          validateFront();
-			        });
-			        var validateFront = function() {
-			          if (true === $('#curriculum-val').parsley().isValid()) {
-			            $('.bs-callout-info').removeClass('hidden');
-			            $('.bs-callout-warning').addClass('hidden');
-			          } else {
-			            $('.bs-callout-info').addClass('hidden');
-			            $('.bs-callout-warning').removeClass('hidden');
-			          }
-			        };
-			      });
-
-			      try {
-			        hljs.initHighlightingOnLoad();
-			      } catch (err) {}
-			    </script>
+	<script>
+	$(document).ready(function() {
+	$.listen('parsley:field:validate', function() {
+	validateFront();
+	});
+	$('#curriculum-val .btn').on('click', function() {
+	$('#curriculum-val').parsley().validate();
+	validateFront();
+	});
+	var validateFront = function() {
+	if (true === $('#curriculum-val').parsley().isValid()) {
+	$('.bs-callout-info').removeClass('hidden');
+	$('.bs-callout-warning').addClass('hidden');
+	} else {
+	$('.bs-callout-info').addClass('hidden');
+	$('.bs-callout-warning').removeClass('hidden');
+	}
+	};
+	});
+	try {
+	hljs.initHighlightingOnLoad();
+	} catch (err) {}
+	</script>
 	<!-- /Parsley -->
 </body>
 </html>

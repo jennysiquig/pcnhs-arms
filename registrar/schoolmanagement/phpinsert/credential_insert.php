@@ -1,20 +1,58 @@
 <?php
-	$cred_id = $_POST['cred_id'];
-	$cred_name = $_POST['cred_name'];
-	$price = $_POST['price'];
-
+	session_start();
 	require_once "../../../resources/config.php";
+	include '../../../resources/classes/Popover.php';
+// get the latest credential ID
+
 	if(!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}
+	$cred_id = 1;
+	$statement = "SELECT * FROM pcnhsdb.credentials order by cred_id desc limit 1;";
+	$result = $conn->query($statement);
+	if ($result->num_rows > 0) {
+		// output data of each row
+		while($row = $result->fetch_assoc()) {
+			$cred_id = $row['cred_id'];
+			$cred_id = $cred_id+1;
+		}
+	}else {
+			$cred_id = 1;
+	}
 
-	$statement = $conn->prepare("INSERT INTO `pcnhsdb`.`credentials` (`cred_id`, `cred_name`, `price`) VALUES (?, ?, ?)");
+	$cred_name = htmlspecialchars(filter_var($_POST['cred_name'], FILTER_SANITIZE_STRING),ENT_QUOTES);
+	$price = htmlspecialchars(filter_var($_POST['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),ENT_QUOTES);
+	$willInsert = true;
+	
+	
 
-	$statement->bind_param("isi", $cred_id, $cred_name, $price);
+	if($price < 1 || !is_numeric($price)) {
+		$willInsert = false;
+		$popover = new Popover();
+		$popover->set_popover("danger", "Invalid Input Price.");
+		$_SESSION['error_pop'] = $popover->get_popover();
+		header("Location: ".$_SERVER['HTTP_REFERER']);
+	}
+	if(empty($cred_name)) {
+		$willInsert = false;
+		$popover = new Popover();
+		$popover->set_popover("danger", "Invalid Input Name.");
+		$_SESSION['error_pop'] = $popover->get_popover();
+		header("Location: ".$_SERVER['HTTP_REFERER']);
+	}
 
-	$statement->execute();
+	
+	if($willInsert) {
+		$statement = $conn->prepare("INSERT INTO `pcnhsdb`.`credentials` (`cred_id`, `cred_name`, `price`) VALUES (?, ?, ?)");
 
-	header('location: ../credentials.php');
+		$statement->bind_param("isi", $cred_id, $cred_name, $price);
+	
+		$statement->execute();
+		$_SESSION['user_activity'][] = "Added New Credential: $cred_name";
+		header('location: ../credentials.php');
+
+	}
+	
 
 	$statement->close();
 	$conn->close();

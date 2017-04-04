@@ -1,25 +1,10 @@
 <?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    
-  ?>
+<?php include('include_files/session_check.php'); ?>
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Add Student Subject</title>
+		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +16,9 @@
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+		<!-- iCheck -->
+		<link href=".../../../../resources/libraries/iCheck/skins/flat/green.css" rel="stylesheet">
+
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
@@ -57,6 +44,7 @@
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
+
 			<div class="col-md-9">
 				<ol class="breadcrumb">
 				  <li><a href="../index.php">Home</a></li>
@@ -70,6 +58,14 @@
 					
 				</div>
 			</div>
+			<!-- Generate Error Message Here  -->
+            <?php
+                if(isset($_SESSION['error_pop'])) {
+                    echo $_SESSION['error_pop'];
+                    unset($_SESSION['error_pop']);
+                }
+            ?>
+            <!--  -->
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
@@ -84,57 +80,66 @@
 					<div class="x_content">
 						<form id="subject-val" class="form-horizontal form-label-left" action="phpinsert/subject_insert.php" method="POST" novalidate>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Subject ID</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<?php
-											
-																								
-											if(!$conn) {
-												die("Connection failed: " . mysqli_connect_error());
-											}
-											$statement = "SELECT * FROM pcnhsdb.subjects order by subj_id desc limit 1;";
-											$result = $conn->query($statement);
-											if ($result->num_rows > 0) {
-											// output data of each row
-												while($row = $result->fetch_assoc()) {
-													$subj_id = $row['subj_id'];
-													$subj_id = $subj_id+1;
-													echo <<<SUBJID
-														<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="subj_id" value="$subj_id" readonly="">
-SUBJID;
-												}
-											}
-									?>
-									
-								</div>
-							</div>
-							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Name</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="subj_name">
 								</div>
 							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="subj_level" min="1">
-								</div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level Needed</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="number" name="yr_level_needed" min="1">
-								</div>
-							</div>
+							<div class="form-group">
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level</label>
+		                        <div class="col-md-6 col-sm-6 col-xs-12">
+		                          <select class="form-control" name="subj_level" required="">
+		                            <option value="">-- No Selected --</option>
+		                            <optgroup label="Year">
+		                              <option value="1">1</option>
+		                              <option value="2">2</option>
+		                              <option value="3">3</option>
+		                              <option value="4">4</option>
+		                            </optgroup>
+		                            <optgroup label="Grade">
+		                              <option value="7">7</option>
+		                              <option value="8">8</option>
+		                              <option value="9">9</option>
+		                              <option value="10">10</option>
+		                              
+		                            </optgroup>
+		                          </select>
+		                        </div>
+		                      </div>
+							<div class="form-group">
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Level Needed</label>
+		                        <div class="col-md-6 col-sm-6 col-xs-12">
+		                          <select class="form-control" name="yr_level_needed" required="">
+		                            <option value="">-- No Selected --</option>
+		                            <optgroup label="Year">
+		                              <option value="1">1</option>
+		                              <option value="2">2</option>
+		                              <option value="3">3</option>
+		                              <option value="4">4</option>
+		                            </optgroup>
+		                            <optgroup label="Grade">
+		                              <option value="7">7</option>
+		                              <option value="8">8</option>
+		                              <option value="9">9</option>
+		                              <option value="10">10</option>
+		                              
+		                            </optgroup>
+		                          </select>
+		                        </div>
+		                    </div>
+		                    <div class="form-group">
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Order</label>
+		                        <div class="col-md-6 col-sm-6 col-xs-12">
+		                          <input class="form-control" name="subj_order" pattern="\d+" required="">
+		                        </div>
+		                    </div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control col-md-7 col-xs-12" name="curr_id" required="">
-										<!-- <option value="1">Regular</option>
-										-->
-										<option value="">No Selected</option>
-										<?php
-											
+									<div class="form-group">
+				                        <div class="col-md-9 col-sm-9 col-xs-12">
+				                        	<?php
+												
 																								
 											if(!$conn) {
 												die("Connection failed: " . mysqli_connect_error());
@@ -147,49 +152,54 @@ SUBJID;
 												$curr_id = $row['curr_id'];
 												$curr_name = $row['curr_name'];
 												echo <<<OPTION2
-																		<option value="$curr_id">$curr_name</option>
+													<div class="checkbox">
+							                            <label>
+							                              <input type="checkbox" name="curr_id[]" class="flat" value="$curr_id"> $curr_name
+							                            </label>
+							                         </div>
+
+																	
 OPTION2;
 																}
 															}
 											?>
-										</select>
+				                          
+				                        </div>
+				                      </div>
 									</div>
 								</div>
 								<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Program</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control col-md-7 col-xs-12" name="prog_id" required="">
-										<!-- <option value="1">Regular</option>
-										-->
-										<option value="">No Selected</option>
-										<?php
-											
-																								
-											if(!$conn) {
-												die("Connection failed: " . mysqli_connect_error());
-											}
-											$statement = "SELECT * FROM pcnhsdb.programs";
-											$result = $conn->query($statement);
-											if ($result->num_rows > 0) {
-											// output data of each row
-											while($row = $result->fetch_assoc()) {
-												$prog_id = $row['prog_id'];
-												$prog_name = $row['prog_name'];
-												echo <<<OPTION3
-																		<option value="$prog_id">$prog_name</option>
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Program</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<div class="form-group">
+					                        <div class="col-md-9 col-sm-9 col-xs-12">
+											<?php
+												
+																									
+												if(!$conn) {
+													die("Connection failed: " . mysqli_connect_error());
+												}
+												$statement = "SELECT * FROM pcnhsdb.programs";
+												$result = $conn->query($statement);
+												if ($result->num_rows > 0) {
+												// output data of each row
+												while($row = $result->fetch_assoc()) {
+													$prog_id = $row['prog_id'];
+													$prog_name = $row['prog_name'];
+													echo <<<OPTION3
+														<div class="checkbox">
+								                            <label>
+								                              <input type="checkbox" name="prog_id[]" class="flat" value="$prog_id"> $prog_name
+								                            </label>
+								                         </div>
 OPTION3;
+																	}
 																}
-															}
-											?>
-										</select>
+												?>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Unit</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" type="text" required="required" name="unit" >
-								</div>
-							</div>
 								<div class="form-group">
 									<div class="col-md-5 col-md-offset-3 pull-right">
 										<button type="submit" class="btn btn-success">Add Subject</button>
@@ -205,7 +215,6 @@ OPTION3;
 		<!-- Content Here -->
 		<!-- Footer -->
 		<?php include "../../resources/templates/registrar/footer.php"; ?>
-		<!-- Scripts -->
 		<!-- jQuery -->
 		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 		<!-- Bootstrap -->
@@ -217,32 +226,33 @@ OPTION3;
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../js/custom.min.js"></script>
+		<!-- iCheck -->
+		<script src="../../resources/libraries/iCheck/icheck.min.js"></script>
 		<!-- Scripts -->
 		<!-- Parsley -->
-			    <script>
-			      $(document).ready(function() {
-			        $.listen('parsley:field:validate', function() {
-			          validateFront();
-			        });
-			        $('#subject-val .btn').on('click', function() {
-			          $('#subject-val').parsley().validate();
-			          validateFront();
-			        });
-			        var validateFront = function() {
-			          if (true === $('#subject-val').parsley().isValid()) {
-			            $('.bs-callout-info').removeClass('hidden');
-			            $('.bs-callout-warning').addClass('hidden');
-			          } else {
-			            $('.bs-callout-info').addClass('hidden');
-			            $('.bs-callout-warning').removeClass('hidden');
-			          }
-			        };
-			      });
-
-			      try {
-			        hljs.initHighlightingOnLoad();
-			      } catch (err) {}
-			    </script>
+		<script>
+			$(document).ready(function() {
+			$.listen('parsley:field:validate', function() {
+			validateFront();
+			});
+			$('#subject-val .btn').on('click', function() {
+			$('#subject-val').parsley().validate();
+			validateFront();
+			});
+			var validateFront = function() {
+			if (true === $('#subject-val').parsley().isValid()) {
+			$('.bs-callout-info').removeClass('hidden');
+			$('.bs-callout-warning').addClass('hidden');
+			} else {
+			$('.bs-callout-info').addClass('hidden');
+			$('.bs-callout-warning').removeClass('hidden');
+			}
+			};
+			});
+			try {
+			hljs.initHighlightingOnLoad();
+			} catch (err) {}
+		</script>
 	<!-- /Parsley -->
 	</body>
 </html>

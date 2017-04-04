@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-     // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
+<?php include('include_files/session_check.php'); ?>
+<?php include('../../resources/classes/Popover.php'); ?>
 
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-
-?>
 <!-- Validations -->
 <?php
     $stud_id = $_GET['stud_id'];
+    $yr_level = $_GET['yr_level'];
+    $prog_id = $_GET['prog_id'];
+    $curriculum = $_GET['curriculum'];
+    $curriculum_subj = $_GET['curriculum_subj'];
+    $schl_name = $_GET['schl_name'];
+    $schl_year = $_GET['schl_year'];
+
     if(!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
@@ -33,6 +25,9 @@
         while($row = $result->fetch_assoc()) {
             $pschool_year = $row['pschool_year'];
         }
+    }else {
+        header("location: ../../index.php");
+        die();
     }
 
     $explode_date_input = explode("-", $getsy);
@@ -49,15 +44,30 @@
     if($input_year1 <= $compare_year1 || $input_year2 <= $compare_year2) {
         $_SESSION['error_message'] = "<p style='color: red'><b>Invalid School Year</b></p>";
         $yr_level_check = $_GET['yr_level'];
-        header("location: add_grades.php?stud_id=$stud_id&yr_level=$yr_level_check");
+        //header("location: add_grades.php?stud_id=$stud_id&yr_level=$yr_level_check");
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
+        die();
     }
 
+    $checkgrade = "SELECT * from pcnhsdb.grades where stud_id = '$stud_id' AND yr_level = '$yr_level'";
+    $result = $conn->query($checkgrade);
+    if ($result->num_rows > 0) {
+        $alert_type = "danger";
+        $error_message = "Student $stud_id grades for year level $yr_level is already existing.";
+        $popover = new Popover();
+        $popover->set_popover($alert_type, $error_message); 
+        $_SESSION['hasgrades'] = $popover->get_popover();
+        header("location: grades.php?stud_id=".$stud_id);
+        die();
+    }
 ?>
 
 
 <!-- Validations -->
 <html>
     <head>
+        <title>Add Student Grades</title>
+        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -94,64 +104,126 @@
         <!-- Top Navigation -->
         <?php include "../../resources/templates/registrar/top-nav.php"; ?>
         <div class="right_col" role="main">
+
             <div class="clearfix"></div>
+            <!-- Generate Error Message Here  -->
+            <?php
+                if(isset($_SESSION['error_pop'])) {
+                    echo $_SESSION['error_pop'];
+                    unset($_SESSION['error_pop']);
+                }
+            ?>
+            <!--  -->
             <div class="x_panel">
+
                 <div class="x_title">
                     <h2>Grades</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <!-- First -->
-                    <form id="val-gr-form" class="form-horizontal form-label-left" name="val-gr-form" action="phpinsert/grades_insert.php" method="POST" novalidate>
-                        <?php
-                            $schl_name = $_GET['schl_name'];
-                            echo "<h4>School Name: <input value='$schl_name' name='schl_name' readonly></h4>";
-                        ?>
-                        <?php
-                            $stud_id = $_GET['stud_id'];
-                            echo "<h4>Student ID: <input value='$stud_id' name='stud_id' readonly></h4>";
-                        ?>
-                        <?php
-                            $sy = $_GET['schl_year'];
-                            echo "<h4>School Year: <input value='$sy' name='schl_year' readonly></h4>";
-                        ?>
-                        <?php
-                            $sp = $_GET['program'];
-                            echo "<h4>Program: <input value='$sp' name='program' readonly></h4>";
-                        ?>
-                        <?php
-                            if(!$conn) {
-                                die();
-                            }
-                            $curr_id = $_GET['curriculum'];
-                            $statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id";
+                    <form id="val-gr-form" class="form-horizontal form-label-left" name="val-gr-form" action="phpinsert/grades_insert.php" method="POST" data-parsley-validate>
+                        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                          <div class="panel">
+                            <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              <h4 class="panel-title">Student's School Information</h4>
+                            </a>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                              <div class="panel-body">
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <?php
+                                        $schl_name = $_GET['schl_name'];
+                                        echo "<input class='form-control' value='$schl_name' name='schl_name' readonly>";
+                                    ?>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                <?php
+                                    $stud_id = $_GET['stud_id'];
+                                    echo "<input class='form-control' value='$stud_id' name='stud_id' readonly>";
+                                ?>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                <?php
+                                    $sy = $_GET['schl_year'];
+                                    echo "<input class='form-control' value='$sy' name='schl_year' readonly>";
+                                ?>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Program:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <?php
+                                        $sp = $_GET['program'];
+                                        echo "<input class='form-control' value='$sp' name='program' readonly>";
+                                    ?>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <?php
+                                        if(!$conn) {
+                                            die();
+                                        }
+                                        $curr_id = $_GET['curriculum'];
+                                        $statement = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id";
 
-                            $result = $conn->query($statement);
-                            if ($result->num_rows > 0) {
-                                    // output data of each row
-                                while($row = $result->fetch_assoc()) {
-                                    $curr_name = $row['curr_name'];
-                                    echo "<h4>Curriculum: ".$curr_name."</h4>";
-                                }
-                            }
-                        ?>
-                        <?php
-                            $year = $_GET['yr_level'];
-                            $grade = ((int) $year)+6;
-                            echo "<h4>Year Level: <input value='$year' name='yr_level' style='width: 20px;' readonly> | Grade: <input value='$grade' style='width: 20px;' readonly></h4>";
-                        ?>
+                                        $result = $conn->query($statement);
+                                        if ($result->num_rows > 0) {
+                                                // output data of each row
+                                            while($row = $result->fetch_assoc()) {
+                                                $curr_name = $row['curr_name'];
+                                                echo "<h4>".$curr_name."</h4>";
+                                            }
+                                        }
+                                    ?>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level or Grade:</label>
+                                    <div class="col-xs-1">
+                                    <?php
+                                        $year = $_GET['yr_level'];
+                                        $grade = ((int) $year)+6;
+                                        echo "<input class='form-control' value='$year' name='yr_level' readonly>";
+                                    ?>
+                                    </div>
+
+                                    <div class="col-xs-1">
+                                    <?php
+                                        $year = $_GET['yr_level'];
+                                        $grade = ((int) $year)+6;
+                                        echo "<input class='form-control' value='$grade' name='grade' readonly>";
+                                    ?>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Subject ID</th>
                                     <th>Subject</th>
                                     <th>Subject Level</th>
-                                    <th>Unit</th>
+                                    <th>Credits Earned</th>
                                     <th>Final Grade</th>
                                     
                                 </tr>
                             </thead>
                             <tbody id="subj_list">
+
                                 <?php
                                 $curriculum;
                                 if($_GET['curriculum_subj'] == "none") {
@@ -164,54 +236,63 @@
                                 $prog_id = $_GET['prog_id'];
                                 $total_unit = 0;
                                 $numberOfSubj = 0;
+                                $x = 0;
                                 $statement = "SELECT * from subjects NATURAL JOIN subjectcurriculum NATURAL JOIN curriculum NATURAL JOIN programs NATURAL JOIN subjectprogram WHERE subjectcurriculum.curr_id = $curriculum AND yr_level_needed = $yr_level_needed AND prog_id = $prog_id";
                                 $result = $conn->query($statement);
+                                if(!$result) {
+                                    die();
+                                }
                                 if($result->num_rows>0) {
                                 while ($row = $result->fetch_assoc()) {
                                 //$subj_id = $row['subj_id'];
                                 $subj_id = $row['subj_id'];
                                 $subj_name = $row['subj_name'];
                                 $subj_level = $row['subj_level'];
-                                $unit = $row['unit'];
-                                $total_unit += $unit;
+                                
+                                
                                 $numberOfSubj += 1;
                                 //$curr_name = $row['curr_name'];
 
-                                if(strtolower($subj_name) == "makabayan i" || strtolower($subj_name) == "makabayan ii" || strtolower($subj_name) == "makabayan iii" || strtolower($subj_name) == "makabayan iv") {
+                                // if(strtolower($subj_name) == "makabayan i" || strtolower($subj_name) == "makabayan ii" || strtolower($subj_name) == "makabayan iii" || strtolower($subj_name) == "makabayan iv") {
                                     
-                                    $numberOfSubj -= 1;
+                                //     $numberOfSubj -= 1;
 
-                                    echo <<<SUBJ
+                                echo <<<SUBJ
                                 
                                 <tr>
-                                    <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
+                                    <td>   
+                                        <div class="item form-group">
+                                            <div class="col-md-4">
+                                                <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td>$subj_name</td>
                                     <td>$subj_level</td>
-                                    <td>$unit</td>
-                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" value="0" readonly></td>
+                                    <td>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="">
+                                        </div>
+                                    </td>
                                     
                                 </tr>
                                 
 SUBJ;
-
-                                }else {
-                                    echo <<<SUBJ
-                                
-                                <tr>
-                                    <td><input value="$subj_id" name="subj_id[]" style="width: 50px;" readonly></td>
-                                    <td>$subj_name</td>
-                                    <td>$subj_level</td>
-                                    <td>$unit</td>
-                                    <td><input type="text" style="width: 50px; text-align:center;" name="fin_grade[]" pattern="\d*" minlength="2" maxlength="2" onblur="saveToDB(this.value)" required></td>
-                                    
-                                </tr>
-                                
-SUBJ;
-                                }
-                                
                                     }
                                 }
-                                    echo "Number of Subjects: <input type='number' id='num_subj' style='width: 50px; text-align:center;'' value='$numberOfSubj' readonly>";
+                                    echo <<<NUM
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-11 col-sm-3 col-xs-12">Number of Subjects:</label>
+                                        <div class="col-md-1 col-sm-6 col-xs-12">
+                                            <input id="num_subj" class="form-control col-md-7 col-xs-12" type="text" value='$numberOfSubj' readonly>
+                                        </div>
+                                    </div>
+NUM;
                                 ?>
                                 
                             </tbody>
@@ -223,13 +304,15 @@ SUBJ;
                             <input id="average" class="form-control" type="text" style="width: 70px;" value="" name="average_grade">
                         </div>
                         <div class="col-md-2 col-xs-12">
-                            <label for="total_unit">Total Units: </label>
-                            <input id="total_unit" class="form-control" type="text" style="width: 70px;" value=<?php echo $total_unit; ?> name="total_unit" readonly="">
+                            <label for="total_credits">Total Credits: </label>
+                            <input id="total_credits" class="form-control" type="text" style="width: 70px;" value="" name="total_credits" onkeypress="return isNumberKey(event)">
                         </div>
 
                         <div class="clearfix"></div>
-                        <div class="col-md-2 pull-right">
-                            <button id="send" type="submit" class="btn btn-default">Submit</button>
+                        <br>
+                        <div class="col-md-5">
+                            <button id="send" class="btn btn-success" onclick="saveToFile();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
+                            <button id="send" type="submit" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
                         </div>
                     </form>
                 </div>
@@ -255,30 +338,7 @@ SUBJ;
         <script src= "../../js/custom.min.js"></script>
         <!-- Scripts -->
        <!-- Parsley -->
-        <script>
-        $(document).ready(function() {
-        $.listen('parsley:field:validate', function() {
-        validateFront();
-        });
-        $('#val-gr-form .btn').on('click', function() {
-        $('#val-gr-form').parsley().validate();
-        validateFront();
-        });
-        var validateFront = function() {
-        if (true === $('#val-gr-form').parsley().isValid()) {
-        $('.bs-callout-info').removeClass('hidden');
-        $('.bs-callout-warning').addClass('hidden');
-        } else {
-        $('.bs-callout-info').addClass('hidden');
-        $('.bs-callout-warning').removeClass('hidden');
-        }
-        };
-        });
-        try {
-        hljs.initHighlightingOnLoad();
-        } catch (err) {}
-        </script>
-            <!-- /Parsley -->
+ 
         <!-- Sisyphus -->
         
         <!-- jquery.inputmask -->
@@ -290,7 +350,15 @@ SUBJ;
                 <!-- /jquery.inputmask -->
         <!-- Save to DB Script -->
         <script type="text/javascript">
-            function saveToDB(x) {
+            function persistFinal(x) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                   
+                  }
+                };
+                xhttp.open("GET", "phpscript/tempgrade.php?grade="+x, true);
+                xhttp.send();
                 var subj_id = document.getElementsByName('subj_id[]');
                 var fin_grade = document.getElementsByName('fin_grade[]');
                 var comment = document.getElementsByName('comment[]');
@@ -304,7 +372,7 @@ SUBJ;
                 }else {
                     for (var i = 0; i < subj_id.length; i++) {
                         console.log(subj_id[i].value+" - "+fin_grade[i].value);
-                        total_finalgrade += parseInt(fin_grade[i].value);
+                        total_finalgrade += parseFloat(fin_grade[i].value);
 
                     }
                     computed_average = total_finalgrade/num_subj;
@@ -314,7 +382,67 @@ SUBJ;
                 }
 
             }
+            function persistCredit(y) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                   
+                  }
+                };
+                xhttp.open("GET", "phpscript/tempcredits.php?credits="+y, true);
+                xhttp.send();
+
+                var subj_id = document.getElementsByName('subj_id[]');
+                var credit_earned = document.getElementsByName('credit_earned[]');
+                var computed_credits = 0;
+                var total_credits = document.getElementById('total_credits');
+                console.log(y);
+
+
+                if(y == "") {
+
+                }else {
+                    for (var i = 0; i < subj_id.length; i++) {
+                       
+                        computed_credits += parseFloat(credit_earned[i].value);
+
+                    }
+                    
+                    total_credits.value = computed_credits;
+                    console.log(computed_credits);
+                }
+            }
+            function isNumberKey(evt, n){
+            console.log(n);
+              var charCode = (evt.which) ? evt.which : evt.keyCode;
+              if (charCode != 46 && charCode > 31 
+                && (charCode < 48 || charCode > 57))
+                 return false;
+
+              return true;
+            }
+            function saveToFile() {
+                console.log("saved to file.");
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                   
+                  }
+                };
+                xhttp.open("GET", "phpscript/saveToFile.php", true);
+                xhttp.send();
+            }
+            function saveToDB() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                   
+                  }
+                };
+                xhttp.open("GET", "phpscript/saveToDB.php", true);
+                xhttp.send();
+                console.log("saved to database.");
+            }
         </script>
-        <!-- Save to DB Script -->
     </body>
 </html>

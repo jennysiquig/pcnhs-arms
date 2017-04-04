@@ -1,25 +1,10 @@
 <?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-     // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-   
-  ?>
+<?php include('include_files/session_check.php'); ?>
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Add Student</title>
+        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,7 +17,8 @@
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+		<!-- Date Range Picker -->
+		<link href="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
@@ -65,6 +51,14 @@
 			</div>
 			
 			<div class="clearfix"></div>
+			<!-- Generate Error Message Here  -->
+            <?php
+                if(isset($_SESSION['error_pop'])) {
+                    echo $_SESSION['error_pop'];
+                    unset($_SESSION['error_pop']);
+                }
+            ?>
+            <!--  -->
 			<form id="validate-add" class="form-horizontal form-label-left" name="validate-add" data-parsley-validate action= "phpinsert/student_info_insert.php" method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
@@ -104,14 +98,14 @@ OPTION1;
 														
 												?>
 											</select>
-											<p style="color: red">Refer to the curriculum indicated on the Form 137.</p>
+											<p style="color: red">Refer to the curriculum that is indicated on the Form 137.</p>
 										</div>
 									</div>
 									<div class="x_content">
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Secondary School *</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="second_school_name" placeholder="Full Name of Current School or School Graduated">
+												<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="second_school_name" value="Pines City National High School" placeholder="Full Name of Current School or School Graduated">
 											</div>
 											<!-- <input class="form-control" type="text" name="stud_id" required="required"> -->
 										</div>
@@ -131,7 +125,7 @@ OPTION1;
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name *</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="mid_name">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="mid_name">
 											</div>
 										</div>
 										<div class="item form-group">
@@ -155,29 +149,9 @@ OPTION1;
 										</div>
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Birthday *</label>
-											<div class="col-md-2 col-sm-6 col-xs-12">
-												<select class="form-control col-md-7 col-xs-12" name="bmonth" required="">
-													<option value="">Month</option>
-													<?php
-														$month=array('January','February','March','April','May','June','July','August','September','October','November','December');
-														for ($i=0; $i < count($month) ; $i++) {
-															$dayVal = $i+1;
-															$monthName = $month[$i];
-															echo "<option value='$dayVal'>$month[$i]</option>";
-														}
-													?>
-												</select>
-											</div>
-											<div class="col-md-2 col-sm-6 col-xs-12">
-												<select class="form-control col-md-7 col-xs-12" name="bday" required="">
-													<option value="">Day</option>
-													<?php for ($day=1; $day <= 31 ; $day++) {
-														echo "<option value='$day'>$day</option>";
-													} ?>
-												</select>
-											</div>
-											<div class="col-md-2 col-sm-6 col-xs-12">
-												<input class="form-control  col-md-7 col-xs-12" type="text" name="byear" placeholder="Year" data-inputmask="'mask': '9999'" required="">
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<input class="form-control has-feedback-left" type="text" name="birthdate" onblur="validateBday(this.value)" value="01/01/2000" placeholder="Birthday" required="" />
+												 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
 											</div>
 										</div>
 										<div class="item form-group">
@@ -193,7 +167,7 @@ OPTION1;
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
 											<div class="col-md-3 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_barangay" required="" placeholder="Barangay">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="birth_place_barangay" placeholder="Barangay">
 											</div>
 										</div>
 										<div class="item form-group">
@@ -270,7 +244,7 @@ OPTION1;
 												</div>
 											</div>
 											<div class="item form-group">
-												<label class="control-label col-md-4 col-sm-4 col-xs-12">School Year *</label>
+												<label class="control-label col-md-4 col-sm-4 col-xs-12">Last School Year Attended *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
 													<input class="form-control  col-md-7 col-xs-12" type="text" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" required="">
 												</div>
@@ -278,13 +252,13 @@ OPTION1;
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">Total Elementary Years *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="number" name="total_elem_years" min="1" required="">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="total_elem_years" pattern="[6-9]" maxlength="1" required="">
 												</div>
 											</div>
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">Average Grade *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="text" name="gpa" placeholder="" data-inputmask="'mask': '99.9'">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="gpa" placeholder="" pattern="\d+(\.\d{2})?" onkeypress="return isNumberKey(event)"">
 												</div>
 											</div>
 										</div>
@@ -324,6 +298,9 @@ OPTION1;
 				<!-- Custom Theme Scripts -->
 				<script src= "../../js/custom.min.js"></script>
 				<!-- Scripts -->
+				<!-- Date Range Picker -->
+				<script src="../../resources/libraries/moment/min/moment.min.js"></script>
+				<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
 				
 				<!-- /jquery.inputmask -->
 				<script>
@@ -365,15 +342,29 @@ OPTION1;
                 <!-- /jquery.inputmask -->
 
                 <!-- Sisyphus -->
+                
                 <script type="text/javascript">
-                	// Here we'll persist the form's data into localStorage on
-					// every keystroke
-					$( function() {
-					$( "#validate-add" ).sisyphus();
-					// or you can persist all forms data at one command
-					// $( "form" ).sisyphus();
-					} );
-                </script>
+				$(function() {
+				    $('input[name="birthdate"]').daterangepicker({
+				    	autoUpdateInput: true,
+				        singleDatePicker: true,
+				        showDropdowns: true,
 
+				    });
+
+				});
+				</script>
+				<!-- Limit to numbers only -->
+		        <script type="text/javascript">
+		            function isNumberKey(evt, n){
+		            console.log(n);
+		              var charCode = (evt.which) ? evt.which : evt.keyCode;
+		              if (charCode != 46 && charCode > 31 
+		                && (charCode < 48 || charCode > 57))
+		                 return false;
+
+		              return true;
+		           }
+		        </script>
 			</body>
 		</html>

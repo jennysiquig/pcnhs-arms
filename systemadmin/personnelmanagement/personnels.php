@@ -1,25 +1,9 @@
 <!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-     // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
+<?php include('include_files/session_check.php'); ?>
 
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-   
-  ?>
 <html>
-<head>
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,29 +14,29 @@
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
+    <!-- NProgress -->
+    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Datatables -->
     <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="../../css/custom.min.css" rel="stylesheet">
     <link href="../../css/tstheme/style.css" rel="stylesheet">
 
-    <!--[if lt IE 9]>
-    <script src="../js/ie8-responsive-file-warning.js"></script>
-    <![endif]-->
+  </head>
+    <body class="nav-md">
+      <?php include "../../resources/templates/admin/sidebar.php"; ?>
+      <?php include "../../resources/templates/admin/top-nav.php"; ?>
+      <!-- Content Start -->
+      <div class="right_col" role="main">
+          
+          <div class="col-md-5">
+            <ol class="breadcrumb">
+              <li><a href="../index.php">Home</a></li>
+              <li class="disabled">Personnel Accounts</li>
+              <li class="active">View Personnel Accounts</li>
+            </ol>
+          </div>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body class="nav-md">
-<?php include "../../resources/templates/admin/sidebar.php"; ?>
-<?php include "../../resources/templates/admin/top-nav.php"; ?>
-<!-- Content Start -->
-<div class="right_col" role="main">
     <form class="form-horizontal form-label-left" action="personnels.php" method="GET">
 
         <div class="form-group">
@@ -82,6 +66,29 @@
 
                 </div>
                 <div class="x_content">
+                                                        <div class="row">
+                    <form class="form-horizontal form-label-left">
+                        <div class="form-group">
+                          <label class="control-label col-md-10">Show Number Of Entries:</label>
+                          <div class="col-sm-2">
+                              <select class="form-control" onchange="changeEntries(this.value)">
+                                <option value="20" 
+                                  <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 20) {echo "selected";}} ?>
+                                  >20</option>
+                                <option value="50"
+                                   <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 50) {echo "selected";}} ?>
+                                  >50</option>
+                                <option value="100"
+                                   <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 100) {echo "selected";}} ?>
+                                >100</option>
+                              </select>
+                          </div>
+                        </div>
+                      </form>
+              </div>
+
+
+
                     <div class="table-responsive">
                         <table id="personnelList" class="table table-bordered tablesorter ">
                             <thead>
@@ -97,14 +104,16 @@
                             <tbody>
 
                             <?php
-                            $start=0;
-                            $limit=8;
+                           $start=0;
+                           $limit=10;
+
                             if(isset($_GET['page'])){
-                                $page=$_GET['page'];
-                                $start=($page-1)*$limit;
+                              $page=$_GET['page'];
+                              $start=($page-1)*$limit;
                             }else{
-                                $page=1;
+                              $page=1;
                             }
+                            
                             if(!$conn) {
                                 die("Connection failed: " . mysqli_connect_error());
                             }
@@ -124,8 +133,14 @@
                             }
 
                             $result = $conn->query($statement);
-                            if ($result->num_rows > 0) {
-                                // output data of each row
+                            if ($result ->num_rows == 0) {
+                                echo <<<NORES
+                                    <tr class="odd pointer">
+                                    <span class="badge badge-danger">NO RESULT</span>        
+                                    </tr>
+NORES;
+                            }
+                            else if ($result->num_rows > 0) {
                                 while($row = $result->fetch_assoc()) {
                                     $per_id = $row['per_id'];
                                     $uname = $row['uname'];
@@ -156,37 +171,68 @@ PERSONNELLIST;
                             </tbody>
                         </table>
                         <?php
-                        $statement = "SELECT * FROM pcnhsdb.personnel";
-                        $rows = mysqli_num_rows(mysqli_query($conn, $statement));
-                        $total = ceil($rows/$limit);
+                    $statement = "select * from personnel";
+                    $rows = mysqli_num_rows(mysqli_query($conn, $statement));
+                    $total = ceil($rows/$limit);
+                    
+                    echo "<p>Showing $limit of $rows Entries</p>";
 
-                        echo '<div class="pull-right">
+                    echo '<div class="pull-right">
                       <div class="col s12">
                       <ul class="pagination center-align">';
-                        if($page > 1) {
-                            echo "<li class=''><a href='personnels.php?page=".($page-1)."'>Previous</a></li>";
-                        }else if($total <= 0) {
-                            echo '<li class="disabled"><a>Previous</a></li>';
-                        }else {
-                            echo '<li class="disabled"><a>Previous</a></li>';
-                        }
-                        for($i = 1;$i <= $total; $i++) {
-                            if($i==$page) {
-                                echo "<li class='active'><a href='personnels.php?page=$i'>$i</a></li>";
-                            } else {
-                                echo "<li class=''><a href='personnels.php?page=$i'>$i</a></li>";
-                            }
-                        }
-                        if($total == 0) {
-                            echo "<li class='disabled'><a>Next</a></li>";
-                        }else if($page!=$total) {
-                            echo "<li class=''><a href='personnels.php?page=".($page+1)."'>Next</a></li>";
-                        }else {
-                            echo "<li class='disabled'><a>Next</a></li>";
-                        }
-                        echo "</ul></div></div>";
+                      if($page > 1) {
+                        echo "<li class=''><a href='personnels.php?page=".($page-1)."'>Previous</a></li>";
+                      }else if($total <= 0) {
+                        echo '<li class="disabled"><a>Previous</a></li>';
+                      }else {
+                        echo '<li class="disabled"><a>Previous</a></li>';
+                      }
+                      // Google Like Pagination
+                      $x = 0;
+                      $y = 0;
+                      if(($page+5) <= $total) {
+                        if($page >= 3) {
+                          $x = $page + 2;
 
-                        ?>
+                        }else {
+                          $x = 5;
+                        }
+
+                        $y = $page;
+                        if($y <= $total) {
+                          $y -= 2;
+                          if($y < 1) {
+                            $y = 1;
+                          }
+                        }
+                      }else {
+                        $x = $total;
+                        $y = $total - 5;
+                        if($y < 1) {
+                          $y = 1;
+                        }
+                      }
+                      // Google Like Pagination
+                      for($i = $y;$i <= $x; $i++) {
+                        if($i==$page) {
+                          echo "<li class='active'><a href='personnels.php?page=$i'>$i</a></li>";
+                        } else {
+                            echo "<li class=''><a href='personnels.php?page=$i'>$i</a></li>";
+                          }
+                      }
+
+
+                      if($total == 0) {
+                        echo "<li class='disabled'><a>Next</a></li>";
+                      }else if($page!=$total) {
+                        echo "<li class=''><a href='personnels.php?page=".($page+1)."'>Next</a></li>";
+                      }else {
+                        echo "<li class='disabled'><a>Next</a></li>";
+                      }
+                        echo "</ul></div></div>";
+                      
+
+                ?>
                     </div>
                 </div>
             </div>
@@ -206,18 +252,30 @@ PERSONNELLIST;
 <!-- input mask -->
 <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+<!-- NProgress -->
+<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
 <script src= "../../js/custom.min.js"></script>
-
 <script type="text/javascript" src=<?php echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
 <!-- Scripts -->
-
 <script type="text/javascript">
-
     $(document).ready(function(){
             $("#personnelList").tablesorter({headers: { 5:{sorter: false}, }});
         }
     );
+</script>
+
+<script type="text/javascript">
+      function changeEntries(val) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+           location.reload();
+          }
+        };
+        xhttp.open("GET", "../index_entry.php?entry="+val, true);
+        xhttp.send();
+      }
 </script>
 
 </body>

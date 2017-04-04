@@ -1,25 +1,10 @@
 <?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    
-  ?>
+<?php include('include_files/session_check.php'); ?>
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Add Student Attendance</title>
+        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,6 +42,12 @@
         <?php include "../../resources/templates/registrar/top-nav.php"; ?>
         <div class="right_col" role="main">
             <div class="clearfix"></div>
+            <?php
+                if(isset($_SESSION['error_pop'])) {
+                    echo $_SESSION['error_pop'];
+                    unset($_SESSION['error_pop']);
+                }
+            ?>            
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Attendance</h2>

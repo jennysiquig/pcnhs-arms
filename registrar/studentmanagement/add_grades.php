@@ -1,25 +1,13 @@
-<?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-    
-  ?>
 <!DOCTYPE html>
+<?php require_once "../../resources/config.php"; ?>
+<?php include('include_files/session_check.php'); ?>
+<?php         
+    ob_start();
+?>
 <html>
     <head>
+        <title>Add Student Grades</title>
+        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -115,6 +103,9 @@ SP;
                                         
 SP;
                                     }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
                                     }
                                     ?>
                                 
@@ -141,6 +132,9 @@ SP;
                                         
 SP;
                                     }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
                                     }
                                     ?>
                                 
@@ -164,6 +158,9 @@ SP;
                                     $curr_id = $row['curr_id'];
                                     echo "<option value='$curr_id' selected>$curr_name</option>";
                                     }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
                                     }
                                     ?>
                                 </select>
@@ -189,10 +186,13 @@ SP;
                                     $curr_id = $row['curr_id'];
                                     echo "<option value='$curr_id'>$curr_name</option>";
                                     }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
                                     }
                                     ?>
                                 </select>
-                                <p style="color: red">Select to override the <b>Student Curriculum</b></p>
+                                <p style="color: red"><b>Note: </b><b>Select only</b> if the <b>Subject Curriculum</b> is different to <b>Student Curriculum</b> </p>
                             </div>
                         </div>
                         <div class="item form-group">
@@ -213,6 +213,9 @@ SP;
                                     <input class="form-control col-md-7 col-xs-12" required="required" type="text" name="schl_name" value="$second_school_name" placeholder="School Name">
 OPTION2;
                                     }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
                                     }
                                     ?>
                                 </div>
@@ -242,6 +245,9 @@ OPTION2;
                                                 while($row = $result->fetch_assoc()) {
                                                     $pschool_year = $row['schl_year'];
                                                 }
+                                            }else {
+                                                header("location: ../../index.php");
+                                                die();
                                             }
 
                                             $explode_pschool_year = explode("-", $pschool_year);
@@ -263,6 +269,9 @@ OPTION2;
                                                 while($row = $result->fetch_assoc()) {
                                                     $pschool_year = $row['pschool_year'];
                                                 }
+                                            }else {
+                                                header("location: ../../index.php");
+                                                die();
                                             }
 
                                             
@@ -352,3 +361,6 @@ OPTION2;
 
         </body>
     </html>
+<?php
+    ob_end_flush();
+?>

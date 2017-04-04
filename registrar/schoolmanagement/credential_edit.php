@@ -1,25 +1,33 @@
 <?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-      // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-  
-  ?>
+<?php include('include_files/session_check.php'); ?>
 <!DOCTYPE html>
+<?php
+	$cred_id = $_GET['cred_id'];
+	if(!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+	$statement = "SELECT * FROM pcnhsdb.credentials where cred_id = $cred_id";
+	$result = $conn->query($statement);
+	if(!$result) {
+		header("location: credentials.php");
+		die();
+	}
+	if ($result->num_rows > 0) {
+		// output data of each row
+		while($row = $result->fetch_assoc()) {
+			$cred_id = $row['cred_id'];
+			$cred_name = $row['cred_name'];
+			$price = $row['price'];
+		}
+	}else {
+		header("location: credentials.php");
+		die();
+	}
+?>
 <html>
 	<head>
+		<title>Edit Credential</title>
+		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,6 +65,14 @@
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
+			<div class="col-md-9">
+				<ol class="breadcrumb">
+				  <li><a href="../index.php">Home</a></li>
+				  <li><a href="#">School Management</a></li>
+				  <li><a href="credentials.php">Credentials</a></li>
+				  <li class="active">Edit Credentials</li>
+				</ol>
+			</div>
 			<div class="">
 				<div class="row top_tiles">
 					
@@ -74,23 +90,8 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<?php
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$statement = "SELECT * FROM pcnhsdb.credentials";
-							$result = $conn->query($statement);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$cred_id = $row['cred_id'];
-									$cred_name = $row['cred_name'];
-									$price = $row['price'];
-								}
-							}
-						?>
 						<form id="credential-val" class="form-horizontal form-label-left" action="phpupdate/credential_update.php" method="POST" novalidate>
-						<div class="item form-group">
+							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Credential ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="cred_id" value=<?php echo $cred_id; ?> readonly="">

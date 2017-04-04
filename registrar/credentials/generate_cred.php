@@ -1,27 +1,25 @@
 <?php require_once "../../resources/config.php"; ?>
+<?php include('include_files/session_check.php'); ?>
 <?php
-session_start();
-// Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-header('Location: ../../login.php');
-}
-?>
-<?php
-	$stud_id = $_GET['stud_id'];
-	$credential = $_GET['credential'];
-	$request_type = $_GET['request_type'];
+
+	$stud_id = "";
+	$credential = "";
+	$request_type = "";
+	
+	if(isset($_GET['stud_id']) && isset($_GET['credential']) && isset($_GET['request_type'])) {
+		$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
+		$credential = htmlspecialchars($_GET['credential'], ENT_QUOTES);
+		$request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
+	}else {
+		header("location: ../index.php");
+	}
+	
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Generate Credential</title>
+		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -124,9 +122,9 @@ header('Location: ../../login.php');
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Admitted To:</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Issued To:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="admittedto" value="" placeholder="ex: Grade 11">
+							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="issuedto" value="" placeholder="ex: Grade 11">
 						</div>
 					</div>
 					<div class="form-group">

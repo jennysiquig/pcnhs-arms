@@ -1,44 +1,33 @@
-<?php
-    session_start();
-     // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-   
-
-    $_SESSION['last_activity'] = $time;
-  ?>
+<?php include('include_files/session_check.php'); ?>
 <?php require_once "../../resources/config.php"; ?>
-<?php $stud_id = $_GET['stud_id'] ?>
+<?php $stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES) ?>
 <!-- Update Database -->
 <?php
 	if(!$conn) {
 		die();
 	}
-	$cred_id = $_POST['credential'];
-	$request_type = $_POST['request_type'];
-    $signatory = $_POST['signatory'];
-	$personnel_id = $_SESSION['per_id'];
-	$date = $_POST['date'];
+	$cred_id = htmlspecialchars($_POST['credential'], ENT_QUOTES);
+	$request_type = htmlspecialchars($_POST['request_type'], ENT_QUOTES);
+    $signatory = htmlspecialchars($_POST['signatory'], ENT_QUOTES);
+	$personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
+	$date = htmlspecialchars($_POST['date'], ENT_QUOTES);
+    $issuedto = htmlspecialchars($_POST['issuedto'], ENT_QUOTES);
 
-	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$signatory', '$personnel_id');";
+	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `issued_for`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$issuedto' ,'$signatory', '$personnel_id');";
 
 	$statement2 = "INSERT INTO `pcnhsdb`.`unclaimed` (`date_processed`) VALUES ('$date');";
-
-	mysqli_query($conn, $statement1);
+    
+    $_SESSION['user_activity'] = "Student $stud_id requested Credential $cred_id.";
+    
+    //mysqli_query($conn, $statement1);
+    //mysqli_query($conn, $statement2);
 
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
+    <title>Preview Credential</title>
+    <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,11 +57,11 @@
 		<div class="right_col" role="main">
 
 			<?php
-				$DAmonth = $_POST['month'];
-                $DAday = $_POST['day'];
-                $DAyear = $_POST['year'];
-				$admittedto = $_POST['admittedto'];
-				$remarks = $_POST['remarks'];
+				$DAmonth = htmlspecialchars($_POST['month'], ENT_QUOTES);
+                $DAday = htmlspecialchars($_POST['day'], ENT_QUOTES);
+                $DAyear = htmlspecialchars($_POST['year'], ENT_QUOTES);
+				$issuedto = htmlspecialchars($_POST['issuedto'], ENT_QUOTES);
+				$remarks = htmlspecialchars($_POST['remarks'], ENT_QUOTES);
 			?>
 
              <?php
@@ -799,7 +788,7 @@ YR1;
 
                         <div id="box-7">
 
-                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> the <div id="day-cert"> <?php echo $DAday; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $admittedto; ?> </div> as a <div id="reg-cert"> <?php echo $stat; ?> </div> student and <div id="gender-cert"> <?php echo $formgender; ?> </div> has no</br> property and/or money accountability in this school.</div>
+                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> the <div id="day-cert"> <?php echo $DAday; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $issuedto; ?> </div> as a <div id="reg-cert"> <?php echo $stat; ?> </div> student and <div id="gender-cert"> <?php echo $formgender; ?> </div> has no</br> property and/or money accountability in this school.</div>
 
                             <p id="b7-r1-p1">REMARKS:</p>
                             <div id="b7-r1-d1"></div>

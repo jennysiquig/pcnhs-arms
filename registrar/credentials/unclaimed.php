@@ -1,25 +1,10 @@
 <?php require_once "../../resources/config.php"; ?>
-<?php
-    session_start();
-     // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-    
-    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-      session_unset();
-      session_destroy();
-      session_start();
-    }
-
-    $_SESSION['last_activity'] = $time;
-    if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-      header('Location: ../../login.php');
-    }
-   
-  ?>
+<?php include('include_files/session_check.php'); ?>
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Unclaimed Credentials</title>
+		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,6 +41,13 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
+			<div class="col-md-9">
+				<ol class="breadcrumb">
+				  <li><a href="../index.php">Home</a></li>
+				  <li><a href="#">Credentials</a></li>
+				  <li class="active">Unclaimed Credentials</li>
+				</ol>
+			</div>
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
@@ -105,12 +97,13 @@
 												$cred_name = $row['cred_name'];
 												$req_id = $row['req_id'];
 												$request_type = $row['request_type'];
+
 												echo <<<UNCLAIMED
 												<tr class="odd pointer">
 																<td class=" ">$date_processed</td>
 																<td class=" "><a href="../studentmanagement/student_info.php?stud_id=$stud_id">$stud_name</a></td>
 																<td class=" ">$cred_name</td>
-																<td class=" last"><a class="btn btn-default btn-xs" href="release_action.php?stud_id=$stud_id&cred_id=$cred_id&req_id=$req_id&request_type=$request_type"><i class="fa fa-paper-plane"></i> Released</a></td>
+																<td class=" last"><button class="btn btn-default btn-xs" onclick="releaseAction('$stud_id', '$cred_id', '$req_id', '$request_type')"><i class="fa fa-paper-plane"></i> Released</button></td>
 												</tr>
 UNCLAIMED;
 											}
@@ -169,8 +162,37 @@ UNCLAIMED;
 			<!-- input mask -->
 			<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 			<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+			<!-- Bootbox -->
+			<script src= "../../resources/libraries/bootbox/bootbox.min.js"></script>
 			<!-- Custom Theme Scripts -->
+
 			<script src= "../../js/custom.min.js"></script>
 			<!-- Scripts -->
+			<script type="text/javascript">
+				function releaseAction(stud_id, cred_id, req_id, request_type) {
+					bootbox.prompt({
+						size: "small",
+						title: "Enter OR Number",				
+						callback: function(or_no){ 
+									if(or_no != null && !isNaN(or_no) && or_no != "") {
+										var xhttp = new XMLHttpRequest();
+								        xhttp.onreadystatechange = function() {
+								          if (this.readyState == 4 && this.status == 200) {
+								           location.assign("released.php");
+								          }
+								        };
+								        xhttp.open("GET", "release_action.php?stud_id="+stud_id+"&cred_id="+cred_id+"&req_id="+req_id+"&request_type="+request_type+"&or_no="+or_no, true);
+								        xhttp.send();
+									}else if(or_no != null && isNaN(or_no)) {
+										bootbox.alert({
+											size: "small",
+										    message: "Invalid OR Number"
+										});
+									}
+								}
+							
+						});	
+				}
+			</script>
 		</body>
 	</html>
