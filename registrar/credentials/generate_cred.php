@@ -122,6 +122,12 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Request Purpose: </label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input required="required" class="form-control" name="request_purpose" placeholder="">
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Issued To:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="issuedto" value="" placeholder="ex: Grade 11">
@@ -130,7 +136,7 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks: </label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<textarea id="message" required="required" class="form-control" name="remarks" placeholder="ex: ISSUED FOR..."></textarea>
+							<textarea id="message" required="required" class="form-control" name="remarks" placeholder=""></textarea>
 						</div>
 					</div>
 				<!--  -->

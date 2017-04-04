@@ -29,7 +29,7 @@
 							$statement = "SELECT * FROM pcnhsdb.students left join parent on students.stud_id = parent.stud_id left join primaryschool on students.stud_id = primaryschool.stud_id left join programs on students.prog_id = programs.prog_id left join curriculum on students.curr_id = curriculum.curr_id left join grades on students.stud_id = grades.stud_id where students.stud_id = '$stud_id' order by schl_year desc limit 1";
 							$result = $conn->query($statement);
 							if(!$result) {
-								echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
+								//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
 								header("location: student_list.php");
 								die();
 							}
@@ -56,7 +56,6 @@
 									$gpa = $row['gen_average'];
 								}
 							}else {
-								echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
 								header("location: student_list.php");
 								die();
 							}
