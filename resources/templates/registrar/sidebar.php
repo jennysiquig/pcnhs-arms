@@ -52,6 +52,7 @@ echo <<<SB
 				<li><a><i class="fa fa-desktop"></i>Reports<span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu">
 					<li><a href="$base_url/registrar/reports/transaction.php">Transaction Reports</a></li>
+					<li><a href="$base_url/registrar/reports/payment.php">Payment Remittance</a></li>
 					<li><a href="$base_url/registrar/reports/accomplishment.php">Accomplishment Reports</a></li>
 				</ul>
 			</li>
