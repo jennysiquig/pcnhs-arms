@@ -64,7 +64,26 @@
 				header("Location: " . $_SERVER["HTTP_REFERER"]);
 				die();
 			}
-
+			if(empty($average_grade)) {
+				$willInsert = false;
+				$alert_type = "danger";
+				$error_message = "Empty Average Grade.";
+				$popover = new Popover();
+				$popover->set_popover($alert_type, $error_message);	
+				$_SESSION['error_pop'] = $popover->get_popover();
+				header("Location: " . $_SERVER["HTTP_REFERER"]);
+				die();
+			}
+			if(empty($total_credit)) {
+				$willInsert = false;
+				$alert_type = "danger";
+				$error_message = "Empty Credits Earned.";
+				$popover = new Popover();
+				$popover->set_popover($alert_type, $error_message);	
+				$_SESSION['error_pop'] = $popover->get_popover();
+				header("Location: " . $_SERVER["HTTP_REFERER"]);
+				die();
+			}
 			foreach ($_POST['subj_id'] as $key => $value) {
 				$subj_id = $_POST['subj_id'][$key];
 				$fin_grade = $_POST['fin_grade'][$key];
@@ -114,6 +133,7 @@
 			$insertaverage = "INSERT INTO `pcnhsdb`.`grades` (`stud_id`, `schl_name`, `schl_year`, `yr_level`, `average_grade`, `total_credit`) VALUES ('$stud_id', '$schl_name', '$schl_year', '$yr_level', '$average_grade', '$total_credit');";
 
 			if($willInsert) {
+				unset($_SESSION['grades_array']);
 				unset($_SESSION['grade']);
 				unset($_SESSION['credits']);
 				unset($_SESSION['save-type']);

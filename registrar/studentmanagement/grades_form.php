@@ -223,7 +223,6 @@
                                 </tr>
                             </thead>
                             <tbody id="subj_list">
-
                                 <?php
                                 $curriculum;
                                 if($_GET['curriculum_subj'] == "none") {
@@ -256,35 +255,72 @@
                                 // if(strtolower($subj_name) == "makabayan i" || strtolower($subj_name) == "makabayan ii" || strtolower($subj_name) == "makabayan iii" || strtolower($subj_name) == "makabayan iv") {
                                     
                                 //     $numberOfSubj -= 1;
+                                    $grades_pos = 1;
+                                    $credits_pos = 2;
                                     
-                                    echo <<<SUBJ
-                                    
-                                    <tr>
-                                        <td>   
-                                            <div class="item form-group">
-                                                <div class="col-md-4">
-                                                    <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>$subj_name</td>
-                                        <td>$subj_level</td>
-                                        <td>
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="">
-                                            </div>
-                                        </td>
+                                    if(isset($_SESSION['grades_array'])) {
+                                        $grades_array = $_SESSION['grades_array'];
+
+                                        $grades = $grades_array[$grades_pos][$x];
+                                        $credits = $grades_array[$credits_pos][$x];
                                         
-                                    </tr>
+
+                                        echo <<<SUBJ
+                                            <tr>
+                                                <td>
+                                                    <div class="item form-group">
+                                                        <div class="col-md-4">
+                                                            <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$subj_name</td>
+                                                <td>$subj_level</td>
+                                                <td>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$credits">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$grades">
+                                                    </div>
+                                                </td>
+                                                
+                                            </tr>
                                 
 SUBJ;
+                                        }else{
+
+                                          echo <<<NOVAL
+                                            <tr>
+                                                <td>
+                                                    <div class="item form-group">
+                                                        <div class="col-md-4">
+                                                            <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$subj_name</td>
+                                                <td>$subj_level</td>
+                                                <td>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
+                                                    </div>
+                                                </td>
+                                                
+                                            </tr>
+                                
+NOVAL;
                                         }
-                                    }
+                                        $x+=1;
+                                    }//while end
+                                 }//if end
                                         echo <<<NUM
                                         <div class="item form-group">
                                             <label class="control-label col-md-11 col-sm-3 col-xs-12">Number of Subjects:</label>
@@ -320,14 +356,21 @@ NUM;
                             
                         </div>
                     </form>
+                    <div class="ln_solid"></div>
                     <form action="phpscript/parsegrades.php" method="POST" enctype="multipart/form-data">
                         <div class="row">
+
                             <div class="pull-right">
-                                <p>Open Grade Save File (filename.csv)</p>
-                                <input type="file" name="grades" id="fileInput" accept=".csv" />
                                 <br>
-                                 <button id="upbtn" class="btn btn-default" type="submit" value="submit" disabled>Upload</button>
+                                <button id="upbtn" class="btn btn-default" type="submit" value="submit" disabled>Upload</button>
                             </div>
+                            <div class="pull-right">
+                            <p>Open Grades Save File (filename.csv)</p>
+                                <input type="file" name="grades" id="fileInput" accept=".csv" />
+                            </div>
+                                <br>
+                                 
+                            
                         </div>
                     </form>
                 </div>
@@ -418,11 +461,8 @@ NUM;
 
                 }else {
                     for (var i = 0; i < subj_id.length; i++) {
-                       
                         computed_credits += parseFloat(credit_earned[i].value);
-
                     }
-                    
                     total_credits.value = computed_credits;
                     console.log(computed_credits);
                 }
@@ -458,6 +498,7 @@ NUM;
                 xhttp.send(null);
                 
             }
+
         </script>
         <script type="text/javascript">
             $(document).ready(
