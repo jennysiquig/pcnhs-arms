@@ -110,7 +110,7 @@
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
 				} 
-				if($credit_earned < 1 || $credit_earned > 100) {
+				if($credit_earned < 0 || $credit_earned > 100) {
 					$willInsert = false;
 					$alert_type = "danger";
 					$error_message = "You have entered an Invalid Credits Earned.";
