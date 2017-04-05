@@ -100,12 +100,16 @@
 					die();
 				}
 		// 
-				if($fin_grade < 75 && $fin_grade != 0) {
-					$comment ="FAILED";
-				}else {
-					$comment = "PASSED";
-				}
-		//
+				if(empty($fin_grade) || empty($credit_earned)) {
+					$willInsert = false;
+					$alert_type = "danger";
+					$error_message = "Please complete the form before saving to database.";
+					$popover = new Popover();
+					$popover->set_popover($alert_type, $error_message);	
+					$_SESSION['error_pop'] = $popover->get_popover();
+					header("Location: " . $_SERVER["HTTP_REFERER"]);
+					die();
+				} 
 				if($credit_earned < 1 || $credit_earned > 100) {
 					$willInsert = false;
 					$alert_type = "danger";
@@ -116,16 +120,14 @@
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
 				}
-				if(empty($fin_grade) || empty($credit_earned)) {
-					$willInsert = false;
-					$alert_type = "danger";
-					$error_message = "Please complete the form before saving to database.";
-					$popover = new Popover();
-					$popover->set_popover($alert_type, $error_message);	
-					$_SESSION['error_pop'] = $popover->get_popover();
-					header("Location: " . $_SERVER["HTTP_REFERER"]);
-					die();
-				}  
+				if($fin_grade < 75 && $fin_grade != 0) {
+					$credit_earned = 0;
+					$comment ="FAILED";
+				}else {
+					$comment = "PASSED";
+				}
+		//
+				 
 
 				$insertgrades .= "INSERT INTO `pcnhsdb`.`studentsubjects` (`stud_id`, `subj_id`, `schl_year`, `yr_level`, `fin_grade`, `comment`, `credit_earned`) VALUES ('$stud_id', '$subj_id', '$schl_year', '$yr_level', '$fin_grade', '$comment', '$credit_earned');";
 				
