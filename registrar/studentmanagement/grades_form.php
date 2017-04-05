@@ -310,10 +310,24 @@ NUM;
 
                         <div class="clearfix"></div>
                         <br>
-                        <div class="col-md-5">
-                            <a href=<?php echo "grades.php?stud_id=$stud_id"; ?> class="btn btn-default">Cancel</a>
-                            <button id="send" class="btn btn-success" onclick="saveToFile();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
-                            <button id="send" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
+                        <div class="row">
+                            
+                            <div class="pull-right">
+                                <a href=<?php echo "grades.php?stud_id=$stud_id"; ?> class="btn btn-default">Cancel</a>
+                                <button id="send" class="btn btn-success" onclick="saveToFile();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
+                                <button id="send" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
+                            </div>
+                            
+                        </div>
+                    </form>
+                    <form action="phpscript/parsegrades.php" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="pull-right">
+                                <p>Open Grade Save File (filename.csv)</p>
+                                <input type="file" name="grades" id="fileInput" accept=".csv" />
+                                <br>
+                                 <button id="upbtn" class="btn btn-default" type="submit" value="submit" disabled>Upload</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -444,6 +458,20 @@ NUM;
                 xhttp.send(null);
                 
             }
+        </script>
+        <script type="text/javascript">
+            $(document).ready(
+                function(){
+                    $('input:file').change(
+                        function(){
+                            if ($(this).val()) {
+                                $('#upbtn').attr('disabled',false);
+                                // or, as has been pointed out elsewhere:
+                                // $('input:submit').removeAttr('disabled'); 
+                            } 
+                        }
+                        );
+                });
         </script>
     </body>
 </html>

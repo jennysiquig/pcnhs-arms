@@ -17,7 +17,7 @@
 			$credit_earned = filter_var($_POST['credit_earned'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
 			header('Content-type:text/csv');
-			header("Content-Disposition: attachment; filename=$stud_id-$yr_level-$schl_year-partial-save.csv");
+			header("Content-Disposition: attachment; filename=$stud_id-year-level-$yr_level-partial-save.csv");
 			header("Content-Transfer-Encoding: UTF-8");
 
 			
