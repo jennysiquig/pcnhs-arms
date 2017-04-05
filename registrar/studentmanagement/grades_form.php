@@ -290,9 +290,48 @@
                                             </tr>
                                 
 SUBJ;
-                                        }else{
-
-                                          echo <<<NOVAL
+                                        }elseif(isset($_SESSION['credits']) || isset($_SESSION['grade'])){
+                                            $credit_count = count($_SESSION['credits']);
+                                            $grade_count = count($_SESSION['grade']);
+                                            if($x >= $credit_count) {
+                                                $sessioncredits = "";
+                                            }else {
+                                                $sessioncredits = $_SESSION['credits'][$x];
+                                            }
+                                            if($x >= $grade_count) {
+                                                $sessiongrades = "";
+                                            }else {
+                                                $sessiongrades = $_SESSION['grade'][$x];
+                                            }
+                                            
+                                            
+                                            echo <<<PERSIST
+                                            <tr>
+                                                <td>
+                                                    <div class="item form-group">
+                                                        <div class="col-md-4">
+                                                            <input class="form-control" value="$subj_id" name="subj_id[]" style="width: 50px;" readonly>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$subj_name</td>
+                                                <td>$subj_level</td>
+                                                <td>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$sessioncredits">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$sessiongrades">
+                                                    </div>
+                                                </td>
+                                                
+                                            </tr>
+                                
+PERSIST;
+                                        }else {
+                                            echo <<<NOVAL
                                             <tr>
                                                 <td>
                                                     <div class="item form-group">
@@ -350,7 +389,7 @@ NUM;
                             
                             <div class="pull-right">
                                 <a href=<?php echo "grades.php?stud_id=$stud_id"; ?> class="btn btn-default">Cancel</a>
-                                <button id="send" class="btn btn-success" onclick="saveToFile();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
+                                <button id="send" class="btn btn-primary" onclick="saveToFile();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
                                 <button id="send" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
                             </div>
                             
@@ -415,7 +454,7 @@ NUM;
                    
                   }
                 };
-                xhttp.open("GET", "phpscript/tempgrade.php?grade="+x, false);
+                xhttp.open("GET", "phpscript/tempgrade.php?grade="+x, true);
                 xhttp.send();
                 var subj_id = document.getElementsByName('subj_id[]');
                 var fin_grade = document.getElementsByName('fin_grade[]');
@@ -447,7 +486,7 @@ NUM;
                    
                   }
                 };
-                xhttp.open("GET", "phpscript/tempcredits.php?credits="+y, false);
+                xhttp.open("GET", "phpscript/tempcredits.php?credits="+y, true);
                 xhttp.send();
 
                 var subj_id = document.getElementsByName('subj_id[]');

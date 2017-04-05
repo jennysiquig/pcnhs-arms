@@ -3,6 +3,7 @@
 	include('../../../resources/classes/Popover.php');
 ?>
 <?php
+	unset($_SESSION['grades_array']);
 	if(isset($_SESSION['save-type'])) {
 		if ($_SESSION['save-type'] == "save-to-file") {
 			$out = fopen('php://output', 'a');
@@ -135,7 +136,6 @@
 			$insertaverage = "INSERT INTO `pcnhsdb`.`grades` (`stud_id`, `schl_name`, `schl_year`, `yr_level`, `average_grade`, `total_credit`) VALUES ('$stud_id', '$schl_name', '$schl_year', '$yr_level', '$average_grade', '$total_credit');";
 
 			if($willInsert) {
-				unset($_SESSION['grades_array']);
 				unset($_SESSION['grade']);
 				unset($_SESSION['credits']);
 				unset($_SESSION['save-type']);
