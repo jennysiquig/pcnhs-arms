@@ -1,6 +1,14 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <? unset($_SESSION['grade']); ?>
+<?php 
+	if(isset($_GET['stud_id']) && isset($_GET['yr_level'])) {
+		$stud_id = $_GET['stud_id'];
+		$yr_level = $_GET['yr_level'];
+	}else {
+		header("location: student_list.php");
+	}
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -52,6 +60,11 @@
 					<li class="active">Subject Grades</li>
 				</ol>
 			</div>
+			<div class="row">
+				<div class="col-md-9">
+					<a class="btn btn-default" href=<?php echo "../studentmanagement/grades.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+				</div>
+			</div>
 			<div class="clearfix"></div>
 						<div class="x_panel">
 				<div class="x_title">
@@ -71,12 +84,6 @@
 		                </thead>
 		                <tbody>
 		                      	<?php
-		                      		if(isset($_GET['stud_id']) && isset($_GET['yr_level'])) {
-										$stud_id = $_GET['stud_id'];
-										$yr_level = $_GET['yr_level'];
-									}else {
-										header("location: student_list.php");
-									}
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}

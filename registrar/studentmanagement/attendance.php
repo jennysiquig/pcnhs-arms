@@ -63,200 +63,87 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-				<!-- First Year  -->
+					<div class="col-md-12 col-sm-6 col-xs-12">
+					<table class="table table-bordered">
+		                <thead>
+		                <tr>
+		                    <th>Year Level</th>
+		                    <th>School Year</th>
+		                    <th>School Days</th>
+		                    <th>Days Attended</th>
+		                    <th>Total Years in School</th>
+		                    <th>Action</th>
+		                </tr>
+		                </thead>
+		                <tbody>
+							<?php
+								if(!$conn) {
+									die();
+								}else {
+									$already_generated =  false;
+									$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
+									$result = $conn->query($statement);
+									if($result->num_rows > 0) {
+										$already_generated =  true;
+									}
+
+									$statement = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' order by yr_lvl asc;";
+									$result = $conn->query($statement);
+									$attendance_count = 0;
+									if($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$attendance_count += 1;
+											$schl_yr = $row['schl_yr'];
+											$yr_lvl = $row['yr_lvl'];
+											$days_attended = $row['days_attended'];
+											$school_days = $row['school_days'];
+											$total_years_in_school = $row['total_years_in_school'];
+											echo <<<GRADES
+												<tr>
+						                          <th scope="row">$yr_lvl</th>
+						                          <td>$schl_yr</td>
+						                          <td>$school_days</td>
+						                          <td>$days_attended</td>
+						                          <td>$total_years_in_school</td>
+						                          <td>
+													<center>
+GRADES;
+											if($result->num_rows == $yr_lvl && !$already_generated) {
+												echo <<<REMOVE
+													<button class="btn btn-danger btn-xs" onclick="removeAttendance($yr_lvl,'$stud_id');">Remove Record</button>
+REMOVE;
+												}else {
+													echo <<<REMOVE
+													<button class="btn btn-danger btn-xs" disabled>Remove Record</button>
+REMOVE;
+												}
+											
+											echo "</center>
+						                          </td>
+						                        </tr>";
+										}
+									}
+
+								}
+							?>
+						</tbody>
+					</table>
+					</div>
 					<?php
-						if(!$conn) {
-		                    die("Connection failed: " . mysqli_connect_error());
-		                }
-		                $schl_yr1 = "";
-		                $yr_lvl1 ="";
-		                $days_attended1 = "";
-		                $school_days1 = "";
-		                $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 1;";
-		                $result = $conn->query($attendance1);
-	                    if ($result->num_rows > 0) {
-	                    // output data of each row
-		                    while($row = $result->fetch_assoc()) {
-		                    	$schl_yr1 = $row['schl_yr'];
-		                    	$yr_lvl1 = $row['yr_lvl'];
-		                    	$days_attended1 = $row['days_attended'];
-		                    	$school_days1 = $row['school_days'];
-		                    }
-		                }
-
+						$next_attendance = $attendance_count+1;
+						if($attendance_count < 4) {
+							echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_lvl=$next_attendance'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
+						}else {
+							echo "<a class='btn btn-success pull-right disabled'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
+						}
 					?>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-		                <div class="x_panel">
-		                  <div class="x_title">
-		                    <h2>Year Level: 1<small>School Year: <?php if(!empty($schl_yr1)){ echo "$schl_yr1"; }else{echo "None";} ?></small></h2>
-		                    <div class="clearfix"></div>
-		                  </div>
-		                  <div class="x_content">
-		                    <h2>Days Attended: <?php  if(!empty($days_attended1)){ echo "$days_attended1"; }else{echo "None";}  ?></h2>
-		                    <h2>Days of School: <?php if(!empty($school_days1)){ echo "$school_days1"; }else{echo "None";} ?></h2>
-		                    <h2>Total Years in School: 7</h2>
-		                  </div>
-		                <?php
-		                  	if(empty($schl_yr1) || $schl_yr1 == "" || is_null($schl_yr1)) {
-		                  		echo "<a class='btn btn-success pull-right btn-xs' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=1'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  	}else {
-		                  		echo "<a class='btn btn-success pull-right btn-xs disabled' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=1'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  	}
-		                  ?>
-		                  
-		                </div>
-
-		            </div>
-				<!-- First Year  -->
-				<!-- Second Year -->
-					<?php
-						if(!$conn) {
-		                    die("Connection failed: " . mysqli_connect_error());
-		                }
-		                $schl_yr2 = "";
-		                $yr_lvl2 ="";
-		                $days_attended2 = "";
-		                $school_days2 = "";
-		                $attendance2 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_lvl = 2;";
-		                $result = $conn->query($attendance2);
-	                    if ($result->num_rows > 0) {
-	                    // output data of each row
-		                    while($row = $result->fetch_assoc()) {
-		                    	$schl_yr2 = $row['schl_yr'];
-		                    	$yr_lvl2 = $row['yr_lvl'];
-		                    	$days_attended2 = $row['days_attended'];
-		                    	$school_days2 = $row['school_days'];
-		                    }
-		                }
-
-					?>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-		                <div class="x_panel">
-		                  <div class="x_title">
-		                    <h2>Year Level: 2<small>School Year: <?php if(!empty($schl_yr2)){ echo "$schl_yr2"; }else{echo "None";} ?></small></h2>
-		                    <div class="clearfix"></div>
-		                  </div>
-		                  <div class="x_content">
-		                    <h2>Days Attended: <?php  if(!empty($days_attended2)){ echo "$days_attended2"; }else{echo "None";}  ?></h2>
-		                    <h2>Days of School: <?php if(!empty($school_days2)){ echo "$school_days2"; }else{echo "None";} ?></h2>
-		                    <h2>Total Years in School: 8</h2>
-		                  </div>
-		                  <?php
-		                  	if(empty($schl_yr1) || $schl_yr1 == "" || is_null($schl_yr1)) {
-		                  		echo "<a class='btn btn-success pull-right btn-xs disabled' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=2'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  	}else {
-		                  		if(empty($schl_yr2) || $schl_yr2 == "" || is_null($schl_yr2)) {
-		                  			echo "<a class='btn btn-success pull-right btn-xs' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=2'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  		}else {
-		                  			echo "<a class='btn btn-success pull-right btn-xs disabled' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=2'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  		}
-		                  		
-		                  	}
-		                  ?>
-		                </div>
-		            </div>
-				<!-- Second Year -->
-				<!-- Third Year -->
-					<?php
-						if(!$conn) {
-		                    die("Connection failed: " . mysqli_connect_error());
-		                }
-		                $schl_yr3 = "";
-		                $yr_lvl3 ="";
-		                $days_attended3 = "";
-		                $school_days3 = "";
-		                $attendance3 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_lvl = 3;";
-		                $result = $conn->query($attendance3);
-	                    if ($result->num_rows > 0) {
-	                    // output data of each row
-		                    while($row = $result->fetch_assoc()) {
-		                    	$schl_yr3 = $row['schl_yr'];
-		                    	$yr_lvl3 = $row['yr_lvl'];
-		                    	$days_attended3 = $row['days_attended'];
-		                    	$school_days3 = $row['school_days'];
-		                    }
-		                }
-
-					?>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-		                <div class="x_panel">
-		                  <div class="x_title">
-		                    <h2>Year Level: 3<small>School Year: <?php if(!empty($schl_yr3)){ echo "$schl_yr3"; }else{echo "None";} ?></small></h2>
-		                    <div class="clearfix"></div>
-		                  </div>
-		                  <div class="x_content">
-		                    <h2>Days Attended: <?php  if(!empty($days_attended3)){ echo "$days_attended3"; }else{echo "None";}  ?></h2>
-		                    <h2>Days of School: <?php if(!empty($school_days3)){ echo "$school_days3"; }else{echo "None";} ?></h2>
-		                    <h2>Total Years in School: 9</h2>
-		                  </div>
-		                  <?php
-		                  	if(empty($schl_yr2) || $schl_yr2 == "" || is_null($schl_yr2)) {
-		                  		echo "<a class='btn btn-success pull-right btn-xs disabled' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=3'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  	}else {
-		                  		if(empty($schl_yr3) || $schl_yr3 == "" || is_null($schl_yr3)) {
-		                  			echo "<a class='btn btn-success pull-right btn-xs' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=3'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  		}else {
-		                  			echo "<a class='btn btn-success pull-right btn-xs disabled' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=3'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  		}
-		                  		
-		                  	}
-		                  ?>
-		                </div>
-
-		            </div>
+					</div>
+			
 				<!--  -->
-				<!--  -->
-				<?php
-						if(!$conn) {
-		                    die("Connection failed: " . mysqli_connect_error());
-		                }
-		                $schl_yr4 = "";
-		                $yr_lvl4 ="";
-		                $days_attended4 = "";
-		                $school_days4 = "";
-		                $attendance4 = "SELECT * FROM `attendance` WHERE stud_id = '$stud_id' and yr_lvl = 4;";
-		                $result = $conn->query($attendance4);
-	                    if ($result->num_rows > 0) {
-	                    // output data of each row
-		                    while($row = $result->fetch_assoc()) {
-		                    	$schl_yr4 = $row['schl_yr'];
-		                    	$yr_lvl4 = $row['yr_lvl'];
-		                    	$days_attended4 = $row['days_attended'];
-		                    	$school_days4 = $row['school_days'];
-		                    }
-		                }
-
-					?>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-		                <div class="x_panel">
-		                  <div class="x_title">
-		                    <h2>Year Level: 4<small>School Year: <?php if(!empty($schl_yr4)){ echo "$schl_yr4"; }else{echo "None";} ?></small></h2>
-		                    <div class="clearfix"></div>
-		                  </div>
-		                  <div class="x_content">
-		                    <h2>Days Attended: <?php  if(!empty($days_attended4)){ echo "$days_attended4"; }else{echo "None";}  ?></h2>
-		                    <h2>Days of School: <?php if(!empty($school_days4)){ echo "$school_days4"; }else{echo "None";} ?></h2>
-		                    <h2>Total Years in School: 10</h2>
-		                  </div>
-		                  <?php
-		                  	if(empty($schl_yr3) || $schl_yr3 == "" || is_null($schl_yr3)) {
-		                  		echo "<a class='btn btn-success pull-right btn-xs disabled' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=4'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  	}else {
-		                  		if(empty($schl_yr4) || $schl_yr4 == "" || is_null($schl_yr4)) {
-		                  			echo "<a class='btn btn-success pull-right btn-xs' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=4'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  		}else {
-		                  			echo "<a class='btn btn-success pull-right btn-xs disabled' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_level=4'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-		                  		}
-		                  		
-		                  	}
-		                  ?>
-		                </div>
-		            </div>
-				<!--  -->
-              		<div class="clearfix"></div>
+              	<div class="clearfix"></div>
 				</div>
 			</div>
-		</div>
 		<?php include "../../resources/templates/registrar/footer.php"; ?>
 		<!-- Scripts -->
 		<!-- jQuery -->
@@ -313,18 +200,14 @@
 			// }
 		</script> -->
 		<script>
-		function showSubjects() {
-		var xhttp = new XMLHttpRequest();
-		var curriculum = document.getElementById("curriculum").value;
-		xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-		document.getElementById("subj1").innerHTML =
-		this.responseText;
-		}
-		};
-		xhttp.open("GET", "showsubjects.php?curr_id="+curriculum, true);
-		xhttp.send();
-		}
+			function removeAttendance(yr_lvl, stud_id) {
+				var remove = confirm("Are you sure to remove this record?");
+
+				if(remove) {
+					//console.log(stud_id);
+					window.location.assign("phpupdate/removeattendance.php?stud_id="+stud_id+"&yr_lvl="+yr_lvl);
+				}	
+			}
 		</script>
 	</body>
 </html>

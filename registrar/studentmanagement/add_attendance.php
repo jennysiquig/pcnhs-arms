@@ -50,30 +50,25 @@
             ?>            
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Attendance</h2>
+                    <h2>Add Attendance - <small>Year Level: <?php echo $_GET['yr_lvl'] ?></small></h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <!-- First -->
                     <form id="val-gr" class="form-horizontal form-label-left" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/attendance_insert.php?stud_id=$stud_id" ?> method="POST" novalidate>
-                            <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level</label>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <input type="text" class="form-control col-md-7 col-xs-12" name="yr_level" value=<?php echo $_GET['yr_level'] ?> readonly="" >
-                                </div>
-                            </div>
                             <?php
                                         $stud_id = $_GET['stud_id'];
+                                        $yr_lvl = $_GET['yr_lvl'];
                                         if(!$conn) {
                                             die("Connection failed: " . mysqli_connect_error());
                                         }
 
-                                        if($_GET['yr_level'] > 1) {
+                                        if($_GET['yr_lvl'] > 1) {
 
                                             $pschool_year = "";
 
-                                            $yr_level_1 = intval($_GET['yr_level'])-1;
-                                            $statement = "SELECT * from attendance where stud_id = '$stud_id' and yr_lvl = $yr_level_1;";
+                                            $yr_lvl = intval($_GET['yr_lvl'])-1;
+                                            $statement = "SELECT * from attendance where stud_id = '$stud_id' and yr_lvl = $yr_lvl;";
                                             $result = $conn->query($statement);
                                             if ($result->num_rows > 0) {
                                                 // output data of each row
@@ -115,6 +110,12 @@
                                             }
                                     ?>
                             <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Total Years in School</label>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control col-md-7 col-xs-12" name="total_years_in_school" required="" value=<?php $yr_lvl = $_GET['yr_lvl']; echo $yr_lvl+6; ?>>
+                                </div>
+                            </div>
+                            <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">School Year</label>
                                 <div class="col-md-4 col-sm-6 col-xs-12">
                                     <input type="text" class="form-control col-md-7 col-xs-12" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" value=<?php echo "'$stryr'"; ?> required="" >
@@ -123,13 +124,13 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Days of School</label>
                                 <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <input type="text" class="form-control col-md-7 col-xs-12" name="school_days" data-inputmask="'mask': '999'" required="" >
+                                    <input type="text" class="form-control col-md-7 col-xs-12" name="school_days" required="" >
                                 </div>
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Days Attended</label>
                                 <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <input type="text" class="form-control col-md-7 col-xs-12" name="days_attended" data-inputmask="'mask': '999'" required="" >
+                                    <input type="text" class="form-control col-md-7 col-xs-12" name="days_attended" required="" >
                                 </div>
                             </div>
                            <!--  <div class="item form-group">
