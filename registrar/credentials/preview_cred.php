@@ -19,8 +19,8 @@
     
     $_SESSION['user_activity'] = "Student $stud_id requested Credential $cred_id.";
     
-    //mysqli_query($conn, $statement1);
-    //mysqli_query($conn, $statement2);
+    mysqli_query($conn, $statement1);
+    mysqli_query($conn, $statement2);
 
 ?>
 <!DOCTYPE html>
