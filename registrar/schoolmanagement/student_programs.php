@@ -66,7 +66,7 @@
 					</div>
 					<div class="x_content">
 						<div class="table-responsive">
-							<table class="table table-hover">
+							<table class="table table-hover jambo_table">
 								<thead>
 									<tr class="headings">
 										<th class="column-title">Program ID</th>

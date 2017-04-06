@@ -117,7 +117,7 @@ GENMSG;
                       <td>$first_name</td>
                       <td>
                         <span class="">
-                          <center><a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id#generatebutton" class="btn btn-success btn-xs"> Generate Credential</a></center>
+                          <center><a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id#generatebutton" class="btn btn-success btn-xs"> Add Request</a></center>
                         </span>
                       </td>
                     </tr>
@@ -127,11 +127,6 @@ STUDLIST;
                     }else {
                       echo "<p>No Result</p>";
                     }
-
-                    
-                    
-                    
-
                     
                     ?>
                   </tbody>

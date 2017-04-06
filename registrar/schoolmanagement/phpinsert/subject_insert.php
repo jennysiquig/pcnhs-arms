@@ -25,10 +25,10 @@
 
 	$subj_name = htmlspecialchars(filter_var($_POST['subj_name'], FILTER_SANITIZE_STRING), ENT_QUOTES, 'UTF-8');
 	$subj_level = htmlspecialchars(filter_var($_POST['subj_level'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8');
-	$curriculum = intval(htmlspecialchars(filter_var($_POST['curr_id'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8'));
-	$program = intval(htmlspecialchars(filter_var($_POST['prog_id'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8'));
+	$curriculum = $_POST['curr_id'];
+	$program = $_POST['prog_id'];
 	$yr_level_needed = htmlspecialchars(filter_var($_POST['yr_level_needed'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES, 'UTF-8');
-	$subj_order = html_entity_decode(filter_var($_POST['subj_order'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES);
+	$subj_order = intval(htmlspecialchars(filter_var($_POST['subj_order'], FILTER_SANITIZE_NUMBER_INT), ENT_QUOTES));
 
 	$multipleinsert = "";
 	//$insertprogram = "";
@@ -58,7 +58,7 @@
 	if($subj_level > 6 && $yr_level_needed > 6) {
 		$yr_level_needed -= 6;
 	}
-	if($subj_order < 1 || !is_int($subj_order)) {
+	if($subj_order < 1 || !is_numeric($subj_order) || $subj_order > 20) {
 		$willInsert = false;
 		$popover = new Popover();
 		$popover->set_popover("danger", "Invalid Subject Order");
@@ -84,7 +84,7 @@
 		mysqli_query($conn, $insertsubject);
 		mysqli_multi_query($conn, $multipleinsert);
 		$_SESSION['user_activity'][] = "Added New Subject: $subj_name";
-		//mysqli_multi_query($conn, $insertprogram);
+		mysqli_multi_query($conn, $insertprogram);
 		echo "<p>Updating Database, please wait...</p>";
 		header("Refresh:3; url=../student_subjects.php");
 	}

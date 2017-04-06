@@ -97,9 +97,9 @@
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Unit <span style="color:red;">*</span></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Credit Earned <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="unit" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="credit_earned" required=" ">
                             </div>
                         </div>
                         <div class="item form-group">

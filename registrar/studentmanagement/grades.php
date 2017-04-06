@@ -1,6 +1,10 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
-<? unset($_SESSION['grade']); ?>
+<?php 
+	unset($_SESSION['grade']);
+	unset($_SESSION['credits']);
+	unset($_SESSION['save-type']);
+ ?>
 <!DOCTYPE html>
 <?php 
 	if(isset($_GET['stud_id'])) {
@@ -157,7 +161,90 @@ REMOVE;
 				</div>
 			</div>
 			<div class="clearfix"></div>
-					    <!-- Failed Subjects -->
+		    <!-- Other Subjects -->
+			<div class="col-md-12 col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<ul class="nav navbar-right panel_toolbox">
+		                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+		                      </li>
+		                    </ul>
+				<div class="x_title">
+					<h2>Other Subjects</h2>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content">
+					<!--  -->
+					<div class="col-md-12 col-sm-6 col-xs-12">
+					<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
+		                
+		                  	
+		                    <table class="table table-bordered">
+		                      <thead>
+		                        <tr>
+		                          <th>School Name</th>
+		                          <th>School Year</th>
+		                          <th>Year Level</th>
+		                          <th>Subject</th>
+		                          <th>Subject Level</th>
+		                          <th>Subject Type</th>
+		                          <th>Final Grade</th>
+		                          <th>Credit Earned</th>
+		                          <th>Remarks</th>
+		                          <th>Action</th>
+		                        </tr>
+		                      </thead>
+		                      <tbody>
+		                      	<?php
+
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$query = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id';";
+									$result = $conn->query($query);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$schl_name = $row['schl_name'];
+											$schl_year = $row['schl_year'];
+											$yr_level = $row['yr_level'];
+											$subj_name = $row['subj_name'];
+											$subj_level = $row['subj_level'];
+											$subj_type = $row['subj_type'];
+											$fin_grade = $row['fin_grade'];
+											$credit_earned = $row['credit_earned'];
+											$comment = $row['comment'];
+
+											echo <<<YR1
+												<tr>
+						                          <th scope="row">$schl_name</th>
+						                          <td>$schl_year</td>
+						                          <td>$yr_level</td>
+						                          <td>$subj_name</td>
+						                          <td>$subj_level</td>
+						                          <td>$subj_type</td>
+						                          <td>$fin_grade</td>
+						                          <td>$credit_earned</td>
+						                          <td>$comment</td>
+						                          <td>
+													<a href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level>Remove Record</a>
+						                          </td>
+						                        </tr>
+
+YR1;
+										}
+									}
+									
+
+								?>
+		                        
+		                      </tbody>
+		                    </table>	
+		                </div>
+		              </div>
+		            </div>
+		           </div>
+		            <!-- Failed Subjects -->
 			<div class="col-md-12 col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<ul class="nav navbar-right panel_toolbox">

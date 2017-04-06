@@ -121,7 +121,7 @@
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
 				}
-				if($fin_grade < 75 && $fin_grade != 0) {
+				if($fin_grade < 65 && $fin_grade != 0) {
 					$credit_earned = 0;
 					$comment ="FAILED";
 				}else {

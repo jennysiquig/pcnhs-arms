@@ -80,23 +80,30 @@
 							<div class="clearfix"></div>
 						</div>
 						<!-- Date Picker -->
-	                      <div class="col-md-4">
-	                        Select Date of Transaction
-	                        <form class="form-horizontal" action="transaction.php" method="get">
-	                          <fieldset>
-	                            <div class="control-group">
-	                              <div class="controls">
-	                                <div class="input-prepend input-group">
-	                                  <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-	                                  <input type="text" style="width: 200px" name="transaction_date" id="reservation" class="form-control" value="03/11/2017 - 03/11/2017" />
-	                                </div>
-
-	                              </div>
-	                              <button>Go</button>
-	                            </div>
-	                          </fieldset>
-	                        </form>
-	                      </div>
+						<div class="row">
+							<div class="col-md-4">
+								Select Date of Transaction
+								<form class="form-horizontal" action="accomplishment.php" method="get">
+									<fieldset>
+										
+										<div class="control-group">
+											<div class="controls">
+												<div class="input-prepend input-group">
+													<span class="add-on input-group-addon">
+														<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+													</span>
+													<input type="text" name="transaction_date" id="transaction_date" class="form-control" value=" " />
+													<span class="input-group-btn">
+														<button type="submit" class="btn btn-primary">Go!</button>
+													</span>
+												</div>
+											</div>
+										</div>
+										
+									</fieldset>
+								</form>
+							</div>
+						</div>
 	                      <!-- Date Picker -->
 						<div class="x_content">
 							<div class="table-responsive">
@@ -277,7 +284,22 @@ TRANS;
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../js/custom.js"></script>
-		
+		<script type="text/javascript">
+			$('#transaction_date').daterangepicker({
+			    ranges: {
+					'Today': [moment(), moment()],
+					'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+					'This Month': [moment().startOf('month'), moment().endOf('month')],
+					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+				  },
+			    startDate: moment().subtract(29, 'days'),
+				endDate: moment()
+			}, function(start, end, label) {
+			  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+			});
+		</script>
 	<!-- Scripts -->
 </body>
 </html>

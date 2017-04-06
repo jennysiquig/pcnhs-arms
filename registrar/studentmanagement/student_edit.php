@@ -53,6 +53,13 @@
 					</ol>
 				</div>
 			<div class="clearfix"></div>
+			<?php
+				if(isset($_SESSION['error_pop'])) {
+					echo $_SESSION['error_pop'];
+					unset($_SESSION['error_pop']);
+				}
+
+			?>
 			<div class="row">
 				<div class="col-md-9">
 					<a class="btn btn-default" href=<?php echo "student_info.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
@@ -258,13 +265,13 @@
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Total Elementary Years</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="number" value=<?php echo "'$total_elem_years'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" name="total_elem_years" type="number" value=<?php echo "'$total_elem_years'"; ?>>
 										</div>
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Average Grade</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control  col-md-7 col-xs-12" type="text" data-inputmask="'mask': '99'" value=<?php echo "'$gpa'"; ?>>
+											<input class="form-control  col-md-7 col-xs-12" type="text" name="gpa" value=<?php echo "'$gpa'"; ?>>
 										</div>
 									</div>
 								</div>

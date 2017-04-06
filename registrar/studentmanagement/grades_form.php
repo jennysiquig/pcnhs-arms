@@ -217,9 +217,8 @@
                                     <th>Subject ID</th>
                                     <th>Subject</th>
                                     <th>Subject Level</th>
-                                    <th>Credits Earned</th>
                                     <th>Final Grade</th>
-                                    
+                                    <th>Credits Earned</th>
                                 </tr>
                             </thead>
                             <tbody id="subj_list">
@@ -261,8 +260,17 @@
                                     if(isset($_SESSION['grades_array'])) {
                                         $grades_array = $_SESSION['grades_array'];
 
-                                        $grades = $grades_array[$grades_pos][$x];
-                                        $credits = $grades_array[$credits_pos][$x];
+                                        if(empty($grades_array[$grades_pos][$x])) {
+                                            $grades = "";
+                                        }else {
+                                            $grades = $grades_array[$grades_pos][$x];
+                                        }
+                                        if(empty($grades_array[$credits_pos][$x])) {
+                                            $credits = "";
+                                        }else {
+                                            $credits = $grades_array[$credits_pos][$x];
+                                        }
+                                        
                                         
 
                                         echo <<<SUBJ
@@ -278,32 +286,31 @@
                                                 <td>$subj_level</td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$credits">
+                                                        <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$grades">
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$grades">
+                                                        <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$credits">
                                                     </div>
                                                 </td>
+                                                
                                                 
                                             </tr>
                                 
 SUBJ;
                                         }elseif(isset($_SESSION['credits']) || isset($_SESSION['grade'])){
-                                            $credit_count = count($_SESSION['credits']);
-                                            $grade_count = count($_SESSION['grade']);
-                                            if($x >= $credit_count) {
+                                            if(empty($_SESSION['credits'][$x])) {
                                                 $sessioncredits = "";
                                             }else {
                                                 $sessioncredits = $_SESSION['credits'][$x];
                                             }
-                                            if($x >= $grade_count) {
+                                            if(empty($_SESSION['grade'][$x])) {
                                                 $sessiongrades = "";
                                             }else {
                                                 $sessiongrades = $_SESSION['grade'][$x];
                                             }
-                                            
+                    
                                             
                                             echo <<<PERSIST
                                             <tr>
@@ -318,17 +325,18 @@ SUBJ;
                                                 <td>$subj_level</td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$sessioncredits">
+                                                        <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$sessiongrades">
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$sessiongrades">
+                                                        <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="$sessioncredits">
                                                     </div>
                                                 </td>
                                                 
+                                                
                                             </tr>
-                                
+                                        
 PERSIST;
                                         }else {
                                             echo <<<NOVAL
@@ -344,12 +352,12 @@ PERSIST;
                                                 <td>$subj_level</td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
+                                                        <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <input type="text" class="form-control" name="fin_grade[]" pattern="\d+(\.\d{2})?" onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
+                                                        <input type="text" class="form-control" name="credit_earned[]" pattern="\d+(\.\d{2})?" onblur="persistCredit(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
                                                     </div>
                                                 </td>
                                                 
@@ -368,8 +376,10 @@ NOVAL;
                                             </div>
                                         </div>
 NUM;
+                                unset($_SESSION['grades_array']);
+                                unset($_SESSION['grade']);
+                                unset($_SESSION['credits']); 
                                 ?>
-                                
                             </tbody>
                         </table>
 
@@ -389,7 +399,7 @@ NUM;
                             
                             <div class="pull-right">
                                 <a href=<?php echo "grades.php?stud_id=$stud_id"; ?> class="btn btn-default">Cancel</a>
-                                <button id="send" class="btn btn-primary" onclick="saveToFile();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
+                                <button id="send" class="btn btn-primary" onclick="saveToFile();" data-toggle="tooltip" data-placement="top" title="Save grades as CSV"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
                                 <button id="send" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
                             </div>
                             
