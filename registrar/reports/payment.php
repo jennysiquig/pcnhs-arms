@@ -75,7 +75,7 @@
 						</div>
 						<!-- Date Picker -->
 	                      <div class="col-md-4">
-	                        Select Date of Transaction
+	                        Select Payment Date
 	                        <form class="form-horizontal" action="transaction.php" method="get">
 	                          <fieldset>
 	                            <div class="control-group">
@@ -150,10 +150,10 @@
 
 
 
-				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between '$from' and '$to' limit $start, $limit;";
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials where pay_date between '$from' and '$to' limit $start, $limit;";
 				                    }else {
-				                    	$transaction_date = date('m/d/y').'-'.date('m/d/y');
-				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials limit $start, $limit";
+				                    	$pay_date = date('m/d/y').'-'.date('m/d/y');
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials limit $start, $limit";
 				                    }
 
 
@@ -161,20 +161,24 @@
 					                if ($result->num_rows > 0) {
 					                    // output data of each row
 					                    while($row = $result->fetch_assoc()) {
-					                    	$transaction_date = $row['trans_date'];
+					                    	$pay_date = $row['pay_date'];
+					                    	$or_no = $row['or_no'];
 					                    	$student = $row['first_name']." ".$row['last_name'];
 					                    	$credential = $row['cred_name'];
 					                    	$date_processed = $row['date_processed'];
 					                    	$date_released = $row['date_released'];
-					                    	$total_trans_amt = $row['total_trans_amt'];
+					                    	$pay_amt = $row['pay_amt'];
+					                    	//remarks
 					                    echo <<<TRANS
 					                    	<tr class="odd pointer">
-												<td class=" ">$transaction_date</td>
+												<td class=" ">$pay_date</td>
+												<td class=" ">$or_no</td>
 												<td class=" ">$student</td>
 												<td class=" ">$credential</td>
-												<td class=" ">$date_processed</td>
-												<td class=" ">$date_released</td>
-												<td class=" ">$total_trans_amt</td>
+												<td class=" ">$pay_amt</td>
+												<td class=" "><!--remarks--></td>
+												
+												
 											</tr>
 TRANS;
 					                    	
@@ -190,8 +194,8 @@ TRANS;
 							</table>
 							<?php
 								if(isset($_GET['transaction_date'])) {
-				                    	$transaction_date = $_GET['transaction_date'];
-				                    	$from_and_to_date = explode("-", $transaction_date);
+				                    	$pay_date = $_GET['transaction_date'];
+				                    	$from_and_to_date = explode("-", $pay_date);
 				                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
 										$m = $sqldate_format_from[0];
 										$d = $sqldate_format_from[1];
@@ -212,10 +216,10 @@ TRANS;
 
 										$to = $y."-".$m."-".$d;
 
-				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between '$from' and '$to';";
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials where pay_date between '$from' and '$to';";
 				                    }else {
-				                    	$transaction_date = date('m/d/y').'-'.date('m/d/y');
-				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials";
+				                    	$pay_date = date('m/d/y').'-'.date('m/d/y');
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials";
 				                    }
 							
 							$rows = mysqli_num_rows(mysqli_query($conn, $statement));
@@ -224,7 +228,7 @@ TRANS;
 									<div class="col s12">
 											<ul class="pagination center-align">';
 													if($page > 1) {
-													echo "<li class=''><a href='transaction.php?page=".($page-1)."&transaction_date=$transaction_date'>Previous</a></li>";
+													echo "<li class=''><a href='transaction.php?page=".($page-1)."&pay_date=$pay_date'>Previous</a></li>";
 													}else if($total <= 0) {
 													echo '<li class="disabled"><a>Previous</a></li>';
 													}else {
@@ -232,15 +236,15 @@ TRANS;
 													}
 													for($i = 1;$i <= $total; $i++) {
 													if($i==$page) {
-													echo "<li class='active'><a href='transaction.php?page=$i&transaction_date=$transaction_date'>$i</a></li>";
+													echo "<li class='active'><a href='payment.php?page=$i&pay_date=$pay_date'>$i</a></li>";
 													} else {
-													echo "<li class=''><a href='transaction.php?page=$i&transaction_date=$transaction_date'>$i</a></li>";
+													echo "<li class=''><a href='transaction.php?page=$i&pay_date=$pay_date'>$i</a></li>";
 													}
 													}
 													if($total == 0) {
 													echo "<li class='disabled'><a>Next</a></li>";
 													}else if($page!=$total) {
-													echo "<li class=''><a href='transaction.php?page=".($page+1)."&transaction_date=$transaction_date'>Next</a></li>";
+													echo "<li class=''><a href='payment.php?page=".($page+1)."&pay_date=$pay_date'>Next</a></li>";
 													}else {
 													echo "<li class='disabled'><a>Next</a></li>";
 													}
