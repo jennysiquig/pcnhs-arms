@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php ob_start()?>
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <html>
@@ -80,6 +81,10 @@
 
                         $statement = "SELECT * FROM pcnhsdb.signatories WHERE signatories.sign_id='$sign_id'";
                         $result = $conn->query($statement);
+                        if (!$result) {
+                            header("location: signatories.php");
+                            die();
+                        }
                         if($result->num_rows>0) {
                             while($row=$result->fetch_assoc()) {
                                 $first_name = $row['first_name'];
@@ -90,6 +95,9 @@
                                 $yr_ended = $row['yr_ended'];
                                 $position = $row['position'];
                             }
+                        }else{
+                            header("location: signatories.php");
+                            die();
                         }
                         ?>
 

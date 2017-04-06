@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php ob_start()?>
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 
@@ -67,6 +68,10 @@
 
                             $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
                             $result = $conn->query($statement);
+                            if (!$result) {
+                                header("location: personnels.php");
+                                die();
+                            }
                             if($result->num_rows>0) {
                                 while($row=$result->fetch_assoc()){
 
@@ -79,6 +84,9 @@
                                     $access_type = $row['access_type'];
                                     $accnt_status = $row['accnt_status'];
                                 }
+                            }else{
+                                header("location: personnels.php");
+                                die();
                             }
                             $conn->close();
                             ?>
