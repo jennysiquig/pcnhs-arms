@@ -283,7 +283,11 @@
 
                 <!--box-1-->
                 <div id = "box-1">
-                    
+                
+                     <p id="b1-r6-p1">LRN:</p>
+                        <div id="b1-r6-d1" class="underline">
+                            <?php echo $stud_id; ?>
+                        </div>    
                     <p id = "b1-r1-p1">Name:</p>            
                         <div id = "b1-r1-d1" class="underline">
                            <?php echo $name; ?> 
@@ -362,12 +366,6 @@
                     <p id="b1-r5-p3">Year:</p>
                         <div id="b1-r5-d3" class="underline">
                             <?php echo $pschool_year; ?>
-                        </div>
-                    
-
-                    <p id="b1-r6-p1">LRN:</p>
-                        <div id="b1-r6-d1" class="underline">
-                            <?php echo $stud_id; ?>
                         </div>
                     
                    </div>
