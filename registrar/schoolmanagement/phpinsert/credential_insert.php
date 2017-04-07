@@ -36,7 +36,7 @@
 	if(empty($cred_name)) {
 		$willInsert = false;
 		$popover = new Popover();
-		$popover->set_popover("danger", "Invalid Input Name.");
+		$popover->set_popover("danger", "Invalid Credential Name Input.");
 		$_SESSION['error_pop'] = $popover->get_popover();
 		header("Location: ".$_SERVER['HTTP_REFERER']);
 	}

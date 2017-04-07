@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        <div class="col-sm-5 col-sm-offset-3 form-box">
                             <!-- Generate Error Message -->
                             <?php
                             if(isset($_SESSION['error_pop'])) {

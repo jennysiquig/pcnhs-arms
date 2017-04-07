@@ -3,14 +3,14 @@ input[type="text"],
 input[type="password"], 
 textarea, 
 textarea.form-control {
-	height: 50px;
+	height: 60px;
     margin: 0;
     padding: 0 20px;
     vertical-align: middle;
     background: #f8f8f8;
     border: 3px solid #ddd;
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 50px;
     color: #888;
@@ -71,4 +71,4 @@ button.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none
 
 button.btn:focus { outline: 0; opacity: 0.6; background: #1568bd; color: #fff; }
 
-button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #de995e; color: #fff; }
+button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #1568bd; color: #fff; }

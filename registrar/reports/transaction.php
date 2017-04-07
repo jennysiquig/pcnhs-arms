@@ -83,7 +83,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								Select Date of Transaction
-								<form class="form-horizontal" action="accomplishment.php" method="get">
+								<form class="form-horizontal" action="transaction.php" method="get">
 									<fieldset>
 										
 										<div class="control-group">

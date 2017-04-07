@@ -22,6 +22,14 @@
 	}else {
 		$prog_id = 1;
 	}
+
+	if(empty($prog_name)) {
+		$willInsert = false;
+		$popover = new Popover();
+		$popover->set_popover("danger", "Invalid Program Name Input.");
+		$_SESSION['error_pop'] = $popover->get_popover();
+		header("Location: ".$_SERVER['HTTP_REFERER']);
+	}
 	
 	if($willInsert) {
 		$statement = $conn->prepare("INSERT INTO `pcnhsdb`.`programs` (`prog_id`, `prog_name`) VALUES (?, ?)");
