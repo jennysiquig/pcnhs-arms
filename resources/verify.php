@@ -1,5 +1,6 @@
 <?php
     require_once 'config.php';
+    include 'classes/Popover.php';
     session_start();
 
     /*   */
@@ -68,8 +69,9 @@
         }
         
         else {
-            $_SESSION['error_message'] = "<p style='color: red'>You have entered an Invalid Username or Password</p>
-                                          <p style='color: red'>Please contact System Admin if you forgot your Username or Password.</p>";
+            $popover = new Popover();
+            $popover->set_popover("danger", "You have entered an Invalid Username or Password.");
+            $_SESSION['error_pop'] = $popover->get_popover();
             die(header("Location: ../login.php"));
         }
         $conn->close();

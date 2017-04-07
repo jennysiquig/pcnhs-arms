@@ -6,8 +6,7 @@
     $session_timeout = 1800; //seconds
     
     if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-    	$_SESSION['timeout_message'] = "<p style='color: red'>You have been logged out due to inactivity.</p>
-    										<p style='color: red'>Please Login Again.</p>";
+    	$_SESSION['timeout_message'] = "You have been logged out due to inactivity. Please Login Again.";
     	header("location: ../logout.php");
     }
    $_SESSION['last_activity'] = $time;

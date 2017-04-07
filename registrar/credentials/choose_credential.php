@@ -1,6 +1,6 @@
+<!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
-<!DOCTYPE html>
 <?php 
 	$stud_id = "";
 	if(isset($_GET['stud_id'])) {
