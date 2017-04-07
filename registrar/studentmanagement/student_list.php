@@ -151,14 +151,14 @@
                     
 
                     if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
-                      $search = $_GET['search_key'];
+                      $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
                       $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '%$search' or first_name like '%$search' or stud_id like '%$search' or concat(first_name,' ',last_name) like '%$search' or concat(last_name,' ',first_name,' ',mid_name) like '%$search' or concat(first_name,' ',mid_name,' ',last_name) like '%$search' limit $start, $limit";
                     }else {
                       $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id limit $start, $limit";
                     }
 
                     if(isset($_GET['schl_year']) && $_GET['schl_year'] != "") {
-                      $school_year = $_GET['schl_year'];
+                      $school_year = htmlspecialchars($_GET['schl_year'], ENT_QUOTES);
                       $school_year1 = explode("-", $school_year);
                       $from = $school_year1[0];
                       $to = $school_year1[1];
