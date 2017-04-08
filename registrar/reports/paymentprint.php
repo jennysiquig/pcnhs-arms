@@ -1,6 +1,5 @@
 <?php include('include_files/session_check.php'); ?>
 <?php require_once "../../resources/config.php"; ?>
-<?php $stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES) ?>
 <!-- Update Database -->
 <?php
 	if(!$conn) {
@@ -9,6 +8,20 @@
 ?>
 <html>
 	<head>
+
+		<!-- Bootstrap -->
+		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Font Awesome -->
+		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		
+		<!-- Datatables -->
+		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+		
+		<!-- Custom Theme Style -->
+		<link href="../../css/custom.min.css" rel="stylesheet">
+		<link href="../../css/tstheme/style.css" rel="stylesheet">
+		<link rel="stylesheet" href="../../css/paymentprint.css">
+
 	</head>
 
 	<body>
@@ -26,23 +39,75 @@
 			<th>NAME</th>
 			<th>ITEM</th>
 			<th>AMOUNT</th>
+			<th>NO. OF COPIES</th>
 			<th>REMARKS</th>
 
 		</thead>
 
 		<tbody>
 
-			<tr>
+			<?php
+
+				if(!conn) {
+					die("Connection failed: ". mysqli_connect_error());
+				}
+
+				$query = "SELECT * FROM pcnhsdb.payment NATURAL JOIN pcnhsdb.students;";
+				$result = $conn->query($query);
+				if ($result->num_rows > 0){
+					while($row = $result->fetch_assoc()){
+						$pay_date = $row['pay_date'];
+						$or_no = $row['or_no'];
+						$credential = $row['credential'];
+						$pay_amt = $row['pay_amt'];
+						$no_of_copies = $row['no_of_copies'];
+						$student = $row['student'];
+
+						echo <<<PAYMENT
+
+							<tr class="t-row">
+								<td class="t-cell">$pay_date</td>
+								<td class="t-cell">$or_no</td>
+								<td class="t-cell">$student</td>
+								<td class="t-cell">$credential</td>
+								<td class="t-cell">$pay_amt</td>	
+								<td class="t-cell">$no_of_copies</td>
+							</tr>
+
+PAYMENT;				
+				
+
+					}
+				}
+
+
+				?>
+
 
 		</tbody>
 	</table>
+
+
+                            <div id="box-1">
+                            <p id="b1-r1-p1">Prepared by:</p>
+                            <div id="b1-r2-name"> <?php echo $registrar_name; ?></div>
+                            <div id="b1-r3-pos"> <p> <?php echo $position_reg; ?> </p></div>
+                            </div>
+
+                            <div id="box-2">
+                            <p id="b2-r1-p1">Checked &amp; Verified by:</p>
+                            <div id="b2-r2-name"> <?php echo $sign_name; ?> </div>
+                            <div id="b2-r3-pos"> <p> <?php echo $position; ?></p> </div>
+                            </div>
+
 	</div>
 
 				<div class="row no-print">
 				<div class="col-xs-12">
 					<button class="btn btn-success pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
-          <a href="../../registrar" class="btn btn-success pull-right"><i class="fa fa-home"></i> Back to Home</a>
+          <a href="../../registrar" class="btn btn-success pull-right"><i class="fa fa-home"></i>Back to Home</a>
 				</div>
 			</div>
+
 	</body>
 </html>

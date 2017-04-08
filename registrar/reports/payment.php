@@ -102,6 +102,7 @@
 											<th class="column-title">Name</th>
 											<th class="column-title">Item</th>
 											<th class="column-title">Amount</th>
+											<th class="column-title">No. of Copies</th>
 											<th class="column-title">Remarks</th>
 											
 										</th>
@@ -165,22 +166,24 @@
 					                    	$or_no = $row['or_no'];
 					                    	$student = $row['first_name']." ".$row['last_name'];
 					                    	$credential = $row['cred_name'];
-					                    	$date_processed = $row['date_processed'];
-					                    	$date_released = $row['date_released'];
 					                    	$pay_amt = $row['pay_amt'];
+					                    	$no_of_copies = $row['no_of_copies'];
+					                    	
 					                    	//remarks
-					                    echo <<<TRANS
+					                    echo <<<PAYMENT
 					                    	<tr class="odd pointer">
 												<td class=" ">$pay_date</td>
 												<td class=" ">$or_no</td>
 												<td class=" ">$student</td>
-												<td class=" ">$credential</td>
+												<td class=" ">$credential</td>		
 												<td class=" ">$pay_amt</td>
+												<td class=" ">$no_of_copies</td>
+
 												<td class=" "><!--remarks--></td>
 												
 												
 											</tr>
-TRANS;
+PAYMENT;
 					                    	
 
 					                    }
