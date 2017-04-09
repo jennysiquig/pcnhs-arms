@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<?php include('include_files/session_check.php'); ?>
 <?php require_once "../../resources/config.php"; ?>
 <?php ob_start(); ?>
 <?php $stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES) ?>

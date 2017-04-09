@@ -1,5 +1,21 @@
 <!DOCTYPE html>
+<?php include('include_files/session_check.php'); ?>
 <?php require_once "../../resources/config.php"; ?>
+<?php
+    $r_fm = "";
+    $fm = "";
+    $ot = "";
+    if (isset($_POST['r_fm'])){
+        $r_fm = $_POST['r_fm'];
+    }
+    if (isset($_POST['fm'])){
+        $fm = $_POST['fm'];
+    }
+        if (isset($_POST['ot'])){
+        $ot = $_POST['ot'];
+    }
+?>
+
 <html>
   <head>
 
@@ -9,18 +25,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    
-    
-    <!-- Bootstrap -->
-    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
     
     <!-- Datatables -->
-    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    
     <!-- Custom Theme Style -->
     <link href="../../css/custom.min.css" rel="stylesheet">
     <link href="../../css/tstheme/style.css" rel="stylesheet">
@@ -45,24 +52,24 @@
               <table id="acc-t">
                                 
                                 <tr id="b1-head">  
-                                <th class="b1-col1">AREAS</th>
-                                <th class="b1-col2">ACCOMPLISHMENTS</th>
+                                <th class="b1">AREAS</th>
+                                <th class="b1">ACCOMPLISHMENTS</th>
                                 </tr>
 
                                 <tr id="b6-r1">
                                     <td class="col">
 
-                                        <p id="td-1-p1">Records and Files Management</p>
+                                        <p class="td-p1">Records and Files Management</p>
 
-                                        <p id="td-1-p2">Good records management is essential for the registrar's office to function effectively. Efficiency, effectiveness and less time consuming are some of the benefits of organized records and files (especially that the registrar's office is using the manual filing).</p>
+                                        <p class="td-p2">Good records management is essential for the registrar's office to function effectively. Efficiency, effectiveness and less time consuming are some of the benefits of organized records and files (especially that the registrar's office is using the manual filing).</p>
 
                                     </td>
 
                                     <td class="col">
 
-                                        <div id="area1">
+                                        <div id="r_fm">
                                     
-                                 <!--php-->
+                                 <?php echo $r_fm; ?>
 
                                         </div>
 
@@ -73,31 +80,31 @@
                                 <tr id="b6-r2">
                                     <td class="col">
 
-                                        <p id="td-3-p1">Registrar's Services</p>
+                                        <p class="td-p1">Registrar's Services</p>
 
-                                        <p id="td-3-p2">The registrar's office is responsible in the maintenance of students' permanent academic records, receiving of incoming correspondence, processing of requests and issuance/releasing of school credentials.</p>
+                                        <p class="td-p2">The registrar's office is responsible in the maintenance of students' permanent academic records, receiving of incoming correspondence, processing of requests and issuance/releasing of school credentials.</p>
 
                                         <td class="col">
 
-                                        <p id="td-4-p1">Below is the summary of accomplished and released credentials</p>
+                                        <p class="td-p">Below is the summary of accomplished and released credentials</p>
 
                                             <table id="item-t">
-                                            <tr id="td-4-h">
-                                            <th id="th-col1">ITEM</th>
-                                            <th id="th-col2">PROCESSED</th>
-                                            <th id="th-col3">RELEASED</th>
+                                            <thead>
+                                            <th class="item-t-col">ITEM</th>
+                                            <th class="item-t-col">PROCESSED</th>
+                                            <th class="item-t-col">RELEASED</th>
+                                            </thead>
+
+                                            <tr class="td-4-t">
+                                            <td class="name"></td>
+                                            <td class="pro"></td>
+                                            <td class="rel"></td>
                                             </tr>
 
                                             <tr class="td-4-t">
-                                            <td class="td-name"></td>
-                                            <td class="td-pro"></td>
-                                            <td class="td-rel"></td>
-                                            </tr>
-
-                                            <tr class="td-4-t">
-                                            <td class="td-name"></td>
-                                            <td class="td-pro"></td>
-                                            <td class="td-rel"></td>
+                                            <td class="name"></td>
+                                            <td class="pro"></td>
+                                            <td class="rel"></td>
                                             </tr>
 
                                             </tr>
@@ -112,9 +119,9 @@
                                 <tr id="b6-r3">
                                     <td class="col">
 
-                                        <p id="td-5-p1">FINANCIAL MANAGEMENT</p>
+                                        <p class="td-p1">FINANCIAL MANAGEMENT</p>
 
-                                        <p id="td-5-p2">Payments are received in the registrar's office upon request or issuance of school credentials except for school to school transaction.</p>
+                                        <p class="td-p2">Payments are received in the registrar's office upon request or issuance of school credentials except for school to school transaction.</p>
 
                                     </td>
 
@@ -122,7 +129,7 @@
 
                                         <div id="area3">
                                     
-                                        <!--php-->
+                                        <?php echo $fm; ?>
 
                                         </div>
 
@@ -133,15 +140,15 @@
                                 <tr id="b6-r4">
                                     <td class="col">
 
-                                        <p id="td-5-p1">Other Tasks</p>
+                                        <p class="td-p1">Other Tasks</p>
 
                                     </td>
 
-                                    <td class="td-8">
+                                    <td class="col">
 
                                         <div id="area3">
                                     
-                                        <!--php-->
+                                        <?php echo $ot; ?>
 
                                         </div>
 
@@ -150,7 +157,7 @@
                                 </tr>
                 </table>
 
-                                            <div id="box-2">
+                            <div id="box-2">
                             <p id="b2-r1-p1">Prepared by:</p>
                             <div id="b2-r2-name"></div>
                             <div id="b2-r3-pos"></div>

@@ -28,7 +28,8 @@
 	<div class="main">
 	<h4 class="top">PINES CITY NATIONAL HIGH SCHOOL</h4>
 	<h4 class="top">PAYMENT REMITTANCE</h4>
-	<h4 class="top"><?php // date ex. March 1-17, 2017?></h4>
+	<h4 class="top"><?php // date ex. March 1-17, 2017 
+			?></h4>
 
 	<table>
 
@@ -63,18 +64,16 @@
 						$no_of_copies = $row['no_of_copies'];
 						$student = $row['student'];
 
-						echo <<<PAYMENT
+						echo "
 
-							<tr class="t-row">
-								<td class="t-cell">$pay_date</td>
-								<td class="t-cell">$or_no</td>
-								<td class="t-cell">$student</td>
-								<td class="t-cell">$credential</td>
-								<td class="t-cell">$pay_amt</td>	
-								<td class="t-cell">$no_of_copies</td>
-							</tr>
-
-PAYMENT;				
+							<tr class='t-row'>
+								<td class='t-cell'>$pay_date</td>
+								<td class='t-cell'>$or_no</td>
+								<td class='t-cell'>$student</td>
+								<td class='t-cell'>$credential</td>
+								<td class='t-cell'>$pay_amt</td>	
+								<td class='t-cell'>$no_of_copies</td>
+							</tr> ";		
 				
 
 					}
@@ -86,6 +85,70 @@ PAYMENT;
 
 		</tbody>
 	</table>
+             <?php
+
+             $statement = "SELECT * FROM personnel WHERE per_id='$personnel_id'";
+             $result = $conn->query($statement);
+             if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        $registrar_id = $row['per_id'];
+                        $registrar_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
+                        $registrar_name = strtoupper($registrar_name);
+                        $position_reg = $row['position'];
+                        $position_reg = strtolower($position_reg);
+                        $position_reg = ucfirst($position_reg);
+                    }
+             }
+             ?>
+
+             <?php
+
+             $statement = "SELECT * FROM signatories WHERE sign_id='$signatory'";
+             $result = $conn->query($statement);
+             if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        $sign_id = $row['sign_id'];
+                        $sign_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
+                        $sign_name = strtoupper($sign_name);
+                        $position = $row['position'];
+                        $position = strtolower($position);
+                        $position = ucfirst($position);
+                    }
+             }
+             ?>
+
+	
+             <?php
+
+             $statement = "SELECT * FROM personnel WHERE per_id='$personnel_id'";
+             $result = $conn->query($statement);
+             if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        $registrar_id = $row['per_id'];
+                        $registrar_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
+                        $registrar_name = strtoupper($registrar_name);
+                        $position_reg = $row['position'];
+                        $position_reg = strtolower($position_reg);
+                        $position_reg = ucfirst($position_reg);
+                    }
+             }
+             ?>
+
+             <?php
+
+             $statement = "SELECT * FROM signatories WHERE sign_id='$signatory'";
+             $result = $conn->query($statement);
+             if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        $sign_id = $row['sign_id'];
+                        $sign_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
+                        $sign_name = strtoupper($sign_name);
+                        $position = $row['position'];
+                        $position = strtolower($position);
+                        $position = ucfirst($position);
+                    }
+             }
+             ?>
 
 
                             <div id="box-1">
@@ -104,7 +167,7 @@ PAYMENT;
 
 				<div class="row no-print">
 				<div class="col-xs-12">
-					<button class="btn btn-success pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+					<button class="btn btn-success pull-right" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
           <a href="../../registrar" class="btn btn-success pull-right"><i class="fa fa-home"></i>Back to Home</a>
 				</div>
 			</div>
