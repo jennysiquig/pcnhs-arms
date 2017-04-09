@@ -40,7 +40,7 @@
 			$total_credit = filter_var($_POST['total_credits'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 			$insertgrades = "";
 			$comment = "";
-			$credit_earned = filter_var($_POST['credit_earned'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+			$credit_earned = htmlspecialchars($_POST['credit_earned'], ENT_QUOTES);
 			$willInsert = true;
 
 			$checkgrade = "SELECT * from pcnhsdb.grades where stud_id = '$stud_id' AND yr_level = '$yr_level'";

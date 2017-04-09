@@ -1,0 +1,118 @@
+
+
+#outer{
+	height: 1250px;
+    width: 1450px;
+    text-align: center;
+    border: 8px solid #787878;
+}
+
+.text1{
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: 3px;
+
+}
+#subtext{
+	font-size: 13px;
+	font-weight: bold;
+	letter-spacing: 2px;
+
+}
+.text2{
+   	font-size: 24px;
+	font-family: Times New Roman;
+	
+	letter-spacing: 3px;
+	font-style: italic;
+	font-weight: bold;
+	word-spacing: 35px;
+}
+
+.text3{
+	font-size: 30px;
+	font-style: italic;
+	font-family: EdwardianScriptITC;
+	letter-spacing: 5px;
+	font-weight: bold;
+	text-align: justify;
+}
+
+
+#img1{
+	width: 200;
+	height: 200;
+	float: left;
+	margin: 30px;
+	filter: grayscale(100%);
+}
+#img2{
+	width: 200;
+	height: 200;
+	float: right;
+	margin: 30px;
+	
+}
+
+#img3{
+	width: 1100;
+	height: 100;
+	margin:auto;
+
+	
+}
+
+
+
+input[type=text] {
+	width: 700px;
+	height: 50px;
+	font-size: 50px;
+	font-family: Edwardian Script;
+	text-align: center;
+	border: none;
+	line-height: 5px;
+	
+}
+#dd{
+	width: 60px;
+	height: 40px;
+	font-size: 35px;
+	font-family: Edwardian Script;
+	text-align: center;
+	border: none;
+	border-bottom: 2px solid black;
+}
+
+#mm{
+	width: 100px;
+	height: 40px;
+	font-size: 35px;
+	font-family: Edwardian Script;
+	text-align: center;
+	border: none;
+	border-bottom: 2px solid black;
+}
+
+#dd1{
+	width: 60px;
+	height: 40px;
+	font-size: 20px;
+	font-family: Times New Roman;
+	line-height: 200%;
+	letter-spacing: 1px;
+	font-style: italic;
+	font-weight: bold
+}
+
+#mm1{
+	width: 100px;
+	height: 40px;
+	font-size: 20px;
+	font-family: Times New Roman;
+	line-height: 200%;
+	letter-spacing: 1px;
+	font-style: italic;
+	font-weight: bold;
+}
+ 

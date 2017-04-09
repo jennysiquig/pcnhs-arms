@@ -18,19 +18,28 @@
         }
     }
     
-
     $cred_id = htmlspecialchars($_POST['credential'], ENT_QUOTES);
     $request_type = htmlspecialchars($_POST['request_type'], ENT_QUOTES);
     $signatory = htmlspecialchars($_POST['signatory'], ENT_QUOTES);
     $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
     $date = htmlspecialchars($_POST['date'], ENT_QUOTES);
-    $issuedto = htmlspecialchars($_POST['issuedto'], ENT_QUOTES);
+    $issuedfor = htmlspecialchars($_POST['issuedfor'], ENT_QUOTES);
     $request_purpose = htmlspecialchars($_POST['request_purpose']);
 
-    $statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `issued_for`, `request_purpose`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$issuedto', '$request_purpose' ,'$signatory', '$personnel_id');";
+    $checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
+    $result = $conn->query($checkpending);
+    if($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $req_id = $row['req_id'];
+            $update = "UPDATE `pcnhsdb`.`requests` SET `request_type`='$request_type', `status`='u' ,`issued_for` = '$issuedfor' , `sign_id`='$signatory' WHERE `req_id`='$req_id';";
 
-    $statement2 = "INSERT INTO `pcnhsdb`.`unclaimed` (`date_processed`) VALUES ('$date');";    
-    mysqli_query($conn, $statement1);
+            mysqli_query($conn, $update);
+        }
+    }else {
+         $statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `issued_for`, `request_purpose`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$issuedfor', '$request_purpose' ,'$signatory', '$personnel_id');";
+
+        mysqli_query($conn, $statement1);
+    }
     $_SESSION['user_activity'][] = "Student $stud_id requested Credential $cred_id.";
 
 ?>
@@ -70,7 +79,7 @@
 				$DAmonth = htmlspecialchars($_POST['month'], ENT_QUOTES);
                 $DADay = htmlspecialchars($_POST['day'], ENT_QUOTES);
                 $DAyear = htmlspecialchars($_POST['year'], ENT_QUOTES);
-				$issuedto = htmlspecialchars($_POST['issuedto'], ENT_QUOTES);
+				$issuedfor = htmlspecialchars($_POST['issuedfor'], ENT_QUOTES);
 				$remarks = htmlspecialchars($_POST['remarks'], ENT_QUOTES);
 
                 $locale = 'en_US';
@@ -808,7 +817,7 @@ YR1;
 
                         <div id="box-7">
 
-                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> the <div id="day-cert"> <?php echo $DADay; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $issuedto; ?> </div> as a <div id="reg-cert"> <?php echo $stat; ?> </div> student and <div id="gender-cert"> <?php echo $formgender; ?> </div> has no</br> property and/or money accountability in this school.</div>
+                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> the <div id="day-cert"> <?php echo $DADay; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $issuedfor; ?> </div> as a <div id="reg-cert"> <?php echo $stat; ?> </div> student and <div id="gender-cert"> <?php echo $formgender; ?> </div> has no</br> property and/or money accountability in this school.</div>
 
                             <p id="b7-r1-p1">REMARKS:</p>
                             <div id="b7-r1-d1"></div>
