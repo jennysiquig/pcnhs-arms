@@ -24,10 +24,10 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-        <link rel="stylesheet" href="resources/assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="resources/assets/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="resources/assets/css/form-elements.css">
-        <link rel="stylesheet" href="resources/assets/css/style.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/css/form-elements.css">
+        <link rel="stylesheet" href="assets/css/style.css">
         <!-- <link rel="stylesheet" href="resources/assets/css/custom.min.css" rel="stylesheet"> -->
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -39,17 +39,26 @@
 
         <!-- Favicon and touch icons -->
         <link rel="shortcut icon" href="images/pines.png">
+        <style type="text/css">
+             .transparent{
+              background: rgba(0,0,0,0.5);
 
+            }
+            img {
+                width: 120px;
+            }
+        </style>
     </head>
 
     <body>
 
         <!-- Top content -->
-        <div class="top-content">
+        <div class="top-content transparent">
             <div class="inner-bg">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
+
                             <h1><strong>PCNHS ARMS</strong> Login</h1>
                             <div class="description">
                                 <p>
@@ -96,7 +105,7 @@
                                         <label class="sr-only" for="form-password">Password</label>
                                         <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
                                     </div>
-                                    <button type="submit" class="btn">Sign in!</button>
+                                    <button type="submit" class="btn">Sign in</button>
                                 </form>
                                 <br>
                             </div>
@@ -104,14 +113,13 @@
                     </div>
                 </div>
             </div>
-            
         </div>
 
 
         <!-- Javascript -->
-        <script src="resources/assets/js/jquery-1.11.1.min.js"></script>
-        <script src="resources/assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="resources/assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/jquery-1.11.1.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.backstretch.min.js"></script>
         
         <script type="text/javascript">
             jQuery(document).ready(function() {
@@ -120,7 +128,7 @@
                     Fullscreen background
                 */
                 $.backstretch([
-                                "resources/assets/images/backgrounds/bg.jpg"
+                                "assets/images/backgrounds/bg.png"
                              ], {duration: 3000, fade: 750});
                 
                 /*

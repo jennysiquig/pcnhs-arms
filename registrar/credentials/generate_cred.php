@@ -5,14 +5,38 @@
 	$stud_id = "";
 	$credential = "";
 	$request_type = "";
-	
-	if(isset($_GET['stud_id']) && isset($_GET['credential']) && isset($_GET['request_type'])) {
+	$request_purpose = "";
+
+	if(isset($_GET['stud_id']) && isset($_GET['credential'])) {
 		$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
 		$credential = htmlspecialchars($_GET['credential'], ENT_QUOTES);
-		$request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
+		
 	}else {
 		header("location: ../index.php");
 	}
+
+	if(isset($_GET['purpose'])) {
+		$request_purpose = htmlspecialchars($_GET['purpose'], ENT_QUOTES);
+	}else {
+		$request_purpose = "";
+	}
+
+	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
+    $result = $conn->query($checkpending);
+    if($result->num_rows <= 0) {
+    	if(isset($_GET['new_request']) && $_GET['new_request']) {
+			$cred_id = htmlspecialchars($_GET['credential'], ENT_QUOTES);
+		    $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
+		    $date = date("Y-m-d");
+		    $request_purpose = htmlspecialchars($_GET['purpose']);
+
+
+	    	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `status`, `date_processed`, `request_purpose`, `per_id`) VALUES ('$cred_id', '$stud_id', 'p', '$date', '$request_purpose', '$personnel_id');";
+
+	    	mysqli_query($conn, $statement1);
+		}
+    }
+
 	
 ?>
 <!DOCTYPE html>
@@ -34,7 +58,8 @@
 		
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+		<!-- iCheck -->
+		<link href=".../../../../resources/libraries/iCheck/skins/flat/green.css" rel="stylesheet">
 		<!-- Custom Theme Style -->
 		<link href="../../css/custom.min.css" rel="stylesheet">
 		<link href="../../css/tstheme/style.css" rel="stylesheet">
@@ -70,6 +95,18 @@
 					*Form 137 Template Here*
 					<div class="clearfix"></div>
 					<br>
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Type of Request <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <p>
+							<input type="radio" class="flat" name="request_type" id="tor-individual" value="individual" checked="" required /> Individual Request:
+							<input type="radio" class="flat" name="request_type" id="tor-bulk" value="school" />
+							School Request:
+							
+						</p>
+                        </div>
+                      </div>
 					<div class="item form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date Today</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
@@ -82,18 +119,6 @@
 							<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="credential" readonly="" value=<?php echo "'$credential'"; ?>>
 						</div>
 					</div>
-					<div class="item form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Type of Request</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="request_type" readonly="" value=<?php echo "'$request_type'"; ?>>
-						</div>
-					</div>
-					<!-- <div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">Date Accomplished:</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="dateaccomplished" value="">
-							</div>
-					</div> -->
 					<div class="item form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date Accomplished *</label>
 						<div class="col-md-2 col-sm-6 col-xs-12">
@@ -124,13 +149,13 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Request Purpose: </label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input required="required" class="form-control" name="request_purpose" placeholder="">
+							<input required="required" class="form-control" name="request_purpose" placeholder="" value=<?php echo "'$request_purpose'"; ?>>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Issued To:</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Issued For:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="issuedto" value="" placeholder="ex: Grade 11">
+							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="issuedfor" value="" placeholder="ex: Grade 11">
 						</div>
 					</div>
 					<div class="form-group">
@@ -206,6 +231,8 @@
 <!-- input mask -->
 <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+<!-- iCheck -->
+	<script src="../../resources/libraries/iCheck/icheck.min.js"></script>
 <!-- Custom Theme Scripts -->
 <script src= "../../js/custom.min.js"></script>
 <!-- Scripts -->

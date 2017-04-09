@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <html>
 	<head>
@@ -63,11 +64,11 @@
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
-							</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+								</div>
 							</div>
-						</div>
 						
 						<div class="form-group">
 							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">School Year Graduated/Last Attended</label>
@@ -75,7 +76,38 @@
 								<input class="form-control col-md-7 col-xs-12" type="text" name="year-graduated">
 							</div>
 						</div>
-						
+						<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Credential <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <select id="credential" class="form-control" name="credential" required>
+							<option value="">Choose..</option>
+							<?php
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT * FROM credentials";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$cred_id = $row['cred_id'];
+										$cred_name = $row['cred_name'];
+
+										echo "<option value='$cred_id'>$cred_name</option>";
+									}
+								}
+							?>
+							</select>
+	                      </div>
+                      	</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Purpose <span class="required">*</span>
+						</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" id="" name="purpose" required="required" class="form-control col-md-7 col-xs-12">
+						</div>
+						</div>
 				
 						<div class="ln_solid"></div>
 								

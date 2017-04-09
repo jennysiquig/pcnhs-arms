@@ -93,18 +93,6 @@
 							</select>
 	                      </div>
                       </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Type of Request <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <p>
-							<input type="radio" class="flat" name="request_type" id="tor-individual" value="individual" checked="" required /> Individual Request:
-							<input type="radio" class="flat" name="request_type" id="tor-bulk" value="school" />
-							School Request:
-							
-						</p>
-                        </div>
-                      </div>
 				</div>
 			</div>
 			<div class="row no-print">

@@ -78,14 +78,11 @@
                   <tbody>
                     
                     <?php
-                    $_SESSION['generatemessage'] = <<<GENMSG
-                      <div class="alert alert-info alert-dismissible fade in" role="alert">
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                          </button>
-                          <strong>Note: </strong>Credentials can only be generated if the Student is already <strong>graduated</strong>.
-                      </div>
 
-GENMSG;
+                    $stud_id = "";
+                    $cred_id = $_GET['credential'];
+                    $purpose = $_GET['purpose'];
+
                     if($_GET['last-name'] != null && $_GET['first-name'] != null) {
                       $search = htmlspecialchars($_GET['first-name']." ".$_GET['last-name'], ENT_QUOTES);
                       $first_name = htmlspecialchars($_GET['first-name'], ENT_QUOTES);
@@ -117,7 +114,7 @@ GENMSG;
                       <td>$first_name</td>
                       <td>
                         <span class="">
-                          <center><a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id#generatebutton" class="btn btn-success btn-xs"> Add Request</a></center>
+                          <center><a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$purpose&new_request=true#generatebutton" class="btn btn-success btn-xs"> Add Request</a></center>
                         </span>
                       </td>
                     </tr>
