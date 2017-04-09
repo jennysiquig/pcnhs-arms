@@ -104,6 +104,10 @@
 									</fieldset>
 								</form>
 							</div>
+								<br>
+								<div class="col-md-8">
+								<a href="generate_accomp.php"><button type="button" class="btn btn-success pull-right">Generate Report</button></a>
+								</div>
 						</div>
 	                      <!-- Date Picker -->
 						<div class="x_content">

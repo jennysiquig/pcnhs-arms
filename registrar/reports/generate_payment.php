@@ -1,9 +1,31 @@
 <!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
-<?php include "include_files/session_check.php"; ?>
+<?php
+    session_start();
+    // Session Timeout
+    $time = time();
+    $session_timeout = 1800; //seconds
+    
+    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
+      session_unset();
+      session_destroy();
+      session_start();
+    }
+
+    $_SESSION['last_activity'] = $time;
+    if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
+    	if($_SESSION['account_type'] != "registrar") {
+    		echo "<p>Access Failed <a href='../index.php'>Back to Home</a></p>";
+    	}
+    }else {
+    	header('Location: ../../login.php');
+    }
+    date_default_timezone_set('Asia/Manila');
+    
+  ?>
 <html>
 	<head>
-		<title>Accomplishment Report</title>
+		<title>Payment Remittance</title>
 		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
@@ -58,58 +80,14 @@
 							</ul>
 							<div class="clearfix"></div>
 						</div>
-						<form action="preview_accomp.php" method="POST">
+
 						<div>
+							
+							
 
-								<div>
-							 	<div class="form-group">
+						</div>
 
-									<label for="r_fm" class="col-md-3">Records and File Management</label>
-									<br>
-	                    			<div class="col-md-12 pull-right">
-	                      				<textarea class="resizable_textarea form-control" name="r_fm"></textarea>
-	                    			</div>
-                    			</div>
-                    			</div>
-
-                  				<div>
-                    			<div class="form-group">
-                  					<label for=
-                  					"fm" class="col-md-2">Registrar's Services</label>
-                  					<br>
-                    				<div class="col-md-12">
-                    					
-                    				</div>
-                    			</div>
-                    			</div>
-
-                  				<div>
-                    			<div class="form-group">
-                  					<label for=
-                  					"fm" class="col-md-2">Financial Management</label>
-                  					<br>
-                    				<div class="col-md-12 pull-right">
-                      				<textarea class="resizable_textarea form-control" name="fm"></textarea>
-                    				</div>
-                    			</div>
-                    			</div>
-                    		
-                    			<br>
-                    			<br>
-                    			<div class="form-group">
-                    				<label id="ot" class="col-md-2">Other Tasks</label>		
-                    				<div class="col-md-12 pull-right">
-                      				<textarea class="resizable_textarea form-control" name="ot"></textarea>
-                    				</div>
-                    			</div>
-                  		</div>
-
-                  		<button id="generatebutton" class="btn btn-primary pull-right" type="submit"><i class="fa fa-print m-right-xs"></i> Generate Credentials</button>
-                  		</form>
-
-                  		<?php echo $_POST['accomplishment_date'];?>
-					</div>
-			
+						<a id="generatebutton" class="btn btn-primary" href=""><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
 
 						</div>
 					</div>
