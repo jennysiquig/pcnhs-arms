@@ -105,7 +105,7 @@
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $message);	
 		$_SESSION['success'] = $popover->get_popover();
-		$_SESSION['user_activity'][] = "Added New Student: $first_name $last_name";
+		$_SESSION['user_activity'][] = "ADDED NEW STUDENT: $first_name $last_name";
 		header("Location: ../student_info.php?stud_id=$stud_id");
 	}
 	

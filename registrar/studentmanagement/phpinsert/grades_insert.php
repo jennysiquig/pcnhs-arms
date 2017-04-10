@@ -143,7 +143,7 @@
 				mysqli_multi_query($conn, $insertgrades);
 				echo "<p>Updating Database, please wait...</p>";
 				header("refresh:3;url=../grades.php?stud_id=$stud_id");
-				$_SESSION['user_activity'][] = "Added New Grades: $stud_id - $yr_level";
+				$_SESSION['user_activity'][] = "ADDED NEW GRADES: $stud_id - $yr_level";
 			}
 		}
 	}

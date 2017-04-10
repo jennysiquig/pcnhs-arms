@@ -57,7 +57,7 @@
 		$statement->bind_param("issii", $curr_id, $curr_code, $curr_name, $year_started,$year_ended);
 
 		$statement->execute();
-		$_SESSION['user_activity'][] = "Added New Curriculum: $curr_name";
+		$_SESSION['user_activity'][] = "ADDED NEW CURRICULUM: $curr_name";
 		header('location: ../curriculum.php');
 
 		$statement->close();

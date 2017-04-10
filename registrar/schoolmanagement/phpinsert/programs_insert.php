@@ -37,7 +37,7 @@
 		$statement->bind_param("is", $prog_id, $prog_name);
 	
 		$statement->execute();
-		$_SESSION['user_activity'][] = "Added New Program: $prog_name";
+		$_SESSION['user_activity'][] = "ADDED NEW PROGRAM: $prog_name";
 		header('location: ../student_programs.php');
 	}
 	

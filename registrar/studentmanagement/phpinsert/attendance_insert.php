@@ -88,7 +88,7 @@
 
 	if($willInsert) {
 		mysqli_query($conn, $insertattendance);
-		$_SESSION['user_activity'][] = "Added New Attendance of $stud_id";
+		$_SESSION['user_activity'][] = "ADDED NEW ATTENDANCE OF: $stud_id";
 		header("location: ../attendance.php?stud_id=$stud_id");
 	}
 	

@@ -48,7 +48,7 @@
 		$statement->bind_param("isi", $cred_id, $cred_name, $price);
 	
 		$statement->execute();
-		$_SESSION['user_activity'][] = "Added New Credential: $cred_name";
+		$_SESSION['user_activity'][] = "ADDED NEW CREDENTIAL: $cred_name";
 		header('location: ../credentials.php');
 
 	}

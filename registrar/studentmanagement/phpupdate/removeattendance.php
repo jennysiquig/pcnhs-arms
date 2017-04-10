@@ -12,7 +12,7 @@
 	
 	mysqli_query($conn, $statement1);
 	
-	$_SESSION['user_activity'][] = "Removed Attendance: $stud_id";
+	$_SESSION['user_activity'][] = "REMOVED ATTENDANCE OF: $stud_id";
 	header("location: ../attendance.php?stud_id=$stud_id");
 
 ?>
