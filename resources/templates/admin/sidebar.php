@@ -58,8 +58,24 @@ echo <<<SB
               </div>
 
             </div>
-            <!-- /sidebar menu -->
-          </div>
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="System Logs" href="$base_url/systemadmin/index.php">
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Add Personnel" href="$base_url/systemadmin/personnelmanagement/personnel_add.php">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Add Signatory" href="$base_url/systemadmin/schoolmanagement/signatory_add.php">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="$base_url/logout.php">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+<!-- /sidebar menu -->
         </div>
+    </div>
 SB;
 ?>
