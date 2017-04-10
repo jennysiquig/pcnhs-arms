@@ -257,8 +257,8 @@
                                 <input id = "accnt_status" name = "accnt_status" type = "hidden" value=<?php echo "'$accnt_status'"; ?> />
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary" >Save</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-danger" >Remove</button>
                                 </div>
 
                             </form>

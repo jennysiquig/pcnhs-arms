@@ -65,6 +65,7 @@
                                         <?php
                                           $per_id = $_GET['per_id'];
                                           $uname;
+                                          $password;
                                           $hashed_pw;
                                           $last_name;
                                           $first_name;
@@ -85,6 +86,7 @@
                                             while($row=$result->fetch_assoc()){
                                                 $uname = $row['uname'];
                                                 $hashed_pw = $row['hashed_pw'];
+                                                $password = $row['password'];
                                                 $last_name = $row['last_name'];
                                                 $first_name = $row['first_name'];
                                                 $mname = $row['mname'];
@@ -127,7 +129,7 @@
                                         <div class="item form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input id="password" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$hashed_pw'"; ?>
+                                                <input id="hashed_pw" class="form-control col-md-7 col-xs-12" required="required" type="password" name="hashed_pw" readonly value=<?php echo "'$hashed_pw'"; ?>
                                                  data-parsley-minlength="4"
                                                  data-parsley-minlength-message="Password should be greater than 4 characters"/><br><br>
 

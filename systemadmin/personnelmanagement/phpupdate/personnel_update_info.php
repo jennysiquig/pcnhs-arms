@@ -12,8 +12,8 @@
 
     $per_id = htmlspecialchars($_POST['per_id'], ENT_QUOTES);
     $uname = htmlspecialchars($_POST['uname'], ENT_QUOTES);
-    $password = htmlspecialchars($_POST['password']);
-    $hashed_pw = htmlspecialchars($_POST['hashed_pw'], ENT_QUOTES);
+    $password = $_POST['password'];
+    //$hashed_pw = htmlspecialchars($_POST['hashed_pw'], ENT_QUOTES);
     $last_name = htmlspecialchars($_POST['last_name'], ENT_QUOTES);
     $first_name = htmlspecialchars($_POST['first_name'], ENT_QUOTES);
     $mname = htmlspecialchars($_POST['mname'], ENT_QUOTES);
@@ -39,19 +39,30 @@
         if($resultCheckPw->num_rows>0) {
             while ($row=$resultCheckPw->fetch_assoc()) {
                 
-                $verifypw = Bcrypt::checkPassword($password, $row['hashed_pw']);
+                //$verifypw = Bcrypt::checkPassword($password, $row['hashed_pw']);
                 
-                if($verifypw = true) {
+                if($password != $row['password']) {
+
+                $alert_type = "danger";
+                $error_message = "Cannot Edit Account Information: Incorrect Password";
+                $popover = new Popover();
+                $popover->set_popover($alert_type, $error_message);
+                $_SESSION['incorrect_pw'] = $popover->get_popover(); 
+                header("location: ../personnel_edit.php?per_id=$per_id");
+                
+                }
+
+                else{
 
                     if ($resultCheck->num_rows>0 && $uname != $unameChck) {
-                     $_SESSION['error_msg_username_exists'] = "Username: $uname already exists";
-                     $alert_type = "danger";
-                     $error_message = "Personnel Username already exists";
-                     $popover = new Popover();
-                     $popover->set_popover($alert_type, $error_message);
-                     $_SESSION['duplicate_uname'] = $popover->get_popover(); 
-                     header("location: ../personnel_edit.php?per_id=$per_id");
-                }
+                         $_SESSION['error_msg_username_exists'] = "Username: $uname already exists";
+                         $alert_type = "danger";
+                         $error_message = "Personnel Username already exists";
+                         $popover = new Popover();
+                         $popover->set_popover($alert_type, $error_message);
+                         $_SESSION['duplicate_uname'] = $popover->get_popover(); 
+                         header("location: ../personnel_edit.php?per_id=$per_id");
+                    }
 
                     else {
                     $hashed = Bcrypt::hashPassword($password);
@@ -73,16 +84,16 @@
                     
                     header("location: ../personnel_view.php?per_id=$per_id");
                     }
-
                 }
             }
         }
-        else {
-                $alert_type = "danger";
-                $error_message = "Cannot Edit Account Information: Incorrect Password";
-                $popover = new Popover();
-                $popover->set_popover($alert_type, $error_message);
-                $_SESSION['incorrect_pw'] = $popover->get_popover(); 
-                header("location: ../personnel_edit.php?per_id=$per_id");
-                } 
+            else{
+
+                    $alert_type = "danger";
+                    $error_message = "Cannot Edit Account Information: Incorrect Password";
+                    $popover = new Popover();
+                    $popover->set_popover($alert_type, $error_message);
+                    $_SESSION['incorrect_pw'] = $popover->get_popover(); 
+                    header("location: ../personnel_edit.php?per_id=$per_id");
+            }
 ?>
