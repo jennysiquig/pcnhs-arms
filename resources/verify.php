@@ -5,7 +5,7 @@
 
     /*   */
     date_default_timezone_set('Asia/Manila');
-    $_SESSION['sDate'] = date("d/m/Y");
+    $_SESSION['sDate'] = date("m/d/Y");
     $_SESSION['liTime'] = date("h:i:sa");
 
     $username = htmlspecialchars($_POST['username'], ENT_QUOTES);
