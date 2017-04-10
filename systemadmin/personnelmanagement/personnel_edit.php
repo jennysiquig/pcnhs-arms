@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php ob_start()?>
 <?php require_once "../../resources/config.php"; ?>
+<?php require_once "bcrypt/Bcrypt.php";?>
 <?php include('include_files/session_check.php'); ?>
 
 <html>
@@ -44,19 +45,33 @@
                             <h2><i class="fa fa-user"> </i> Edit Personnel Account</h2>
                             <div class="clearfix"></div>
                             <br>
+                                  <?php
+                                        if(isset($_SESSION['duplicate_uname'])) {
+                                            echo $_SESSION['duplicate_uname'];
+                                            unset($_SESSION['duplicate_uname']);
+                                            }
+                                        if(isset($_SESSION['incorrect_pw'])) {
+                                            echo $_SESSION['incorrect_pw'];
+                                            unset($_SESSION['incorrect_pw']);
+                                            }
+                                        if(isset($_SESSION['incorrect_pw_change'])) {
+                                            echo $_SESSION['incorrect_pw_change'];
+                                            unset($_SESSION['incorrect_pw_change']);
+                                            }
+                                  ?>
 
                                 <div class="x_content">
                                     <form id="personnel-edit" class="form-horizontal form-label-left" action="phpupdate/personnel_update_info.php" method="POST" data-parsley-trigger="keyup">
                                         <?php
-                                        $per_id = $_GET['per_id'];
-                                        $uname;
-                                        $password;
-                                        $last_name;
-                                        $first_name;
-                                        $mname;
-                                        $position;
-                                        $access_type;
-                                        $accnt_status;
+                                          $per_id = $_GET['per_id'];
+                                          $uname;
+                                          $hashed_pw;
+                                          $last_name;
+                                          $first_name;
+                                          $mname;
+                                          $position;
+                                          $access_type;
+                                          $accnt_status;
 
                                         $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
                                         $result = $conn->query($statement);
@@ -69,7 +84,7 @@
                                         if($result->num_rows>0) {
                                             while($row=$result->fetch_assoc()){
                                                 $uname = $row['uname'];
-                                                $password = $row['password'];
+                                                $hashed_pw = $row['hashed_pw'];
                                                 $last_name = $row['last_name'];
                                                 $first_name = $row['first_name'];
                                                 $mname = $row['mname'];
@@ -112,11 +127,10 @@
                                         <div class="item form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input id="password" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$password'"; ?>
+                                                <input id="password" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$hashed_pw'"; ?>
                                                  data-parsley-minlength="4"
-                                                 data-parsley-minlength-message="Password should be greater than 4 characters"
-                                                 data-parsley-maxlength="50"
-                                                 data-parsley-maxlength-message="Error"/><br><br>
+                                                 data-parsley-minlength-message="Password should be greater than 4 characters"/><br><br>
+
                                                 <a href="" span class="label label-warning" data-toggle="modal" data-target=".bs-example-modal-sm" class="btn btn-warning btn-xs">Edit Password</a></span>
                                             </div>
                                         </div>
@@ -206,13 +220,9 @@ OPTION2;
                                         <div class="item form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Confirm Password</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input id="password2" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password2" 
+                                                <input id="password" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password" 
                                                  data-parsley-minlength="4"
-                                                 data-parsley-minlength-message="Password should be greater than 4 characters"
-                                                 data-parsley-maxlength="50"
-                                                 data-parsley-maxlength-message="Error"
-                                                 data-parsley-equalto = "#password"
-                                                 data-parsley-equalto-message = "Password does not match"/>
+                                                 data-parsley-minlength-message="Password should be greater than 4 characters"/>
                                             </div>
                                         </div>
 
@@ -248,6 +258,7 @@ OPTION2;
                                 $per_id;
                                 $uname;
                                 $password;
+                                $hashed_pw;
                                 $last_name;
                                 $first_name;
                                 $mname;
@@ -261,6 +272,7 @@ OPTION2;
                                     while($row=$result->fetch_assoc()){
                                         $uname = $row['uname'];
                                         $password = $row['password'];
+                                        $hashed_pw = $row['hashed_pw'];
                                         $last_name = $row['last_name'];
                                         $first_name = $row['first_name'];
                                         $mname = $row['mname'];
@@ -271,13 +283,11 @@ OPTION2;
                                 }
                                 ?>
                                 <label for="cpw">Current Password :</label>
-                                <input type="password" id="cpw" class="form-control" name="cpw" required 
+                                <input type="password" id="cpw" class="form-control" name="password" required 
                                     data-parsley-minlength="4"
                                     data-parsley-minlength-message="Password should be greater than 4 characters"
-                                    data-parsley-maxlength="50"
-                                    data-parsley-maxlength-message="Error"
-                                    data-parsley-equalto = "#password"
-                                    data-parsley-equalto-message = "Incorrect Current Password">
+                                    data-parsley-maxlength="300"
+                                    data-parsley-maxlength-message="Error">
 
                                 <label for="npw">New Password :</label>
                                 <input type="password" id="npw" class="form-control" name="npw" data-parsley-trigger="change" required 
@@ -287,7 +297,7 @@ OPTION2;
                                     data-parsley-maxlength-message="Error">
 
                                 <label for="cnpw">Confirm New Password :</label>
-                                <input type="password" id="cnpw" class="form-control" name="password" data-parsley-trigger="change" required 
+                                <input type="password" id="cnpw" class="form-control" name="new_password" data-parsley-trigger="change" required 
                                     data-parsley-minlength="4"
                                     data-parsley-minlength-message="Password should be greater than 4 characters"
                                     data-parsley-maxlength="50"

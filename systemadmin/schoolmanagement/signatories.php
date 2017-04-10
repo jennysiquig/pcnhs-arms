@@ -42,7 +42,7 @@
             <div class="col-sm-7">
                 <div class="input-group">
 
-                    <input type="text" class="form-control" name="search_key" placeholder="Search Signatory ID or Name">
+                    <input type="text" class="form-control" name="search_key" placeholder="Search Signatories">
                     <span class="input-group-btn">
                   <button class="btn btn-primary">Go</button>
                 </span>
@@ -59,8 +59,13 @@
                 <div class="x_title">
                     <h2><i class="fa fa-users"> </i> Signatories</h2>
                     <div class="clearfix"></div>
-                    <br/>
-
+                      <br/>
+                     <?php
+                        if(isset($_SESSION['sign_del'])) {
+                           echo $_SESSION['sign_del'];
+                           unset($_SESSION['sign_del']);
+                        }
+                      ?>
                 </div>
                 <div class="x_content">
                                     <div class="row">
@@ -125,6 +130,11 @@
                                               OR CONCAT(first_name,' ',last_name) LIKE '$search'
                                               OR CONCAT(last_name,first_name,mname) LIKE '$search'
                                               OR CONCAT(last_name,' ',first_name) LIKE '$search'
+                                              OR yr_started LIKE '%$search%'
+                                              OR yr_ended LIKE '%$search%'
+                                              OR sign_id LIKE '%$search%'
+                                              OR title LIKE '%$search%'
+                                              OR position LIKE '%$search%'
                                               LIMIT $start, $limit";
                             }else{
                                 $statement = "SELECT * FROM pcnhsdb.signatories

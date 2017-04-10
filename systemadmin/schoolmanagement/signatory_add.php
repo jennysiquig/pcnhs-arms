@@ -51,6 +51,12 @@
                         </li>
                     </ul>
                     <div class="clearfix"></div>
+                    <?php
+                        if(isset($_SESSION['error_pop'])) {
+                            echo $_SESSION['error_pop'];
+                            unset($_SESSION['error_pop']);
+                                    }
+                    ?>
                 </div>
                 <div class="x_content">
                     <form id="signatory-add" class="form-horizontal form-label-left" action="phpinsert/signatory_insert.php" method="POST" data-parsley-trigger="keyup">

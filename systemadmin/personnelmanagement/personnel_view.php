@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php ob_start()?>
 <?php require_once "../../resources/config.php"; ?>
+<?php require_once "bcrypt/Bcrypt.php";?>
 <?php include('include_files/session_check.php'); ?>
 
 <html>
@@ -51,6 +52,21 @@
                                 ?>
                                 <h2><i class="fa fa-user"> </i> View Personnel Account</h2>
                                     <div class="clearfix"></div><br>
+                                    <?php
+                                          if(isset($_SESSION['success_personnel'])) {
+                                            echo $_SESSION['success_personnel'];
+                                            unset($_SESSION['success_personnel']);
+                                            }
+
+                                         if(isset($_SESSION['success_personnel_edit'])) {
+                                            echo $_SESSION['success_personnel_edit'];
+                                            unset($_SESSION['success_personnel_edit']);
+                                            }
+                                        if(isset($_SESSION['incorrect_pw_del'])) {
+                                            echo $_SESSION['incorrect_pw_del'];
+                                            unset($_SESSION['incorrect_pw_del']);
+                                            }
+                                    ?>
 
                     <div class="x_content">
                         <form class="form-horizontal form-label-left" action="phpupdate/personnel_update_info.php" method="POST" novalidate>
@@ -59,6 +75,7 @@
                             $per_id = $_GET['per_id'];
                             $uname;
                             $password;
+                            $hashed_pw;
                             $last_name;
                             $first_name;
                             $mname;
@@ -77,6 +94,7 @@
 
                                     $uname = $row['uname'];
                                     $password = $row['password'];
+                                    $hashed_pw = $row['hashed_pw'];
                                     $last_name = $row['last_name'];
                                     $first_name = $row['first_name'];
                                     $mname = $row['mname'];
@@ -88,7 +106,6 @@
                                 header("location: personnels.php");
                                 die();
                             }
-                            $conn->close();
                             ?>
 
                             <div class="item form-group"><br>
@@ -116,7 +133,7 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="password" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$password'"; ?>>
+                                    <input id="password" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$hashed_pw'"; ?>>
                                 </div>
                             </div>
 
@@ -180,39 +197,76 @@
         </div>
     </div>
 </div>
-    <!-- /page content -->
-    <!-- Content Here -->
+<!-- Content Here -->
 <!-- Small modal -->
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel2">Remove Personnel Account :<br>
-                    <b><?php echo "$uname";?></b>
-                </h4>
-            </div>
-            <div class="modal-body">
-                    <!-- start form for validation -->
-                    <form id="change-pw" action="phpdelete/delete.php" method="DELETE" data-parsley-validate>
-                        <label for="cpw">Enter Personnel Account Password :</label>
-                        <input type="password" id="vpw" class="form-control" name="vpw" required 
-                            data-parsley-minlength="4"
-                            data-parsley-minlength-message="Password should be greater than 4 characters"
-                            data-parsley-maxlength="50"
-                            data-parsley-maxlength-message="Error"
-                            data-parsley-equalto="#password"
-                            data-parsley-equalto-message="Incorrect Personnel Account Password">
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-danger" >Remove</button>
+<!-- Small modal -->
+        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2"><i class="fa fa-lock"></i> Change Password</h4>
+                    </div>
+                    <div class="modal-body">
+                            <!-- start form for validation -->
+                            <form id="change-pw" action="phpdelete/delete.php" method="POST" data-parsley-validate>
+                               <?php
+                                $per_id;
+                                $uname;
+                                $password;
+                                $hashed_pw;
+                                $last_name;
+                                $first_name;
+                                $mname;
+                                $position;
+                                $access_type;
+                                $accnt_status;
+
+                                $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
+                                $result = $conn->query($statement);
+                                if($result->num_rows>0) {
+                                    while($row=$result->fetch_assoc()){
+                                        $uname = $row['uname'];
+                                        $password = $row['password'];
+                                        $hashed_pw = $row['hashed_pw'];
+                                        $last_name = $row['last_name'];
+                                        $first_name = $row['first_name'];
+                                        $mname = $row['mname'];
+                                        $position = $row['position'];
+                                        $access_type = $row['access_type'];
+                                        $accnt_status = $row['accnt_status'];
+                                    }
+                                }
+                                ?>
+
+                                <label for="cnpw">Enter Personnel Account Password :</label>
+                                <input type="password" id="cnpw" class="form-control" name="confirm_pw" data-parsley-trigger="change" required 
+                                    data-parsley-minlength="4"
+                                    data-parsley-minlength-message="Password should be greater than 4 characters"
+                                    data-parsley-maxlength="50"
+                                    data-parsley-maxlength-message="Error">
+
+                                <input id = "per_id" name = "per_id" type = "hidden" value=<?php echo "'$per_id'"; ?> />
+                                <input id = "uname" name = "uname" type = "hidden" value=<?php echo "'$uname'"; ?> />
+                                <input id = "last_name" name = "last_name" type = "hidden" value=<?php echo "'$last_name'"; ?> />
+                                <input id = "first_name" name = "first_name" type = "hidden" value=<?php echo "'$first_name'"; ?> />
+                                <input id = "mname" name = "mname" type = "hidden" value=<?php echo "'$mname'"; ?> />
+                                <input id = "position" name = "position" type = "hidden" value=<?php echo "'$position'"; ?> />
+                                <input id = "access_type" name = "access_type" type = "hidden" value=<?php echo "'$access_type'"; ?> />
+                                <input id = "accnt_status" name = "accnt_status" type = "hidden" value=<?php echo "'$accnt_status'"; ?> />
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" >Save</button>
+                                </div>
+
+                            </form>
                         </div>
-                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    <!-- /modals -->
 <!-- /modals -->
     <!-- Footer -->
     <?php include "../../resources/templates/admin/footer.php"; ?>

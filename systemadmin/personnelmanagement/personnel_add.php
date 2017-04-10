@@ -42,7 +42,18 @@
                         <h2><i class="fa fa-user"> </i> Add Personnel Account</h2>
                         <div class="clearfix"></div>
                         <br>
+                                        <?php
+                                        if(isset($_SESSION['error_pop'])) {
+                                            echo $_SESSION['error_pop'];
+                                            unset($_SESSION['error_pop']);
+                                            }
 
+                                          if(isset($_SESSION['error_pop2'])) {
+                                            echo $_SESSION['error_pop2'];
+                                            unset($_SESSION['error_pop2']);
+                                            }
+
+                                        ?>
                             <div class="x_content">
                                 <form id="personnel-add" class="form-horizontal form-label-left" action="phpinsert/personnel_insert.php" method="POST" data-parsley-trigger="keyup">
 

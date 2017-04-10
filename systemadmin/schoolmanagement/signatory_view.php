@@ -52,6 +52,17 @@
                         </li>
                     </ul>
                     <div class="clearfix"></div>
+                    <?php
+                        if(isset($_SESSION['success_signatory'])) {
+                            echo $_SESSION['success_signatory'];
+                            unset($_SESSION['success_signatory']);
+                                }
+
+                        if(isset($_SESSION['success_signatory_edit'])) {
+                            echo $_SESSION['success_signatory_edit'];
+                            unset($_SESSION['success_signatory_edit']);
+                                }
+                    ?>
                 </div>
                 <div class="x_content">
                     <form class="form-horizontal form-label-left" action="phpupdate/update_signatory_info.php" method="POST" novalidate>

@@ -46,7 +46,7 @@
             <div class="col-sm-7">
                 <div class="input-group">
 
-                    <input type="text" class="form-control" name="search_key" placeholder="Search Personnel ID or User Name">
+                    <input type="text" class="form-control" name="search_key" placeholder="Search Personnel Username or ID">
                     <span class="input-group-btn">
                   <button class="btn btn-primary">Go</button>
                 </span>
@@ -65,7 +65,12 @@
                     </h2>
                     <div class="clearfix"></div>
                     <br/>
-
+                      <?php
+                            if(isset($_SESSION['success_personnel_delete'])) {
+                               echo $_SESSION['success_personnel_delete'];
+                               unset($_SESSION['success_personnel_delete']);
+                              }
+                      ?>
                 </div>
                 <div class="x_content">
                                                         <div class="row">
@@ -126,6 +131,8 @@
                                 AND (per_id NOT LIKE '1' and per_id NOT LIKE '2') 
                                 OR (uname LIKE '%$search%')
                                 AND (uname NOT LIKE 'admin' and uname NOT LIKE 'registrar') 
+                                OR (first_name LIKE '%$search%')
+                                AND (first_name NOT LIKE 'admin' and first_name NOT LIKE 'registrar')
                                 LIMIT $start, $limit";
                             }else{
                                 $statement = "SELECT * FROM pcnhsdb.personnel
