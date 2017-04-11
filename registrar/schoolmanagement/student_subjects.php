@@ -345,7 +345,7 @@ SUBJS;
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
 		 <script type="text/javascript" src="../../resources/libraries/tablesorter/jquery.tablesorter.js" ></script>
-		<script src= "../../js/custom.min.js"></script>
+		<script src= "../../assets/js/custom.min.js"></script>
 	<!-- Scripts -->
 	<script>
 	function showSubjects() {

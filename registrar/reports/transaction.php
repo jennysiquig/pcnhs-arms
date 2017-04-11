@@ -25,7 +25,7 @@
 <html>
 	<head>
 		<title>Transaction Report</title>
-		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+		<link rel="shortcut icon" href="../../assets/images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -283,7 +283,7 @@ TRANS;
 		
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
-		<script src= "../../js/custom.js"></script>
+		<script src= "../../assets/js/custom.js"></script>
 		<script type="text/javascript">
 			$('#transaction_date').daterangepicker({
 			    ranges: {

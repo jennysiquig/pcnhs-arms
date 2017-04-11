@@ -47,7 +47,7 @@
 <html>
 	<head>
 		<title>Generate Credential</title>
-		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+		<link rel="shortcut icon" href="../../assets/images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -65,8 +65,8 @@
 		<!-- iCheck -->
 		<link href=".../../../../resources/libraries/iCheck/skins/flat/green.css" rel="stylesheet">
 		<!-- Custom Theme Style -->
-		<link href="../../css/custom.min.css" rel="stylesheet">
-		<link href="../../css/tstheme/style.css" rel="stylesheet">
+		<link href="../../assets/css/custom.min.css" rel="stylesheet">
+		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
@@ -238,7 +238,7 @@
 <!-- iCheck -->
 	<script src="../../resources/libraries/iCheck/icheck.min.js"></script>
 <!-- Custom Theme Scripts -->
-<script src= "../../js/custom.min.js"></script>
+<script src= "../../assets/js/custom.min.js"></script>
 <!-- Scripts -->
 </body>
 </html>

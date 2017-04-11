@@ -287,7 +287,7 @@ STUDLIST;
     <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
     <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src= "../../js/custom.min.js"></script>
+    <script src= "../../assets/js/custom.min.js"></script>
     <!-- NProgress -->
     <script src="../../resources/libraries/nprogress/nprogress.js"></script>
     <script type="text/javascript" src=<?php echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>

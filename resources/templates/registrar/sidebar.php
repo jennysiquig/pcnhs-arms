@@ -14,7 +14,7 @@ echo <<<SB
 				<!-- menu profile quick info -->
 				<div class="profile clearfix">
 					<div class="profile_pic">
-						<img src="$base_url/images/icon-user-default.png" alt="Registrar" class="img-circle profile_img">
+						<img src="$base_url/assets/images/icon-user-default.png" alt="Registrar" class="img-circle profile_img">
 					</div>
 					<div class="profile_info">
 						<span>Welcome,</span>

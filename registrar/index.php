@@ -24,7 +24,7 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 <html>
 	<head>
 		<title>Home</title>
-		<link rel="shortcut icon" href="../images/pines.png" type="image/x-icon" />
+		<link rel="shortcut icon" href="../assets/images/pines.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,8 +42,8 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 		<link href="../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
 		<!-- Custom Theme Style -->
-		<link href="../css/custom.min.css" rel="stylesheet">
-		<link href="../css/tstheme/style.css" rel="stylesheet">
+		<link href="../assets/css/custom.min.css" rel="stylesheet">
+		<link href="../assets/css/tstheme/style.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -277,7 +277,7 @@ UNCLAIMED;
 		<script src="../resources/libraries/flot-spline/js/jquery.flot.spline.min.js"></script>
 		<script src="../resources/libraries/flot.curvedlines/curvedLines.js"></script>
 		<!-- Custom Theme Scripts -->
-		<script src= "../js/custom.min.js"></script>
+		<script src= "../assets/js/custom.min.js"></script>
 		<!-- Scripts -->
 	</body>
 </html>

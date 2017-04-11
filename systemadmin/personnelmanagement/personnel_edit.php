@@ -345,7 +345,7 @@ OPTION2;
     <script src="../../resources/libraries/moment/min/moment.min.js"></script>
     <script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src= "../../js/custom.min.js"></script>
+    <script src= "../../assets/js/custom.min.js"></script>
     <!-- Scripts -->
     <!-- jquery.inputmask -->
         <script>

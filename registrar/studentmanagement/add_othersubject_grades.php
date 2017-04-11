@@ -135,7 +135,7 @@
             <!-- NProgress -->
             <script src="../../resources/libraries/nprogress/nprogress.js"></script>
             <!-- Custom Theme Scripts -->
-            <script src= "../../js/custom.min.js"></script>
+            <script src= "../../assets/js/custom.min.js"></script>
             <!-- Scripts -->
             <!-- Parsley -->
             <script>

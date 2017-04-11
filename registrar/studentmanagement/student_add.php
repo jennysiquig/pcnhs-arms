@@ -293,7 +293,7 @@ OPTION1;
 				<!-- NProgress -->
     			<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 				<!-- Custom Theme Scripts -->
-				<script src= "../../js/custom.min.js"></script>
+				<script src= "../../assets/js/custom.min.js"></script>
 				<!-- Scripts -->
 				<!-- Date Range Picker -->
 				<script src="../../resources/libraries/moment/min/moment.min.js"></script>

@@ -288,7 +288,7 @@ PAYMENT;
 		
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
-		<script src= "../../js/custom.js"></script>
+		<script src= "../../assets/js/custom.js"></script>
 		<script type="text/javascript">
 			$('#payment_date').daterangepicker({
 			    ranges: {

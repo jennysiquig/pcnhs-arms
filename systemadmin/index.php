@@ -403,7 +403,7 @@ LOGLIST;
     <script src="../resources/libraries/moment/min/moment.min.js"></script>
     <script src="../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src= "../js/custom.min.js"></script>
+    <script src= "../assets/js/custom.min.js"></script>
     <script type="text/javascript" src=<?php echo "../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
     <!-- Scripts -->
     <script type="text/javascript">

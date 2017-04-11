@@ -103,7 +103,7 @@
 	<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 	<!-- Custom Theme Scripts -->
-	<script src= "../../js/custom.min.js"></script>
+	<script src= "../../assets/js/custom.min.js"></script>
 	<!-- Scripts -->
 	<!-- Parsley -->
 			    <script>
