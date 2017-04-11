@@ -107,7 +107,7 @@ UNCLAIMED;
 								</tbody>
 							</table>
 							<?php
-							$statement = "SELECT req_id, stud_id, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='u';";
+							$statement = "SELECT req_id, stud_id, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='p';";
 							
 							$rows = mysqli_num_rows(mysqli_query($conn, $statement));
 							$total = ceil($rows/$limit);
@@ -115,7 +115,7 @@ UNCLAIMED;
 									<div class="col s12">
 											<ul class="pagination center-align">';
 													if($page > 1) {
-													echo "<li class=''><a href='unclaimed.php?page=".($page-1)."'>Previous</a></li>";
+													echo "<li class=''><a href='requests.php?page=".($page-1)."'>Previous</a></li>";
 													}else if($total <= 0) {
 													echo '<li class="disabled"><a>Previous</a></li>';
 													}else {
@@ -123,15 +123,15 @@ UNCLAIMED;
 													}
 													for($i = 1;$i <= $total; $i++) {
 													if($i==$page) {
-													echo "<li class='active'><a href='unclaimed.php?page=$i'>$i</a></li>";
+													echo "<li class='active'><a href='requests.php?page=$i'>$i</a></li>";
 													} else {
-													echo "<li class=''><a href='unclaimed.php?page=$i'>$i</a></li>";
+													echo "<li class=''><a href='requests.php?page=$i'>$i</a></li>";
 													}
 													}
 													if($total == 0) {
 													echo "<li class='disabled'><a>Next</a></li>";
 													}else if($page!=$total) {
-													echo "<li class=''><a href='unclaimed.php?page=".($page+1)."'>Next</a></li>";
+													echo "<li class=''><a href='requests.php?page=".($page+1)."'>Next</a></li>";
 													}else {
 													echo "<li class='disabled'><a>Next</a></li>";
 													}

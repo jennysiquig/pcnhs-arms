@@ -67,7 +67,7 @@
 <html>
     <head>
         <title>Add Student Grades</title>
-        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="../../assets/images/pines.png" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -85,8 +85,8 @@
         <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
         
         <!-- Custom Theme Style -->
-        <link href="../../css/custom.min.css" rel="stylesheet">
-        <link href="../../css/tstheme/style.css" rel="stylesheet">
+        <link href="../../assets/css/custom.min.css" rel="stylesheet">
+        <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
         
         <!--[if lt IE 9]>
         <script src="../js/ie8-responsive-file-warning.js"></script>
@@ -417,9 +417,7 @@ NUM;
                             <p>Open Grades Save File (filename.csv)</p>
                                 <input type="file" name="grades" id="fileInput" accept=".csv" />
                             </div>
-                                <br>
-                                 
-                            
+                            <br>     
                         </div>
                     </form>
                 </div>

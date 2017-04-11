@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Add Signatory</title>
-    <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="../../assets/images/pines.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +17,8 @@
     <!-- NProgress -->
     <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="../../css/custom.min.css" rel="stylesheet">
-    <link href="../../css/tstheme/style.css" rel="stylesheet">
+    <link href="../../assets/css/custom.min.css" rel="stylesheet">
+    <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
 
 </head> 
 <body class="nav-md">

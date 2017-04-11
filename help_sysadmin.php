@@ -38,8 +38,8 @@
         <!-- Date Range Picker -->
         <link href="resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
         <!-- Custom Theme Style -->
-        <link href="css/custom.min.css" rel="stylesheet">
-        <link href="css/tstheme/style.css" rel="stylesheet">
+        <link href="assets/css/custom.min.css" rel="stylesheet">
+        <link href="assets/css/tstheme/style.css" rel="stylesheet">
         <!-- PDFObject -->
         <script src="resources/libraries/PDFObject/pdfobject.min.js"></script>
 

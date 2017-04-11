@@ -23,7 +23,7 @@
 
 	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
-    if($result->num_rows <= 0) {
+    if($result->num_rows == 0) {
     	if(isset($_GET['new_request']) && $_GET['new_request']) {
 			$cred_id = htmlspecialchars($_GET['credential'], ENT_QUOTES);
 		    $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
@@ -34,6 +34,10 @@
 	    	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `status`, `date_processed`, `request_purpose`, `per_id`) VALUES ('$cred_id', '$stud_id', 'p', '$date', '$request_purpose', '$personnel_id');";
 
 	    	mysqli_query($conn, $statement1);
+	    	header("location: requests.php");
+	    	die();
+
+	    	
 		}
     }
 

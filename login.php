@@ -38,7 +38,7 @@
         <![endif]-->
 
         <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="images/pines.png">
+        <link rel="shortcut icon" href="assets/images/pines.png">
     </head>
 
     <body>
@@ -50,7 +50,7 @@
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
 
-                            <h1><i class="fa fa-university"></i> <strong>PCNHS ARMS</strong> Log In</h1>
+                            <h1><img src="assets/images/pcnhslogo.png" style='height: 80px; width: 80px;'/> <strong>PCNHS ARMS</strong> Log In</h1>
                             <div class="description">
                                 <p>
                                 </p>

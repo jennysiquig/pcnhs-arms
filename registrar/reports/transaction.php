@@ -43,8 +43,8 @@
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
 		<!-- Custom Theme Style -->
-		<link href="../../css/custom.css" rel="stylesheet">
-		<link href="../../css/tstheme/style.css" rel="stylesheet">
+		<link href="../../assets/css/custom.css" rel="stylesheet">
+		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>

@@ -19,7 +19,7 @@
 <html>
   <head>
 
-    <link rel="stylesheet" href="../../css/accreport.css">
+    <link rel="stylesheet" href="../../assets/css/accreport.css">
     <title>Accomplishment Report</title>
     <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -29,8 +29,8 @@
     
     <!-- Datatables -->
     <!-- Custom Theme Style -->
-    <link href="../../css/custom.min.css" rel="stylesheet">
-    <link href="../../css/tstheme/style.css" rel="stylesheet">
+    <link href="../../assets/css/custom.min.css" rel="stylesheet">
+    <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
 
     </head>
 
