@@ -44,8 +44,25 @@
 
             <h4 class="inst">PINES CITY NATIONAL HIGH SCHOOL</h4>
             <h4 class="inst">REGISTRAR'S ACCOMPLISHMENT REPORT</h4>
-            <div id="month"></div>
-            <div id="year"></div>
+
+
+
+            <?php $accomplishment_date = $_SESSION['accomplishment_date'];
+
+                $accomplishment_date = explode("/", $accomplishment_date);
+
+                $a_month = $accomplishment_date[0];
+                $a_year = substr($accomplishment_date[2], 0, 4);
+                
+                if($a_month < 10) {
+                    $a_month = substr($a_month, 1, 1);
+                }
+
+                $month_array = array('January','February','March','April','May','June','July','August','September','October','November','December');
+                    $monthstr = $month_array[$a_month-1]; ?>
+
+            <div id="month"> <?php echo $monthstr; ?> </div>
+            <div id="year"> <?php echo $a_year; ?> </div>
 
             <div id ="report">
                 
@@ -69,7 +86,7 @@
 
                                         <div id="r_fm">
                                     
-                                 <?php echo $r_fm; ?>
+                                        <?php echo $r_fm; ?>
 
                                         </div>
 
@@ -83,8 +100,11 @@
                                         <p class="td-p1">Registrar's Services</p>
 
                                         <p class="td-p2">The registrar's office is responsible in the maintenance of students' permanent academic records, receiving of incoming correspondence, processing of requests and issuance/releasing of school credentials.</p>
+                                    
+                                    </td>
 
-                                        <td class="col">
+
+                                    <td class="col">
 
                                         <p class="td-p">Below is the summary of accomplished and released credentials</p>
 
@@ -107,13 +127,9 @@
                                             <td class="rel"></td>
                                             </tr>
 
-                                            </tr>
-                                            </table>
                                             
-                                        </td>
-
+                                            </table>
                                     </td>
-
                                 </tr>
 
                                 <tr id="b6-r3">
@@ -127,7 +143,7 @@
 
                                     <td class="col">
 
-                                        <div id="area3">
+                                        <div id="fm">
                                     
                                         <?php echo $fm; ?>
 
@@ -146,7 +162,7 @@
 
                                     <td class="col">
 
-                                        <div id="area3">
+                                        <div id="ot">
                                     
                                         <?php echo $ot; ?>
 

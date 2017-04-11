@@ -84,7 +84,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								Select Date of Accomplishment
-								<form class="form-horizontal" action="accomplishment.php" method="get">
+								<form class="form-horizontal" action="accomplishment.php" method="get" value="accomplishment_date">
 									<fieldset>
 										
 										<div class="control-group">
@@ -93,7 +93,7 @@
 													<span class="add-on input-group-addon">
 														<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
 													</span>
-													<input type="text" name="accomplishment_date" id="accomplishment_date" class="form-control" value=" " />
+													<input type="text" name="accomplishment_date" id="accomplishment_date" class="form-control" value="accomplishment_date" />
 													<span class="input-group-btn">
 														<button type="submit" class="btn btn-primary">Go!</button>
 													</span>
@@ -106,8 +106,10 @@
 							</div>
 								<br>
 								<div class="col-md-8">
-								<a href="generate_accomp.php"><button type="button" class="btn btn-success pull-right">Generate Report</button></a>
+								<a href = "generate_accomp.php"><button type="button" class="btn btn-success pull-right">Generate Report</button></a></form>
 								</div>
+
+								
 						</div>
 	                      <!-- Date Picker -->
 						<div class="x_content">
@@ -256,6 +258,8 @@ REQ;
 													echo "<li class='disabled'><a>Next</a></li>";
 													}
 											echo "</ul></div></div>";
+
+											$_SESSION['accomplishment_date'] = $accomplishment_date;
 				             ?>
 						</div>
 					</div>
@@ -297,6 +301,12 @@ REQ;
 			  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
 			});
 		</script>
+
+		<script type="text/javascript">
+           $(document).ready(function(){
+                 $("#date").datepicker();
+           });
+   </script>
 	
 </body>
 </html>
