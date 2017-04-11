@@ -38,7 +38,7 @@
         <![endif]-->
 
         <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="assets/images/pines.png">
+        <link rel="shortcut icon" href="assets/images/ico/fav.png">
     </head>
 
     <body>

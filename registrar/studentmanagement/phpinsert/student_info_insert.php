@@ -20,7 +20,7 @@
 	$towncity = htmlspecialchars(filter_var($_POST['birth_place_towncity'], FILTER_SANITIZE_STRING));
 	$barangay = htmlspecialchars(filter_var($_POST['birth_place_barangay'], FILTER_SANITIZE_STRING));
 
-	$second_school_name = htmlspecialchars(filter_var($_POST['second_school_name'], FILTER_SANITIZE_STRING));
+	$second_school_name = strtoupper(htmlspecialchars(filter_var($_POST['second_school_name'], FILTER_SANITIZE_STRING)));
 	$program = htmlspecialchars(filter_var($_POST['program'], FILTER_SANITIZE_STRING));
 	$curriculum = htmlspecialchars(filter_var($_POST['curriculum'], FILTER_SANITIZE_STRING));
 
