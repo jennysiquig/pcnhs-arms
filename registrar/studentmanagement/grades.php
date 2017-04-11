@@ -162,6 +162,7 @@ REMOVE;
 			</div>
 			<div class="clearfix"></div>
 		    <!-- Other Subjects -->
+		    <div class="row">
 			<div class="col-md-12 col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<ul class="nav navbar-right panel_toolbox">
@@ -244,7 +245,9 @@ YR1;
 		              </div>
 		            </div>
 		           </div>
-		            <!-- Failed Subjects -->
+		    </div>
+		    <!-- Failed Subjects -->
+		    <div class="row">
 			<div class="col-md-12 col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<ul class="nav navbar-right panel_toolbox">
@@ -301,8 +304,8 @@ YR1;
 		                </div>
 		              </div>
 		            </div>
+		          </div>
              <!-- END -->
-			</div> 
 			<!-- Other Subjects -->
 
 		</div>
