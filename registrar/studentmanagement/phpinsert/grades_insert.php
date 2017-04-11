@@ -40,7 +40,6 @@
 			$total_credit = filter_var($_POST['total_credits'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 			$insertgrades = "";
 			$comment = "";
-			$credit_earned = htmlspecialchars($_POST['credit_earned'], ENT_QUOTES);
 			$willInsert = true;
 
 			$checkgrade = "SELECT * from pcnhsdb.grades where stud_id = '$stud_id' AND yr_level = '$yr_level'";
@@ -78,7 +77,7 @@
 			if(empty($total_credit)) {
 				$willInsert = false;
 				$alert_type = "danger";
-				$error_message = "Empty Credits Earned.";
+				$error_message = "Empty Total Credits Earned.";
 				$popover = new Popover();
 				$popover->set_popover($alert_type, $error_message);	
 				$_SESSION['error_pop'] = $popover->get_popover();
@@ -86,10 +85,13 @@
 				die();
 			}
 			foreach ($_POST['subj_id'] as $key => $value) {
-				$subj_id = $_POST['subj_id'][$key];
-				$fin_grade = $_POST['fin_grade'][$key];
-				$credit_earned = $_POST['credit_earned'][$key];
-// 
+				$subj_id = htmlspecialchars($_POST['subj_id'][$key]);
+				$fin_grade = htmlspecialchars($_POST['fin_grade'][$key]);
+				$credit_earned = htmlspecialchars($_POST['credit_earned'][$key]);
+// 	
+				if(empty($credit_earned)) {
+					$credit_earned = 1;
+				}
 				if($fin_grade > 99.99 || $fin_grade < 70) {
 					$willInsert = false;
 					$alert_type = "danger";

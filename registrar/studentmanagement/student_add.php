@@ -269,6 +269,7 @@ OPTION1;
 								<div class="form-group">
 									<div class="col-md-3 col-md-offset-3 pull-right">
 										<button type="submit" class="btn btn-success"><i class="fa fa-save m-right-xs"></i> Add Student</button>
+										<button type="reset" onclick="releaseData();" class="btn btn-default">Reset</button>
 									</div>
 								</div>
 							</div>
@@ -311,7 +312,7 @@ OPTION1;
 				$.listen('parsley:field:validate', function() {
 				validateFront();
 				});
-				$('#validate-add .btn').on('click', function() {
+				$('#validate-add submit').on('click', function() {
 				$('#validate-add').parsley().validate();
 				validateFront();
 				});
@@ -363,5 +364,17 @@ OPTION1;
 		              return true;
 		           }
 		        </script>
+		       	<script type="text/javascript">
+		       		$( function() {
+						$( "#validate-add" ).sisyphus({
+							autoRelease: false
+						});
+					});
+				</script>
+				<script type="text/javascript">
+					function releaseData() {
+						$('#validate-add').sisyphus().manuallyReleaseData();
+					}
+				</script>
 			</body>
 		</html>
