@@ -59,55 +59,72 @@
 							<div class="clearfix"></div>
 						</div>
 						<form action="preview_accomp.php" method="POST">
-						<div>
 
-								<div>
-							 	<div class="form-group">
+								
 
 									<label for="r_fm" class="col-md-3">Records and File Management</label>
 									<br>
 	                    			<div class="col-md-12 pull-right">
 	                      				<textarea class="resizable_textarea form-control" name="r_fm"></textarea>
 	                    			</div>
-                    			</div>
-                    			</div>
+                    			
 
-                  				<div>
-                    			<div class="form-group">
+                  				
                   					<label for=
                   					"fm" class="col-md-2">Registrar's Services</label>
                   					<br>
                     				<div class="col-md-12">
                     					
                     				</div>
-                    			</div>
-                    			</div>
 
-                  				<div>
-                    			<div class="form-group">
+                    				<div id="date">
+                    				<?php $accomplishment_date = $_SESSION['accomplishment_date'];
+
+	             						$accomplishment_date = explode("/", $accomplishment_date);
+
+	             						$a_month = $accomplishment_date[0];
+	             						$a_year = substr($accomplishment_date[2], 0, 4);
+	            
+	             						if($a_month < 10) {
+	                						$a_month = substr($a_month, 1, 1);
+	             						}
+
+	              						$month_array = array('January','February','March','April','May','June','July','August','September','October','November','December');
+	                					$monthstr = $month_array[$a_month-1]; ?>
+
+                    					<!-- <?php // echo $accomplishment_date; ?> -->
+                    					<?php echo $monthstr; ?>
+                    					<?php echo $a_year; ?>
+                    				</div>
+                    	
+
+                  				
                   					<label for=
                   					"fm" class="col-md-2">Financial Management</label>
                   					<br>
                     				<div class="col-md-12 pull-right">
                       				<textarea class="resizable_textarea form-control" name="fm"></textarea>
                     				</div>
-                    			</div>
-                    			</div>
+                    			
                     		
-                    			<br>
-                    			<br>
-                    			<div class="form-group">
+                    			
                     				<label id="ot" class="col-md-2">Other Tasks</label>		
                     				<div class="col-md-12 pull-right">
                       				<textarea class="resizable_textarea form-control" name="ot"></textarea>
                     				</div>
-                    			</div>
-                  		</div>
+
+
+                   </div>
 
                   		<button id="generatebutton" class="btn btn-primary pull-right" type="submit"><i class="fa fa-print m-right-xs"></i> Generate Credentials</button>
                   		</form>
 
-                  		<?php echo $_POST['accomplishment_date'];?>
+                  		<!-- <?php // $accomplishment_date = $_GET['accomplishment_date'];?>
+                  		<?php // echo $accomplishment_date;?> -->
+
+        
+
+
 					</div>
 			
 
