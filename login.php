@@ -20,7 +20,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>PCNHS ARMS Login</title>
+        <title>Log In</title>
 
         <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
@@ -39,27 +39,18 @@
 
         <!-- Favicon and touch icons -->
         <link rel="shortcut icon" href="images/pines.png">
-        <style type="text/css">
-             .transparent{
-              background: rgba(0,0,0,0.5);
-
-            }
-            img {
-                width: 120px;
-            }
-        </style>
     </head>
 
     <body>
 
         <!-- Top content -->
-        <div class="top-content transparent">
+        <div class="top-content">
             <div class="inner-bg">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
 
-                            <h1><strong>PCNHS ARMS</strong> Login</h1>
+                            <h1><i class="fa fa-university"></i> <strong>PCNHS ARMS</strong> Log In</h1>
                             <div class="description">
                                 <p>
                                 </p>
@@ -106,8 +97,10 @@
                                         <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
                                     </div>
                                     <button type="submit" class="btn">Sign in</button>
+
                                 </form>
                                 <br>
+                                 <center><a href="#">Forgot Password?</a></center>
                             </div>
                         </div>
                     </div>
