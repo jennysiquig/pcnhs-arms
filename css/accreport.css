@@ -47,15 +47,16 @@ body{
 	font-size: 14px;
 }
 
-td.col{
-	max-width: 300px;
+.col{
+	max-width: 350px;
 	border-color: black;
 	border-width: 1px;
 	border-style: solid;
-	padding-bottom: 50px;
 	margin-top: 0px;
 	padding-top:0px;
-	word-break: break-all;
+	word-break: keep-all;
+	white-space: normal;
+	text-align: justify;
 }
 
 table > tr{
@@ -63,7 +64,7 @@ table > tr{
 }
 
 .td-p1{
-	width: 325px;
+	width: 360px;
 	font-weight: bold;
 	margin: 0px;
 	padding: 0px;
@@ -74,14 +75,14 @@ table > tr{
 }
 
 .td-p2{
-	width: 325px;
+	width: 360px;
 	margin: 0px;
 	padding: 0px;
 	max-height: auto;
 }
 
 #item-t{
-	margin-top: 25px;
+	margin-top: 10px;
 	width: 325px;
 	max-height: 150px;
 	border: 1px solid black;
@@ -127,10 +128,14 @@ td.rel{
 
 #r_fm, #fm, #ot{
 	padding-top: 0px;
-}
-
-pre{
 	margin-top:0px;
-		font: 12px, "Calibri";
-	width: 300px;
+	width: 360px;
+	font-family: "Calibri";
+	word-break: normal;
+	white-space: normal;
+	text-align: justify;
 }
+/*
+pre{
+	white-space: normal;
+}*/
