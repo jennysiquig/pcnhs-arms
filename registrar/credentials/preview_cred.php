@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
 <?php ob_start(); ?>
+<?php session_start(); ?>
 <?php $stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES) ?>
 <!-- Update Database -->
 <?php
@@ -45,7 +46,7 @@
 <html>
 	<head>
         <title>Preview Credential</title>
-        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -62,9 +63,9 @@
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
 		<!-- Custom Theme Style -->
-		<link href="../../css/custom.min.css" rel="stylesheet">
-		<link href="../../css/tstheme/style.css" rel="stylesheet">
-		<link href="../../css/form137.css" rel="stylesheet">
+		<link href="../../assets/css/custom.min.css" rel="stylesheet">
+		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+		<link href="../../assets/css/form137.css" rel="stylesheet">
 
 		<style type="text/css" media="print">
 		   .no-print { display: none; }

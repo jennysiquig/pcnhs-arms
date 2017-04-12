@@ -46,7 +46,7 @@
 		mysqli_query($conn, $updatestmnt2);
 		mysqli_query($conn, $updatestmnt3);
 
-		$_SESSION['user_activity'][] = "Updated Info of: $stud_id";
+		$_SESSION['user_activity'][] = "UPDATED INFORMATION OF: $stud_id";
 
 		header("location: ../student_info.php?stud_id=$stud_id");
 	}

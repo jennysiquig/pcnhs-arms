@@ -20,7 +20,7 @@
 	$towncity = htmlspecialchars(filter_var($_POST['birth_place_towncity'], FILTER_SANITIZE_STRING));
 	$barangay = htmlspecialchars(filter_var($_POST['birth_place_barangay'], FILTER_SANITIZE_STRING));
 
-	$second_school_name = htmlspecialchars(filter_var($_POST['second_school_name'], FILTER_SANITIZE_STRING));
+	$second_school_name = strtoupper(htmlspecialchars(filter_var($_POST['second_school_name'], FILTER_SANITIZE_STRING)));
 	$program = htmlspecialchars(filter_var($_POST['program'], FILTER_SANITIZE_STRING));
 	$curriculum = htmlspecialchars(filter_var($_POST['curriculum'], FILTER_SANITIZE_STRING));
 
@@ -105,7 +105,7 @@
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $message);	
 		$_SESSION['success'] = $popover->get_popover();
-		$_SESSION['user_activity'][] = "Added New Student: $first_name $last_name";
+		$_SESSION['user_activity'][] = "ADDED NEW STUDENT: $first_name $last_name";
 		header("Location: ../student_info.php?stud_id=$stud_id");
 	}
 	

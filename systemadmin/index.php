@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <?php require_once "../resources/config.php"; ?>
 <?php
     session_start();
@@ -22,16 +20,19 @@
     }
         date_default_timezone_set('Asia/Manila');
         $loTime = date("h:i:sa");
+        $curr_date = date("m/d/Y");
 ?>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Activity Logs</title>
-        <link rel="shortcut icon" href="../images/pines.png" type="image/x-icon" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <head>
+    <title>Activity Logs</title>
+    <link rel="shortcut icon" href="../assets/images/ico/fav.png" type="image/x-icon" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
         <!-- Bootstrap -->
         <link href="../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -43,29 +44,30 @@
         <!-- Date Range Picker -->
         <link href="../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
         <!-- Custom Theme Style -->
-        <link href="../css/custom.min.css" rel="stylesheet">
-        <link href="../css/tstheme/style.css" rel="stylesheet">
-
-    </head>
-    <body class="nav-md">
+        <link href="../assets/css/custom.min.css" rel="stylesheet">
+        <link href="../assets/css/tstheme/style.css" rel="stylesheet">
+    
+  </head>
+  <body class="nav-md">
+    <!-- Sidebar -->
         <?php include "../resources/templates/admin/sidebar.php"; ?>
         <?php include "../resources/templates/admin/top-nav.php"; ?>
-        <!-- Content Start -->
-        <div class="right_col" role="main">
-        <div class="col-md-5">
-        <ol class="breadcrumb">
-          <li><a href="index.php">Home</a></li>
-          <li class="disabled">System Logs</li>
-          <li class="active">View System Logs</li>
-        </ol>
-      </div>
-            <form class="form-horizontal form-label-left" action="index.php" method="GET">
+    <!-- Contents Here -->
+    <div class="right_col" role="main">
+          <div class="col-md-5">
+          <ol class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+            <li class="disabled">System Logs</li>
+            <li class="active">View System Logs</li>
+          </ol>
+        </div>
+                    <form class="form-horizontal form-label-left" action="index.php" method="GET">
 
                  <div class="form-group">
                  <div class="col-sm-5"></div>
                     <div class="col-sm-7">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="search_key" placeholder="Search Personnel Username">
+                            <input type="text" class="form-control" name="search_key" placeholder="Search Personnels">
                                 <span class="input-group-btn">
                                        <button class="btn btn-primary">Go</button>
                                 </span>
@@ -73,38 +75,36 @@
                     </div>
                 </div>
             </form>
-            <div class="clearfix"></div>
-            <div class="">
-
-            <div class="clearfix"></div>
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2><i class="fa fa-tasks"> </i> PCNHS-ARMS User Activity Logs</h2>
-                            <div class="clearfix"></div>
-                            <br/>
-                         </div>
-                          <!-- Date Picker -->
-                          <div class="col-md-4">
-                            Sort by Date
-                            <form class="form-horizontal" action="transaction.php" method="get">
-                              <fieldset>
-                                <div class="control-group">
-                                  <div class="controls">
-                                    <div class="input-prepend input-group">
-                                      <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                      <input type="text" style="width: 200px" name="log_date" id="reservation" class="form-control" value=<?php echo "'$loTime'";?>/>
-                                    </div>
-
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+               <h2><i class="fa fa-tasks"> </i> PCNHS-ARMS User Activity Logs</h2>
+              <ul class="nav navbar-right panel_toolbox">
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <!-- Date Picker -->
+                        <div class="col-md-4">
+                          Sort by Date
+                          <form class="form-horizontal" action="index.php" method="get">
+                            <fieldset>
+                              <div class="control-group">
+                                <div class="controls">
+                                  <div class="input-prepend input-group">
+                                    <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                    <input type="text" style="width: 200px" name="log_date" id="reservation" class="form-control" value=<?php echo "'$curr_date'"; ?>/>
                                   </div>
-                                  <button type="button" class="btn btn-primary">Go</button>
+
                                 </div>
-                              </fieldset>
-                            </form>
-                          </div>
-                          <!-- Date Picker -->
+                                <button class="btn btn-primary">Go</button>
+                              </div>
+                            </fieldset>
+                          </form>
+                        </div>
+                        <!-- Date Picker -->
             <div class="x_content">
-                <div class="row">
+                              <div class="row">
                     <form class="form-horizontal form-label-left">
                         <div class="form-group">
                           <label class="control-label col-md-10">Show Number Of Entries:</label>
@@ -139,26 +139,29 @@
                             </thead>
 
                             <tbody>
-                            <?php
-                            $statement = "";
+                <?php
+                  $statement = "";
                             $start=0;
-                            $limit;
+                            $limit=20;
 
-                            if(isset($_SESSION['entry'])){
-                              $limit = $_SESSION['entry'];
-                            }else {
-                              $limit = 20;
+                            if(!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
                             }
 
-                            if(isset($_GET['page'])){
-                              $page=$_GET['page'];
-                              $start=($page-1)*$limit;
-                            }else{
-                              $page=1;
-                            }
+                                  if(isset($_SESSION['entry'])){
+                                    $limit = $_SESSION['entry'];
+                                  }else {
+                                    $limit = 20;
+                                  }
 
-                              if(isset($_GET['log_date'])) {
-                              
+                                  if(isset($_GET['page'])){
+                                    $page=$_GET['page'];
+                                    $start=($page-1)*$limit;
+                                  }else{
+                                    $page=1;
+                                  }
+
+                            if(isset($_GET['log_date'])) {
                               $log_date = $_GET['log_date'];
                               $from_and_to_date = explode("-", $log_date);
                               $sqldate_format_from = explode("/", $from_and_to_date[0]);
@@ -169,7 +172,7 @@
                               $d = preg_replace('/\s+/', '', $d);
                               $y = preg_replace('/\s+/', '', $y);
 
-                              $from = $y."-".$m."-".$d;
+                              $from = $m."/".$d."/".$y;
 
                               $sqldate_format_to = explode("/", $from_and_to_date[1]);
                               $m = $sqldate_format_to[0];
@@ -179,25 +182,26 @@
                               $d = preg_replace('/\s+/', '', $d);
                               $y = preg_replace('/\s+/', '', $y);
 
-                              $to = $y."-".$m."-".$d;
+                              $to = $m."/".$d."/".$y;
 
-                              $statement = "SELECT * FROM pcnhsdb.user_logs 
-                                            WHERE log_date 
-                                            BETWEEN '$from' and '$to' 
-                                            LIMIT $start, $limit;";
-                            }else{
-                              $log_date = date('m/d/y').'-'.date('m/d/y');
-                              $statement = "SELECT * FROM pcnhsdb.user_logs 
-                                            LIMIT $start, $limit";
-                            }
+                                    $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                                  WHERE log_date 
+                                                  BETWEEN '$from' and '$to'
+                                                  ORDER BY log_id DESC                                           
+                                                  LIMIT $start, $limit;";
+                                  }else{
+                                    $log_date = date('m/d/y').'-'.date('m/d/y');
+                                    $statement = "SELECT * FROM pcnhsdb.user_logs
+                                            ORDER BY log_id DESC 
+                                                  LIMIT $start, $limit";
+                                  }
 
-                            if(!$conn) {
-                                die("Connection failed: " . mysqli_connect_error());
-                            }
                             if (isset($_GET['search_key'])){
                                 $search = $_GET['search_key'];
                                 $statement = "SELECT * FROM pcnhsdb.user_logs WHERE user_name 
                                               LIKE '%$search%'
+                                              OR account_type LIKE '%$search%'
+                                              OR user_act LIKE '%$search%'
                                               ORDER BY log_id DESC
                                               LIMIT $start, $limit";
                             }else{
@@ -206,7 +210,7 @@
                                               LIMIT $start, $limit";
                             }
 
-                            $result = $conn->query($statement);
+              $result = $conn->query($statement);
                             if ($result ->num_rows == 0) {
                                 echo <<<NORES
                                     <tr class="odd pointer">
@@ -241,15 +245,78 @@ LOGLIST;
                             ?>
                             </tbody>
                         </table>
-                        
-                    <?php
+              <?php
+
+                                          $statement = "";
+                            $start=0;
+                            $limit;
+
+                            if(isset($_SESSION['entry'])){
+                              $limit = $_SESSION['entry'];
+                            }else {
+                              $limit = 20;
+                            }
+
+                            if(isset($_GET['page'])){
+                              $page=$_GET['page'];
+                              $start=($page-1)*$limit;
+                            }else{
+                              $page=1;
+                            }
+
+                if(isset($_GET['log_date'])) {
+                              $log_date = $_GET['log_date'];
+                              $from_and_to_date = explode("-", $log_date);
+                              $sqldate_format_from = explode("/", $from_and_to_date[0]);
+                              $m = $sqldate_format_from[0];
+                              $d = $sqldate_format_from[1];
+                              $y = $sqldate_format_from[2];
+                              $m = preg_replace('/\s+/', '', $m);
+                              $d = preg_replace('/\s+/', '', $d);
+                              $y = preg_replace('/\s+/', '', $y);
+
+                              $from = $m."/".$d."/".$y;
+
+                              $sqldate_format_to = explode("/", $from_and_to_date[1]);
+                              $m = $sqldate_format_to[0];
+                              $d = $sqldate_format_to[1];
+                              $y = $sqldate_format_to[2];
+                              $m = preg_replace('/\s+/', '', $m);
+                              $d = preg_replace('/\s+/', '', $d);
+                              $y = preg_replace('/\s+/', '', $y);
+
+                              $to = $m."/".$d."/".$y;
+
+                                  $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                                  WHERE log_date 
+                                                  BETWEEN '$from' and '$to'
+                                                  ORDER BY log_id DESC 
+                                                  LIMIT $start, $limit;";
+                                  }else{
+                                    $log_date = date('m/d/y').'-'.date('m/d/y');
+                                    $statement = "SELECT * FROM pcnhsdb.user_logs
+                                            ORDER BY log_id DESC 
+                                                  LIMIT $start, $limit";
+                                  }?>
+              
+                           <?php
+
                     $statement = "select * from user_logs";
                     $rows = mysqli_num_rows(mysqli_query($conn, $statement));
-                    if ($rows > 20000) {
-                        $sql = "TRUNCATE TABLE user_logs";
-                        mysqli_query($conn, $sql);
+
+                    if ($rows > 30000) {
+
+                       $alert_type = "info";
+                       $error_message = "REMINDER: USER ACTIVITY LOGS TABLE WILL BE TRUNCATED ";
+                       $popover = new Popover();
+                       $popover->set_popover($alert_type, $error_message);
+                       $_SESSION['trunc_notif'] = $popover->get_popover(); 
+
+                       $sql = "TRUNCATE TABLE user_logs";
+                       mysqli_query($conn, $sql);
                       }
                     else
+
                       {
                     $total = ceil($rows/$limit);
                     
@@ -311,18 +378,17 @@ LOGLIST;
                       
                         }
                 ?>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+          </div>
         </div>
-    <!-- Content End -->
-    <?php include "../resources/templates/registrar/footer.php"; ?>
+      </div>
+    </div>
+  </div>
+  <!-- Contents Here -->
+  
+    <?php include "../resources/templates/admin/footer.php"; ?>
 
-    <!-- Scripts -->
-    <!-- jQuery -->
+
     <script src="../resources/libraries/jquery/dist/jquery.min.js" ></script>
     <!-- Bootstrap -->
     <script src="../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -337,7 +403,7 @@ LOGLIST;
     <script src="../resources/libraries/moment/min/moment.min.js"></script>
     <script src="../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src= "../js/custom.min.js"></script>
+    <script src= "../assets/js/custom.min.js"></script>
     <script type="text/javascript" src=<?php echo "../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
     <!-- Scripts -->
     <script type="text/javascript">
@@ -361,4 +427,6 @@ LOGLIST;
     </script>
 
     </body>
+</html>
+</body>
 </html>

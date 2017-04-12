@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>View Signatories</title>
-    <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,8 +19,8 @@
     <!-- Datatables -->
     <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="../../css/custom.min.css" rel="stylesheet">
-    <link href="../../css/tstheme/style.css" rel="stylesheet">
+    <link href="../../assets/css/custom.min.css" rel="stylesheet">
+    <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
     
 </head>
 <body class="nav-md">
@@ -42,7 +42,7 @@
             <div class="col-sm-7">
                 <div class="input-group">
 
-                    <input type="text" class="form-control" name="search_key" placeholder="Search Signatory ID or Name">
+                    <input type="text" class="form-control" name="search_key" placeholder="Search Signatories">
                     <span class="input-group-btn">
                   <button class="btn btn-primary">Go</button>
                 </span>
@@ -59,8 +59,13 @@
                 <div class="x_title">
                     <h2><i class="fa fa-users"> </i> Signatories</h2>
                     <div class="clearfix"></div>
-                    <br/>
-
+                      <br/>
+                     <?php
+                        if(isset($_SESSION['sign_del'])) {
+                           echo $_SESSION['sign_del'];
+                           unset($_SESSION['sign_del']);
+                        }
+                      ?>
                 </div>
                 <div class="x_content">
                                     <div class="row">
@@ -125,6 +130,11 @@
                                               OR CONCAT(first_name,' ',last_name) LIKE '$search'
                                               OR CONCAT(last_name,first_name,mname) LIKE '$search'
                                               OR CONCAT(last_name,' ',first_name) LIKE '$search'
+                                              OR yr_started LIKE '%$search%'
+                                              OR yr_ended LIKE '%$search%'
+                                              OR sign_id LIKE '%$search%'
+                                              OR title LIKE '%$search%'
+                                              OR position LIKE '%$search%'
                                               LIMIT $start, $limit";
                             }else{
                                 $statement = "SELECT * FROM pcnhsdb.signatories
@@ -256,7 +266,7 @@ SIGNLIST;
 <!-- NProgress -->
 <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
-<script src= "../../js/custom.min.js"></script>
+<script src= "../../assets/js/custom.min.js"></script>
 <script type="text/javascript" src=<?php echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
 <!-- Scripts -->
 <script type="text/javascript">

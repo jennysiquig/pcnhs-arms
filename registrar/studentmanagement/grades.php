@@ -17,7 +17,7 @@
 <html>
 	<head>
 		<title>Student Grades</title>
-        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,8 +35,8 @@
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
 		<!-- Custom Theme Style -->
-		<link href="../../css/custom.min.css" rel="stylesheet">
-		<link href="../../css/tstheme/style.css" rel="stylesheet">
+		<link href="../../assets/css/custom.min.css" rel="stylesheet">
+		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -162,6 +162,7 @@ REMOVE;
 			</div>
 			<div class="clearfix"></div>
 		    <!-- Other Subjects -->
+		    <div class="row">
 			<div class="col-md-12 col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<ul class="nav navbar-right panel_toolbox">
@@ -173,28 +174,23 @@ REMOVE;
 					<div class="clearfix"></div>
 				</div>
 
-				<div class="x_content">
-					<!--  -->
-					<div class="col-md-12 col-sm-6 col-xs-12">
-					<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
-		                
-		                  	
-		                    <table class="table table-bordered">
-		                      <thead>
-		                        <tr>
-		                          <th>School Name</th>
-		                          <th>School Year</th>
-		                          <th>Year Level</th>
-		                          <th>Subject</th>
-		                          <th>Subject Level</th>
-		                          <th>Subject Type</th>
-		                          <th>Final Grade</th>
-		                          <th>Credit Earned</th>
-		                          <th>Remarks</th>
-		                          <th>Action</th>
-		                        </tr>
-		                      </thead>
-		                      <tbody>
+			<div class="x_content">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>School Name</th>
+							<th>School Year</th>
+							<th>Year Level</th>
+							<th>Subject</th>
+							<th>Subject Level</th>
+							<th>Subject Type</th>
+							<th>Final Grade</th>
+							<th>Credit Earned</th>
+							<th>Remarks</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
 		                      	<?php
 
 									if(!$conn) {
@@ -239,12 +235,18 @@ YR1;
 								?>
 		                        
 		                      </tbody>
-		                    </table>	
-		                </div>
-		              </div>
-		            </div>
-		           </div>
-		            <!-- Failed Subjects -->
+		                    </table>
+						<div class="row">
+							<div class="col-md-12 col-sm-6 col-xs-12">
+								<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
+						</div>
+					</div>
+				</div>
+				</div>
+				</div>
+		    </div>
+		    <!-- Failed Subjects -->
+		    <div class="row">
 			<div class="col-md-12 col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<ul class="nav navbar-right panel_toolbox">
@@ -301,8 +303,8 @@ YR1;
 		                </div>
 		              </div>
 		            </div>
+		       </div>
              <!-- END -->
-			</div> 
 			<!-- Other Subjects -->
 
 		</div>
@@ -320,7 +322,7 @@ YR1;
 		<!-- NProgress -->
     	<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 		<!-- Custom Theme Scripts -->
-		<script src= "../../js/custom.min.js"></script>
+		<script src= "../../assets/js/custom.min.js"></script>
 		<!-- Scripts -->
 		<!-- validator -->
 		<script>

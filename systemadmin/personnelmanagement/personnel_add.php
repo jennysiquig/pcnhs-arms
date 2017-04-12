@@ -5,7 +5,7 @@
 <html>
     <head>
         <title>Add Personnel Account</title>
-        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,8 +18,8 @@
         <!-- NProgress -->
         <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
         <!-- Custom Theme Style -->
-        <link href="../../css/custom.min.css" rel="stylesheet">
-        <link href="../../css/tstheme/style.css" rel="stylesheet">
+        <link href="../../assets/css/custom.min.css" rel="stylesheet">
+        <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
 
     </head> 
     <body class="nav-md">
@@ -42,7 +42,18 @@
                         <h2><i class="fa fa-user"> </i> Add Personnel Account</h2>
                         <div class="clearfix"></div>
                         <br>
+                                        <?php
+                                        if(isset($_SESSION['error_pop'])) {
+                                            echo $_SESSION['error_pop'];
+                                            unset($_SESSION['error_pop']);
+                                            }
 
+                                          if(isset($_SESSION['error_pop2'])) {
+                                            echo $_SESSION['error_pop2'];
+                                            unset($_SESSION['error_pop2']);
+                                            }
+
+                                        ?>
                             <div class="x_content">
                                 <form id="personnel-add" class="form-horizontal form-label-left" action="phpinsert/personnel_insert.php" method="POST" data-parsley-trigger="keyup">
 
@@ -218,7 +229,7 @@ OPTION2;
     <!-- NProgress -->
     <script src="../../resources/libraries/nprogress/nprogress.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src= "../../js/custom.min.js"></script>
+    <script src= "../../assets/js/custom.min.js"></script>
 
     <!-- Parsley -->
     <script>

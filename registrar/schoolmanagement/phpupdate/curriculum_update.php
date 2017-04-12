@@ -8,6 +8,6 @@
 	$updatestm = "UPDATE `pcnhsdb`.`curriculum` SET `curr_name`='$curr_name', `year_ended`='$year_ended' WHERE `curr_id`='$curr_id';";
 
 	mysqli_query($conn, $updatestm);
-	$_SESSION['user_activity'][] = "Added New Curriculum: $curr_name";
+	$_SESSION['user_activity'][] = "ADDED NEW CURRICULUM: $curr_name";
 	header("location: ../curriculum.php");
 ?>

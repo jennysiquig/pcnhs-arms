@@ -1,20 +1,58 @@
 <?php
     require_once "../../../resources/config.php";
+    require_once "../bcrypt/Bcrypt.php";
+    include('../../../resources/classes/Popover.php');
+    
     session_start();
 
-if(!$conn) {
-    die();
-}
-    $per_id = $_SESSION['per_id'];
-    $query = 'DELETE FROM personnel WHERE per_id = ?';
-    $stmt = mysqli_stmt_init($conn);
-    mysqli_stmt_prepare($stmt, $query);
-    mysqli_stmt_bind_param($stmt, 's', $per_id);
+    if(!$conn) {
+        die();
+    }
 
-    mysqli_stmt_execute($stmt);
+    $per_id = htmlspecialchars($_POST['per_id'], ENT_QUOTES);
+    $uname = htmlspecialchars($_POST['uname'], ENT_QUOTES);
+    $password = htmlspecialchars($_POST['confirm_pw']);
+    $new_password = htmlspecialchars($_POST['new_password']);
+    $hashed_pw = htmlspecialchars($_POST['hashed_pw'], ENT_QUOTES);
+    $last_name = htmlspecialchars($_POST['last_name'], ENT_QUOTES);
+    $first_name = htmlspecialchars($_POST['first_name'], ENT_QUOTES);
+    $mname = htmlspecialchars($_POST['mname'], ENT_QUOTES);
+    $position = htmlspecialchars($_POST['position'], ENT_QUOTES);
+    $access_type = htmlspecialchars($_POST['access_type'], ENT_QUOTES);
+    $accnt_status = htmlspecialchars($_POST['accnt_status'], ENT_QUOTES);
 
-    $per_del = "DELETED PERSONNEL ACCOUNT : $per_id";
-    $_SESSION['user_activity'][] = $per_del;
+    $pwCheck = "SELECT * from personnel where per_id = ? and password = ?";
+    $preparedPwCheck = $conn->prepare($pwCheck);
+    $preparedPwCheck->bind_param("ss",$per_id,$password);
+    $preparedPwCheck->execute();
+    $resultCheckPw = $preparedPwCheck->get_result();
 
-header("location: ../personnels.php");
+    if($resultCheckPw->num_rows>0) {
+        while ($row=$resultCheckPw->fetch_assoc()) {
+         $verifypw = Bcrypt::checkPassword($password, $row['hashed_pw']);
+         if($verifypw = true) {
+            $delstmnt = "DELETE FROM PERSONNEL WHERE per_id = '$per_id'";
+            mysqli_query($conn, $delstmnt);
+            $per_edit = "EDITED PERSONNEL ACCOUNT : $per_id";
+            $_SESSION['user_activity'][] = $per_edit;
+            //NOTIFICATIONS
+            $alert_type = "info";
+            $message = "Personnel Account Deleted Successfully";
+            $popover = new Popover();
+            $popover->set_popover($alert_type, $message);   
+            $_SESSION['success_personnel_delete'] = $popover->get_popover();
+            header("location: ../personnels.php");  
+            }
+        }
+    }
+    
+    else {
+        $alert_type = "danger";
+        $error_message = "Cannot Delete Personnel: Incorrect Password";
+        $popover = new Popover();
+        $popover->set_popover($alert_type, $error_message);
+        $_SESSION['incorrect_pw_del'] = $popover->get_popover(); 
+        header("location: ../personnel_view.php?per_id=$per_id");
+    } 
+           
 ?>

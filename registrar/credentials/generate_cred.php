@@ -23,7 +23,7 @@
 
 	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
-    if($result->num_rows <= 0) {
+    if($result->num_rows == 0) {
     	if(isset($_GET['new_request']) && $_GET['new_request']) {
 			$cred_id = htmlspecialchars($_GET['credential'], ENT_QUOTES);
 		    $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
@@ -34,6 +34,10 @@
 	    	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `status`, `date_processed`, `request_purpose`, `per_id`) VALUES ('$cred_id', '$stud_id', 'p', '$date', '$request_purpose', '$personnel_id');";
 
 	    	mysqli_query($conn, $statement1);
+	    	header("location: requests.php");
+	    	die();
+
+	    	
 		}
     }
 
@@ -43,7 +47,7 @@
 <html>
 	<head>
 		<title>Generate Credential</title>
-		<link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+		<link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,8 +65,8 @@
 		<!-- iCheck -->
 		<link href=".../../../../resources/libraries/iCheck/skins/flat/green.css" rel="stylesheet">
 		<!-- Custom Theme Style -->
-		<link href="../../css/custom.min.css" rel="stylesheet">
-		<link href="../../css/tstheme/style.css" rel="stylesheet">
+		<link href="../../assets/css/custom.min.css" rel="stylesheet">
+		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
@@ -234,7 +238,7 @@
 <!-- iCheck -->
 	<script src="../../resources/libraries/iCheck/icheck.min.js"></script>
 <!-- Custom Theme Scripts -->
-<script src= "../../js/custom.min.js"></script>
+<script src= "../../assets/js/custom.min.js"></script>
 <!-- Scripts -->
 </body>
 </html>

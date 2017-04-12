@@ -21,7 +21,7 @@
 <html>
     <head>
         <title>System Admin Help</title>
-        <link rel="shortcut icon" href="images/pines.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="assets/images/pines.png" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,8 +38,8 @@
         <!-- Date Range Picker -->
         <link href="resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
         <!-- Custom Theme Style -->
-        <link href="css/custom.min.css" rel="stylesheet">
-        <link href="css/tstheme/style.css" rel="stylesheet">
+        <link href="assets/css/custom.min.css" rel="stylesheet">
+        <link href="assets/css/tstheme/style.css" rel="stylesheet">
         <!-- PDFObject -->
         <script src="resources/libraries/PDFObject/pdfobject.min.js"></script>
 
@@ -80,7 +80,7 @@
     <script src="resources/libraries/moment/min/moment.min.js"></script>
     <script src="resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src= "js/custom.min.js"></script>
+    <script src= "assets/js/custom.min.js"></script>
     <!-- Scripts -->
     <script type="text/javascript">
         PDFObject.embed("resources/files/ebook.pdf", "#pdf1");

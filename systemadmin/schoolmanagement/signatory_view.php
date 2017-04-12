@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>View Signatory</title>
-    <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,8 +18,8 @@
     <!-- NProgress -->
     <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="../../css/custom.min.css" rel="stylesheet">
-    <link href="../../css/tstheme/style.css" rel="stylesheet">
+    <link href="../../assets/css/custom.min.css" rel="stylesheet">
+    <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
 
 </head>
 <body class="nav-md">
@@ -52,6 +52,17 @@
                         </li>
                     </ul>
                     <div class="clearfix"></div>
+                    <?php
+                        if(isset($_SESSION['success_signatory'])) {
+                            echo $_SESSION['success_signatory'];
+                            unset($_SESSION['success_signatory']);
+                                }
+
+                        if(isset($_SESSION['success_signatory_edit'])) {
+                            echo $_SESSION['success_signatory_edit'];
+                            unset($_SESSION['success_signatory_edit']);
+                                }
+                    ?>
                 </div>
                 <div class="x_content">
                     <form class="form-horizontal form-label-left" action="phpupdate/update_signatory_info.php" method="POST" novalidate>
@@ -199,7 +210,7 @@
 <!-- NProgress -->
 <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
-<script src= "../../js/custom.min.js"></script>
+<script src= "../../assets/js/custom.min.js"></script>
 <!-- Scripts -->
 
 </body>

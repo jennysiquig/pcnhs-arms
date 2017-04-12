@@ -36,8 +36,8 @@
     <link href="resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom Theme Style -->
-    <link href="css/custom.min.css" rel="stylesheet">
-    <link href="css/tstheme/style.css" rel="stylesheet">
+    <link href="assets/css/custom.min.css" rel="stylesheet">
+    <link href="assets/css/tstheme/style.css" rel="stylesheet">
     <!-- PDFObject -->
     <script src="resources/libraries/PDFObject/pdfobject.min.js"></script>
 
@@ -77,7 +77,7 @@
     <!-- NProgress -->
     <script src="resources/libraries/nprogress/nprogress.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src= "js/custom.min.js"></script>
+    <script src= "assets/js/custom.min.js"></script>
     <!-- Scripts -->
     <script type="text/javascript">
         PDFObject.embed("resources/files/ebook.pdf", "#pdf1");

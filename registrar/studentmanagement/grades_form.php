@@ -67,7 +67,7 @@
 <html>
     <head>
         <title>Add Student Grades</title>
-        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -85,8 +85,8 @@
         <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
         
         <!-- Custom Theme Style -->
-        <link href="../../css/custom.min.css" rel="stylesheet">
-        <link href="../../css/tstheme/style.css" rel="stylesheet">
+        <link href="../../assets/css/custom.min.css" rel="stylesheet">
+        <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
         
         <!--[if lt IE 9]>
         <script src="../js/ie8-responsive-file-warning.js"></script>
@@ -400,7 +400,7 @@ NUM;
                             <div class="pull-right">
                                 <a href=<?php echo "grades.php?stud_id=$stud_id"; ?> class="btn btn-default">Cancel</a>
                                 <button id="send" class="btn btn-primary" onclick="saveToFile();" data-toggle="tooltip" data-placement="top" title="Save grades as CSV"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
-                                <button id="send" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
+                                <button id="send" class="btn btn-success" onclick="saveToDB(); computeCredit(); computeAverage();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
                             </div>
                             
                         </div>
@@ -417,9 +417,7 @@ NUM;
                             <p>Open Grades Save File (filename.csv)</p>
                                 <input type="file" name="grades" id="fileInput" accept=".csv" />
                             </div>
-                                <br>
-                                 
-                            
+                            <br>     
                         </div>
                     </form>
                 </div>
@@ -442,7 +440,7 @@ NUM;
         <!-- NProgress -->
         <script src="../../resources/libraries/nprogress/nprogress.js"></script>
         <!-- Custom Theme Scripts -->
-        <script src= "../../js/custom.min.js"></script>
+        <script src= "../../assets/js/custom.min.js"></script>
         <!-- Scripts -->
        <!-- Parsley -->
  
@@ -457,15 +455,18 @@ NUM;
                 <!-- /jquery.inputmask -->
         <!-- Save to DB Script -->
         <script type="text/javascript">
-            function persistFinal(x) {
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                  if (this.readyState == 4 && this.status == 200) {
-                   
-                  }
-                };
-                xhttp.open("GET", "phpscript/tempgrade.php?grade="+x, true);
-                xhttp.send();
+            function computeCredit() {
+                var subj_id = document.getElementsByName('subj_id[]');
+                var credit_earned = document.getElementsByName('credit_earned[]');
+                var computed_credits = 0;
+                var total_credits = document.getElementById('total_credits');
+                    for (var i = 0; i < subj_id.length; i++) {
+                        computed_credits += parseFloat(credit_earned[i].value);
+                    }
+                    total_credits.value = computed_credits;
+                    console.log(computed_credits);
+            }
+            function computeAverage() {
                 var subj_id = document.getElementsByName('subj_id[]');
                 var fin_grade = document.getElementsByName('fin_grade[]');
                 var comment = document.getElementsByName('comment[]');
@@ -474,9 +475,7 @@ NUM;
                 var total_finalgrade = 0;
                 var num_subj = parseInt(document.getElementById('num_subj').value);
                 console.log(num_subj);
-                if(x == "") {
-
-                }else {
+            
                     for (var i = 0; i < subj_id.length; i++) {
                         console.log(subj_id[i].value+" - "+fin_grade[i].value);
                         total_finalgrade += parseFloat(fin_grade[i].value);
@@ -486,35 +485,34 @@ NUM;
                     average.value = computed_average;
                     console.log(parseInt(total_finalgrade));
                     console.log(parseInt(computed_average));
-                }
-
+                
             }
-            function persistCredit(y) {
+            function persistFinal(x) {
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                   if (this.readyState == 4 && this.status == 200) {
                    
                   }
                 };
-                xhttp.open("GET", "phpscript/tempcredits.php?credits="+y, true);
+                xhttp.open("GET", "phpscript/tempgrade.php?grade="+x, false);
                 xhttp.send();
 
-                var subj_id = document.getElementsByName('subj_id[]');
-                var credit_earned = document.getElementsByName('credit_earned[]');
-                var computed_credits = 0;
-                var total_credits = document.getElementById('total_credits');
-                console.log(y);
+                computeAverage();
 
+            }
+            function persistCredit(y) {
 
-                if(y == "") {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                   
+                  }
+                };
+                xhttp.open("GET", "phpscript/tempcredits.php?credits="+y, false);
+                xhttp.send();
 
-                }else {
-                    for (var i = 0; i < subj_id.length; i++) {
-                        computed_credits += parseFloat(credit_earned[i].value);
-                    }
-                    total_credits.value = computed_credits;
-                    console.log(computed_credits);
-                }
+                computeCredit();
+
             }
             function isNumberKey(evt, n){
             console.log(n);

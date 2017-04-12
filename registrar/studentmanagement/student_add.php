@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<title>Add Student</title>
-        <link rel="shortcut icon" href="../../images/pines.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,8 +23,8 @@
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		
 		<!-- Custom Theme Style -->
-		<link href="../../css/custom.min.css" rel="stylesheet">
-		<link href="../../css/tstheme/style.css" rel="stylesheet">
+		<link href="../../assets/css/custom.min.css" rel="stylesheet">
+		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
@@ -269,15 +269,13 @@ OPTION1;
 								<div class="form-group">
 									<div class="col-md-3 col-md-offset-3 pull-right">
 										<button type="submit" class="btn btn-success"><i class="fa fa-save m-right-xs"></i> Add Student</button>
+										<button type="reset" onclick="releaseData();" class="btn btn-default">Reset</button>
 									</div>
 								</div>
 							</div>
 						</form>
 					</div>
 				</div>
-				
-				
-				
 				<!-- Content End -->
 				<?php include "../../resources/templates/registrar/footer.php"; ?>
 				
@@ -296,7 +294,7 @@ OPTION1;
 				<!-- NProgress -->
     			<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 				<!-- Custom Theme Scripts -->
-				<script src= "../../js/custom.min.js"></script>
+				<script src= "../../assets/js/custom.min.js"></script>
 				<!-- Scripts -->
 				<!-- Date Range Picker -->
 				<script src="../../resources/libraries/moment/min/moment.min.js"></script>
@@ -314,7 +312,7 @@ OPTION1;
 				$.listen('parsley:field:validate', function() {
 				validateFront();
 				});
-				$('#validate-add .btn').on('click', function() {
+				$('#validate-add submit').on('click', function() {
 				$('#validate-add').parsley().validate();
 				validateFront();
 				});
@@ -366,5 +364,17 @@ OPTION1;
 		              return true;
 		           }
 		        </script>
+		       	<script type="text/javascript">
+		       		$( function() {
+						$( "#validate-add" ).sisyphus({
+							autoRelease: false
+						});
+					});
+				</script>
+				<script type="text/javascript">
+					function releaseData() {
+						$('#validate-add').sisyphus().manuallyReleaseData();
+					}
+				</script>
 			</body>
 		</html>

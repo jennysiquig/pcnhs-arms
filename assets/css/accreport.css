@@ -6,7 +6,6 @@ body{
 	background-color: white;
 	color: black;
 	width: 900px;
-/*    margin-left: 300px;*/
     margin-right: 300px;
     height: 1700px;
     padding-top: 50px;
@@ -17,69 +16,91 @@ body{
 
 
 #year{
-	margin-left: 390px;
+	margin-left: 380px;
 	width: 80px;
 	height: 20px;
-	margin-top: -20px;
+	margin-top: -19px;
 }
 
-#report{
-	border: 1px solid black;
+#month{
+	margin-left: 255px;
+	width: 120px;
+	height: 20px;
+	text-align: right;
+	margin-bottom: 1px;
+	font-size: 14px;
 }
 
 #acc-t{
 	width: 750px;
 	border: 1px solid black;
+	border-spacing: 0px;
+	padding-top: 0px;
 }
 
-td.col{
-	width: 750px;
-	height: 300px;
+.b1{
+	text-align: center;
+	height: 30px;
 	border-color: black;
 	border-width: 1px;
 	border-style: solid;
+	font-size: 14px;
 }
 
-tr{
+.col{
+	max-width: 350px;
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+	margin-top: 0px;
+	padding-top:0px;
+	word-break: keep-all;
+	white-space: normal;
+	text-align: justify;
+}
+
+table > tr{
 	width: 500px;
-	border-color: black;
-	border-width: 1px;
-	border-style: solid;
 }
 
-td > p{
-		width: 325px;
+.td-p1{
+	width: 360px;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+}
+
+#b6-r2 > td > .td-p1{
+	margin-top: -20px;
+}
+
+.td-p2{
+	width: 360px;
+	margin: 0px;
+	padding: 0px;
+	max-height: auto;
 }
 
 #item-t{
-	width: 250px;
-	height: 150px;
-	border-color: black;
-	border-width: 1px;
-	border-style: solid;
+	margin-top: 10px;
+	width: 325px;
+	max-height: 150px;
+	border: 1px solid black;
+	border-spacing: 0px;
+	margin-left: 10px;
+}
+
+.item-t-col{
+	border: 1px solid black;
+	border-spacing: 0px;
+	padding: 0px;
 }
 
 .inst{
 	text-align: center;
 	font-size: 17px;
 	font-weight: bold;
-}
-
-#month{
-	border-bottom-color: black;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	margin-left: 260px;
-	width: 120px;
-	height: 20px;
-	border-width: 1px;
-	border-style: solid;
-}
-
-#b1-col1{
-	border-bottom-color: black;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
+	margin: 2px;
 }
 
 .td-4-t{
@@ -87,26 +108,34 @@ td > p{
 	height: 20px;
 }
 
-.td-name{
+td.name{
 	width: 100px;
 	height: 20px;
-	border-color: black;
-	border-width: 1px;
-	border-style: solid;
+	border: 1px solid black;
 }
 
-.td-pro{
+td.pro{
 	width: 100px;
 	height: 20px;
-	border-color: black;
-	border-width: 1px;
-	border-style: solid;
+	border: 1px solid black;
 }
 
-.td-rel{
+td.rel{
 	width: 100px;
 	height: 20px;
-	border-color: black;
-	border-width: 1px;
-	border-style: solid;
+	border: 1px solid black;
 }
+
+#r_fm, #fm, #ot{
+	padding-top: 0px;
+	margin-top:0px;
+	width: 360px;
+	font-family: "Calibri";
+	word-break: normal;
+	white-space: normal;
+	text-align: justify;
+}
+/*
+pre{
+	white-space: normal;
+}*/
