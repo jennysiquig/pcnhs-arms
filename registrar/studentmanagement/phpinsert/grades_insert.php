@@ -74,7 +74,7 @@
 				header("Location: " . $_SERVER["HTTP_REFERER"]);
 				die();
 			}
-			if(empty($total_credit)) {
+			if(!is_numeric($total_credit)) {
 				$willInsert = false;
 				$alert_type = "danger";
 				$error_message = "Empty Total Credits Earned.";
@@ -92,6 +92,7 @@
 				if(empty($credit_earned)) {
 					$credit_earned = 1;
 				}
+
 				if($fin_grade > 99.99 || $fin_grade < 70) {
 					$willInsert = false;
 					$alert_type = "danger";

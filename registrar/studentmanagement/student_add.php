@@ -268,8 +268,8 @@ OPTION1;
 								<div class="ln_solid"></div>
 								<div class="form-group">
 									<div class="col-md-3 col-md-offset-3 pull-right">
-										<button type="submit" class="btn btn-success"><i class="fa fa-save m-right-xs"></i> Add Student</button>
 										<button type="reset" onclick="releaseData();" class="btn btn-default">Reset</button>
+										<button type="submit" class="btn btn-success"><i class="fa fa-save m-right-xs"></i> Add Student</button>
 									</div>
 								</div>
 							</div>

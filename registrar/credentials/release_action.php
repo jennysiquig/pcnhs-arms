@@ -5,7 +5,7 @@
 	$req_id = htmlspecialchars($_GET['req_id'], ENT_QUOTES);
 	$cred_id = htmlspecialchars($_GET['cred_id'], ENT_QUOTES);
 	$request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
-	$or_no = htmlspecialchars(intval($_GET['or_no']), ENT_QUOTES);
+	$or_no = htmlspecialchars($_GET['or_no'], ENT_QUOTES);
 	
 	$insertstm1 = "";
 	if(!$conn) {
@@ -28,9 +28,9 @@
  	$updatestm1 = "UPDATE `pcnhsdb`.`requests` SET `status`='r', `date_released`= current_date() WHERE `req_id`= '$req_id';";
 
  	if($request_type == "individual") {
- 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `or_no`, `pay_amt`, `stud_id`, `cred_id`) VALUES (current_date(), '$or_no', '$price', '$stud_id', '$cred_id');";
+ 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `pay_amt`, `stud_id`, `cred_id`) VALUES (current_date(), '$price', '$stud_id', '$cred_id');";
  	}else {
- 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `pay_amt`, `or_no`, `stud_id`) VALUES (current_date(), 0, 0, '$stud_id', '$cred_id');";
+ 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `pay_amt`, `stud_id`, `cred_id`) VALUES (current_date(), 0, 0, '$stud_id', '$cred_id');";
  	}
 
  	mysqli_query($conn, $updatestm1);
@@ -46,7 +46,7 @@
 		}
 	}
 
-	$insertstm2 = "INSERT INTO `pcnhsdb`.`transaction` (`trans_date`, `total_trans_amt`, `stud_id`, `pay_id`, `req_id`) VALUES (current_date(), $pay_amt, '$stud_id', $pay_id, $req_id);";
+	$insertstm2 = "INSERT INTO `pcnhsdb`.`transaction` (`trans_date`, `total_trans_amt`, `stud_id`, `pay_id`, `req_id`, `or_no`) VALUES (current_date(), '$pay_amt', '$stud_id', '$pay_id', '$req_id', '$or_no');";
 
 	mysqli_query($conn, $insertstm2);
 

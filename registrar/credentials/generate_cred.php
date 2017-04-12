@@ -123,33 +123,6 @@
 							<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="credential" readonly="" value=<?php echo "'$credential'"; ?>>
 						</div>
 					</div>
-					<div class="item form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date Accomplished *</label>
-						<div class="col-md-2 col-sm-6 col-xs-12">
-							<select class="form-control col-md-7 col-xs-12" name="month" required="">
-								<option value="">Month</option>
-								<?php
-									$month=array('January','February','March','April','May','June','July','August','September','October','November','December');
-									for ($i=0; $i < count($month) ; $i++) {
-										$dayVal = $i+1;
-										$monthName = $month[$i];
-										echo "<option value='$monthName'>$monthName</option>";
-									}
-								?>
-							</select>
-						</div>
-						<div class="col-md-2 col-sm-6 col-xs-12">
-							<select class="form-control col-md-7 col-xs-12" name="day" required="">
-								<option value="">Day</option>
-								<?php for ($day=1; $day <= 31 ; $day++) {
-									echo "<option value='$day'>$day</option>";
-								} ?>
-							</select>
-						</div>
-						<div class="col-md-2 col-sm-6 col-xs-12">
-							<input class="form-control  col-md-7 col-xs-12" type="text" name="year" placeholder="Year" data-inputmask="'mask': '9999'" required="">
-						</div>
-					</div>
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Request Purpose: </label>
 						<div class="col-md-6 col-sm-6 col-xs-12">

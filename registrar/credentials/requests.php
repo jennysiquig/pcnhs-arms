@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Unclaimed Credentials</title>
+		<title>Credential Requests</title>
 		<link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
@@ -46,6 +46,7 @@
 					<div class="x_panel">
 						<div class="x_title">
 							<h2>Credential Requests</h2>
+							<a href="request_credential.php" class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> New Request</a>
 							<ul class="nav navbar-right panel_toolbox">
 							</ul>
 							<div class="clearfix"></div>
@@ -97,7 +98,7 @@
 																<td class=" ">$stud_name</td>
 																<td class=" ">$cred_name</td>
 																<td class=" ">$request_purpose</td>
-																<td class=" "><a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose&new_request=true#generatebutton" class="btn btn-success btn-xs"> Process Request</a></td>
+																<td class=" "><a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose&new_request=true" class="btn btn-default btn-xs"> Process Request</a></td>
 												</tr>
 UNCLAIMED;
 											}
