@@ -1,0 +1,141 @@
+body{
+	font: 12px, "Calibri";
+}
+
+.main{
+	background-color: white;
+	color: black;
+	width: 900px;
+    margin-right: 300px;
+    height: 1700px;
+    padding-top: 50px;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-bottom: 75px;
+}
+
+
+#year{
+	margin-left: 380px;
+	width: 80px;
+	height: 20px;
+	margin-top: -19px;
+}
+
+#month{
+	margin-left: 255px;
+	width: 120px;
+	height: 20px;
+	text-align: right;
+	margin-bottom: 1px;
+	font-size: 14px;
+}
+
+#acc-t{
+	width: 750px;
+	border: 1px solid black;
+	border-spacing: 0px;
+	padding-top: 0px;
+}
+
+.b1{
+	text-align: center;
+	height: 30px;
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+	font-size: 14px;
+}
+
+.col{
+	max-width: 350px;
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+	margin-top: 0px;
+	padding-top:0px;
+	word-break: keep-all;
+	white-space: normal;
+	text-align: justify;
+}
+
+table > tr{
+	width: 500px;
+}
+
+.td-p1{
+	width: 360px;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+}
+
+#b6-r2 > td > .td-p1{
+	margin-top: -20px;
+}
+
+.td-p2{
+	width: 360px;
+	margin: 0px;
+	padding: 0px;
+	max-height: auto;
+}
+
+#item-t{
+	margin-top: 10px;
+	width: 325px;
+	max-height: 150px;
+	border: 1px solid black;
+	border-spacing: 0px;
+	margin-left: 10px;
+}
+
+.item-t-col{
+	border: 1px solid black;
+	border-spacing: 0px;
+	padding: 0px;
+}
+
+.inst{
+	text-align: center;
+	font-size: 17px;
+	font-weight: bold;
+	margin: 2px;
+}
+
+.td-4-t{
+	width: 300px;
+	height: 20px;
+}
+
+td.name{
+	width: 100px;
+	height: 20px;
+	border: 1px solid black;
+}
+
+td.pro{
+	width: 100px;
+	height: 20px;
+	border: 1px solid black;
+}
+
+td.rel{
+	width: 100px;
+	height: 20px;
+	border: 1px solid black;
+}
+
+#r_fm, #fm, #ot{
+	padding-top: 0px;
+	margin-top:0px;
+	width: 360px;
+	font-family: "Calibri";
+	word-break: normal;
+	white-space: normal;
+	text-align: justify;
+}
+/*
+pre{
+	white-space: normal;
+}*/

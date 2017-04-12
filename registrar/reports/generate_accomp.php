@@ -49,6 +49,9 @@
 				  <li class="active">Accomplishment Reports</li>
 				</ol>
 			</div>
+
+
+
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
@@ -59,17 +62,22 @@
 							<div class="clearfix"></div>
 						</div>
 						<form action="preview_accomp.php" method="POST">
+						<div>
 
-								
+								<div>
+							 	<div class="form-group">
 
 									<label for="r_fm" class="col-md-3">Records and File Management</label>
 									<br>
 	                    			<div class="col-md-12 pull-right">
-	                      				<textarea class="resizable_textarea form-control" name="r_fm"></textarea>
+	                      				<textarea class="resizable_textarea form-control" name="r_fm" style="height:150px;"></textarea>
 	                    			</div>
-                    			
+                    			</div>
+                    			</div>
 
-                  				
+                  				<div>
+                    			<div class="form-group">
+
                   					<label for=
                   					"fm" class="col-md-2">Registrar's Services</label>
                   					<br>
@@ -96,25 +104,29 @@
                     					<?php echo $monthstr; ?>
                     					<?php echo $a_year; ?>
                     				</div>
-                    	
+                    			</div>
+                    			</div>
 
-                  				
+                  				<div>
+                    			<div class="form-group">
                   					<label for=
                   					"fm" class="col-md-2">Financial Management</label>
                   					<br>
                     				<div class="col-md-12 pull-right">
-                      				<textarea class="resizable_textarea form-control" name="fm"></textarea>
+                      				<textarea class="resizable_textarea form-control" name="fm" style="height:150px;"></textarea>
                     				</div>
-                    			
+                    			</div>
+                    			</div>
                     		
-                    			
+                    			<br>
+                    			<br>
+                    			<div class="form-group">
                     				<label id="ot" class="col-md-2">Other Tasks</label>		
                     				<div class="col-md-12 pull-right">
-                      				<textarea class="resizable_textarea form-control" name="ot"></textarea>
+                      				<textarea class="resizable_textarea form-control" name="ot" style="height:150px;"></textarea>
                     				</div>
-
-
-                   </div>
+                    			</div>
+                  		</div>
 
                   		<button id="generatebutton" class="btn btn-primary pull-right" type="submit"><i class="fa fa-print m-right-xs"></i> Generate Credentials</button>
                   		</form>

@@ -14,6 +14,14 @@
         if (isset($_POST['ot'])){
         $ot = $_POST['ot'];
     }
+
+    if(isset($_GET['accomplishment_date'])){
+        $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to';";
+                                        }
+            else {
+                $accomplishment_date = date('m/d/y').'-'.date('m/d/y');
+                $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
+    }
 ?>
 
 <html>
@@ -86,7 +94,7 @@
 
                                         <div id="r_fm">
                                     
-                                        <?php echo $r_fm; ?>
+                                        <pre><?php echo $r_fm; ?></pre>
 
                                         </div>
 
@@ -114,18 +122,38 @@
                                             <th class="item-t-col">PROCESSED</th>
                                             <th class="item-t-col">RELEASED</th>
                                             </thead>
+<?php
 
-                                            <tr class="td-4-t">
-                                            <td class="name"></td>
-                                            <td class="pro"></td>
-                                            <td class="rel"></td>
-                                            </tr>
+                                        if(isset($_GET['accomplishment_date'])) {
+                                        $accomplishment_date = $_GET['accomplishment_date'];
+                
 
-                                            <tr class="td-4-t">
-                                            <td class="name"></td>
-                                            <td class="pro"></td>
-                                            <td class="rel"></td>
-                                            </tr>
+                                        $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
+
+
+                                        $statement = "SELECT * FROM pcnhsdb.credentials";
+
+                                        }
+
+
+                                    $result = $conn->query($statement);
+                                    if ($result->num_rows > 0) {
+                                        while($row = $result->fetch_assoc()) {
+                                            
+                                            $processed = $row['date_processed_count'];
+                                            $released = $row['date_released_count'];
+                                            //$cred = $row['cred_name'];
+                                            }
+                                        }
+                                        echo  <<<REQ
+                                            <tr>
+                                                <td class=" ">    
+                                                <td class=" ">$processed</td>
+                                                <td class=" ">$released</td>
+                                                
+                                            </tr>;
+REQ;
+?>
 
                                             
                                             </table>
