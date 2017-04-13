@@ -11,8 +11,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     
+    <!-- jQuery -->
+    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+    <!-- Tablesorter themes -->
+    <!-- bootstrap -->
+    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+    <!-- Tablesorter: required -->
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
     <!-- NProgress -->
-      <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -23,8 +35,10 @@
     
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
-    <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+     <!-- Custom Theme Style -->
+    <link href="../../assets/css/customstyle.css" rel="stylesheet">
     
+
     <!--[if lt IE 9]>
     <script src="../js/ie8-responsive-file-warning.js"></script>
     <![endif]-->
@@ -112,8 +126,8 @@
                   echo "<p>Showing Students in School Year of $school_year2</p>";
                 }
               ?>
-              <div class="table-responsive">
-                <table id="studList" class="table table-bordered tablesorter">
+              <div class="stud-list">
+                <table class="tablesorter-bootstrap">
                   <thead>
                     <tr>
                       <th>Student ID</th>
@@ -121,6 +135,7 @@
                       <th>First Name</th>
                       <th>Middle Name</th>
                       <th>Curriculum</th>
+                      <th>Date Modified</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -185,6 +200,8 @@
                     $curriculum = $row['curr_id'];
                     $curr_code = $row['curr_code'];
 
+                    $date_modified = $row['date_modified'];
+
                     echo <<<STUDLIST
                     <tr>
                       <td>$stud_id</td>
@@ -192,6 +209,7 @@
                       <td>$first_name</td>
                       <td>$mid_name</td>
                       <td>$curr_code</td>
+                      <td>$date_modified</td>
                       <td>
                         <center>
                           <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
@@ -277,8 +295,7 @@ STUDLIST;
     <?php include "../../resources/templates/registrar/footer.php"; ?>
     
     <!-- Scripts -->
-    <!-- jQuery -->
-    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+    
     <!-- Bootstrap -->
     <script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
@@ -290,17 +307,10 @@ STUDLIST;
     <script src= "../../assets/js/custom.min.js"></script>
     <!-- NProgress -->
     <script src="../../resources/libraries/nprogress/nprogress.js"></script>
-    <script type="text/javascript" src=<?php echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
+    <!-- <script type="text/javascript" src="../../resources/libraries/tablesorter/jquery.tablesorter.js"></script> -->
     <!-- Scripts -->
     
-    <script type="text/javascript">
-    
-    $(document).ready(function(){
-    $("#studList").tablesorter({headers: { 6:{sorter: false}, }});
-    }
-    );
-    
-    </script>
+   
     <!-- Change Entry -->
     <script type="text/javascript">
       function changeEntries(val) {
@@ -316,11 +326,28 @@ STUDLIST;
     </script>
     <!--  -->
     <!-- jquery.inputmask -->
-              <script>
-                  $(document).ready(function() {
-                      $(":input").inputmask();
-                  });
-              </script>
-                <!-- /jquery.inputmask -->
+    <script>
+      $(document).ready(function() {
+        $(":input").inputmask();
+      });
+    </script>
+    <!-- /jquery.inputmask -->
+    <script type="text/javascript">
+  
+    $(function() {
+
+      $('.stud-list').tablesorter();
+
+
+
+      $('.tablesorter-bootstrap').tablesorter({
+        theme : 'bootstrap',
+        headerTemplate: '{content} {icon}',
+        widgets    : ['zebra','columns', 'uitheme']
+      });
+
+    });
+    
+    </script>
   </body>
 </html>

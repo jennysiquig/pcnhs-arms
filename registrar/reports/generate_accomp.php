@@ -44,14 +44,11 @@
 		<div class="right_col" role="main">
 			<div class="col-md-9">
 				<ol class="breadcrumb">
-				  <li><a href="../index.php">Home</a></li>
-				  <li><a href="#">Reports</a></li>
-				  <li class="active">Accomplishment Reports</li>
+					<li><a href="../index.php">Home</a></li>
+					<li><a href="#">Reports</a></li>
+					<li class="active">Accomplishment Reports</li>
 				</ol>
 			</div>
-
-
-
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
@@ -61,88 +58,142 @@
 							</ul>
 							<div class="clearfix"></div>
 						</div>
+						<div class="x_content">
 						<form action="preview_accomp.php" method="POST">
-						<div>
-
-								<div>
-							 	<div class="form-group">
-
-									<label for="r_fm" class="col-md-3">Records and File Management</label>
-									<br>
-	                    			<div class="col-md-12 pull-right">
-	                      				<textarea class="resizable_textarea form-control" name="r_fm" style="height:150px;"></textarea>
-	                    			</div>
-                    			</div>
-                    			</div>
-
-                  				<div>
-                    			<div class="form-group">
-
-                  					<label for=
-                  					"fm" class="col-md-2">Registrar's Services</label>
-                  					<br>
-                    				<div class="col-md-12">
-                    					
-                    				</div>
-
-                    				<div id="date">
-                    				<?php $accomplishment_date = $_SESSION['accomplishment_date'];
-
-	             						$accomplishment_date = explode("/", $accomplishment_date);
-
-	             						$a_month = $accomplishment_date[0];
-	             						$a_year = substr($accomplishment_date[2], 0, 4);
-	            
-	             						if($a_month < 10) {
-	                						$a_month = substr($a_month, 1, 1);
-	             						}
-
-	              						$month_array = array('January','February','March','April','May','June','July','August','September','October','November','December');
-	                					$monthstr = $month_array[$a_month-1]; ?>
-
-                    					<!-- <?php // echo $accomplishment_date; ?> -->
-                    					<?php echo $monthstr; ?>
-                    					<?php echo $a_year; ?>
-                    				</div>
-                    			</div>
-                    			</div>
-
-                  				<div>
-                    			<div class="form-group">
-                  					<label for=
-                  					"fm" class="col-md-2">Financial Management</label>
-                  					<br>
-                    				<div class="col-md-12 pull-right">
-                      				<textarea class="resizable_textarea form-control" name="fm" style="height:150px;"></textarea>
-                    				</div>
-                    			</div>
-                    			</div>
-                    		
-                    			<br>
-                    			<br>
-                    			<div class="form-group">
-                    				<label id="ot" class="col-md-2">Other Tasks</label>		
-                    				<div class="col-md-12 pull-right">
-                      				<textarea class="resizable_textarea form-control" name="ot" style="height:150px;"></textarea>
-                    				</div>
-                    			</div>
-                  		</div>
-
-                  		<button id="generatebutton" class="btn btn-primary pull-right" type="submit"><i class="fa fa-print m-right-xs"></i> Generate Credentials</button>
-                  		</form>
-
-                  		<!-- <?php // $accomplishment_date = $_GET['accomplishment_date'];?>
-                  		<?php // echo $accomplishment_date;?> -->
-
-        
-
-
-					</div>
-			
-
+							
+							<label for="r_fm" class="col-md-3">Records and File Management</label>
+							<br>
+							<div class="col-md-12 pull-right">
+								<textarea class="resizable_textarea form-control" name="r_fm" style="height:150px;"></textarea>
+							</div>
+							
+							
+							
+							<div class="col-md-12">
+								<label for="fm" class="col-md-2">Registrar's Services</label>
+								
+								
+								<div id="date"  class="col-md-7">
+									<?php 
+												$accomplishment_date = $_SESSION['accomplishment_date'];
+												$accomplishment_date = explode("/", $accomplishment_date);
+												$a_month = $accomplishment_date[0];
+												$a_year = substr($accomplishment_date[2], 0, 4);
+									
+												if($a_month < 10) {
+												$a_month = substr($a_month, 1, 1);
+												}
+												$month_array = array('January','February','March','April','May','June','July','August','September','October','November','December');
+									$monthstr = $month_array[$a_month-1]; ?>
+									<!-- <?php // echo $accomplishment_date; ?> -->
+									<p>Accomplished and Released Credentials in the month of <?php echo $monthstr; ?> year <?php echo $a_year; ?>.</p>
+								</div>
+							</div>
+							
+							
+							<label for=
+							"fm" class="col-md-2">Financial Management</label>
+							<br>
+							<div class="col-md-12 pull-right">
+								<textarea class="resizable_textarea form-control" name="fm" style="height:150px;"></textarea>
+							</div>
+							
+							
+							
+							<label id="ot" class="col-md-2">Other Tasks</label>
+							<div class="col-md-12 pull-right">
+								<textarea class="resizable_textarea form-control" name="ot" style="height:150px;"></textarea>
+							</div>
+							<!--             <div class="form-group"> -->
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Signatory (Checked by)<span class="required">*</span>
+						</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<select id="credential" class="form-control" name="signatory1">
+								<option value="">-- Choose Signatory --</option>
+								<option value="" disabled="">-- Head Teacher --</option>
+								<?php
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$statement = "SELECT * FROM signatories WHERE position='HEAD TEACHER'";
+									$result = $conn->query($statement);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$sign_id1 = $row['sign_id'];
+											$sign_name1 = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+											echo "<option value='$sign_id1'>$sign_name1</option>";
+										}
+									}
+								?>
+								<option value="" disabled="">-- Principal --</option>
+								<?php
+										if(!$conn) {
+											die("Connection failed: " . mysqli_connect_error());
+										}
+										$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
+										$result = $conn->query($statement);
+										if ($result->num_rows > 0) {
+											// output data of each row
+											while($row = $result->fetch_assoc()) {
+												$sign_id1 = $row['sign_id'];
+												$sign_name1 = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+												echo "<option value='$sign_id1'>$sign_name1</option>";
+											}
+										}
+								?>
+							</select>
 						</div>
+						<!-- 			</div> -->
+						<div class="col-md-12"></div>
+						<!-- 			<div class="form-group"> -->
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Signatory (Verified by)<span class="required">*</span></label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<select id="credential" class="form-control" name="signatory2">
+								<option value="">-- Choose Signatory --</option>
+								<option value="" disabled="">-- Head Teacher --</option>
+								<?php
+									if(!$conn) {
+										die("Connection failed: " . mysqli_connect_error());
+									}
+									$statement = "SELECT * FROM signatories WHERE position='HEAD TEACHER'";
+									$result = $conn->query($statement);
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											$sign_id2 = $row['sign_id'];
+											$sign_name2 = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+											echo "<option value='$sign_id2'>$sign_name2</option>";
+										}
+									}
+								?>
+								<option value="" disabled="">-- Principal --</option>
+								<?php
+										if(!$conn) {
+											die("Connection failed: " . mysqli_connect_error());
+										}
+										$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
+										$result = $conn->query($statement);
+										if ($result->num_rows > 0) {
+											// output data of each row
+											while($row = $result->fetch_assoc()) {
+												$sign_id2 = $row['sign_id'];
+												$sign_name2 = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+												echo "<option value='$sign_id2'>$sign_name2</option>";
+											}
+										}
+								?>
+							</select>
+						</div>
+						<!-- 			</div> -->
+						<button id="generatebutton" class="btn btn-primary pull-right" type="submit"><i class="fa fa-print m-right-xs"></i> Generate Credentials</button>
+					</form>
 					</div>
+					<!-- <?php // $accomplishment_date = $_GET['accomplishment_date'];?>
+					<?php // echo $accomplishment_date;?> -->
+					
 				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -164,7 +215,9 @@
 	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src= "../../assets/js/custom.js"></script>
-	
+	<script type="text/javascript">
+		$('textarea').autoResize();
+	</script>
 	
 </body>
 </html>

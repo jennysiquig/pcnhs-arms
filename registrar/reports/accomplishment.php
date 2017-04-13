@@ -84,7 +84,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								Select Date of Accomplishment
-								<form class="form-horizontal" action="accomplishment.php" method="get" value="accomplishment_date">
+								<form class="form-horizontal" action="accomplishment.php" method="get">
 									<fieldset>
 										
 										<div class="control-group">
@@ -93,9 +93,9 @@
 													<span class="add-on input-group-addon">
 														<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
 													</span>
-													<input type="text" name="accomplishment_date" id="accomplishment_date" class="form-control" value="accomplishment_date" />
+													<input type="text" name="accomplishment_date" id="accomplishment_date" class="form-control" value="" />
 													<span class="input-group-btn">
-														<button type="submit" class="btn btn-primary">Go!</button>
+														<button type="submit" class="btn btn-primary">Go</button>
 													</span>
 												</div>
 											</div>
@@ -104,12 +104,6 @@
 									</fieldset>
 								</form>
 							</div>
-								<br>
-								<div class="col-md-8">
-								<a href = "generate_accomp.php"><button type="button" class="btn btn-success pull-right">Generate Report</button></a></form>
-								</div>
-
-								
 						</div>
 	                      <!-- Date Picker -->
 						<div class="x_content">
@@ -145,7 +139,7 @@
 				                    }
 
 				                    if(isset($_GET['accomplishment_date'])) {
-				                    	$accomplishment_date = $_GET['accomplishment_date'];
+				                    		$accomplishment_date = $_GET['accomplishment_date'];
 					                    	//echo $accomplishment_date;
 					                    	$from_and_to_date = explode("-", $accomplishment_date);
 					                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
@@ -156,7 +150,7 @@
 											$d = preg_replace('/\s+/', '', $d);
 											$y = preg_replace('/\s+/', '', $y);
 
-											$from = $y."-".$m."-".$d;
+											$from = $y."-".$m."-"."1";
 
 											$sqldate_format_to = explode("/", $from_and_to_date[1]);
 											$m = $sqldate_format_to[0];
@@ -166,9 +160,9 @@
 											$d = preg_replace('/\s+/', '', $d);
 											$y = preg_replace('/\s+/', '', $y);
 
-											$to = $y."-".$m."-".$d;
-										//echo $accomplishment_date;
+											$to = $y."-".$m."-"."31";
 
+											
 				                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to' limit 0, 25;";
 				                    }else {
 				                    	$accomplishment_date = date('m/d/y').'-'.date('m/d/y');
@@ -204,26 +198,17 @@ REQ;
 								if(isset($_GET['accomplishment_date'])) {
 					                    	$accomplishment_date = $_GET['accomplishment_date'];
 					                    	//echo $accomplishment_date;
-					                    	$from_and_to_date = explode("-", $accomplishment_date);
-					                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
-											$m = $sqldate_format_from[0];
-											$d = $sqldate_format_from[1];
-											$y = $sqldate_format_from[2];
+					                    	$from_and_to_date = explode("/", $accomplishment_date);
+											$m = $from_and_to_date[0];
+											$d = $from_and_to_date[1];
+											$y = $from_and_to_date[2];
 											$m = preg_replace('/\s+/', '', $m);
 											$d = preg_replace('/\s+/', '', $d);
 											$y = preg_replace('/\s+/', '', $y);
 
-											$from = $y."-".$m."-".$d;
+											$from = $y."-".$m."-"."1";
 
-											$sqldate_format_to = explode("/", $from_and_to_date[1]);
-											$m = $sqldate_format_to[0];
-											$d = $sqldate_format_to[1];
-											$y = $sqldate_format_to[2];
-											$m = preg_replace('/\s+/', '', $m);
-											$d = preg_replace('/\s+/', '', $d);
-											$y = preg_replace('/\s+/', '', $y);
-
-											$to = $y."-".$m."-".$d;
+											$to = $y."-".$m."-"."31";
 											//echo $accomplishment_date;
 
 					                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to';";

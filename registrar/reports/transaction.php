@@ -94,7 +94,7 @@
 													</span>
 													<input type="text" name="transaction_date" id="transaction_date" class="form-control" value=" " />
 													<span class="input-group-btn">
-														<button type="submit" class="btn btn-primary">Go!</button>
+														<button type="submit" class="btn btn-primary">Go</button>
 													</span>
 												</div>
 											</div>

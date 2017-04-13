@@ -118,7 +118,7 @@
 						<!-- this row will not appear when printing -->
 						<div class="row no-print">
 							<div class="col-xs-12">
-								<button class="btn btn-success pull-right"><i class="fa fa-paper-plane"></i> Submit</button>
+								<button class="btn btn-primary pull-right">Next</button>
 								<a href="../../registrar/index.php" class="btn btn-default pull-right">Cancel</a>
 							</div>
 						</div>

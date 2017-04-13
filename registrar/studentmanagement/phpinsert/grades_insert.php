@@ -15,7 +15,7 @@
 			$total_credit = filter_var($_POST['total_credits'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 			$insertgrades = "";
 			$comment = "";
-			$credit_earned = filter_var($_POST['credit_earned'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+			$credit_earned = htmlspecialchars($_POST['credit_earned']);
 
 			header('Content-type:text/csv');
 			header("Content-Disposition: attachment; filename=$stud_id-year-level-$yr_level-partial-save.csv");
@@ -42,6 +42,16 @@
 			$comment = "";
 			$willInsert = true;
 
+			$curr_id = $_GET['curr_id'];
+			$curr_code = "";
+			$checkcurriculum = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id;";
+			$result = $conn->query($checkcurriculum);
+			if($result->num_rows>0) {
+				while ($row = $result->fetch_assoc()) {
+					$curr_code = $row['curr_code'];
+				}
+			}
+
 			$checkgrade = "SELECT * from pcnhsdb.grades where stud_id = '$stud_id' AND yr_level = '$yr_level'";
 		    $result = $conn->query($checkgrade);
 		    if ($result->num_rows > 0) {
@@ -54,55 +64,78 @@
 		        die();
 		    }
 // 
-			if($average_grade > 99.999) {
-				$willInsert = false;
-				$alert_type = "danger";
-				$error_message = "You have entered an Invalid Average Grade.";
-				$popover = new Popover();
-				$popover->set_popover($alert_type, $error_message);	
-				$_SESSION['error_pop'] = $popover->get_popover();
-				header("Location: " . $_SERVER["HTTP_REFERER"]);
-				die();
-			}
-			if(empty($average_grade)) {
-				$willInsert = false;
-				$alert_type = "danger";
-				$error_message = "Empty Average Grade.";
-				$popover = new Popover();
-				$popover->set_popover($alert_type, $error_message);	
-				$_SESSION['error_pop'] = $popover->get_popover();
-				header("Location: " . $_SERVER["HTTP_REFERER"]);
-				die();
-			}
-			if(empty($total_credit)) {
-				$willInsert = false;
-				$alert_type = "danger";
-				$error_message = "Empty Total Credits Earned.";
-				$popover = new Popover();
-				$popover->set_popover($alert_type, $error_message);	
-				$_SESSION['error_pop'] = $popover->get_popover();
-				header("Location: " . $_SERVER["HTTP_REFERER"]);
-				die();
-			}
 			foreach ($_POST['subj_id'] as $key => $value) {
 				$subj_id = htmlspecialchars($_POST['subj_id'][$key]);
 				$fin_grade = htmlspecialchars($_POST['fin_grade'][$key]);
 				$credit_earned = htmlspecialchars($_POST['credit_earned'][$key]);
 // 	
-				if(empty($credit_earned)) {
-					$credit_earned = 1;
-				}
-				if($fin_grade > 99.99 || $fin_grade < 70) {
+
+				if($fin_grade > 65 && $credit_earned == 0 && is_numeric($credit_earned)) {
 					$willInsert = false;
 					$alert_type = "danger";
-					$error_message = "You have entered an Invalid Final Grade.";
+					$error_message = "Invalid Credit Earned input. Enter Credit Earned that is greater than 0 if the Final Grade is greater than 65";
 					$popover = new Popover();
 					$popover->set_popover($alert_type, $error_message);	
 					$_SESSION['error_pop'] = $popover->get_popover();
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
+				}elseif ($fin_grade < 75 && $credit_earned == 0) {
+					$credit_earned = 1;
 				}
-		// 
+				if(!is_numeric($credit_earned)) {
+					$curr_id = $_GET['curr_id'];
+					$curr_code = "";
+					$checkcurriculum = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id;";
+					$result = $conn->query($checkcurriculum);
+					if($result->num_rows>0) {
+						while ($row = $result->fetch_assoc()) {
+						    $curr_code = $row['curr_code'];
+						}
+					}
+					if($curr_code != "K-12") {
+						$willInsert = false;
+						$alert_type = "danger";
+						$error_message = "'P' for PROMOTED or 'R' for RETAINED is for K-12 curriculum only. ";
+						$popover = new Popover();
+						$popover->set_popover($alert_type, $error_message);	
+						$_SESSION['error_pop'] = $popover->get_popover();
+						header("Location: " . $_SERVER["HTTP_REFERER"]);
+						die();
+					}else {
+						if(strtoupper($credit_earned) == 'P') {
+							$credit_earned = "PROMOTED";
+						}elseif(strtoupper($credit_earned) == 'R') {
+							$credit_earned = "RETAINED";
+						}else {
+							$credit_earned = "";
+							$willInsert = false;
+							$alert_type = "danger";
+							$error_message = "Invalid Credit Earned input. Enter 'P' for PROMOTED or 'R' for RETAINED.";
+							$popover = new Popover();
+							$popover->set_popover($alert_type, $error_message);	
+							$_SESSION['error_pop'] = $popover->get_popover();
+							header("Location: " . $_SERVER["HTTP_REFERER"]);
+							die();
+						}
+					}
+
+					
+				}
+				if(is_numeric($credit_earned)) {
+			
+					if($curr_code == "K-12") {
+						$willInsert = false;
+						$alert_type = "danger";
+						$error_message = "Enter 'P' for PROMOTED or 'R' for RETAINED. ";
+						$popover = new Popover();
+						$popover->set_popover($alert_type, $error_message);	
+						$_SESSION['error_pop'] = $popover->get_popover();
+						header("Location: " . $_SERVER["HTTP_REFERER"]);
+						die();
+					}
+				}
+				
+
 				if(empty($fin_grade) || empty($credit_earned)) {
 					$willInsert = false;
 					$alert_type = "danger";
@@ -113,6 +146,17 @@
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
 				} 
+				if($fin_grade > 99.99 || $fin_grade < 65) {
+					$willInsert = false;
+					$alert_type = "danger";
+					$error_message = "You have entered an Invalid Final Grade.";
+					$popover = new Popover();
+					$popover->set_popover($alert_type, $error_message);	
+					$_SESSION['error_pop'] = $popover->get_popover();
+					header("Location: " . $_SERVER["HTTP_REFERER"]);
+					die();
+				}
+		// 
 				if($credit_earned < 0 || $credit_earned > 100) {
 					$willInsert = false;
 					$alert_type = "danger";
@@ -123,14 +167,44 @@
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
 				}
-				if($fin_grade < 65 && $fin_grade != 0) {
+				if($fin_grade < 75 && $fin_grade != 0) {
 					$credit_earned = 0;
 					$comment ="FAILED";
 				}else {
 					$comment = "PASSED";
 				}
 		//
-				 
+				if($average_grade > 99.999) {
+				$willInsert = false;
+				$alert_type = "danger";
+				$error_message = "You have entered an Invalid Average Grade.";
+				$popover = new Popover();
+				$popover->set_popover($alert_type, $error_message);	
+				$_SESSION['error_pop'] = $popover->get_popover();
+				header("Location: " . $_SERVER["HTTP_REFERER"]);
+				die();
+				}
+				if(empty($average_grade)) {
+					$willInsert = false;
+					$alert_type = "danger";
+					$error_message = "Empty Average Grade.";
+					$popover = new Popover();
+					$popover->set_popover($alert_type, $error_message);	
+					$_SESSION['error_pop'] = $popover->get_popover();
+					header("Location: " . $_SERVER["HTTP_REFERER"]);
+					die();
+				}
+				if(!is_numeric($total_credit)) {
+					// $willInsert = false;
+					// $alert_type = "danger";
+					// $error_message = "Empty Total Credits Earned.";
+					// $popover = new Popover();
+					// $popover->set_popover($alert_type, $error_message);	
+					// $_SESSION['error_pop'] = $popover->get_popover();
+					// header("Location: " . $_SERVER["HTTP_REFERER"]);
+					// die();
+					$total_credit = "N/A";
+				}
 
 				$insertgrades .= "INSERT INTO `pcnhsdb`.`studentsubjects` (`stud_id`, `subj_id`, `schl_year`, `yr_level`, `fin_grade`, `comment`, `credit_earned`) VALUES ('$stud_id', '$subj_id', '$schl_year', '$yr_level', '$fin_grade', '$comment', '$credit_earned');";
 				

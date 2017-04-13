@@ -8,37 +8,37 @@
     if(!$conn) {
         die();
     }
-    // if(!isset($_SESSION['generated'])) {
-    //     $_SESSION['generated'] = true;
-    // }else {
-    //     if($_SESSION['generated']) {
-    //         unset($_SESSION['generated']);
-    //         header("location: ../../index.php");
-    //         die();
-    //     }
-    // }
+    if(!isset($_SESSION['generated'])) {
+        $_SESSION['generated'] = true;
+    }else {
+        if($_SESSION['generated']) {
+            unset($_SESSION['generated']);
+            header("location: ../../index.php");
+            die();
+        }
+    }
     
-    $cred_id = htmlspecialchars($_POST['credential'], ENT_QUOTES);
-    $request_type = htmlspecialchars($_POST['request_type'], ENT_QUOTES);
-    $signatory = htmlspecialchars($_POST['signatory'], ENT_QUOTES);
+    $cred_id = htmlspecialchars($_GET['cred_id'], ENT_QUOTES);
+    $request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
+    $signatory = htmlspecialchars($_GET['signatory'], ENT_QUOTES);
     $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
-    $date = htmlspecialchars($_POST['date'], ENT_QUOTES);
-    $issuedfor = htmlspecialchars($_POST['issuedfor'], ENT_QUOTES);
-    $request_purpose = htmlspecialchars($_POST['request_purpose']);
+    $date = htmlspecialchars($_GET['date'], ENT_QUOTES);
+    $admitted_to = htmlspecialchars($_GET['admitted_to'], ENT_QUOTES);
+    $request_purpose = htmlspecialchars($_GET['request_purpose']);
 
     $checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
     if($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $req_id = $row['req_id'];
-            $update = "UPDATE `pcnhsdb`.`requests` SET `request_type`='$request_type', `status`='u' ,`issued_for` = '$issuedfor' , `sign_id`='$signatory' WHERE `req_id`='$req_id';";
+            $update = "UPDATE `pcnhsdb`.`requests` SET `request_type`='$request_type', `status`='u' ,`admitted_to` = '$admitted_to' , `sign_id`='$signatory' WHERE `req_id`='$req_id';";
 
-            //mysqli_query($conn, $update);
+            mysqli_query($conn, $update);
         }
     }else {
-         $statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `issued_for`, `request_purpose`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$issuedfor', '$request_purpose' ,'$signatory', '$personnel_id');";
+         $statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `admitted_to`, `request_purpose`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$admitted_to', '$request_purpose' ,'$signatory', '$personnel_id');";
 
-        //mysqli_query($conn, $statement1);
+        mysqli_query($conn, $statement1);
     }
     $_SESSION['user_activity'][] = "Student $stud_id requested Credential $cred_id.";
 
@@ -76,7 +76,7 @@
 		<div class="right_col" role="main">
 
 			<?php
-        $date_today = $_POST['date'];
+        $date_today = $_GET['date'];
         $date_today_e = explode("-", $date_today);
         $y = $date_today_e[0];
         $m = $date_today_e[1];
@@ -89,9 +89,7 @@
 
         $DADay = $d;
         $DAyear = $y;
-				$issuedfor = htmlspecialchars($_POST['issuedfor'], ENT_QUOTES);
-				$remarks = htmlspecialchars($_POST['remarks'], ENT_QUOTES);
-
+				$admitted_to = htmlspecialchars($_GET['admitted_to'], ENT_QUOTES);
         $locale = 'en_US';
         $nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
         $DADay = $nf->format($DADay);
@@ -376,7 +374,8 @@
                                             $yr_level1 = $row['yr_level'];
                                             $schl_year1 = $row['schl_year'];
 
-                                            echo <<<A
+                                        }
+                                        echo <<<A
                                               <div id="info">
 
                                                 <p id="b2-r1-p1">School:</p>
@@ -393,7 +392,24 @@
 
                                             </div>
 A;
-                                        }
+                                    }else {
+                                      echo <<<A
+                                              <div id="info">
+
+                                                <p id="b2-r1-p1">School:</p>
+                                                    <div id="b2-r1-d1" class="underline"></div>
+                                                
+
+                                                <p id="b2-r2-p1">Grade:</p>
+                                                    <div id="b2-r2-d1" class="underline"></div>
+                                                
+
+                                                <p id="b2-r2-p2">School Year:</p>
+                                                    <div id="b2-r2-d2" class="underline"></div>
+                                                
+
+                                            </div>
+A;
                                     }
                                     
 
@@ -436,6 +452,16 @@ A;
 
 YR1;
                                         }
+                                    }else {
+                                      for($x=0; $x <= 11; $x++) {
+                                        echo <<<YR1
+                                          <tr id="b2-r4">
+                                            <td class="subj"></td> <!-- subject -->
+                                            <td class="fr"></td> <!-- final rating -->
+                                            <td class="at"></td> <!-- Action Taken -->
+                                          </tr>
+YR1;
+                                      }
                                     }
                                     
 
@@ -469,6 +495,17 @@ YR1;
                                         <div id="b2-r19-d1" class="underline"></div>
 A1;
                                     }
+                                }else {
+                                  echo <<<A1
+                                        <p id="b2-r18-p1">Days of School:</p>
+                                        <div id="b2-r18-d1" class="underline"></div>
+
+                                        <p id="b2-r18-p2">Days Present:</p>
+                                        <div id="b2-r18-d2" class="underline"></div>
+
+                                        <p id="b2-r19-p1">Total Number of Years in School:</p>
+                                        <div id="b2-r19-d1" class="underline"></div>
+A1;
                                 }
 
                             ?>
@@ -493,7 +530,9 @@ A1;
                                     $schl_name2 = $row['schl_name'];
                                     $yr_level2 = $row['yr_level'];
                                     $schl_year2 = $row['schl_year'];
-                                    echo <<<A2
+                                   
+                                }
+                                 echo <<<A2
                                     <p id="b2-r1-p1">School:</p>
                                     <div id="b2-r1-d1" class="underline">$schl_name2</div>
                                 
@@ -505,7 +544,6 @@ A1;
                                     <p id="b2-r2-p2">School Year:</p>
                                         <div id="b2-r2-d2" class="underline">$schl_year2</div>
 A2;
-                                }
                             }else {
                               echo <<<A3
                                     <p id="b2-r1-p1">School:</p>
@@ -601,7 +639,18 @@ YR2;
                                         <div id="b2-r19-d1" class="underline"></div>
 A1;
                                     }
-                                }
+                                }else {
+                                  echo <<<A1
+                                        <p id="b2-r18-p1">Days of School:</p>
+                                        <div id="b2-r18-d1" class="underline"></div>
+
+                                        <p id="b2-r18-p2">Days Present:</p>
+                                        <div id="b2-r18-d2" class="underline"></div>
+
+                                        <p id="b2-r19-p1">Total Number of Years in School:</p>
+                                        <div id="b2-r19-d1" class="underline"></div>
+A1;
+                              }
                             ?>
                         </div>
 
@@ -633,7 +682,8 @@ A1;
                                           $yr_level3 = $row['yr_level'];
                                           $schl_year3 = $row['schl_year'];
 
-                                          echo <<<A3
+                                      }
+                                      echo <<<A3
                                             <p id="b2-r1-p1">School:</p>
                                               <div id="b2-r1-d1" class="underline">$schl_name3</div>
                                           
@@ -645,8 +695,6 @@ A1;
                                             <p id="b2-r2-p2">School Year:</p>
                                                 <div id="b2-r2-d2" class="underline">$schl_year3</div>
 A3;
-
-                                      }
                                   }else {
                                     echo <<<A3
                                             <p id="b2-r1-p1">School:</p>
@@ -784,8 +832,8 @@ A4;
                                           $schl_name4 = $row['schl_name'];
                                           $yr_level4 = $row['yr_level'];
                                           $schl_year4 = $row['schl_year'];
-
-                                          echo <<<A6
+                                      }
+                                       echo <<<A6
                                           <p id="b2-r1-p1">School:</p>
                                               <div id="b2-r1-d1" class="underline">$schl_name4</div>
                                           
@@ -797,7 +845,6 @@ A4;
                                           <p id="b2-r2-p2">School Year:</p>
                                               <div id="b2-r2-d2" class="underline">$schl_year4</div>
 A6;
-                                      }
                                   }else {
                                     echo <<<A7
                                           <p id="b2-r1-p1">School:</p>
@@ -966,12 +1013,12 @@ A4;
 
                         <div id="box-7">
 
-                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> the <div id="day-cert"> <?php echo $DADay; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $issuedfor; ?> </div> as a <div id="reg-cert"> <?php echo $stat; ?> </div> student and <div id="gender-cert"> <?php echo $formgender; ?> </div> has no</br> property and/or money accountability in this school.</div>
+                            <div id="cert">I certify that this is a true copy of the records of <div id="name-cert"> <?php echo $name; ?> </div> This student is eligible on</br> the <div id="day-cert"> <?php echo $DADay; ?> </div> day of <div id="month-cert"> <?php echo $DAmonth; ?> </div> <div id="year"> <?php echo $DAyear; ?> </div> for admission to <div id="grade-cert"> <?php echo $admitted_to; ?> </div> as a <div id="reg-cert"> <?php echo $stat; ?> </div> student and <div id="gender-cert"> <?php echo $formgender; ?> </div> has no</br> property and/or money accountability in this school.</div>
 
                             <p id="b7-r1-p1">REMARKS:</p>
                             <div id="b7-r1-d1"></div>
 
-                            <p id="b7-r1-p2">ISSUED TO: <div id="b7-r1-d2"><?PHP echo $remarks; ?></div></p>
+                            <p id="b7-r1-p2">ISSUED TO: <div id="b7-r1-d2"><?PHP echo $request_purpose; ?></div></p>
 
 
 

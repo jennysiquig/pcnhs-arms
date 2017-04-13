@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <?php
@@ -43,7 +44,6 @@
 
 	
 ?>
-<!DOCTYPE html>
 <html>
 	<head>
 		<title>Generate Credential</title>
@@ -85,7 +85,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "preview_cred.php?stud_id=$stud_id" ?> method="POST" >
+			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "choose_template.php?stud_id=$stud_id" ?> method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Form 137 <small></small></h2>
@@ -123,49 +123,16 @@
 							<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="credential" readonly="" value=<?php echo "'$credential'"; ?>>
 						</div>
 					</div>
-					<div class="item form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date Accomplished *</label>
-						<div class="col-md-2 col-sm-6 col-xs-12">
-							<select class="form-control col-md-7 col-xs-12" name="month" required="">
-								<option value="">Month</option>
-								<?php
-									$month=array('January','February','March','April','May','June','July','August','September','October','November','December');
-									for ($i=0; $i < count($month) ; $i++) {
-										$dayVal = $i+1;
-										$monthName = $month[$i];
-										echo "<option value='$monthName'>$monthName</option>";
-									}
-								?>
-							</select>
-						</div>
-						<div class="col-md-2 col-sm-6 col-xs-12">
-							<select class="form-control col-md-7 col-xs-12" name="day" required="">
-								<option value="">Day</option>
-								<?php for ($day=1; $day <= 31 ; $day++) {
-									echo "<option value='$day'>$day</option>";
-								} ?>
-							</select>
-						</div>
-						<div class="col-md-2 col-sm-6 col-xs-12">
-							<input class="form-control  col-md-7 col-xs-12" type="text" name="year" placeholder="Year" data-inputmask="'mask': '9999'" required="">
-						</div>
-					</div>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Request Purpose: </label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Request Purpose/Remarks: </label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input required="required" class="form-control" name="request_purpose" placeholder="" value=<?php echo "'$request_purpose'"; ?>>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Issued For:</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Admitted To:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="issuedfor" value="" placeholder="ex: Grade 11">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks: </label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<textarea id="message" required="required" class="form-control" name="remarks" placeholder=""></textarea>
+							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="admitted_to" value="" placeholder="ex: Grade 11">
 						</div>
 					</div>
 				<!--  -->

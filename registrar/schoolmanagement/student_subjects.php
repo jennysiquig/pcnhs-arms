@@ -26,6 +26,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     
+     <!-- jQuery -->
+    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+    <!-- Tablesorter themes -->
+    <!-- bootstrap -->
+    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+    <!-- Tablesorter: required -->
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
     
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -37,8 +49,9 @@
     
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
-    <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-    
+     <!-- Custom Theme Style -->
+    <link href="../../assets/css/customstyle.css" rel="stylesheet">
+
     <!--[if lt IE 9]>
     <script src="../js/ie8-responsive-file-warning.js"></script>
     <![endif]-->
@@ -82,14 +95,15 @@
 							<ul class="nav navbar-right panel_toolbox">
 								<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 							</li>
-						</ul>
-						<div class="clearfix"></div>
-					</div>
+							</ul>
+							<div class="clearfix"></div>
+						</div>
 						<div class="x_content">
 							<form class="form-horizontal form-label-left" action="student_subjects.php" method="get">
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12">Filter Curriculum</label>
-									<div class="col-md-3 col-sm-4 col-xs-12">
+								<div class="row">
+									<div class="item form-group">
+										<label class="control-label col-md-9 col-sm-3 col-xs-12">Filter Curriculum</label>
+										<div class="col-md-3 col-sm-4 col-xs-12">
 										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="curriculum">
 											<option value="all">All</option>
 											<?php
@@ -119,8 +133,9 @@
 											</select>
 										</div>
 									</div>
+								
 								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12">Filter Program</label>
+									<label class="control-label col-md-9 col-sm-3 col-xs-12">Filter Program</label>
 									<div class="col-md-3 col-sm-4 col-xs-12">
 										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="program">
 											<option value="all">All</option>
@@ -150,15 +165,16 @@
 										</div>
 										
 								</div>
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-									<div class="col-md-3 col-sm-4 col-xs-12">
-										<button class="btn btn-primary pull-right">Filter</button>
-									</div>
-								</div>
+								
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary pull-right">Filter</button>
+								</div>	
+							</div>
 							<div class="clearfix"></div>
-							<div class="table-responsive">
-								<table id="subjList" class="table table-bordered tablesorter">
+							<div class="table-responsive subj-list">
+								<table class="tablesorter-bootstrap">
 									<thead>
 										<tr class="headings">
 											<th class="column-title">Subject Name</th>
@@ -333,9 +349,8 @@ SUBJS;
 	<!-- Footer -->
 	<?php include "../../resources/templates/registrar/footer.php"; ?>
 	
-	<!-- Scripts -->
-		<!-- jQuery -->
-		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+		<!-- Scripts -->
+
 		<!-- Bootstrap -->
 		<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 		<!-- FastClick -->
@@ -344,7 +359,6 @@ SUBJS;
 		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
-		 <script type="text/javascript" src="../../resources/libraries/tablesorter/jquery.tablesorter.js" ></script>
 		<script src= "../../assets/js/custom.min.js"></script>
 	<!-- Scripts -->
 	<script>
@@ -368,10 +382,19 @@ SUBJS;
 	</script>
 	<script type="text/javascript">
     
-    $(document).ready(function(){
-    $("#subjList").tablesorter({headers: { 4:{sorter: false}, }});
-    }
-    );
+    $(function() {
+
+      $('.subj-list').tablesorter();
+
+
+
+      $('.tablesorter-bootstrap').tablesorter({
+        theme : 'bootstrap',
+        headerTemplate: '{content} {icon}',
+        widgets    : ['zebra','columns', 'uitheme']
+      });
+
+    });
     
     </script>
 </body>

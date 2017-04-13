@@ -1,4 +1,4 @@
-assets/<!DOCTYPE html>
+<!DOCTYPE html>
 <?php include('include_files/session_check.php'); ?>
 <?php require_once "../../resources/config.php"; ?>
 <?php 
@@ -65,7 +65,7 @@ assets/<!DOCTYPE html>
             <div class="x_content">
               
               <div class="table-responsive">
-                <table id="studList" class="table table-bordered tablesorter">
+                <table id="studList" class="table table-bordered jambo_table">
                   <thead>
                     <tr>
                       <th>Student ID</th>
@@ -114,7 +114,11 @@ assets/<!DOCTYPE html>
                       <td>$first_name</td>
                       <td>
                         <span class="">
-                          <center><a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$purpose&new_request=true" class="btn btn-default btn-xs"> Add Request</a></center>
+                        <center>
+                          <a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$purpose&new_request=true" class="btn btn-default btn-xs"> Add Request</a>
+
+                          <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default btn-xs"> View Profile</a>
+                          </center>
                         </span>
                       </td>
                     </tr>
@@ -148,7 +152,7 @@ STUDLIST;
     <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
     <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src= "../../js/custom.min.js"></script>
+    <script src= "../../assets/js/custom.min.js"></script>
     <!-- NProgress -->
     <script src="../../resources/libraries/nprogress/nprogress.js"></script>
     <script type="text/javascript" src=<?php echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
