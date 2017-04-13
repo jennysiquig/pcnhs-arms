@@ -108,6 +108,11 @@
 				  <li class="active">Student Personal Information</li>
 				</ol>
 			</div>
+			<div class="row">
+				<div class="col-md-9">
+					<a class="btn btn-default" href=<?php echo "../studentmanagement/student_list.php"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+				</div>
+			</div>
 			<div class="clearfix"></div>
 			<?php
 				if(isset($_SESSION['success'])) {

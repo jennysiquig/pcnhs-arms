@@ -87,7 +87,7 @@
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = '$yr_level' and stud_id = '$stud_id';";
+									$query = "SELECT subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = '$yr_level' and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row

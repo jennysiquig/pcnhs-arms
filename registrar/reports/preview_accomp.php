@@ -3,25 +3,18 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php
     $r_fm = "";
-    $fm = "";
-    $ot = "";
-    if (isset($_POST['r_fm'])){
+    $fm   = "";
+    $ot   = "";
+    if (isset($_POST['r_fm'])) {
         $r_fm = $_POST['r_fm'];
     }
-    if (isset($_POST['fm'])){
+    if (isset($_POST['fm'])) {
         $fm = $_POST['fm'];
     }
-        if (isset($_POST['ot'])){
+    if (isset($_POST['ot'])) {
         $ot = $_POST['ot'];
     }
 
-    if(isset($_GET['accomplishment_date'])){
-        $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to';";
-                                        }
-            else {
-                $accomplishment_date = date('m/d/y').'-'.date('m/d/y');
-                $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
-    }
 ?>
 
 <html>
@@ -53,114 +46,129 @@
             <h4 class="inst">PINES CITY NATIONAL HIGH SCHOOL</h4>
             <h4 class="inst">REGISTRAR'S ACCOMPLISHMENT REPORT</h4>
 
+            <div id="month"> 
+                <?php 
+                    $accomplishment_date = $_POST['accomplishment_date'];
+                    //echo $accomplishment_date;
+                    $from_and_to_date = explode("-", $accomplishment_date);
+                    $sqldate_format_from = explode("/", $from_and_to_date[0]);
+                    $m = $sqldate_format_from[0];
+                    $d = $sqldate_format_from[1];
+                    $y = $sqldate_format_from[2];
+                    $m = preg_replace('/\s+/', '', $m);
+                    $d = preg_replace('/\s+/', '', $d);
+                    $y = preg_replace('/\s+/', '', $y);
+                    $from = $y."-".$m."-".$d;
+                    $month_array = array('January','February','March','April','May','June','July','August','September','October','November','December');
+                    $m = $month_array[$m-1];
+                    echo $m.' '.$y; 
 
+                ?> 
 
-            <?php $accomplishment_date = $_SESSION['accomplishment_date'];
-
-                $accomplishment_date = explode("/", $accomplishment_date);
-
-                $a_month = $accomplishment_date[0];
-                $a_year = substr($accomplishment_date[2], 0, 4);
+            </div>
                 
-                if($a_month < 10) {
-                    $a_month = substr($a_month, 1, 1);
-                }
+              <table class="table-1">
+                <tr id="b1-head">
+                    <th class="b1">AREAS</th>
+                    <th class="b1">ACCOMPLISHMENTS</th>
+                </tr>
+                <tr id="b6-r1">
+                    <td class="col">
+                        <p class="td-p1">Records and Files Management</p>
+                        <p class="td-p2">Good records management is essential for the registrar's office to function effectively. Efficiency, effectiveness and less time consuming are some of the benefits of organized records and files (especially that the registrar's office is using the manual filing).</p>
+                    </td>
+                    <td class="col">
+                        <div id="r_fm">
+                            <?php
+                                echo "<p>$r_fm</p>"; 
+                            ?>
+                        </div>
+                </td>
+                </tr>
 
-                $month_array = array('January','February','March','April','May','June','July','August','September','October','November','December');
-                    $monthstr = $month_array[$a_month-1]; ?>
+                <tr id="b6-r2">
+                    <td class="col">
+                        <p class="td-p1">Registrar's Services</p>
+                        <p class="td-p2">The registrar's office is responsible in the maintenance of students' permanent academic records, receiving of incoming correspondence, processing of requests and issuance/releasing of school credentials.</p>
+                        
+                    </td>
+                    <td class="col">
+                        <p class="td-p">Below is the summary of accomplished and released credentials</p>
+                        <table style="width: 290px; margin: 20px; text-align: center;">
+                            <thead>
+                                <th class="item-t-col">ITEM</th>
+                                <th class="item-t-col">PROCESSED</th>
+                                <th class="item-t-col">RELEASED</th>
+                            </thead>
+                            <tbody>
+                                    <?php
+    
+                                         $statement = "SELECT * FROM pcnhsdb.credentials;";
+                                            $result = $conn->query($statement);
+                                            if($result->num_rows>0){
+                                                while ($row=$result->fetch_assoc()) {
+                                                    $cred_id = $row['cred_id'];
+                                                    $cred_name = $row['cred_name'];
 
-            <div id="month"> <?php echo $monthstr; ?> </div>
-            <div id="year"> <?php echo $a_year; ?> </div>
+                                                    echo    '<tr class="odd pointer">';
+                                                    echo        "<td class=''>$cred_name</td>";
 
-            <div id ="report">
-                
-              <table id="acc-t">
-                                
-                                <tr id="b1-head">  
-                                <th class="b1">AREAS</th>
-                                <th class="b1">ACCOMPLISHMENTS</th>
-                                </tr>
+                                                     if(isset($_POST['accomplishment_date'])) {
+                                                        $accomplishment_date = $_POST['accomplishment_date'];
+                                                        //echo $accomplishment_date;
+                                                        $from_and_to_date = explode("-", $accomplishment_date);
+                                                        $sqldate_format_from = explode("/", $from_and_to_date[0]);
+                                                        $m = $sqldate_format_from[0];
+                                                        $d = $sqldate_format_from[1];
+                                                        $y = $sqldate_format_from[2];
+                                                        $m = preg_replace('/\s+/', '', $m);
+                                                        $d = preg_replace('/\s+/', '', $d);
+                                                        $y = preg_replace('/\s+/', '', $y);
 
-                                <tr id="b6-r1">
-                                    <td class="col">
+                                                        $from = $y."-".$m."-".$d;
 
-                                        <p class="td-p1">Records and Files Management</p>
+                                                        $sqldate_format_to = explode("/", $from_and_to_date[1]);
+                                                        $m = $sqldate_format_to[0];
+                                                        $d = $sqldate_format_to[1];
+                                                        $y = $sqldate_format_to[2];
+                                                        $m = preg_replace('/\s+/', '', $m);
+                                                        $d = preg_replace('/\s+/', '', $d);
+                                                        $y = preg_replace('/\s+/', '', $y);
 
-                                        <p class="td-p2">Good records management is essential for the registrar's office to function effectively. Efficiency, effectiveness and less time consuming are some of the benefits of organized records and files (especially that the registrar's office is using the manual filing).</p>
+                                                        $to = $y."-".$m."-".$d;
+                                                        //echo $accomplishment_date;
 
-                                    </td>
+                                                        $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to' and credentials.cred_id = $cred_id";
+                                                        }
 
-                                    <td class="col">
-
-                                        <div id="r_fm">
-                                    
-                                        <pre><?php echo $r_fm; ?></pre>
-
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr id="b6-r2">
-                                    <td class="col">
-
-                                        <p class="td-p1">Registrar's Services</p>
-
-                                        <p class="td-p2">The registrar's office is responsible in the maintenance of students' permanent academic records, receiving of incoming correspondence, processing of requests and issuance/releasing of school credentials.</p>
-                                    
-                                    </td>
-
-
-                                    <td class="col">
-
-                                        <p class="td-p">Below is the summary of accomplished and released credentials</p>
-
-                                            <table id="item-t">
-                                            <thead>
-                                            <th class="item-t-col">ITEM</th>
-                                            <th class="item-t-col">PROCESSED</th>
-                                            <th class="item-t-col">RELEASED</th>
-                                            </thead>
-<?php
-
-                                        if(isset($_GET['accomplishment_date'])) {
-                                        $accomplishment_date = $_GET['accomplishment_date'];
-                
-
-                                        $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
-
-
-                                        $statement = "SELECT * FROM pcnhsdb.credentials";
-
-                                        }
-
-
-                                    $result = $conn->query($statement);
-                                    if ($result->num_rows > 0) {
-                                        while($row = $result->fetch_assoc()) {
-                                            
-                                            $processed = $row['date_processed_count'];
-                                            $released = $row['date_released_count'];
-                                            //$cred = $row['cred_name'];
-                                            }
-                                        }
-                                        echo  <<<REQ
-                                            <tr>
-                                                <td class=" ">    
-                                                <td class=" ">$processed</td>
-                                                <td class=" ">$released</td>
-                                                
-                                            </tr>;
+                                                        $result_1 = $conn->query($statement);
+                                                        if ($result_1->num_rows > 0) {
+                                                            // output data of each row
+                                                            while($row_1 = $result_1->fetch_assoc()) {
+                                                                
+                                                                $date_processed_count = $row_1['date_processed_count'];
+                                                                $date_released_count = $row_1['date_released_count'];
+                                                            echo <<<REQ
+                                                                
+                                                                    <td class=" ">$date_processed_count</td>
+                                                                    <td class=" ">$date_released_count</td>
+                                                                
 REQ;
-?>
+                                                                
 
-                                            
-                                            </table>
+                                                            }
+                                                        }
+                                                    echo    "</tr>";
+                                                    }
+                                                }
+                                                
+                                            ?>
+                                            </tbody>
+                                        </table>
                                     </td>
                                 </tr>
 
-                                <tr id="b6-r3">
+                                <tr>
                                     <td class="col">
 
                                         <p class="td-p1">FINANCIAL MANAGEMENT</p>
@@ -172,9 +180,9 @@ REQ;
                                     <td class="col">
 
                                         <div id="fm">
-                                    
-                                        <?php echo $fm; ?>
-
+                                            <?php
+                                                echo "<p>$fm</p>"; 
+                                            ?>
                                         </div>
 
                                     </td>
@@ -191,38 +199,36 @@ REQ;
                                     <td class="col">
 
                                         <div id="ot">
-                                    
-                                        <?php echo $ot; ?>
-
+                                        <?php
+                                            echo "<p>$ot</p>"; 
+                                        ?>
                                         </div>
 
                                     </td>
 
                                 </tr>
-                </table>
+                            </table>
 
                             <div id="box-2">
-                            <p id="b2-r1-p1">Prepared by:</p>
-                            <div id="b2-r2-name"></div>
-                            <div id="b2-r3-pos"></div>
+                                <p id="b2-r1-p1">Prepared by:</p>
+                                <div id="b2-r2-name"></div>
+                                <div id="b2-r3-pos"></div>
                             </div>
-
                             <div id="box-3">
-                            <p id="b3-r1-p1">Checked by:</p>
-                            <div id="b3-r2-name"></div>
-                            <div id="b3-r3-pos"></div>
+                                <p id="b3-r1-p1">Checked by:</p>
+                                <div id="b3-r2-name"></div>
+                                <div id="b3-r3-pos"></div>
                             </div>
-
                             <div id="box-4">
-                            <p id="b4-r1-p1">Checked &amp; Verified by:</p>
-                            <div id="b4-r2-name"></div>
-                            <div id="b4-r3-pos"></div>
+                                <p id="b4-r1-p1">Checked &amp; Verified by:</p>
+                                <div id="b4-r2-name"></div>
+                                <div id="b4-r3-pos"></div>
                             </div>
-            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
-        </div>
-        </div>
-        </div>
-        </body>
-        </html>
+    </body>
+</html>
 

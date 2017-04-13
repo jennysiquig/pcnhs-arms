@@ -467,8 +467,7 @@ NUM;
                 var date_modified = n + ' ' + time;
                 var stud_id = document.getElementsByName('stud_id')[0].value;
 
-                var modified = "EDITED GRADES";
-                
+                           
 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
@@ -476,7 +475,7 @@ NUM;
                    
                   }
                 };
-                xhttp.open("GET", "phpscript/update_date_modified.php?date_modified="+date_modified+"&stud_id="+stud_id+"&modified="+modified, true);
+                xhttp.open("GET", "phpscript/update_date_modified.php?date_modified="+date_modified+"&stud_id="+stud_id, true);
                 xhttp.send();
 
             }

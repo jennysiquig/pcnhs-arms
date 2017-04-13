@@ -431,7 +431,7 @@ A;
                                     if(!$conn) {
                                         die("Connection failed: " . mysqli_connect_error());
                                     }
-                                    $query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = '$stud_id';";
+                                    $query = "SELECT subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = '$stud_id';";
                                     $result = $conn->query($query);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -577,7 +577,7 @@ A3;
                                     if(!$conn) {
                                         die("Connection failed: " . mysqli_connect_error());
                                     }
-                                    $query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
+                                    $query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
                                     $result = $conn->query($query);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -730,7 +730,7 @@ A3;
                                     if(!$conn) {
                                         die("Connection failed: " . mysqli_connect_error());
                                     }
-                                    $query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
+                                    $query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
                                     $result = $conn->query($query);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -877,7 +877,7 @@ A7;
                                     if(!$conn) {
                                         die("Connection failed: " . mysqli_connect_error());
                                     }
-                                    $query = "SELECT subj_name, subj_level, fin_grade, credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = '$stud_id';";
+                                    $query = "SELECT subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = '$stud_id';";
                                     $result = $conn->query($query);
                                     if ($result->num_rows > 0) {
                                         // output data of each row

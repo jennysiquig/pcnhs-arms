@@ -8,27 +8,27 @@
 	session_start();
 
 
-	$stud_id = htmlspecialchars(filter_var($_POST['stud_id'], FILTER_SANITIZE_STRING));
-	$first_name = htmlspecialchars(filter_var($_POST['first_name'], FILTER_SANITIZE_STRING));
-	$mid_name = htmlspecialchars(filter_var($_POST['mid_name'], FILTER_SANITIZE_STRING));
-	$last_name = htmlspecialchars(filter_var($_POST['last_name'], FILTER_SANITIZE_STRING));
-	$gender = htmlspecialchars(filter_var($_POST['gender'], FILTER_SANITIZE_STRING));
+	$stud_id = strtoupper(htmlspecialchars(filter_var($_POST['stud_id'], FILTER_SANITIZE_STRING)));
+	$first_name = strtoupper(htmlspecialchars(filter_var($_POST['first_name'], FILTER_SANITIZE_STRING)));
+	$mid_name = strtoupper(htmlspecialchars(filter_var($_POST['mid_name'], FILTER_SANITIZE_STRING)));
+	$last_name = strtoupper(htmlspecialchars(filter_var($_POST['last_name'], FILTER_SANITIZE_STRING)));
+	$gender = strtoupper(htmlspecialchars(filter_var($_POST['gender'], FILTER_SANITIZE_STRING)));
 
 	$birth_date = htmlspecialchars(filter_var($_POST['birthdate']));
 
-	$province = htmlspecialchars(filter_var($_POST['birth_place_province'], FILTER_SANITIZE_STRING));
-	$towncity = htmlspecialchars(filter_var($_POST['birth_place_towncity'], FILTER_SANITIZE_STRING));
-	$barangay = htmlspecialchars(filter_var($_POST['birth_place_barangay'], FILTER_SANITIZE_STRING));
+	$province = strtoupper(htmlspecialchars(filter_var($_POST['birth_place_province'], FILTER_SANITIZE_STRING)));
+	$towncity = strtoupper(htmlspecialchars(filter_var($_POST['birth_place_towncity'], FILTER_SANITIZE_STRING)));
+	$barangay = strtoupper(htmlspecialchars(filter_var($_POST['birth_place_barangay'], FILTER_SANITIZE_STRING)));
 
 	$second_school_name = strtoupper(htmlspecialchars(filter_var($_POST['second_school_name'], FILTER_SANITIZE_STRING)));
 	$program = htmlspecialchars(filter_var($_POST['program'], FILTER_SANITIZE_STRING));
 	$curriculum = htmlspecialchars(filter_var($_POST['curriculum'], FILTER_SANITIZE_STRING));
 
-	$pname = htmlspecialchars(filter_var($_POST['pname'], FILTER_SANITIZE_STRING));
-	$parent_occupation = htmlspecialchars(filter_var($_POST['occupation'], FILTER_SANITIZE_STRING));
-	$parent_address = htmlspecialchars(filter_var($_POST['parent_address'], FILTER_SANITIZE_STRING));
+	$pname = strtoupper(htmlspecialchars(filter_var($_POST['pname'], FILTER_SANITIZE_STRING)));
+	$parent_occupation = strtoupper(htmlspecialchars(filter_var($_POST['occupation'], FILTER_SANITIZE_STRING)));
+	$parent_address = strtoupper(htmlspecialchars(filter_var($_POST['parent_address'], FILTER_SANITIZE_STRING)));
 
-	$primary_schl_name = htmlspecialchars(filter_var($_POST['schl_name'], FILTER_SANITIZE_STRING));
+	$primary_schl_name = strtoupper(htmlspecialchars(filter_var($_POST['schl_name'], FILTER_SANITIZE_STRING)));
 	$primary_schl_year = htmlspecialchars($_POST['schl_year'], FILTER_SANITIZE_STRING);
 	$total_elem_years = htmlspecialchars(filter_var($_POST['total_elem_years'], FILTER_SANITIZE_STRING));
 	$gpa = htmlspecialchars(filter_var($_POST['gpa'], FILTER_SANITIZE_STRING));

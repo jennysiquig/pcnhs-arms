@@ -87,7 +87,16 @@
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$statement = "SELECT * FROM pcnhsdb.curriculum";
+
+									$start=0;
+                   					$limit=20;
+									if(isset($_GET['page'])){
+				                      $page=$_GET['page'];
+				                      $start=($page-1)*$limit;
+				                    }else{
+				                      $page=1;
+				                    }
+									$statement = "SELECT * FROM pcnhsdb.curriculum limit $start, $limit";
 									$result = $conn->query($statement);
 									if($result->num_rows>0) {
 										while($row=$result->fetch_assoc()) {
@@ -108,11 +117,71 @@
 CURR;
 										}
 									}
-									$conn->close();
 								?>
 								
 							</tbody>
 						</table>
+						 <?php
+		                  $statement = "SELECT * FROM pcnhsdb.curriculum;";
+		                    $rows = mysqli_num_rows(mysqli_query($conn, $statement));
+		                    $total = ceil($rows/$limit);
+		                    
+		                    echo '<div class="pull-right">
+		                      <div class="col s12">
+		                      <ul class="pagination center-align">';
+		                      if($page > 1) {
+		                        echo "<li class=''><a href='curriculum.php?page=".($page-1)."'>Previous</a></li>";
+		                      }else if($total <= 0) {
+		                        echo '<li class="disabled"><a>Previous</a></li>';
+		                      }else {
+		                        echo '<li class="disabled"><a>Previous</a></li>';
+		                      }
+		                      // Google Like Pagination
+		                      $x = 0;
+		                      $y = 0;
+		                      if(($page+5) <= $total) {
+		                        if($page >= 3) {
+		                          $x = $page + 2;
+
+		                        }else {
+		                          $x = 5;
+		                        }
+
+		                        $y = $page;
+		                        if($y <= $total) {
+		                          $y -= 2;
+		                          if($y < 1) {
+		                            $y = 1;
+		                          }
+		                        }
+		                      }else {
+		                        $x = $total;
+		                        $y = $total - 5;
+		                        if($y < 1) {
+		                          $y = 1;
+		                        }
+		                      }
+		                      // Google Like Pagination
+		                      for($i = $y;$i <= $x; $i++) {
+		                        if($i==$page) {
+		                          echo "<li class='active'><a href='curriculum.php?page=$i'>$i</a></li>";
+		                        } else {
+		                            echo "<li class=''><a href='curriculum.php?page=$i'>$i</a></li>";
+		                          }
+		                      }
+
+
+		                      if($total == 0) {
+		                        echo "<li class='disabled'><a>Next</a></li>";
+		                      }else if($page!=$total) {
+		                        echo "<li class=''><a href='curriculum.php?page=".($page+1)."'>Next</a></li>";
+		                      }else {
+		                        echo "<li class='disabled'><a>Next</a></li>";
+		                      }
+		                        echo "</ul></div></div>";
+		                      
+
+		                ?>
 					</div>
 					<a href=<?php echo "../../registrar/schoolmanagement/curriculum_add.php" ?>>Add Curriculum</a>
 					

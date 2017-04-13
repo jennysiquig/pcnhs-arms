@@ -162,10 +162,10 @@
 
 
 
-				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials where pay_date between '$from' and '$to' limit $start, $limit;";
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials natural join transaction where pay_date between '$from' and '$to' limit $start, $limit;";
 				                    }else {
 				                    	$pay_date = date('m/d/y').'-'.date('m/d/y');
-				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials limit $start, $limit";
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials natural join transaction limit $start, $limit";
 				                    }
 
 
@@ -178,7 +178,7 @@
 					                    	$student = $row['first_name']." ".$row['last_name'];
 					                    	$credential = $row['cred_name'];
 					                    	$pay_amt = $row['pay_amt'];
-					                    	$no_of_copies = $row['no_of_copies'];
+					                    	$remarks = $row['remarks'];
 					                    	
 					                    	//remarks
 					                    echo <<<PAYMENT
@@ -188,9 +188,9 @@
 												<td class=" ">$student</td>
 												<td class=" ">$credential</td>		
 												<td class=" ">$pay_amt</td>
-												<td class=" ">$no_of_copies</td>
+												<td class=" ">1</td>
 
-												<td class=" "><!--remarks--></td>
+												<td class=" ">$remarks</td>
 												
 												
 											</tr>

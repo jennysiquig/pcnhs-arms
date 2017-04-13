@@ -199,8 +199,12 @@
                     $program = $row['prog_id'];
                     $curriculum = $row['curr_id'];
                     $curr_code = $row['curr_code'];
-
                     $date_modified = $row['date_modified'];
+
+                    if(empty($date_modified)) {
+                      $date_modified = "No grades edited.";
+                    }
+                    
 
                     echo <<<STUDLIST
                     <tr>

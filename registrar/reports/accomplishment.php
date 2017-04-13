@@ -106,7 +106,22 @@
 							</div>
 								<br>
 								<div class="col-md-8">
-								<a href = "generate_accomp.php"><button type="button" class="btn btn-success pull-right">Generate Report</button></a></form>
+								<?php
+									$accomplishment_date_get = "";
+									if(isset($_GET['accomplishment_date'])) {
+										$accomplishment_date_get = $_GET['accomplishment_date'];
+										$accomplishment_date_get = preg_replace('/\s+/', '', $accomplishment_date_get);
+
+									}else {
+										$date_from = date("m/01/Y");
+										$date_to = date("m/d/Y");
+										$accomplishment_date_get = $date_from.' - '.$date_to;
+										$accomplishment_date_get = preg_replace('/\s+/', '', $accomplishment_date_get);
+									}
+									
+									
+								?>
+								<a href= <?php echo "generate_accomp.php?accomplishment_date=$accomplishment_date_get"; ?>><button type="button" class="btn btn-success pull-right">Generate Report</button></a></form>
 								</div>
 
 								
@@ -126,8 +141,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr class="odd pointer">
-												<td class=" ">Form 137</td>
+									
 									<?php
 									$statement = "";
 				                    $start=0;
@@ -144,93 +158,101 @@
 				                      $page=1;
 				                    }
 
-				                    if(isset($_GET['accomplishment_date'])) {
-				                    	$accomplishment_date = $_GET['accomplishment_date'];
-					                    	//echo $accomplishment_date;
-					                    	$from_and_to_date = explode("-", $accomplishment_date);
-					                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
-											$m = $sqldate_format_from[0];
-											$d = $sqldate_format_from[1];
-											$y = $sqldate_format_from[2];
-											$m = preg_replace('/\s+/', '', $m);
-											$d = preg_replace('/\s+/', '', $d);
-											$y = preg_replace('/\s+/', '', $y);
-
-											$from = $y."-".$m."-".$d;
-
-											$sqldate_format_to = explode("/", $from_and_to_date[1]);
-											$m = $sqldate_format_to[0];
-											$d = $sqldate_format_to[1];
-											$y = $sqldate_format_to[2];
-											$m = preg_replace('/\s+/', '', $m);
-											$d = preg_replace('/\s+/', '', $d);
-											$y = preg_replace('/\s+/', '', $y);
-
-											$to = $y."-".$m."-".$d;
-										//echo $accomplishment_date;
-
-				                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to' limit 0, 25;";
-				                    }else {
-				                    	$accomplishment_date = date('m/d/y').'-'.date('m/d/y');
-
-				                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null limit $start, $limit";
-				                    }
-
-
+				                    $statement = "SELECT * FROM pcnhsdb.credentials;";
 				                    $result = $conn->query($statement);
-					                if ($result->num_rows > 0) {
-					                    // output data of each row
-					                    while($row = $result->fetch_assoc()) {
-					                    	
-					                   		$date_processed_count = $row['date_processed_count'];
-					                    	$date_released_count = $row['date_released_count'];
-					                    echo <<<REQ
-					                    	
-												<td class=" ">$date_processed_count</td>
-												<td class=" ">$date_released_count</td>
-											</tr>
+				                    if($result->num_rows>0){
+				                    	while ($row=$result->fetch_assoc()) {
+				                    		$cred_id = $row['cred_id'];
+				                    	    $cred_name = $row['cred_name'];
+
+				                    	    echo 	'<tr class="odd pointer">';
+				                    	    echo 		"<td class=''>$cred_name</td>";
+
+				                    	     if(isset($_GET['accomplishment_date'])) {
+					                    		$accomplishment_date = $_GET['accomplishment_date'];
+						                    	//echo $accomplishment_date;
+						                    	$from_and_to_date = explode("-", $accomplishment_date);
+						                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
+												$m = $sqldate_format_from[0];
+												$d = $sqldate_format_from[1];
+												$y = $sqldate_format_from[2];
+												$m = preg_replace('/\s+/', '', $m);
+												$d = preg_replace('/\s+/', '', $d);
+												$y = preg_replace('/\s+/', '', $y);
+
+												$from = $y."-".$m."-".$d;
+
+												$sqldate_format_to = explode("/", $from_and_to_date[1]);
+												$m = $sqldate_format_to[0];
+												$d = $sqldate_format_to[1];
+												$y = $sqldate_format_to[2];
+												$m = preg_replace('/\s+/', '', $m);
+												$d = preg_replace('/\s+/', '', $d);
+												$y = preg_replace('/\s+/', '', $y);
+
+												$to = $y."-".$m."-".$d;
+												//echo $accomplishment_date;
+
+							                    $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to' and credentials.cred_id = $cred_id";
+							                    }else {
+							                    	$accomplishment_date = date('m/d/y').'-'.date('m/d/y');
+
+							                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and credentials.cred_id = $cred_id";
+							                    }
+
+
+							                    $result_1 = $conn->query($statement);
+								                if ($result_1->num_rows > 0) {
+								                    // output data of each row
+								                    while($row_1 = $result_1->fetch_assoc()) {
+								                    	
+								                   		$date_processed_count = $row_1['date_processed_count'];
+								                    	$date_released_count = $row_1['date_released_count'];
+								                    echo <<<REQ
+								                    	
+															<td class=" ">$date_processed_count</td>
+															<td class=" ">$date_released_count</td>
+														
 REQ;
-					                    	
+								                    	
 
-					                    }
-					                }
+								                    }
+								                }
+    										echo 	"</tr>";
+				                    		}
+				                    	}
 
-				                    
-
-								?>
+									?>
 								</tbody>
 							</table>
 							<?php
 								if(isset($_GET['accomplishment_date'])) {
-					                    	$accomplishment_date = $_GET['accomplishment_date'];
-					                    	//echo $accomplishment_date;
-					                    	$from_and_to_date = explode("-", $accomplishment_date);
-					                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
-											$m = $sqldate_format_from[0];
-											$d = $sqldate_format_from[1];
-											$y = $sqldate_format_from[2];
-											$m = preg_replace('/\s+/', '', $m);
-											$d = preg_replace('/\s+/', '', $d);
-											$y = preg_replace('/\s+/', '', $y);
-
-											$from = $y."-".$m."-".$d;
-
-											$sqldate_format_to = explode("/", $from_and_to_date[1]);
-											$m = $sqldate_format_to[0];
-											$d = $sqldate_format_to[1];
-											$y = $sqldate_format_to[2];
-											$m = preg_replace('/\s+/', '', $m);
-											$d = preg_replace('/\s+/', '', $d);
-											$y = preg_replace('/\s+/', '', $y);
-
-											$to = $y."-".$m."-".$d;
+									$accomplishment_date = $_GET['accomplishment_date'];
+									//echo $accomplishment_date;
+									$from_and_to_date = explode("-", $accomplishment_date);
+									$sqldate_format_from = explode("/", $from_and_to_date[0]);
+									$m = $sqldate_format_from[0];
+									$d = $sqldate_format_from[1];
+									$y = $sqldate_format_from[2];
+									$m = preg_replace('/\s+/', '', $m);
+									$d = preg_replace('/\s+/', '', $d);
+									$y = preg_replace('/\s+/', '', $y);
+									$from = $y."-".$m."-".$d;
+									$sqldate_format_to = explode("/", $from_and_to_date[1]);
+									$m = $sqldate_format_to[0];
+									$d = $sqldate_format_to[1];
+									$y = $sqldate_format_to[2];
+									$m = preg_replace('/\s+/', '', $m);
+									$d = preg_replace('/\s+/', '', $d);
+									$y = preg_replace('/\s+/', '', $y);
+									$to = $y."-".$m."-".$d;
 											//echo $accomplishment_date;
 
-					                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to';";
-					                    }else {
+					                $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to';";
+					            }else {
 					                    	$accomplishment_date = date('m/d/y').'-'.date('m/d/y');
 					                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
-					                    }
+					            }
 					        $rows = mysqli_num_rows(mysqli_query($conn, $statement));
 							$total = ceil($rows/$limit);
 							echo '<div class="pull-right">
@@ -259,7 +281,7 @@ REQ;
 													}
 											echo "</ul></div></div>";
 
-											$_SESSION['accomplishment_date'] = $accomplishment_date;
+											// $_SESSION['accomplishment_date'] = $accomplishment_date;
 				             ?>
 						</div>
 					</div>
@@ -292,11 +314,11 @@ REQ;
 					'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
 					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
 					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-					'This Month': [moment().startOf('month'), moment().endOf('month')],
+					'This Month': [moment().startOf('month'), ],
 					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
 				  },
-			    startDate: moment().subtract(29, 'days'),
-				endDate: moment()
+			    startDate: moment().startOf('month'),
+				endDate: moment().endOf('month')
 			}, function(start, end, label) {
 			  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
 			});
