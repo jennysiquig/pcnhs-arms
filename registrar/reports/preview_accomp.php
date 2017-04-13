@@ -5,89 +5,24 @@
     $r_fm = "";
     $fm = "";
     $ot = "";
-    $personnel_id = $_SESSION['per_id'];
-    $signatory1 = "";
-    $signatory2 = "";
     if (isset($_POST['r_fm'])){
         $r_fm = $_POST['r_fm'];
     }
     if (isset($_POST['fm'])){
         $fm = $_POST['fm'];
     }
-    if (isset($_POST['ot'])){
+        if (isset($_POST['ot'])){
         $ot = $_POST['ot'];
     }
-    if (isset($_POST['personnel_id'])){
-        $personnel_id = $_POST['fm'];
-    }
-    if (isset($_POST['signatory1'])){
-        $signatory1 = $_POST['signatory1'];
-    }
-    if (isset($_POST['signatory2'])){
-        $signatory2 = $_POST['signatory2'];
-    }
 
-
-        if(isset($_GET['accomplishment_date'])){
+    if(isset($_GET['accomplishment_date'])){
         $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to';";
                                         }
             else {
                 $accomplishment_date = date('m/d/y').'-'.date('m/d/y');
                 $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
     }
-
-
 ?>
-
- <?php
-
-             $statement = "SELECT * FROM personnel WHERE per_id='$personnel_id'";
-             $result = $conn->query($statement);
-             if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        $registrar_id = $row['per_id'];
-                        $registrar_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
-                        $registrar_name = strtoupper($registrar_name);
-                        $position_reg = $row['position'];
-                        $position_reg = strtolower($position_reg);
-                        $position_reg = ucfirst($position_reg);
-
-                        echo $position_reg;
-                    }
-             }
-             ?>
-
-             <?php
-
-             $statement = "SELECT * FROM signatories WHERE sign_id='$signatory1'";
-             $result = $conn->query($statement);
-             if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        $sign_id1 = $row['sign_id'];
-                        $sign_name1 = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
-                        $sign_name1 = strtoupper($sign_name1);
-                        $position1 = $row['position'];
-                        $position1 = strtolower($position1);
-                        $position1 = ucfirst($position1);
-                    }
-             }
-             ?>
-
-                          <?php
-
-             $statement = "SELECT * FROM signatories WHERE sign_id='$signatory2'";
-             $result = $conn->query($statement);
-             if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        $sign_id2 = $row['sign_id'];
-                        $sign_name2 = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
-                        $sign_name2 = strtoupper($sign_name2);
-                        $position2 = $row['position'];
-                        $position2 = strtolower($position2);
-                        $position2 = ucfirst($position2);
-                    }
-             }
-             ?>
 
 <html>
   <head>
@@ -159,7 +94,7 @@
 
                                         <div id="r_fm">
                                     
-                                        <?php echo $r_fm; ?>
+                                        <pre><?php echo $r_fm; ?></pre>
 
                                         </div>
 
@@ -187,15 +122,16 @@
                                             <th class="item-t-col">PROCESSED</th>
                                             <th class="item-t-col">RELEASED</th>
                                             </thead>
-
-                                    <?php
+<?php
 
                                         if(isset($_GET['accomplishment_date'])) {
                                         $accomplishment_date = $_GET['accomplishment_date'];
                 
 
-                                        $statement = "SELECT cred_id, count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;
-";                
+                                        $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
+
+
+                                        $statement = "SELECT * FROM pcnhsdb.credentials";
 
                                         }
 
@@ -206,17 +142,16 @@
                                             
                                             $processed = $row['date_processed_count'];
                                             $released = $row['date_released_count'];
-                                            
+                                            //$cred = $row['cred_name'];
                                             }
                                         }
-
                                         echo  <<<REQ
-                                            <tr class="td-4-t">
-                                                <td class="name"></td>   
-                                                <td class="pro">$processed</td>
-                                                <td class="rel">$released</td>
+                                            <tr>
+                                                <td class=" ">    
+                                                <td class=" ">$processed</td>
+                                                <td class=" ">$released</td>
                                                 
-                                            </tr>
+                                            </tr>;
 REQ;
 ?>
 
@@ -268,20 +203,20 @@ REQ;
 
                             <div id="box-2">
                             <p id="b2-r1-p1">Prepared by:</p>
-                            <div id="b2-r2-name"><?php echo $registrar_name; ?></div>
-                            <div id="b2-r3-pos"><p> <?php echo $position_reg; ?> </p></div>
+                            <div id="b2-r2-name"></div>
+                            <div id="b2-r3-pos"></div>
                             </div>
 
                             <div id="box-3">
                             <p id="b3-r1-p1">Checked by:</p>
-                            <div id="b3-r2-name"> <?php echo $sign_name1; ?> </div>
-                            <div id="b3-r3-pos"><p> <?php echo $position1; ?></p></div>
+                            <div id="b3-r2-name"></div>
+                            <div id="b3-r3-pos"></div>
                             </div>
 
                             <div id="box-4">
-                            <p id="b4-r1-p1">Verified by:</p>
-                            <div id="b4-r2-name"><?php echo $sign_name2; ?></div>
-                            <div id="b4-r3-pos"> <p> <?php echo $position2; ?></p> </div>
+                            <p id="b4-r1-p1">Checked &amp; Verified by:</p>
+                            <div id="b4-r2-name"></div>
+                            <div id="b4-r3-pos"></div>
                             </div>
             </div>
         </div>

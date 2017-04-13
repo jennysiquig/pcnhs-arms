@@ -1,3 +1,13 @@
+/*CSS*/
+@media print {  
+  @page {
+    size: 8.5in 13in; /* landscape */
+    /* you can also specify margins here: */
+    margin: 5mm;
+    margin-right: 30mm; /* for compatibility with both A4 and Letter */
+  }
+}
+
 body{
 	font: 12px, "Calibri";
 }
@@ -6,7 +16,11 @@ body{
 	background-color: white;
 	color: black;
 	width: 900px;
+<<<<<<< HEAD
+	margin-right: 300px;
+=======
     margin-right: 300px;
+>>>>>>> 526272fc89a52c3ffcf5ae38f117a98d89cbdfb2
     height: 1700px;
     padding-top: 50px;
     padding-left: 75px;
@@ -57,6 +71,25 @@ body{
 	word-break: keep-all;
 	white-space: normal;
 	text-align: justify;
+<<<<<<< HEAD
+}
+
+table > tr{
+	width: 500px;
+}
+
+.td-p1{
+	width: 360px;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+}
+
+/*#b6-r2 > td > .td-p1{
+	margin-top: -20px;
+}*/
+
+=======
 }
 
 table > tr{
@@ -74,6 +107,7 @@ table > tr{
 	margin-top: -20px;
 }
 
+>>>>>>> 526272fc89a52c3ffcf5ae38f117a98d89cbdfb2
 .td-p2{
 	width: 360px;
 	margin: 0px;
@@ -101,6 +135,7 @@ table > tr{
 	font-size: 17px;
 	font-weight: bold;
 	margin: 2px;
+<<<<<<< HEAD
 }
 
 .td-4-t{
@@ -112,8 +147,114 @@ td.name{
 	width: 100px;
 	height: 20px;
 	border: 1px solid black;
+=======
+>>>>>>> 526272fc89a52c3ffcf5ae38f117a98d89cbdfb2
 }
 
+td.pro{
+	width: 100px;
+	height: 20px;
+	border: 1px solid black;
+}
+
+<<<<<<< HEAD
+td.rel{
+=======
+td.name{
+>>>>>>> 526272fc89a52c3ffcf5ae38f117a98d89cbdfb2
+	width: 100px;
+	height: 20px;
+	border: 1px solid black;
+}
+
+<<<<<<< HEAD
+#r_fm, #fm, #ot{
+	padding-top: 0px;
+	margin-top:0px;
+	width: 360px;
+	font-family: "Calibri";
+	word-break: normal;
+	white-space: normal;
+	text-align: justify;
+}
+
+#signatory{
+	margin-top: 80px;
+	width: 750px;
+	height: 200px;
+}
+
+#box-2{
+	width: 300px;
+	height: 150px;
+	text-align: center;
+	margin: 0px !important;
+}
+
+#b2-r1-p1{
+	height: 20px;
+}
+
+#b2-r2-name{
+	margin-top: 20px;
+	width: 300px;
+	height: 20px;
+}
+
+#b2-r3-pos{
+	width: 300px;
+	height: 20px;
+	font-style: italic;
+}
+
+#box-3{
+	width: 300px;
+	height: 150px;
+	margin-top: -165px;
+	margin-left: 230px;
+	text-align: center;
+}
+
+#b3-r1-p1{
+	height: 20px;
+}
+
+#b3-r2-name{
+	margin-top: 20px;
+	width: 300px;
+	height: 20px;
+}
+
+#b3-r3-pos{
+	width: 300px;
+	height: 20px;
+		font-style: italic;
+}
+
+#box-4{
+	width: 300px;
+	height: 150px;
+	margin-top: -160px;
+	margin-left: 480px;
+	text-align: center;
+}
+
+#b4-r1-p1{
+	height: 20px;
+}
+
+#b4-r2-name{
+	margin-top: 20px;
+	width: 300px;
+	height: 20px;
+}
+
+#b4-r3-pos{
+	width: 300px;
+	height: 20px;
+	font-style: italic;
+}
+=======
 td.pro{
 	width: 100px;
 	height: 20px;
@@ -139,3 +280,4 @@ td.rel{
 pre{
 	white-space: normal;
 }*/
+>>>>>>> 526272fc89a52c3ffcf5ae38f117a98d89cbdfb2
