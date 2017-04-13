@@ -100,7 +100,7 @@
 							<br>
 							<div class="col-md-8">
 								<a href="paymentprint.php"><button type="button" class="btn btn-success pull-right">Generate Report</button></a>
-								</div>
+							</div>
 						</div>
 	                      <!-- Date Picker -->
 						<div class="x_content">

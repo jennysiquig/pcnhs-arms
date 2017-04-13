@@ -8,15 +8,15 @@
     if(!$conn) {
         die();
     }
-    // if(!isset($_SESSION['generated'])) {
-    //     $_SESSION['generated'] = true;
-    // }else {
-    //     if($_SESSION['generated']) {
-    //         unset($_SESSION['generated']);
-    //         header("location: ../../index.php");
-    //         die();
-    //     }
-    // }
+    if(!isset($_SESSION['generated'])) {
+        $_SESSION['generated'] = true;
+    }else {
+        if($_SESSION['generated']) {
+            unset($_SESSION['generated']);
+            header("location: ../../index.php");
+            die();
+        }
+    }
     
     $cred_id = htmlspecialchars($_GET['cred_id'], ENT_QUOTES);
     $request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
@@ -33,12 +33,12 @@
             $req_id = $row['req_id'];
             $update = "UPDATE `pcnhsdb`.`requests` SET `request_type`='$request_type', `status`='u' ,`admitted_to` = '$admitted_to' , `sign_id`='$signatory' WHERE `req_id`='$req_id';";
 
-            //mysqli_query($conn, $update);
+            mysqli_query($conn, $update);
         }
     }else {
          $statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `admitted_to`, `request_purpose`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$admitted_to', '$request_purpose' ,'$signatory', '$personnel_id');";
 
-        //mysqli_query($conn, $statement1);
+        mysqli_query($conn, $statement1);
     }
     $_SESSION['user_activity'][] = "Student $stud_id requested Credential $cred_id.";
 

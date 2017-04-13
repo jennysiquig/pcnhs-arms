@@ -114,6 +114,11 @@
                 }
             ?>
             <!--  -->
+            <div class="row">
+                <div class="col-md-9">
+                    <a class="btn btn-default" href=<?php echo "grades.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+                </div>
+            </div>
             <div class="x_panel">
 
                 <div class="x_title">
@@ -126,13 +131,14 @@
                     <?php
                         $curr_id = $_GET['curriculum'];
                     ?>
-                    <form id="val-gr-form" class="form-horizontal form-label-left" name="val-gr-form" action=<?php echo "phpinsert/grades_insert.php?curr_id=$curr_id"; ?> method="POST" > 
+                    <!-- val-gr-form -->
+                    <form id=<?php echo "'$stud_id-$yr_level'"; ?> class="form-horizontal form-label-left" name="val-gr-form" action=<?php echo "phpinsert/grades_insert.php?curr_id=$curr_id"; ?> method="POST" > 
                         <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                           <div class="panel">
-                            <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <a class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                               <h4 class="panel-title">Student's School Information</h4>
                             </a>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="true">
                               <div class="panel-body">
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name:</label>
@@ -251,37 +257,87 @@
                                     $subj_name = $row['subj_name'];
                                     $subj_level = $row['subj_level'];
                                     $numberOfSubj += 1;
-                                     echo <<<SUBJ
-                                            <tr>
-                                                <td>
-                                                    <div class="item form-group">
-                                                        <div class="col-md-5">
-                                                            <input class="form-control" name="subj_id[]" value="$subj_id"  style="width: 50px;" readonly>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>$subj_name</td>
-                                                <td>$subj_level</td>
-                                                <td>
-                                                    <div class="col-md-5">
-                                                        <input type="text" id="grade$x" class="form-control" name="fin_grade[]"  onblur="persistFinal(this.value)" onkeypress="return isNumberKey(event)" placeholder="" value="">
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="col-md-5">
-                                                        <input type="text" id="credit$x" class="form-control" name="credit_earned[]"  onblur="persistCredit(this.value)" placeholder="" value="">
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="col-md-5">
-                                                        <input type="text" class="form-control" name="special_grade[]" placeholder="" value="">
-                                                    </div>
 
-                                                </td>
-                                                
-                                            </tr>
+                                    $grades_pos = 1;
+                                    $credits_pos = 2;
+                                    
+                                    if(isset($_SESSION['grades_array'])) {
+                                        $grades_array = $_SESSION['grades_array'];
+
+                                        if(empty($grades_array[$grades_pos][$x])) {
+                                            $grades = "";
+                                        }else {
+                                            $grades = $grades_array[$grades_pos][$x];
+                                        }
+                                        if(empty($grades_array[$credits_pos][$x])) {
+                                            $credits = "";
+                                        }else {
+                                            $credits = $grades_array[$credits_pos][$x];
+                                        }
+                                         echo <<<SUBJ
+                                                <tr>
+                                                    <td>
+                                                        <div class="item form-group">
+                                                            <div class="col-md-5">
+                                                                <input class="form-control" name="subj_id[]" value="$subj_id"  style="width: 50px;" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>$subj_name</td>
+                                                    <td>$subj_level</td>
+                                                    <td>
+                                                        <div class="col-md-5">
+                                                            <input type="text" id="grade-$x" class="form-control" name="fin_grade[]"  onkeypress="return isNumberKey(event), dateModified();" placeholder="" value="$grades">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-md-5">
+                                                            <input type="text" id="credit-$x" class="form-control" name="credit_earned[]" onkeypress="dateModified();" placeholder="" value="$credits">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control" name="special_grade[]" placeholder="" value="">
+                                                        </div>
+
+                                                    </td>
+                                                    
+                                                </tr>
                                 
 SUBJ;
+                                    }else {
+                                        echo <<<SUBJ
+                                                <tr>
+                                                    <td>
+                                                        <div class="item form-group">
+                                                            <div class="col-md-5">
+                                                                <input class="form-control" name="subj_id[]" value="$subj_id"  style="width: 50px;" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>$subj_name</td>
+                                                    <td>$subj_level</td>
+                                                    <td>
+                                                        <div class="col-md-5">
+                                                            <input type="text" id="grade-$x" class="form-control" name="fin_grade[]" onkeypress="return isNumberKey(event), dateModified(this.value);" placeholder="" value="">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-md-5">
+                                                            <input type="text" id="credit-$x" class="form-control" name="credit_earned[]"  onkeypress="dateModified();" placeholder="" value="">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control" name="special_grade[]" onblur="dateModified();" placeholder="" value="">
+                                                        </div>
+
+                                                    </td>
+                                                    
+                                                </tr>
+                                
+SUBJ;
+                                    }
                                     $x+=1;
                                     
                                    
@@ -296,8 +352,6 @@ SUBJ;
                                         </div>
 NUM;
                                 unset($_SESSION['grades_array']);
-                                unset($_SESSION['grade']);
-                                unset($_SESSION['credits']); 
                                 ?>
                             </tbody>
                         </table>
@@ -315,10 +369,6 @@ NUM;
                         <div class="clearfix"></div>
                         <br>
                         <div class="row">
-                            <div class="col-md-5">
-                                <a href=<?php echo "grades.php?stud_id=$stud_id"; ?> class="btn btn-default">Cancel</a>
-                            </div>
-                            
                             <div class="pull-right">
                                 <button type="reset" class="btn btn-default" onclick="releaseData();">Reset</button>
                                 
@@ -334,7 +384,7 @@ NUM;
 
                             <div class="pull-right">
                 
-                                <button type="reset" id="upbtn" class="btn btn-default" type="submit" value="submit" disabled>Upload</button>
+                                <button id="upbtn" class="btn btn-default" type="submit" value="submit" disabled>Upload</button>
                             </div>
                             <div class="pull-right">
                             <p>Open Grades Save File (filename.csv)</p>
@@ -410,20 +460,15 @@ NUM;
                     console.log(parseInt(computed_average));
                 
             }
-            function persistFinal(x) {
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                  if (this.readyState == 4 && this.status == 200) {
-                   
-                  }
-                };
-                xhttp.open("GET", "phpscript/tempgrade.php?grade="+x, false);
-                xhttp.send();
+            function dateModified() {
+                var date = new Date();
+                var n = date.toDateString();
+                var time = date.toLocaleTimeString();
+                var date_modified = n + ' ' + time;
+                var stud_id = document.getElementsByName('stud_id')[0].value;
 
-                computeAverage();
-
-            }
-            function persistCredit(y) {
+                var modified = "EDITED GRADES";
+                
 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
@@ -431,10 +476,8 @@ NUM;
                    
                   }
                 };
-                xhttp.open("GET", "phpscript/tempcredits.php?credits="+y, false);
+                xhttp.open("GET", "phpscript/update_date_modified.php?date_modified="+date_modified+"&stud_id="+stud_id+"&modified="+modified, true);
                 xhttp.send();
-
-                computeCredit();
 
             }
             function isNumberKey(evt, n){
@@ -485,15 +528,23 @@ NUM;
                 });
         </script>
         <script type="text/javascript">
+            var val_gr_form = document.getElementsByName("val-gr-form");
+            var stud_unique_id = val_gr_form[0].id;
+      
+
             $( function() {
-                        $( '#val-gr-form' ).sisyphus({
-                            autoRelease: false
+                        $('#' + stud_unique_id).sisyphus({
+                            autoRelease: false,
                         });
                     });
         </script>
         <script type="text/javascript">
+            var val_gr_form = document.getElementsByName("val-gr-form");
+            var stud_unique_id = val_gr_form[0].id;
+            
+
             function releaseData() {
-                $('#val-gr-form').sisyphus().manuallyReleaseData();
+                $('#' + stud_unique_id).sisyphus().manuallyReleaseData();
             }
         </script>
     </body>
