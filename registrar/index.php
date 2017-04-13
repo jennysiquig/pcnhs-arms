@@ -189,7 +189,7 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 							<h2>Recent Credential Requests</h2>
 							<ul class="nav navbar-right panel_toolbox">
 							</ul>
-							<a href="credentials/request_credential.php" class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> New Request</a>
+							<a href="credentials/request_credential.php" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> New Request</a>
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content">

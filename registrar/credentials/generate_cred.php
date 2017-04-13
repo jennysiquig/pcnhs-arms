@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <?php
@@ -43,7 +44,6 @@
 
 	
 ?>
-<!DOCTYPE html>
 <html>
 	<head>
 		<title>Generate Credential</title>
@@ -85,7 +85,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "preview_cred.php?stud_id=$stud_id" ?> method="POST" >
+			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "choose_template.php?stud_id=$stud_id" ?> method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Form 137 <small></small></h2>
@@ -124,21 +124,15 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Request Purpose: </label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Request Purpose/Remarks: </label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input required="required" class="form-control" name="request_purpose" placeholder="" value=<?php echo "'$request_purpose'"; ?>>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Issued For:</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Admitted To:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="issuedfor" value="" placeholder="ex: Grade 11">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks: </label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<textarea id="message" required="required" class="form-control" name="remarks" placeholder=""></textarea>
+							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="admitted_to" value="" placeholder="ex: Grade 11">
 						</div>
 					</div>
 				<!--  -->

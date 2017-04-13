@@ -46,7 +46,7 @@
 					<div class="x_panel">
 						<div class="x_title">
 							<h2>Credential Requests</h2>
-							<a href="request_credential.php" class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> New Request</a>
+							<a href="request_credential.php" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> New Request</a>
 							<ul class="nav navbar-right panel_toolbox">
 							</ul>
 							<div class="clearfix"></div>

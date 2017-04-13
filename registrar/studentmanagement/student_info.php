@@ -1,5 +1,6 @@
 <?php require_once "../../resources/config.php";?>
 <?php include('include_files/session_check.php'); ?>
+<?php include('../../resources/classes/Popover.php'); ?>
 <!DOCTYPE html>
 <?php
 	if (isset($_GET['stud_id'])) {
@@ -375,6 +376,58 @@ CREDC;
 								}
 							?>
 						<!--  -->
+						<div class="row">
+							<div class="col-md-5">
+								<?php 
+									if($attendancecount < 1 && $gradecount < 1) {
+										$popover = new Popover();
+										$popover->set_popover("warning", "No records found in grades and attendance.");
+										echo $popover->get_popover();
+									}
+									if($attendancecount != $gradecount) {
+										$popover = new Popover();
+										if($gradecount > $attendancecount) {
+											$popover->set_popover("warning", "No records found in attendance in a certain year.");
+										}else {
+											$popover->set_popover("warning", "No records found in grades in a certain year.");
+										}
+										
+										echo $popover->get_popover();
+									}
+									
+								?>
+							</div>
+						</div>
+						<!-- Check Attendance and Grades to Generate Credentials -->
+							<?php
+
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$attendancecount = "";
+								$gradecount = "";
+								$attquery = "SELECT count(*) as 'attendancecount' FROM pcnhsdb.attendance where stud_id = '$stud_id';";
+								$result1 = $conn->query($attquery);
+								if ($result1->num_rows > 0) {
+									// output data of each row
+									while($row = $result1->fetch_assoc()) {
+										$attendancecount = $row['attendancecount'];
+
+									}
+								}
+
+								$gradequery = "SELECT count(*) as 'gradecount' FROM pcnhsdb.grades where stud_id = '$stud_id';";
+								$result2 = $conn->query($gradequery);
+								if ($result2->num_rows > 0) {
+									// output data of each row
+									while($row = $result2->fetch_assoc()) {
+										$gradecount = $row['gradecount'];
+
+									}
+								}
+							?>
+						<!--  -->
+
 						<div class="form-group">
 							<div class="col-md-6">
 								<a class="btn btn-default" href=<?php echo "../../registrar/studentmanagement/student_edit.php?stud_id=$stud_id" ?>><i class="fa fa-edit m-right-xs"></i> Edit Profile</a>
@@ -383,15 +436,10 @@ CREDC;
 							</div>
 							<div class="col-md-3 pull-right">
 								<?php
-									if($attendancecount > 3 && $gradecount > 3) {
-										echo <<<GEN
-											<a id="generatebutton" class="btn btn-primary" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
+									
+								echo <<<GEN
+									<a href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Please verify first if the grades and attendance are complete."><i class="fa fa-print m-right-xs"></i> Generate Credentials</button></a>
 GEN;
-									}else {
-										echo <<<GEN1
-											<a id="generatebutton" class="btn btn-primary disabled" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
-GEN1;
-									}
 								?>
 								
 							</div>
@@ -419,6 +467,7 @@ GEN1;
     	<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../assets/js/custom.min.js"></script>
+		
 		<!-- Scripts -->
 		<!-- validator -->
 		<!-- /jquery.inputmask -->

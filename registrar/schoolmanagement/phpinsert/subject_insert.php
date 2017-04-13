@@ -33,6 +33,7 @@
 	$multipleinsert = "";
 	//$insertprogram = "";
 	$willInsert = true;
+
 	if(is_null($curriculum)) {
 		$willInsert = false;
 		$popover = new Popover();
@@ -84,7 +85,6 @@
 		mysqli_query($conn, $insertsubject);
 		mysqli_multi_query($conn, $multipleinsert);
 		$_SESSION['user_activity'][] = "ADDED NEW SUBJECT: $subj_name";
-		mysqli_multi_query($conn, $insertprogram);
 		echo "<p>Updating Database, please wait...</p>";
 		header("Refresh:3; url=../student_subjects.php");
 	}
