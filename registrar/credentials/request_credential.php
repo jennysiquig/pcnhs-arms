@@ -22,7 +22,7 @@
 		
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
-		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+		<link href="../../assets/css/easy-autocomplete.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
@@ -54,31 +54,22 @@
 			<div class="x_content">
 				
 				
-				<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action="validate_request.php" method="GET" >
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" id="first-name" name="first-name" required="required" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-						
+				<form id="choose_cred" class="form-horizontal form-label-left" action="verify_student.php" method="GET" >
 						<div class="form-group">
-							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">School Year Graduated/Last Attended</label>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="full-name">Full Name <span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" id="full-name" name="full-name" required="required" class="form-control">
+								</div>
+							</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">School Year Graduated/Last Attended</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input class="form-control col-md-7 col-xs-12" type="text" name="year-graduated">
 							</div>
 						</div>
 						<div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Credential <span class="required">*</span>
-                        </label>
+                        	<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Credential <span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select id="credential" class="form-control" name="credential" required>
 							<option value="">Choose..</option>
@@ -102,13 +93,22 @@
 	                      </div>
                       	</div>
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Purpose <span class="required">*</span>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Purpose <span class="required">*</span>
 						</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" id="" name="purpose" required="required" class="form-control col-md-7 col-xs-12">
+							<select id="purpose" class="form-control" name="purpose" required>
+								<option value="">Choose..</option>
+								<option value="employment">Employment</option>
+							</select>
 						</div>
 						</div>
-				
+						<div class="form-group">
+							<label class="control-label col-md-4 col-sm-3 col-xs-12">Others:
+							</label>
+							<div class="col-md-5 col-sm-6 col-xs-12">
+								<input type="text" name="others" class="form-control col-md-7 col-xs-12">
+							</div>
+						</div>
 						<div class="ln_solid"></div>
 								
 						<div class="clearfix"></div>
@@ -118,7 +118,7 @@
 						<!-- this row will not appear when printing -->
 						<div class="row no-print">
 							<div class="col-xs-12">
-								<button class="btn btn-primary pull-right">Next</button>
+								<button type="submit" class="btn btn-primary pull-right">Next</button>
 								<a href="../../registrar/index.php" class="btn btn-default pull-right">Cancel</a>
 							</div>
 						</div>
@@ -140,6 +140,35 @@
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../assets/js/custom.min.js"></script>
+		<script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
+		<script type="text/javascript">
+			var options = {
+			  url: function(phrase) {
+			    return "phpscript/student_search.php?query="+phrase;
+			  },
+
+			  getValue: function(element) {
+			    return element.name;
+			  },
+
+			  ajaxSettings: {
+			    dataType: "json",
+			    method: "POST",
+			    data: {
+			      dataType: "json"
+			    }
+			  },
+
+			  preparePostData: function(data) {
+			    data.phrase = $("#full-name").val();
+			    return data;
+			  },
+
+			  requestDelay: 400
+			};
+
+			$("#full-name").easyAutocomplete(options);
+		</script>
 		<!-- Scripts -->
 	</body>
 </html>

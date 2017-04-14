@@ -26,19 +26,34 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		
-		
-		<!-- Bootstrap -->
-		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<!-- Font Awesome -->
-		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		<!-- Date Range Picker -->
+		<!-- jQuery -->
+	    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+	    <!-- Tablesorter themes -->
+	    <!-- bootstrap -->
+	    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+	    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+	    <!-- Tablesorter: required -->
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+	    <!-- NProgress -->
+	    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+	    <!-- Bootstrap -->
+	    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Font Awesome -->
+	    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	    <!-- Date Range Picker -->
 		<link href="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-		<!-- Datatables -->
-		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
-		<!-- Custom Theme Style -->
-		<link href="../../assets/css/custom.css" rel="stylesheet">
-		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+	    
+	    <!-- Datatables -->
+	    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	    
+	    <!-- Custom Theme Style -->
+	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
+	     <!-- Custom Theme Style -->
+	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -104,17 +119,17 @@
 						</div>
 	                      <!-- Date Picker -->
 						<div class="x_content">
-							<div class="table-responsive">
-								<table class="table table-striped jambo_table">
+							<div class="payment-list">
+								<table class="tablesorter-bootstrap">
 									<thead>
 										<tr class="headings">
-											<th class="column-title">Payment Date</th>
-											<th class="column-title">OR Number</th>
-											<th class="column-title">Name</th>
-											<th class="column-title">Item</th>
-											<th class="column-title">Amount</th>
-											<th class="column-title">No. of Copies</th>
-											<th class="column-title">Remarks</th>
+											<th class="column-title" data-sorter="false">Payment Date</th>
+											<th class="column-title" data-sorter="false">OR Number</th>
+											<th class="column-title" data-sorter="false">Name</th>
+											<th class="column-title" data-sorter="false">Item</th>
+											<th class="column-title" data-sorter="false">Amount</th>
+											<th class="column-title" data-sorter="false">No. of Copies</th>
+											<th class="column-title" data-sorter="false">Remarks</th>
 											
 										</th>
 										
@@ -273,9 +288,7 @@ PAYMENT;
 	</div>
 	<!-- Contents Here -->
 	<?php include "../../resources/templates/registrar/footer.php"; ?>
-	<!-- Scripts -->
-		<!-- jQuery -->
-		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+		<!-- Scripts -->
 		<!-- Bootstrap -->
 		<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 		<!-- FastClick -->
@@ -305,7 +318,16 @@ PAYMENT;
 			  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
 			});
 		</script>
-		
+		<script type="text/javascript">
+		$(function() {
+		$('.payment-list').tablesorter();
+		$('.tablesorter-bootstrap').tablesorter({
+		theme : 'bootstrap',
+		headerTemplate: '{content} {icon}',
+		widgets    : ['zebra','columns', 'uitheme']
+		});
+		});
+		</script>
 	<!-- Scripts -->
 </body>
 </html>

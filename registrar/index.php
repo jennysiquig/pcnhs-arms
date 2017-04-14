@@ -30,6 +30,17 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
+		 <!-- jQuery -->
+	    <script src="../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+	    <!-- Tablesorter themes -->
+	    <!-- bootstrap -->
+	    <link href="../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+	    <link href="../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+	    <!-- Tablesorter: required -->
+	    <script src="../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+	    <script src="../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
 		<!-- NProgress -->
 		<link href="../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		
@@ -43,7 +54,8 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 		
 		<!-- Custom Theme Style -->
 		<link href="../assets/css/custom.min.css" rel="stylesheet">
-		<link href="../assets/css/tstheme/style.css" rel="stylesheet">
+		<!-- Custom Theme Style -->
+	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -63,28 +75,7 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
-			<!-- 			<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="x_panel">
-							<div class="x_title">
-								<h2>Search Student Record</h2>
-							<div class="clearfix"></div>
-						</div>
-						<div class="x_content">
-							<form action="studentmanagement/student_list.php" method="GET">
-								<div class="input-group input-group-lg">
-									<span class="input-group-addon"><i class="fa fa-search"></i></span>
-									<input type="text" class="form-control" name="search_key" placeholder="Name of Student or ID Number">
-								</div>
-								<br>
-								<button class="btn btn-lg btn-primary btn-block">Search</button>
-								<br>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div> -->
-				<div class="row top_tiles">
+			<div class="row top_tiles">
 				<a href="studentmanagement/student_list.php">
 					<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 						<div class="tile-stats">
@@ -193,15 +184,15 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content">
-							<div class="table-responsive">
-								<table class="table table-hover jambo_table">
+							<div class="recent-request">
+								<table class="tablesorter-bootstrap">
 									<thead>
 										<tr class="headings">
-											<th class="column-title">Date of Request</th>
-											<th class="column-title">Student Name</th>
-											<th class="column-title">Requested Credential</th>
-											<th class="column-title">Purpose</th>
-											<th class="column-title no-link last"><span class="nobr">Action</span>
+											<th class="column-title" data-sorter="false">Date of Request</th>
+											<th class="column-title" data-sorter="false">Student Name</th>
+											<th class="column-title" data-sorter="false">Requested Credential</th>
+											<th class="column-title" data-sorter="false">Purpose</th>
+											<th class="column-title no-link last" data-sorter="false"><span class="nobr">Action</span>
 										</th>
 										
 									</tr>
@@ -253,8 +244,6 @@ UNCLAIMED;
 		<?php include "../resources/templates/registrar/footer.php"; ?>
 		
 		<!-- Scripts -->
-		<!-- jQuery -->
-		<script src="../resources/libraries/jquery/dist/jquery.min.js" ></script>
 		<!-- Bootstrap -->
 		<script src="../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 		<!-- FastClick -->
@@ -278,6 +267,16 @@ UNCLAIMED;
 		<script src="../resources/libraries/flot.curvedlines/curvedLines.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../assets/js/custom.min.js"></script>
+		<script type="text/javascript">
+	      $(function() {
+	      $('.recent-request').tablesorter();
+	      $('.tablesorter-bootstrap').tablesorter({
+	      theme : 'bootstrap',
+	      headerTemplate: '{content} {icon}',
+	      widgets    : ['zebra','columns', 'uitheme']
+	      });
+	      });
+	    </script>
 		<!-- Scripts -->
 	</body>
 </html>

@@ -37,7 +37,7 @@
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
      <!-- Custom Theme Style -->
     <link href="../../assets/css/customstyle.css" rel="stylesheet">
-    
+    <link href="../../assets/css/easy-autocomplete-custom.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="../js/ie8-responsive-file-warning.js"></script>
@@ -62,24 +62,23 @@
         </ol>
       </div>
       <form class="form-horizontal form-label-left" action="student_list.php" method="GET">
-        
         <div class="form-group">
           <div class="col-sm-5"></div>
           <div class="col-sm-7">
             <div class="input-group">
-              
-                <input type="text" class="form-control" name="search_key" placeholder="Search Student...">
+                <input id="search_key" type="text" class="form-control" name="search_key" placeholder="Search Student...">
                 <span class="input-group-btn">
-                  <button class="btn btn-primary">Go</button>
+                  <button class="btn btn-primary">Search</button>
                 </span>
             </div>
+          </div>
+          <div class="pull-right">
+            <a><i class="fa fa-info-circle"></i> Search Student by <strong>Last Name/First Name/Last Year Attended</strong></a>
           </div>
         </div>
       </form>
       <div class="clearfix"></div>
-      <div class="">
-        
-        <div class="clearfix"></div>
+      <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
@@ -90,7 +89,7 @@
             </div>
             <div class="x_content">
               <div class="row">
-               <form class="form-horizontal form-label-left" action="student_list.php" method="GET">
+             <!--   <form class="form-horizontal form-label-left" action="student_list.php" method="GET">
                 <div class="form-group">
                   <label class="control-label col-md-10">Search Student by School Year:</label>
                   <div class="input-group">
@@ -100,7 +99,7 @@
                       </span>
                   </div>
                 </div>
-              </form>
+              </form> -->
               <form class="form-horizontal form-label-left">
                 <div class="form-group">
                   <label class="control-label col-md-10">Show Number Of Entries:</label>
@@ -136,7 +135,7 @@
                       <th>Middle Name</th>
                       <th>Curriculum</th>
                       <th>Date Modified</th>
-                      <th>Action</th>
+                      <th data-sorter="false">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -160,16 +159,41 @@
                     }
 
                     if(!$conn) {
-                    die("Connection failed: " . mysqli_connect_error());
+                      die("Connection failed: " . mysqli_connect_error());
                     }
 
                     
-
+                    $search = "";
                     if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                       $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
-                      $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '%$search' or first_name like '%$search' or stud_id like '%$search' or concat(first_name,' ',last_name) like '%$search' or concat(last_name,' ',first_name,' ',mid_name) like '%$search' or concat(first_name,' ',mid_name,' ',last_name) like '%$search' limit $start, $limit";
+                      $statement = "SELECT 
+                                        *
+                                    FROM
+                                        students
+                                            LEFT JOIN
+                                        curriculum ON students.curr_id = curriculum.curr_id
+                                            NATURAL JOIN
+                                        grades
+                                    WHERE
+                                        last_name LIKE '%$search'
+                                            OR first_name LIKE '%$search'
+                                            OR stud_id LIKE '%$search'
+                                            OR CONCAT(first_name, ' ', last_name) LIKE '%$search'
+                                            OR CONCAT(last_name,
+                                                ' ',
+                                                first_name,
+                                                ' ',
+                                                mid_name) LIKE '%$search'
+                                            OR CONCAT(first_name,
+                                                ' ',
+                                                mid_name,
+                                                ' ',
+                                                last_name) LIKE '%$search'
+                                            OR (schl_year = '$search' AND yr_level = 4)
+                                    GROUP BY stud_id
+                                    LIMIT $start , $limit;";
                     }else {
-                      $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id limit $start, $limit";
+                      $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id limit $start, $limit;";
                     }
 
                     if(isset($_GET['schl_year']) && $_GET['schl_year'] != "") {
@@ -216,7 +240,7 @@
                       <td>$date_modified</td>
                       <td>
                         <center>
-                          <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
+                          <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default"><i class="fa fa-user"></i> View </a>
                         </center>
                       </td>
                     </tr>
@@ -227,7 +251,14 @@ STUDLIST;
                   </tbody>
                 </table>
                 <?php
-                  $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id";
+                  if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
+                      $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
+                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '%$search' or first_name like '%$search' or stud_id like '%$search' or concat(first_name,' ',last_name) like '%$search' or concat(last_name,' ',first_name,' ',mid_name) like '%$search' or concat(first_name,' ',mid_name,' ',last_name) like '%$search' or (schl_year = '$search' and yr_level = 4);";
+                  }else {
+                    $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id;";
+                  }
+                  
+
                     $rows = mysqli_num_rows(mysqli_query($conn, $statement));
                     $total = ceil($rows/$limit);
                     
@@ -237,7 +268,7 @@ STUDLIST;
                       <div class="col s12">
                       <ul class="pagination center-align">';
                       if($page > 1) {
-                        echo "<li class=''><a href='student_list.php?page=".($page-1)."'>Previous</a></li>";
+                        echo "<li class=''><a href='student_list.php?page=".($page-1)."&search_key=$search'>Previous</a></li>";
                       }else if($total <= 0) {
                         echo '<li class="disabled"><a>Previous</a></li>';
                       }else {
@@ -271,9 +302,9 @@ STUDLIST;
                       // Google Like Pagination
                       for($i = $y;$i <= $x; $i++) {
                         if($i==$page) {
-                          echo "<li class='active'><a href='student_list.php?page=$i'>$i</a></li>";
+                          echo "<li class='active'><a href='student_list.php?page=$i&search_key=$search'>$i</a></li>";
                         } else {
-                            echo "<li class=''><a href='student_list.php?page=$i'>$i</a></li>";
+                            echo "<li class=''><a href='student_list.php?page=$i&search_key=$search'>$i</a></li>";
                           }
                       }
 
@@ -281,7 +312,7 @@ STUDLIST;
                       if($total == 0) {
                         echo "<li class='disabled'><a>Next</a></li>";
                       }else if($page!=$total) {
-                        echo "<li class=''><a href='student_list.php?page=".($page+1)."'>Next</a></li>";
+                        echo "<li class=''><a href='student_list.php?page=".($page+1)."&search_key=$search'>Next</a></li>";
                       }else {
                         echo "<li class='disabled'><a>Next</a></li>";
                       }
@@ -312,21 +343,22 @@ STUDLIST;
     <!-- NProgress -->
     <script src="../../resources/libraries/nprogress/nprogress.js"></script>
     <!-- <script type="text/javascript" src="../../resources/libraries/tablesorter/jquery.tablesorter.js"></script> -->
+    <script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
     <!-- Scripts -->
     
    
     <!-- Change Entry -->
     <script type="text/javascript">
-      function changeEntries(val) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-           location.reload();
-          }
-        };
-        xhttp.open("GET", "phpscript/showentry.php?entry="+val, true);
-        xhttp.send();
-      }
+    function changeEntries(val) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    location.reload();
+    }
+    };
+    xhttp.open("GET", "phpscript/showentry.php?entry="+val, true);
+    xhttp.send();
+    }
     </script>
     <!--  -->
     <!-- jquery.inputmask -->
@@ -337,21 +369,42 @@ STUDLIST;
     </script>
     <!-- /jquery.inputmask -->
     <script type="text/javascript">
-  
-    $(function() {
-
+      $(function() {
       $('.stud-list').tablesorter();
-
-
-
       $('.tablesorter-bootstrap').tablesorter({
-        theme : 'bootstrap',
-        headerTemplate: '{content} {icon}',
-        widgets    : ['zebra','columns', 'uitheme']
+      theme : 'bootstrap',
+      headerTemplate: '{content} {icon}',
+      widgets    : ['zebra','columns', 'uitheme']
       });
+      });
+    </script>
+    <script type="text/javascript">
+      var options = {
+        url: function(phrase) {
+          return "phpscript/student_search.php?query="+phrase;
+        },
 
-    });
-    
+        getValue: function(element) {
+          return element.name;
+        },
+
+        ajaxSettings: {
+          dataType: "json",
+          method: "POST",
+          data: {
+            dataType: "json"
+          }
+        },
+
+        preparePostData: function(data) {
+          data.phrase = $("#search_key").val();
+          return data;
+        },
+
+        requestDelay: 400
+      };
+
+      $("#search_key").easyAutocomplete(options);
     </script>
   </body>
 </html>

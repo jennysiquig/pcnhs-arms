@@ -12,17 +12,32 @@
 		
 		
 		
-		<!-- Bootstrap -->
-		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<!-- Font Awesome -->
-		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
-		<!-- Datatables -->
-		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
-		<!-- Custom Theme Style -->
-		<link href="../../assets/css/custom.min.css" rel="stylesheet">
-		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+		<!-- jQuery -->
+	    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+	    <!-- Tablesorter themes -->
+	    <!-- bootstrap -->
+	    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+	    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+	    <!-- Tablesorter: required -->
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+	    <!-- NProgress -->
+	    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+	    <!-- Bootstrap -->
+	    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Font Awesome -->
+	    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	    
+	    <!-- Datatables -->
+	    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	    
+	    <!-- Custom Theme Style -->
+	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
+	     <!-- Custom Theme Style -->
+	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
@@ -58,14 +73,14 @@
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content">
-							<div class="table-responsive">
-								<table class="table table-striped jambo_table">
+							<div class="unclaimed-list">
+								<table class="tablesorter-bootstrap">
 									<thead>
 										<tr class="headings">
-											<th class="column-title">Date Processed</th>
-											<th class="column-title">Student Name</th>
-											<th class="column-title">Requested Credential</th>
-											<th class="column-title no-link last"><span class="nobr">Mark as</span>
+											<th class="column-title" data-sorter="false">Date Processed</th>
+											<th class="column-title" data-sorter="false">Student Name</th>
+											<th class="column-title" data-sorter="false">Requested Credential</th>
+											<th class="column-title no-link last" data-sorter="false"><span class="nobr">Mark as</span>
 										</th>
 										
 									</tr>
@@ -103,7 +118,11 @@
 																<td class=" ">$date_processed</td>
 																<td class=" "><a href="../studentmanagement/student_info.php?stud_id=$stud_id">$stud_name</a></td>
 																<td class=" ">$cred_name</td>
-																<td class=" last"><button class="btn btn-default btn-xs" onclick="releaseAction('$stud_id', '$cred_id', '$req_id', '$request_type')"><i class="fa fa-paper-plane"></i> Released</button></td>
+																<td class=" last">
+																	<center>
+																	<button class="btn btn-default" onclick="releaseAction('$stud_id', '$cred_id', '$req_id', '$request_type')"><i class="fa fa-paper-plane"></i> Released</button>
+																	</center>
+																</td>
 												</tr>
 UNCLAIMED;
 											}
@@ -153,8 +172,6 @@ UNCLAIMED;
 			<!-- Contents Here -->
 			<?php include "../../resources/templates/registrar/footer.php"; ?>
 			<!-- Scripts -->
-			<!-- jQuery -->
-			<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 			<!-- Bootstrap -->
 			<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 			<!-- FastClick -->
@@ -193,6 +210,16 @@ UNCLAIMED;
 							
 						});	
 				}
+			</script>
+			<script type="text/javascript">
+			$(function() {
+			$('.unclaimed-list').tablesorter();
+			$('.tablesorter-bootstrap').tablesorter({
+			theme : 'bootstrap',
+			headerTemplate: '{content} {icon}',
+			widgets    : ['zebra','columns', 'uitheme']
+			});
+			});
 			</script>
 		</body>
 	</html>

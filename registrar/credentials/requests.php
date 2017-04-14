@@ -10,19 +10,32 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		
-		
-		<!-- Bootstrap -->
-		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<!-- Font Awesome -->
-		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
-		<!-- Datatables -->
-		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
-		<!-- Custom Theme Style -->
-		<link href="../../assets/css/custom.min.css" rel="stylesheet">
-		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+		<!-- jQuery -->
+	    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+	    <!-- Tablesorter themes -->
+	    <!-- bootstrap -->
+	    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+	    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+	    <!-- Tablesorter: required -->
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+	    <!-- NProgress -->
+	    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+	    <!-- Bootstrap -->
+	    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Font Awesome -->
+	    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	    
+	    <!-- Datatables -->
+	    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	    
+	    <!-- Custom Theme Style -->
+	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
+	     <!-- Custom Theme Style -->
+	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
@@ -52,15 +65,15 @@
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content">
-							<div class="table-responsive">
-								<table class="table table-striped jambo_table">
+							<div class="credential-request">
+								<table class="tablesorter-bootstrap">
 									<thead>
 										<tr class="headings">
-											<th class="column-title">Date of Request</th>
-											<th class="column-title">Student Name</th>
-											<th class="column-title">Requested Credential</th>
-											<th class="column-title">Purpose</th>
-											<th class="column-title no-link last"><span class="nobr">Action</span>
+											<th class="column-title" data-sorter="false">Date of Request</th>
+											<th class="column-title" data-sorter="false">Student Name</th>
+											<th class="column-title" data-sorter="false">Requested Credential</th>
+											<th class="column-title" data-sorter="false">Purpose</th>
+											<th class="column-title no-link last" data-sorter="false"><span class="nobr">Action</span>
 										</th>
 										
 									</tr>
@@ -148,8 +161,6 @@ UNCLAIMED;
 			<!-- Contents Here -->
 			<?php include "../../resources/templates/registrar/footer.php"; ?>
 			<!-- Scripts -->
-			<!-- jQuery -->
-			<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 			<!-- Bootstrap -->
 			<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 			<!-- FastClick -->
@@ -165,29 +176,39 @@ UNCLAIMED;
 			<!-- Scripts -->
 			<script type="text/javascript">
 				function releaseAction(stud_id, cred_id, req_id, request_type) {
-					bootbox.prompt({
-						size: "small",
-						title: "Enter OR Number",				
-						callback: function(or_no){ 
-									if(or_no != null && !isNaN(or_no) && or_no != "") {
-										var xhttp = new XMLHttpRequest();
-								        xhttp.onreadystatechange = function() {
-								          if (this.readyState == 4 && this.status == 200) {
-								           location.assign("released.php");
-								          }
-								        };
-								        xhttp.open("GET", "release_action.php?stud_id="+stud_id+"&cred_id="+cred_id+"&req_id="+req_id+"&request_type="+request_type+"&or_no="+or_no, true);
-								        xhttp.send();
-									}else if(or_no != null && isNaN(or_no)) {
-										bootbox.alert({
-											size: "small",
-										    message: "Invalid OR Number"
-										});
-									}
-								}
-							
-						});	
+				bootbox.prompt({
+				size: "small",
+				title: "Enter OR Number",
+				callback: function(or_no){
+				if(or_no != null && !isNaN(or_no) && or_no != "") {
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+				location.assign("released.php");
+				}
+				};
+				xhttp.open("GET", "release_action.php?stud_id="+stud_id+"&cred_id="+cred_id+"&req_id="+req_id+"&request_type="+request_type+"&or_no="+or_no, true);
+				xhttp.send();
+				}else if(or_no != null && isNaN(or_no)) {
+				bootbox.alert({
+				size: "small",
+				message: "Invalid OR Number"
+				});
+				}
+				}
+
+				});
 				}
 			</script>
+			<script type="text/javascript">
+		      $(function() {
+		      $('.credential-request').tablesorter();
+		      $('.tablesorter-bootstrap').tablesorter({
+		      theme : 'bootstrap',
+		      headerTemplate: '{content} {icon}',
+		      widgets    : ['zebra','columns', 'uitheme']
+		      });
+		      });
+		    </script>
 		</body>
 	</html>
