@@ -100,7 +100,7 @@
             <!-- Date Picker -->
             <div class="row">
               <div class="col-md-4">
-                Select Date of Transaction
+                Select Log Date
                 <form class="form-horizontal" action="index.php" method="get">
                   <fieldset>
                     
