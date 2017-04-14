@@ -1,6 +1,6 @@
 body {
 	font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 400;
     color: #888;
     line-height: 30px;
@@ -25,13 +25,13 @@ h1, h2 {
 }
 
 h3 {
-	font-size: 17px;
+	font-size: 20px;
     font-weight: 300;
     color: #555;
     line-height: 30px;
 }
 p {
-	font-size: 13px;
+	font-size: 15px;
 }
 img { max-width: 100%; }
 

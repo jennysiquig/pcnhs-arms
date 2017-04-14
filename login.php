@@ -50,7 +50,7 @@
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
 
-                            <h1><img src="assets/images/pcnhslogo.png" style='height: 80px; width: 80px;'/> <strong>PCNHS ARMS</strong> Log In</h1>
+                            <h1><img src="assets/images/pcnhslogo.png" style='height: 80px; width: 80px;'/> <strong>PCNHS ARMS</strong> </h1>
                             <div class="description">
                                 <p>
                                 </p>
@@ -100,7 +100,7 @@
 
                                 </form>
                                 <br>
-                                 <center><a href="#">Forgot Password?</a></center>
+                                 <center><a href="#" data-toggle="tooltip" data-placement="top" title="Contact System Administrator to reset password."><i class="fa fa-info-circle"></i> Forgot Password?</a></center>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,19 @@
         <script src="assets/js/jquery-1.11.1.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="assets/js/jquery.backstretch.min.js"></script>
-        
+        <!-- jQuery -->
+    
+        <!-- Bootstrap -->
+        <script src="resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src= "resources/libraries/fastclick/lib/fastclick.js"></script>
+        <!-- input mask -->
+        <script src= "resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+        <script src= "resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+        <!-- NProgress -->
+        <script src="resources/libraries/nprogress/nprogress.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src= "assets/js/custom.min.js"></script>
         <script type="text/javascript">
             jQuery(document).ready(function() {
     
