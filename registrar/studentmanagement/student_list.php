@@ -401,7 +401,7 @@ STUDLIST;
           return data;
         },
 
-        requestDelay: 400
+        requestDelay: 200
       };
 
       $("#search_key").easyAutocomplete(options);

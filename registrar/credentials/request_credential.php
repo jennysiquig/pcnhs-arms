@@ -163,7 +163,7 @@
 			    return data;
 			  },
 
-			  requestDelay: 400
+			  requestDelay: 200
 			};
 
 			$("#full-name").easyAutocomplete(options);
