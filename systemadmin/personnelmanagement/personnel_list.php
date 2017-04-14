@@ -12,17 +12,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+    <!-- jQuery -->
+    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+    <!-- Tablesorter themes -->
+    <!-- bootstrap -->
+    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+    <!-- Tablesorter: required -->
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+    <!-- NProgress -->
+    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+    
     <!-- Datatables -->
     <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
-    <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+     <!-- Custom Theme Style -->
+    <link href="../../assets/css/customstyle.css" rel="stylesheet">
 
   </head>
     <body class="nav-md">
@@ -39,7 +54,7 @@
             </ol>
           </div>
 
-    <form class="form-horizontal form-label-left" action="personnels.php" method="GET">
+    <form class="form-horizontal form-label-left" action="personnel_list.php" method="GET">
 
         <div class="form-group">
             <div class="col-sm-5"></div>
@@ -96,16 +111,16 @@
 
 
 
-                    <div class="table-responsive">
-                        <table id="personnelList" class="table table-bordered tablesorter ">
+                    <div class="personnel-list">
+                        <table id="personnelList" class="tablesorter-bootstrap">
                             <thead>
                             <tr>
-                                <th>Personnel ID</th>
-                                <th>Username</th>
-                                <th>Position</th>
-                                <th>Access Type</th>
-                                <th>Account Status</th>
-                                <th>Action</th>
+                                <th data-sorter="false">Personnel ID</th>
+                                <th data-sorter="false">Username</th>
+                                <th data-sorter="false">Position</th>
+                                <th data-sorter="false">Access Type</th>
+                                <th data-sorter="false">Account Status</th>
+                                <th data-sorter="false">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -142,14 +157,7 @@
                             }
 
                             $result = $conn->query($statement);
-                            if ($result ->num_rows == 0) {
-                                echo <<<NORES
-                                    <tr class="odd pointer">
-                                    <span class="badge badge-danger">NO RESULT</span>        
-                                    </tr>
-NORES;
-                            }
-                            else if ($result->num_rows > 0) {
+                            if ($result->num_rows > 0) {
                                 while($row = $result->fetch_assoc()) {
                                     $per_id = $row['per_id'];
                                     $uname = $row['uname'];
@@ -168,8 +176,10 @@ NORES;
                                                         <td class=" ">$access_type</td>
                                                         <td class=" ">$accnt_status</td>
                                                         <td class=" ">
-                                                        <a href= "personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs">
+                                                        <center>
+                                                          <a href= "personnel_view.php?per_id=$per_id" class="btn btn-default">
                                                         <i class="fa fa-user"></i>View</a>
+                                                        </center>
                                                         </td>
                                                         
                                             </tr>
@@ -184,13 +194,12 @@ PERSONNELLIST;
                     $rows = mysqli_num_rows(mysqli_query($conn, $statement));
                     $total = ceil($rows/$limit);
                     
-                    echo "<p>Showing $limit of $rows Entries</p>";
 
                     echo '<div class="pull-right">
                       <div class="col s12">
                       <ul class="pagination center-align">';
                       if($page > 1) {
-                        echo "<li class=''><a href='personnels.php?page=".($page-1)."'>Previous</a></li>";
+                        echo "<li class=''><a href='personnel_list.php?page=".($page-1)."'>Previous</a></li>";
                       }else if($total <= 0) {
                         echo '<li class="disabled"><a>Previous</a></li>';
                       }else {
@@ -224,9 +233,9 @@ PERSONNELLIST;
                       // Google Like Pagination
                       for($i = $y;$i <= $x; $i++) {
                         if($i==$page) {
-                          echo "<li class='active'><a href='personnels.php?page=$i'>$i</a></li>";
+                          echo "<li class='active'><a href='personnel_list.php?page=$i'>$i</a></li>";
                         } else {
-                            echo "<li class=''><a href='personnels.php?page=$i'>$i</a></li>";
+                            echo "<li class=''><a href='personnel_list.php?page=$i'>$i</a></li>";
                           }
                       }
 
@@ -234,7 +243,7 @@ PERSONNELLIST;
                       if($total == 0) {
                         echo "<li class='disabled'><a>Next</a></li>";
                       }else if($page!=$total) {
-                        echo "<li class=''><a href='personnels.php?page=".($page+1)."'>Next</a></li>";
+                        echo "<li class=''><a href='personnel_list.php?page=".($page+1)."'>Next</a></li>";
                       }else {
                         echo "<li class='disabled'><a>Next</a></li>";
                       }
@@ -252,8 +261,6 @@ PERSONNELLIST;
 <?php include "../../resources/templates/admin/footer.php"; ?>
 
 <!-- Scripts -->
-<!-- jQuery -->
-<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 <!-- Bootstrap -->
 <script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
@@ -268,13 +275,6 @@ PERSONNELLIST;
 <script type="text/javascript" src=<?php echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
 <!-- Scripts -->
 <script type="text/javascript">
-    $(document).ready(function(){
-            $("#personnelList").tablesorter({headers: { 5:{sorter: false}, }});
-        }
-    );
-</script>
-
-<script type="text/javascript">
       function changeEntries(val) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -286,6 +286,15 @@ PERSONNELLIST;
         xhttp.send();
       }
 </script>
-
+<script type="text/javascript">
+      $(function() {
+      $('.personnel-list').tablesorter();
+      $('.tablesorter-bootstrap').tablesorter({
+      theme : 'bootstrap',
+      headerTemplate: '{content} {icon}',
+      widgets    : ['zebra','columns', 'uitheme']
+      });
+      });
+</script>
 </body>
 </html>

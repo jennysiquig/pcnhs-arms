@@ -55,7 +55,7 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 		<!-- Custom Theme Style -->
 		<link href="../assets/css/custom.min.css" rel="stylesheet">
 		<!-- Custom Theme Style -->
-	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
+	    <link href="../assets/css/customstyle.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -167,7 +167,7 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 									}
 								?>
 								<p>&nbsp</p>
-								<h3>Total Transactions</h3>
+								<h3>Transactions</h3>
 								<p>&nbsp</p>
 							</div>
 						</div>
@@ -253,14 +253,6 @@ UNCLAIMED;
 		<script src= "../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- NProgress -->
 		<script src="../resources/libraries/nprogress/nprogress.js"></script>
-		<!-- Flot -->
-		<script src="../resources/libraries/Flot/jquery.flot.js"></script>
-		<script src="../resources/libraries/Flot/jquery.flot.pie.js"></script>
-		<script src="../resources/libraries/Flot/jquery.flot.time.js"></script>
-		<script src="../resources/libraries/Flot/jquery.flot.stack.js"></script>
-		<script src="../resources/libraries/Flot/jquery.flot.resize.js"></script>
-		<!-- DateJS -->
-		<script src="../resources/libraries/DateJS/build/date.js"></script>
 		<!-- Flot plugins -->
 		<script src="../resources/libraries/flot.orderbars/js/jquery.flot.orderBars.js"></script>
 		<script src="../resources/libraries/flot-spline/js/jquery.flot.spline.min.js"></script>

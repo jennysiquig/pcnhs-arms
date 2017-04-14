@@ -32,20 +32,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    
-        <!-- Bootstrap -->
-        <link href="../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Font Awesome -->
-        <link href="../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <!-- NProgress -->
-        <link href="../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
-        <!-- Datatables -->
-        <link href="../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-        <!-- Date Range Picker -->
-        <link href="../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-        <!-- Custom Theme Style -->
-        <link href="../assets/css/custom.min.css" rel="stylesheet">
-        <link href="../assets/css/tstheme/style.css" rel="stylesheet">
+      <!-- jQuery -->
+      <script src="../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+      <!-- Tablesorter themes -->
+      <!-- bootstrap -->
+      <link href="../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+      <link href="../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+      <!-- Tablesorter: required -->
+      <script src="../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+      <script src="../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+      <!-- NProgress -->
+      <link href="../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+      
+      <!-- Bootstrap -->
+      <link href="../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Font Awesome -->
+      <link href="../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+      
+      <!-- Datatables -->
+      <link href="../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+      <!-- Date Range Picker -->
+      <link href="../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+      <!-- Custom Theme Style -->
+      <link href="../assets/css/custom.min.css" rel="stylesheet">
+      <!-- Custom Theme Style -->
+      <link href="../assets/css/customstyle.css" rel="stylesheet">
     
   </head>
   <body class="nav-md">
@@ -85,24 +98,31 @@
               <div class="clearfix"></div>
             </div>
             <!-- Date Picker -->
-                        <div class="col-md-4">
-                          Sort by Date
-                          <form class="form-horizontal" action="index.php" method="get">
-                            <fieldset>
-                              <div class="control-group">
-                                <div class="controls">
-                                  <div class="input-prepend input-group">
-                                    <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                    <input type="text" style="width: 200px" name="log_date" id="reservation" class="form-control" value=<?php echo "'$curr_date'"; ?>/>
-                                  </div>
-
-                                </div>
-                                <button class="btn btn-primary">Go</button>
-                              </div>
-                            </fieldset>
-                          </form>
+            <div class="row">
+              <div class="col-md-4">
+                Select Date of Transaction
+                <form class="form-horizontal" action="index.php" method="get">
+                  <fieldset>
+                    
+                    <div class="control-group">
+                      <div class="controls">
+                        <div class="input-prepend input-group">
+                          <span class="add-on input-group-addon">
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                          </span>
+                          <input type="text" name="log_date" id="log_date" class="form-control" value=" " />
+                          <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">Go</button>
+                          </span>
                         </div>
-                        <!-- Date Picker -->
+                      </div>
+                    </div>
+                    
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+            <!-- Date Picker -->
             <div class="x_content">
                               <div class="row">
                     <form class="form-horizontal form-label-left">
@@ -124,17 +144,17 @@
                         </div>
                       </form>
               </div>
-                <div class="table-responsive">
-                    <table id="logList" class="table table-bordered tablesorter">
+                <div class="activity-log">
+                    <table id="logList" class="tablesorter-bootstrap">
                         <thead>
                             <tr>
-                                <th>Log ID</th>
-                                <th>Date</th>
-                                <th>Username</th>
-                                <th>Access Type</th>
-                                <th>Login Time</th>
-                                <th>User Activity</th>
-                                <th>Logout Time</th>
+                                <th data-sorter="false">Log ID</th>
+                                <th data-sorter="false">Date</th>
+                                <th data-sorter="false">Username</th>
+                                <th data-sorter="false">Access Type</th>
+                                <th data-sorter="false">Login Time</th>
+                                <th data-sorter="false">User Activity</th>
+                                <th data-sorter="false">Logout Time</th>
                             </tr>
                             </thead>
 
@@ -388,31 +408,37 @@ LOGLIST;
   
     <?php include "../resources/templates/admin/footer.php"; ?>
 
-
-    <script src="../resources/libraries/jquery/dist/jquery.min.js" ></script>
-    <!-- Bootstrap -->
+    <!-- Scripts -->
+    <<!-- Bootstrap -->
     <script src="../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src= "../resources/libraries/fastclick/lib/fastclick.js"></script>
     <!-- input mask -->
     <script src= "../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-    <script src= "../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
-    <!-- NProgress -->
-    <script src="../resources/libraries/nprogress/nprogress.js"></script>
     <!-- Date Range Picker -->
     <script src="../resources/libraries/moment/min/moment.min.js"></script>
     <script src="../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="../resources/libraries/nprogress/nprogress.js"></script>
+
     <!-- Custom Theme Scripts -->
     <script src= "../assets/js/custom.min.js"></script>
-    <script type="text/javascript" src=<?php echo "../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
-    <!-- Scripts -->
+    
     <script type="text/javascript">
-        $(document).ready(function(){
-                $("#logList").tablesorter({headers: { 7:{sorter: false}, }});
-            }
-        );
+      $('#log_date').daterangepicker({
+          ranges: {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+          },
+          startDate: moment().subtract(29, 'days'),
+        endDate: moment()
+      }, function(start, end, label) {
+        console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+      });
     </script>
-
     <script type="text/javascript">
       function changeEntries(val) {
         var xhttp = new XMLHttpRequest();
@@ -425,7 +451,16 @@ LOGLIST;
         xhttp.send();
       }
     </script>
-
+    <script type="text/javascript">
+        $(function() {
+        $('.activity-log').tablesorter();
+        $('.tablesorter-bootstrap').tablesorter({
+        theme : 'bootstrap',
+        headerTemplate: '{content} {icon}',
+        widgets    : ['zebra','columns', 'uitheme']
+        });
+        });
+      </script>
     </body>
 </html>
 </body>

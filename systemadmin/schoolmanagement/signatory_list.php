@@ -10,17 +10,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+   <!-- jQuery -->
+    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+    <!-- Tablesorter themes -->
+    <!-- bootstrap -->
+    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+    <!-- Tablesorter: required -->
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+    <!-- NProgress -->
+    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+    
     <!-- Datatables -->
     <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
-    <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+     <!-- Custom Theme Style -->
+    <link href="../../assets/css/customstyle.css" rel="stylesheet">
     
 </head>
 <body class="nav-md">
@@ -35,7 +50,7 @@
           <li class="active">View Signatories</li>
         </ol>
       </div>
-    <form class="form-horizontal form-label-left" action="signatories.php" method="GET">
+    <form class="form-horizontal form-label-left" action="signatory_list.php" method="GET">
 
         <div class="form-group">
             <div class="col-sm-5"></div>
@@ -89,19 +104,19 @@
                       </form>
               </div>
 
-                    <div class="table-responsive">
-                        <table id="signList" class="table table-bordered tablesorter">
+                    <div class="signatory-list">
+                        <table id="signList" class="tablesorter-bootstrap">
                             <thead>
                             <tr>
-                                <th>Signatory ID</th>
-                                <th>First Name</th>
-                                <th>Middle Name</th>
-                                <th>Last Name</th>
-                                <th>Degree</th>
-                                <th>Position</th>
-                                <th>Year Started</th>
-                                <th>Year Ended</th>
-                                <th>Action</th>
+                                <th data-sorter="false">Signatory ID</th>
+                                <th data-sorter="false">First Name</th>
+                                <th data-sorter="false">Middle Name</th>
+                                <th data-sorter="false">Last Name</th>
+                                <th data-sorter="false">Degree</th>
+                                <th data-sorter="false">Position</th>
+                                <th data-sorter="false">Year Started</th>
+                                <th data-sorter="false">Year Ended</th>
+                                <th data-sorter="false">Action</th>
                             </tr>
                             </thead>
 
@@ -172,7 +187,9 @@ NORES;
                                                         <td class=" ">$yr_started</td>
                                                         <td class=" ">$yr_ended</td>
                                                         <td class=" ">
-                                                        <a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View </a>
+                                                        <center>
+                                                          <a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-default"><i class="fa fa-user"></i> View </a>
+                                                        </center>
                                                         </td>                                                       
                                             </tr>
 SIGNLIST;
@@ -192,7 +209,7 @@ SIGNLIST;
                       <div class="col s12">
                       <ul class="pagination center-align">';
                       if($page > 1) {
-                        echo "<li class=''><a href='signatories.php?page=".($page-1)."'>Previous</a></li>";
+                        echo "<li class=''><a href='signatory_list.php?page=".($page-1)."'>Previous</a></li>";
                       }else if($total <= 0) {
                         echo '<li class="disabled"><a>Previous</a></li>';
                       }else {
@@ -226,9 +243,9 @@ SIGNLIST;
                       // Google Like Pagination
                       for($i = $y;$i <= $x; $i++) {
                         if($i==$page) {
-                          echo "<li class='active'><a href='signatories.php?page=$i'>$i</a></li>";
+                          echo "<li class='active'><a href='signatory_list.php?page=$i'>$i</a></li>";
                         } else {
-                            echo "<li class=''><a href='signatories.php?page=$i'>$i</a></li>";
+                            echo "<li class=''><a href='signatory_list.php?page=$i'>$i</a></li>";
                           }
                       }
 
@@ -236,7 +253,7 @@ SIGNLIST;
                       if($total == 0) {
                         echo "<li class='disabled'><a>Next</a></li>";
                       }else if($page!=$total) {
-                        echo "<li class=''><a href='signatories.php?page=".($page+1)."'>Next</a></li>";
+                        echo "<li class=''><a href='signatory_list.php?page=".($page+1)."'>Next</a></li>";
                       }else {
                         echo "<li class='disabled'><a>Next</a></li>";
                       }
@@ -254,8 +271,6 @@ SIGNLIST;
 <?php include "../../resources/templates/registrar/footer.php"; ?>
 
 <!-- Scripts -->
-<!-- jQuery -->
-<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 <!-- Bootstrap -->
 <script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
@@ -270,13 +285,6 @@ SIGNLIST;
 <script type="text/javascript" src=<?php echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
 <!-- Scripts -->
 <script type="text/javascript">
-    $(document).ready(function(){
-            $("#signList").tablesorter({headers: { 8:{sorter: false}, }});
-        }
-    );
-</script>
-
-<script type="text/javascript">
       function changeEntries(val) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -287,6 +295,16 @@ SIGNLIST;
         xhttp.open("GET", "../entry/index_entry.php?entry="+val, true);
         xhttp.send();
       }
+</script>
+<script type="text/javascript">
+      $(function() {
+      $('.signatory-list').tablesorter();
+      $('.tablesorter-bootstrap').tablesorter({
+      theme : 'bootstrap',
+      headerTemplate: '{content} {icon}',
+      widgets    : ['zebra','columns', 'uitheme']
+      });
+      });
 </script>
 
 </body>
