@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<?php ob_start()?>
+<?php ob_start() ?>
 <?php require_once "../../resources/config.php"; ?>
-<?php include('include_files/session_check.php'); ?>
+<?php include ('include_files/session_check.php'); ?>
 <html>
 <head>
     <title>View Signatory</title>
@@ -10,7 +10,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -20,17 +19,13 @@
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
     <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-
 </head>
 <body class="nav-md">
-<!-- Sidebar -->
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
-<!-- Top Navigation -->
 <?php include "../../resources/templates/admin/top-nav.php"; ?>
-<!-- Content Here -->
 <!-- page content -->
 <div class="right_col" role="main">
-                     <div class="col-md-5">
+    <div class="col-md-5">
         <ol class="breadcrumb">
           <li><a href="../index.php">Home</a></li>
           <li class="disabled">Signatories</li>
@@ -53,55 +48,51 @@
                     </ul>
                     <div class="clearfix"></div>
                     <?php
-                        if(isset($_SESSION['success_signatory'])) {
+                        if (isset($_SESSION['success_signatory'])) {
                             echo $_SESSION['success_signatory'];
                             unset($_SESSION['success_signatory']);
-                                }
-
-                        if(isset($_SESSION['success_signatory_edit'])) {
+                        }
+                        if (isset($_SESSION['success_signatory_edit'])) {
                             echo $_SESSION['success_signatory_edit'];
                             unset($_SESSION['success_signatory_edit']);
-                                }
+                        }
                     ?>
                 </div>
                 <div class="x_content">
                     <form class="form-horizontal form-label-left" action="phpupdate/update_signatory_info.php" method="POST" novalidate>
 
                         <?php require_once "../../resources/config.php";
+                            $sign_id = $_GET['sign_id'];
+                            $first_name;
+                            $mname;
+                            $last_name;
+                            $title;
+                            $yr_started;
+                            $yr_ended;
+                            $position;
+                            $statement = "SELECT * FROM pcnhsdb.signatories WHERE signatories.sign_id = '$sign_id'";
+                            $result = $conn->query($statement);
 
-                        $sign_id = $_GET['sign_id'];
-
-                        $first_name;
-                        $mname;
-                        $last_name;
-                        $title;
-                        $yr_started;
-                        $yr_ended;
-                        $position;
-
-                        $statement = "SELECT * FROM pcnhsdb.signatories WHERE signatories.sign_id = '$sign_id'";
-                        $result = $conn->query($statement);
-                        if (!$result) {
-                            header("location: signatories.php");
-                            die();
-                        }
-                        if($result->num_rows>0) {
-                            while($row=$result->fetch_assoc()){
-
-                                //$sign_id = row['sign_id'];
-                                $first_name = $row['first_name'];
-                                $mname = $row['mname'];
-                                $last_name = $row['last_name'];
-                                $title = $row['title'];
-                                $yr_started = $row['yr_started'];
-                                $yr_ended = $row['yr_ended'];
-                                $position = $row['position'];
+                            if (!$result) {
+                                header("location: signatories.php");
+                                die();
                             }
-                        }else{
-                            header("location: signatories.php");
-                            die();
-                        }
-                        $conn->close();
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $first_name = $row['first_name'];
+                                    $mname = $row['mname'];
+                                    $last_name = $row['last_name'];
+                                    $title = $row['title'];
+                                    $yr_started = $row['yr_started'];
+                                    $yr_ended = $row['yr_ended'];
+                                    $position = $row['position'];
+                                }
+                            }
+                            else {
+                                header("location: signatories.php");
+                                die();
+                            }
+                                $conn->close();
                         ?>
 
                         <div class="item form-group">
@@ -162,8 +153,8 @@
 
                         <div class="form-group">
                             <div class="col-md-5 col-md-offset-3 pull-left">
-                                <br>
-                                <a href = <?php echo "signatory_edit.php?sign_id=$sign_id"?> button type="submit" class="btn btn-primary " >Edit Signatory</a>
+                                <br />
+                                <a href = <?php echo "signatory_edit.php?sign_id=$sign_id" ?> button type="submit" class="btn btn-primary " >Edit Signatory</a>
                                 <a href = "" button type="submit" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-sm" >Remove</a> &nbsp&nbsp&nbsp&nbsp
                                 <a href = "signatories.php" button type="submit" class="btn btn-primary " >View Signatories</a>
                             </div>
@@ -175,22 +166,19 @@
     </div>
 </div>
 <!-- /page content -->
-<!-- Content Here -->
 <!-- Modal -->
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel2">Remove Signatory <?php echo $first_name?> ?</h4>
+                <h4 class="modal-title" id="myModalLabel2">Remove Signatory <?php echo $first_name ?> ?</h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                <a href= <?php echo "phpdelete/delete.php?sign_id=$sign_id"?> class="btn btn-danger">Remove</a>
+                <a href= <?php echo "phpdelete/delete.php?sign_id=$sign_id" ?> class="btn btn-danger">Remove</a>
             </div>
-
         </div>
     </div>
 </div>
@@ -212,6 +200,5 @@
 <!-- Custom Theme Scripts -->
 <script src= "../../assets/js/custom.min.js"></script>
 <!-- Scripts -->
-
-</body>
+    </body>
 </html>

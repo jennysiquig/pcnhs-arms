@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
-<?php include('include_files/session_check.php'); ?>
+<?php include ('include_files/session_check.php'); ?>
 <html>
 <head>
     <title>Add Signatory</title>
@@ -9,7 +9,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -19,17 +18,15 @@
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
     <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-
 </head> 
 <body class="nav-md">
 <!-- Sidebar -->
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
 <!-- Top Navigation -->
 <?php include "../../resources/templates/admin/top-nav.php"; ?>
-<!-- Content Here -->
 <!-- page content -->
 <div class="right_col" role="main">
-                 <div class="col-md-5">
+    <div class="col-md-5">
         <ol class="breadcrumb">
           <li><a href="../index.php">Home</a></li>
           <li class="disabled">Signatories</li>
@@ -52,10 +49,10 @@
                     </ul>
                     <div class="clearfix"></div>
                     <?php
-                        if(isset($_SESSION['error_pop'])) {
+                        if (isset($_SESSION['error_pop'])) {
                             echo $_SESSION['error_pop'];
                             unset($_SESSION['error_pop']);
-                                    }
+                        }
                     ?>
                 </div>
                 <div class="x_content">
@@ -69,12 +66,12 @@
                                      data-parsley-maxlength="50"
                                      data-parsley-maxlength-message="Error"/>
                                      <?php
-                                            if(isset($_SESSION['error_msg_signatory'])) {
-                                                $error_msg_signatory = $_SESSION['error_msg_signatory'];
-                                                echo "<p style='color: red'>$error_msg_signatory</p>";
-                                                unset($_SESSION['error_msg_signatory']);
-                                         }
-                                     ?>
+                                        if (isset($_SESSION['error_msg_signatory'])) {
+                                            $error_msg_signatory = $_SESSION['error_msg_signatory'];
+                                            echo "<p style='color: red'>$error_msg_signatory</p>";
+                                            unset($_SESSION['error_msg_signatory']);
+                                        }
+                                    ?>
                             </div>
                         </div>
 
@@ -127,11 +124,11 @@
                             <div class="col-md-2 col-sm-6 col-xs-12">
                                 <select id = "yrStarted"class="form-control col-md-7 col-xs-12" required="required" name="yr_started">
                                     <option value="">-- Year --</option>
-                                    <?php
-                                    $present = date("Y");
-                                    for ($year=1973; $year <= $present; $year++) {
+                                    <?php $present = date("Y");
+                                    for ($year = 1973; $year <= $present; $year++) {
                                         echo "<option value='$year'>$year</option>";
-                                    } ?>
+                                        } 
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -142,11 +139,11 @@
                                     data-parsley-ge = "#yrStarted"
                                     data-parsley-ge-message = "Year Ended should be greater than or equal to Year Started">
                                     <option value="">-- Year --</option>
-                                    <?php
-                                    $present = date("Y");
-                                    for ($year=1973; $year <= $present; $year++) {
-                                        echo "<option value='$year'>$year</option>";
-                                    } ?>
+                                    <?php $present = date("Y");
+                                        for ($year = 1973; $year <= $present; $year++) {
+                                            echo "<option value='$year'>$year</option>";
+                                            } 
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -164,7 +161,7 @@
 
                         <div class="form-group">
                             <div class="col-md-5 col-md-offset-3 pull-left">
-                                <br>
+                                <br />
                                 <button type="submit" class="btn btn-success">Add Signatory</button>
                             </div>
                         </div>
@@ -175,7 +172,6 @@
     </div>
 </div>
 <!-- /page content -->
-<!-- Content Here -->
 <!-- Footer -->
 <?php include "../../resources/templates/admin/footer.php"; ?>
 <!-- Scripts -->
