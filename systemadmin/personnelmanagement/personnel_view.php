@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<?php ob_start()?>
+<?php ob_start() ?>
 <?php require_once "../../resources/config.php"; ?>
-<?php require_once "bcrypt/Bcrypt.php";?>
-<?php include('include_files/session_check.php'); ?>
+<?php require_once "bcrypt/Bcrypt.php"; ?>
+<?php include ('include_files/session_check.php'); ?>
 
 <html>
     <head>
@@ -12,7 +12,6 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <!-- Bootstrap -->
         <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -22,8 +21,8 @@
         <!-- Custom Theme Style -->
         <link href="../../assets/css/custom.min.css" rel="stylesheet">
         <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-
     </head> 
+
         <body class="nav-md">
             <?php include "../../resources/templates/admin/sidebar.php"; ?>
             <?php include "../../resources/templates/admin/top-nav.php"; ?>
@@ -44,75 +43,73 @@
                         <div class="x_panel">
                             <div class="x_title">
                                 <?php
-                                    if(isset($_SESSION['success_edit'])) {
+                                    if (isset($_SESSION['success_edit'])) {
                                         $success_msg = $_SESSION['success_edit'];
                                         echo $success_msg;
                                         session_unset();
                                     }
                                 ?>
                                 <h2><i class="fa fa-user"> </i> View Personnel Account</h2>
-                                    <div class="clearfix"></div><br>
-                                    <?php
-                                          if(isset($_SESSION['success_personnel'])) {
-                                            echo $_SESSION['success_personnel'];
-                                            unset($_SESSION['success_personnel']);
-                                            }
-
-                                         if(isset($_SESSION['success_personnel_edit'])) {
-                                            echo $_SESSION['success_personnel_edit'];
-                                            unset($_SESSION['success_personnel_edit']);
-                                            }
-                                        if(isset($_SESSION['incorrect_pw_del'])) {
-                                            echo $_SESSION['incorrect_pw_del'];
-                                            unset($_SESSION['incorrect_pw_del']);
-                                            }
-                                    ?>
+                                    <div class="clearfix"></div><br />
+                                <?php
+                                    if (isset($_SESSION['success_personnel'])) {
+                                        echo $_SESSION['success_personnel'];
+                                        unset($_SESSION['success_personnel']);
+                                    }
+                                    if (isset($_SESSION['success_personnel_edit'])) {
+                                        echo $_SESSION['success_personnel_edit'];
+                                        unset($_SESSION['success_personnel_edit']);
+                                    }
+                                    if (isset($_SESSION['incorrect_pw_del'])) {
+                                        echo $_SESSION['incorrect_pw_del'];
+                                        unset($_SESSION['incorrect_pw_del']);
+                                    }
+                                ?>
 
                     <div class="x_content">
                         <form class="form-horizontal form-label-left" action="phpupdate/personnel_update_info.php" method="POST" novalidate>
                             <?php require_once "../../resources/config.php";
 
-                            $per_id = $_GET['per_id'];
-                            $uname;
-                            $password;
-                            $hashed_pw;
-                            $last_name;
-                            $first_name;
-                            $mname;
-                            $position;
-                            $access_type;
-                            $accnt_status;
+                                $per_id = $_GET['per_id'];
+                                $uname;
+                                $password;
+                                $last_name;
+                                $first_name;
+                                $mname;
+                                $position;
+                                $access_type;
+                                $accnt_status;
+                                $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
+                                $result = $conn->query($statement);
 
-                            $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
-                            $result = $conn->query($statement);
-                            if (!$result) {
-                                header("location: personnels.php");
-                                die();
-                            }
-                            if($result->num_rows>0) {
-                                while($row=$result->fetch_assoc()){
-
-                                    $uname = $row['uname'];
-                                    $password = $row['password'];
-                                    $hashed_pw = $row['hashed_pw'];
-                                    $last_name = $row['last_name'];
-                                    $first_name = $row['first_name'];
-                                    $mname = $row['mname'];
-                                    $position = $row['position'];
-                                    $access_type = $row['access_type'];
-                                    $accnt_status = $row['accnt_status'];
+                                if (!$result) {
+                                    header("location: personnels.php");
+                                    die();
                                 }
-                            }else{
-                                header("location: personnels.php");
-                                die();
-                            }
+
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        $uname = $row['uname'];
+                                        $password = $row['password'];
+                                        $last_name = $row['last_name'];
+                                        $first_name = $row['first_name'];
+                                        $mname = $row['mname'];
+                                        $position = $row['position'];
+                                        $access_type = $row['access_type'];
+                                        $accnt_status = $row['accnt_status'];
+                                    }
+                                }
+                                else {
+                                    header("location: personnels.php");
+                                    die();
+                                }
                             ?>
 
-                            <div class="item form-group"><br>
+                            <div class="item form-group"><br />
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Personnel ID</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="per_id" class="form-control col-md-7 col-xs-12" required="required" type="text" name="per_id" readonly value=<?php echo "'$per_id'"; ?>>
-                                    <?php $_SESSION['per_id']=$per_id?>
+                                    <?php $_SESSION['per_id'] = $per_id ?>
                                 </div>
                             </div>
 
@@ -121,19 +118,19 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="uname" class="form-control col-md-7 col-xs-12" required="required" type="text" name="uname" readonly value=<?php echo "'$uname'"; ?>>
                                     <?php
-                                            if(isset($_SESSION['error_msg_personnel_edit'])) {
-                                                $error_msg_personnel_edit = $_SESSION['error_msg_personnel_edit'];
-                                                echo "<p style='color: red'>$error_msg_personnel_edit</p>";
-                                                unset($_SESSION['error_msg_personnel_edit']);
-                                         } 
-                                     ?>
+                                        if (isset($_SESSION['error_msg_personnel_edit'])) {
+                                            $error_msg_personnel_edit = $_SESSION['error_msg_personnel_edit'];
+                                            echo "<p style='color: red'>$error_msg_personnel_edit</p>";
+                                            unset($_SESSION['error_msg_personnel_edit']);
+                                        }
+                                    ?>
                                 </div>
                             </div>
 
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="password" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$hashed_pw'"; ?>>
+                                    <input id="password" class="form-control col-md-7 col-xs-12" required="required" type="password" name="password" readonly value=<?php echo "'$password'"; ?>>
                                 </div>
                             </div>
 
@@ -182,7 +179,7 @@
                             </div>
 
                             <div class="form-group">
-                                <br>
+                                <br />
                                 <div class="col-md-5 col-md-offset-3 pull-left">
                                     <a href = <?php echo "personnel_edit.php?per_id=$per_id" ?> button type="submit" class="btn btn-primary " >Edit Profile</a>
                                     <a href = "" button type="submit" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-sm" >Remove</a> &nbsp&nbsp&nbsp&nbsp
@@ -197,9 +194,7 @@
         </div>
     </div>
 </div>
-<!-- Content Here -->
-<!-- Small modal -->
-<!-- Small modal -->
+
         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
@@ -209,39 +204,37 @@
                         <h4 class="modal-title" id="myModalLabel2"><i class="fa fa-lock"></i> Change Password</h4>
                     </div>
                     <div class="modal-body">
-                            <!-- start form for validation -->
+                           
                             <form id="change-pw" action="phpdelete/delete.php" method="POST" data-parsley-validate>
                                <?php
-                                $per_id;
-                                $uname;
-                                $password;
-                                $hashed_pw;
-                                $last_name;
-                                $first_name;
-                                $mname;
-                                $position;
-                                $access_type;
-                                $accnt_status;
+                                    $per_id;
+                                    $uname;
+                                    $password;
+                                    $last_name;
+                                    $first_name;
+                                    $mname;
+                                    $position;
+                                    $access_type;
+                                    $accnt_status;
+                                    $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
+                                    $result = $conn->query($statement);
 
-                                $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
-                                $result = $conn->query($statement);
-                                if($result->num_rows>0) {
-                                    while($row=$result->fetch_assoc()){
-                                        $uname = $row['uname'];
-                                        $password = $row['password'];
-                                        $hashed_pw = $row['hashed_pw'];
-                                        $last_name = $row['last_name'];
-                                        $first_name = $row['first_name'];
-                                        $mname = $row['mname'];
-                                        $position = $row['position'];
-                                        $access_type = $row['access_type'];
-                                        $accnt_status = $row['accnt_status'];
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            $uname = $row['uname'];
+                                            $password = $row['password'];
+                                            $last_name = $row['last_name'];
+                                            $first_name = $row['first_name'];
+                                            $mname = $row['mname'];
+                                            $position = $row['position'];
+                                            $access_type = $row['access_type'];
+                                            $accnt_status = $row['accnt_status'];
+                                        }
                                     }
-                                }
                                 ?>
 
                                 <label for="cnpw">Enter Personnel Account Password :</label>
-                                <input type="password" id="cnpw" class="form-control" name="confirm_pw" data-parsley-trigger="change" required 
+                                <input type="password" id="password" class="form-control" name="password" data-parsley-trigger="change" required 
                                     data-parsley-minlength="4"
                                     data-parsley-minlength-message="Password should be greater than 4 characters"
                                     data-parsley-maxlength="50"
@@ -260,14 +253,12 @@
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                                     <button type="submit" class="btn btn-danger" >Remove</button>
                                 </div>
-
                             </form>
                         </div>
                 </div>
             </div>
         </div>
     <!-- /modals -->
-<!-- /modals -->
     <!-- Footer -->
     <?php include "../../resources/templates/admin/footer.php"; ?>
     <!-- Scripts -->

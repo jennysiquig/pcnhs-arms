@@ -33,7 +33,7 @@
           <li class="active">View Signatories</li>
         </ol>
       </div>
-    <form class="form-horizontal form-label-left" action="signatory_list.php" method="GET">
+    <form class="form-horizontal form-label-left" action="signatories.php" method="GET">
 
         <div class="form-group">
             <div class="col-sm-5"></div>
@@ -200,7 +200,7 @@ SIGNLIST;
                                                 <div class="col s12">
                                                 <ul class="pagination center-align">';
                           if ($page > 1) {
-                            echo "<li class=''><a href='signatory_list.php?page=" . ($page - 1) . "'>Previous</a></li>";
+                            echo "<li class=''><a href='signatories.php?page=" . ($page - 1) . "'>Previous</a></li>";
                           }
                           else
                           if ($total <= 0) {
@@ -236,10 +236,10 @@ SIGNLIST;
                           }
                           for ($i = $y; $i <= $x; $i++) {
                             if ($i == $page) {
-                              echo "<li class='active'><a href='signatory_list.php?page=$i'>$i</a></li>";
+                              echo "<li class='active'><a href='signatories.php?page=$i'>$i</a></li>";
                             }
                             else {
-                              echo "<li class=''><a href='signatory_list.php?page=$i'>$i</a></li>";
+                              echo "<li class=''><a href='signatories.php?page=$i'>$i</a></li>";
                             }
                           }
 
@@ -248,7 +248,7 @@ SIGNLIST;
                           }
                           else
                           if ($page != $total) {
-                            echo "<li class=''><a href='signatory_list.php?page=" . ($page + 1) . "'>Next</a></li>";
+                            echo "<li class=''><a href='signatories.php?page=" . ($page + 1) . "'>Next</a></li>";
                           }
                           else {
                             echo "<li class='disabled'><a>Next</a></li>";

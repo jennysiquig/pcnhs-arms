@@ -10,7 +10,6 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <!-- Bootstrap -->
         <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -20,7 +19,6 @@
         <!-- Custom Theme Style -->
         <link href="../../assets/css/custom.min.css" rel="stylesheet">
         <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-
     </head> 
     <body class="nav-md">
         <?php include "../../resources/templates/admin/sidebar.php"; ?>
@@ -47,12 +45,10 @@
                                             echo $_SESSION['error_pop'];
                                             unset($_SESSION['error_pop']);
                                             }
-
-                                          if(isset($_SESSION['error_pop2'])) {
+                                        if(isset($_SESSION['error_pop2'])) {
                                             echo $_SESSION['error_pop2'];
                                             unset($_SESSION['error_pop2']);
                                             }
-
                                         ?>
                             <div class="x_content">
                                 <form id="personnel-add" class="form-horizontal form-label-left" action="phpinsert/personnel_insert.php" method="POST" data-parsley-trigger="keyup">
@@ -70,8 +66,8 @@
                                                 $error_msg_personnel1 = $_SESSION['error_msg_personnel1'];
                                                 echo "<p style='color: red'>$error_msg_personnel1</p>";
                                                 unset($_SESSION['error_msg_personnel1']);
-                                         } 
-                                     ?>
+                                            } 
+                                        ?>
                                         </div>
                                     </div>
 
@@ -88,8 +84,8 @@
                                                 $error_msg_personnel2 = $_SESSION['error_msg_personnel2'];
                                                 echo "<p style='color: red'>$error_msg_personnel2</p>";
                                                 unset($_SESSION['error_msg_personnel2']);
-                                         } 
-                                     ?>
+                                            } 
+                                         ?>
                                         </div>
                                     </div>
 
@@ -194,7 +190,7 @@ OPTION1;
                                                     <option value="ACTIVE">ACTIVATED</option>
                                                     <option value="DEACTIVATED">DEACTIVATED</option>
 OPTION2;
-                                        ?>
+                                                ?>
                                             </select>
                                          </div>
                                      </div>
@@ -230,7 +226,6 @@ OPTION2;
     <script src="../../resources/libraries/nprogress/nprogress.js"></script>
     <!-- Custom Theme Scripts -->
     <script src= "../../assets/js/custom.min.js"></script>
-
     <!-- Parsley -->
     <script>
         $(document).ready(function() {
@@ -251,12 +246,10 @@ OPTION2;
                 }
             };
         });
-
         try {
             hljs.initHighlightingOnLoad();
         } catch (err) {}
     </script>
     <!-- /Parsley -->
-
     </body>
 </html>

@@ -37,7 +37,7 @@
             </ol>
           </div>
 
-    <form class="form-horizontal form-label-left" action="personnel_list.php" method="GET">
+    <form class="form-horizontal form-label-left" action="personnels.php" method="GET">
 
         <div class="form-group">
             <div class="col-sm-5"></div>
@@ -204,7 +204,7 @@ PERSONNELLIST;
                                                 <div class="col s12">
                                                 <ul class="pagination center-align">';
                           if ($page > 1) {
-                            echo "<li class=''><a href='personnel_list.php?page=" . ($page - 1) . "'>Previous</a></li>";
+                            echo "<li class=''><a href='personnels.php?page=" . ($page - 1) . "'>Previous</a></li>";
                           }
                           else if ($total <= 0) {
                             echo '<li class="disabled"><a>Previous</a></li>';
@@ -240,17 +240,17 @@ PERSONNELLIST;
                             }
                             for ($i = $y; $i <= $x; $i++) {
                               if ($i == $page) {
-                                echo "<li class='active'><a href='personnel_list.php?page=$i'>$i</a></li>";
+                                echo "<li class='active'><a href='personnels.php?page=$i'>$i</a></li>";
                               }
                               else {
-                                echo "<li class=''><a href='personnel_list.php?page=$i'>$i</a></li>";
+                                echo "<li class=''><a href='personnels.php?page=$i'>$i</a></li>";
                               }
                             }
                             if ($total == 0) {
                               echo "<li class='disabled'><a>Next</a></li>";
                             }
                             else if ($page != $total) {
-                              echo "<li class=''><a href='personnel_list.php?page=" . ($page + 1) . "'>Next</a></li>";
+                              echo "<li class=''><a href='personnels.php?page=" . ($page + 1) . "'>Next</a></li>";
                             }
                             else {
                               echo "<li class='disabled'><a>Next</a></li>";

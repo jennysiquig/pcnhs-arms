@@ -22,10 +22,9 @@
 
     mysqli_query($conn, $updatestmt);
 
-   	$sign_edit = "EDITED SIGNATORY : $sign_id";    
+   	$sign_edit = "EDITED SIGNATORY: $sign_id";    
    	$_SESSION['user_activity'][] = $sign_edit;
 
-   	//NOTIFICATIONS
     $alert_type = "info";
     $message = "Signatory Information Edited Successfully";
     $popover = new Popover();
