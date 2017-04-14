@@ -15,7 +15,8 @@
 						<span class=" fa fa-angle-down"></span>
 					</a>
 					<ul class="dropdown-menu dropdown-usermenu pull-right">
-						<li><a href="$base_url/help.php">Help</a></li>
+						<li><a href="$base_url/help.php" target="_blank">Help</a></li>
+						<li><a href="https://goo.gl/forms/Db1YtGkquWuIIEeB3" target="_blank">Report an Issue</a></li>
 						<li><a href="$base_url/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 					</ul>
 				</li>
