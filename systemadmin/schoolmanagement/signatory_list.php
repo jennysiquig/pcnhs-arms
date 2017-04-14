@@ -9,17 +9,32 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+    <!-- Tablesorter themes -->
+    <!-- bootstrap -->
+    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+    <!-- Tablesorter: required -->
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+    <!-- NProgress -->
+    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+    
     <!-- Datatables -->
     <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
-    <link href="../../assets/css/tstheme/style.css" rel="stylesheet"> 
+     <!-- Custom Theme Style -->
+    <link href="../../assets/css/customstyle.css" rel="stylesheet">
 </head>
 <body class="nav-md">
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
@@ -93,19 +108,19 @@
                   echo "<p>Showing Signatories in School Year of $sign_disp</p>";
                 }
               ?>
-                    <div class="table-responsive">
-                        <table id="signList" class="table table-bordered tablesorter">
+                    <div class="signatory-list table-list">
+                        <table id="signList" class="tablesorter-bootstrap">
                             <thead>
                             <tr>
-                                <th>Signatory ID</th>
-                                <th>First Name</th>
-                                <th>Middle Initial</th>
-                                <th>Last Name</th>
-                                <th>Degree</th>
-                                <th>Position</th>
-                                <th>Year Started</th>
-                                <th>Year Ended</th>
-                                <th>Action</th>
+                                <th data-sorter="false">Signatory ID</th>
+                                <th data-sorter="false">First Name</th>
+                                <th data-sorter="false">Middle Initial</th>
+                                <th data-sorter="false">Last Name</th>
+                                <th data-sorter="false">Degree</th>
+                                <th data-sorter="false">Position</th>
+                                <th data-sorter="false">Year Started</th>
+                                <th data-sorter="false">Year Ended</th>
+                                <th data-sorter="false">Action</th>
                             </tr>
                             </thead>
 
@@ -265,8 +280,6 @@ SIGNLIST;
 <!-- Content End -->
 <?php include "../../resources/templates/registrar/footer.php"; ?>
 <!-- Scripts -->
-<!-- jQuery -->
-<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 <!-- Bootstrap -->
 <script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
@@ -278,15 +291,6 @@ SIGNLIST;
 <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
 <script src= "../../assets/js/custom.min.js"></script>
-<script type="text/javascript" src=<?php
-echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
-<!-- Scripts -->
-<script type="text/javascript">
-    $(document).ready(function(){
-            $("#signList").tablesorter({headers: { 8:{sorter: false}, }});
-        }
-    );
-</script>
 
 <script type="text/javascript">
       function changeEntries(val) {
@@ -300,6 +304,15 @@ echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
         xhttp.send();
       }
 </script>
-
+  <script type="text/javascript">
+      $(function() {
+      $('.signatory-list').tablesorter();
+      $('.tablesorter-bootstrap').tablesorter({
+      theme : 'bootstrap',
+      headerTemplate: '{content} {icon}',
+      widgets    : ['zebra','columns', 'uitheme']
+      });
+      });
+  </script>
 </body>
 </html>

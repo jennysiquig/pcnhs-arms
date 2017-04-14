@@ -10,17 +10,32 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+    <!-- Tablesorter themes -->
+    <!-- bootstrap -->
+    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+    <!-- Tablesorter: required -->
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+    <!-- NProgress -->
+    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+    
     <!-- Datatables -->
     <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
-    <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+     <!-- Custom Theme Style -->
+    <link href="../../assets/css/customstyle.css" rel="stylesheet">
 
   </head>
     <body class="nav-md">
@@ -89,16 +104,16 @@
                       </form>
               </div>
 
-                    <div class="table-responsive">
-                        <table id="personnelList" class="table table-bordered tablesorter ">
+                    <div class="personnel-list table-list">
+                        <table id="personnelList" class="tablesorter-bootstrap">
                             <thead>
                             <tr>
-                                <th>Personnel ID</th>
-                                <th>Username</th>
-                                <th>Position</th>
-                                <th>Access Type</th>
-                                <th>Account Status</th>
-                                <th>Action</th>
+                                <th data-sorter="false">Personnel ID</th>
+                                <th data-sorter="false">Username</th>
+                                <th data-sorter="false">Position</th>
+                                <th data-sorter="false">Access Type</th>
+                                <th data-sorter="false">Account Status</th>
+                                <th data-sorter="false">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -182,11 +197,13 @@ NORES;
                                                         <td class=" ">$per_id</td>
                                                         <td class=" ">$uname</td>
                                                         <td class=" ">$position</td>
-                                                        <td class=" ">$access_type</td>
-                                                        <td class=" ">$accnt_status</td>
+                                                        <td class=" "><center>$access_type</center></td>
+                                                        <td class=" "><center>$accnt_status</center></td>
                                                         <td class=" ">
-                                                        <a href= "personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs">
-                                                        <i class="fa fa-user"></i> View Profile</a>
+                                                        <center>
+                                                          <a href= "personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs">
+                                                          <i class="fa fa-user"></i> View Profile</a>
+                                                        </center>
                                                         </td>           
                                             </tr>
 PERSONNELLIST;
@@ -266,8 +283,6 @@ PERSONNELLIST;
 <!-- Content End -->
 <?php include "../../resources/templates/admin/footer.php"; ?>
 <!-- Scripts -->
-<!-- jQuery -->
-<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 <!-- Bootstrap -->
 <script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
@@ -279,15 +294,7 @@ PERSONNELLIST;
 <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
 <script src= "../../assets/js/custom.min.js"></script>
-<script type="text/javascript" src=<?php
-echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
 <!-- Scripts -->
-<script type="text/javascript">
-    $(document).ready(function(){
-            $("#personnelList").tablesorter({headers: { 5:{sorter: false}, }});
-        }
-    );
-</script>
 
 <script type="text/javascript">
       function changeEntries(val) {
@@ -301,6 +308,15 @@ echo "../../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
         xhttp.send();
       }
 </script>
-
+    <script type="text/javascript">
+      $(function() {
+      $('.personnel-list').tablesorter();
+      $('.tablesorter-bootstrap').tablesorter({
+      theme : 'bootstrap',
+      headerTemplate: '{content} {icon}',
+      widgets    : ['zebra','columns', 'uitheme']
+      });
+      });
+    </script>
 </body>
 </html>

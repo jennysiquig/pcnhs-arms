@@ -29,19 +29,35 @@ else {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!-- jQuery -->
+    <script src="../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+      <!-- Tablesorter themes -->
+      <!-- bootstrap -->
+    <link href="../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+    <link href="../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+      <!-- Tablesorter: required -->
+    <script src="../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+    <script src="../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+    <!-- NProgress -->
+    <link href="../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+    
     <!-- Bootstrap -->
     <link href="../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+    
     <!-- Datatables -->
     <link href="../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <!-- Date Range Picker -->
-    <link href="../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    
     <!-- Custom Theme Style -->
     <link href="../assets/css/custom.min.css" rel="stylesheet">
-    <link href="../assets/css/tstheme/style.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+      <link href="../assets/css/customstyle.css" rel="stylesheet">
+    <!-- Date Range Picker -->
+    <link href="../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
   </head>
   <body class="nav-md">
       <?php include "../resources/templates/admin/sidebar.php"; ?>
@@ -121,17 +137,17 @@ else {
                         </div>
                       </form>
               </div>
-                <div class="table-responsive">
-                    <table id="logList" class="table table-bordered tablesorter">
+                <div class="log-list table-list">
+                    <table id="logList" class="tablesorter-bootstrap">
                         <thead>
                             <tr>
-                                <th>Log ID</th>
-                                <th>Date</th>
-                                <th>Username</th>
-                                <th>Access Type</th>
-                                <th>Login Time</th>
-                                <th>User Activity</th>
-                                <th>Logout Time</th>
+                                <th data-sorter="false">Log ID</th>
+                                <th data-sorter="false">Date</th>
+                                <th data-sorter="false">Username</th>
+                                <th data-sorter="false">Access Type</th>
+                                <th data-sorter="false">Login Time</th>
+                                <th data-sorter="false">User Activity</th>
+                                <th data-sorter="false">Logout Time</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -221,7 +237,6 @@ else {
   </div>
   <!-- Contents Here -->
     <?php include "../resources/templates/admin/footer.php"; ?>
-    <script src="../resources/libraries/jquery/dist/jquery.min.js" ></script>
     <!-- Bootstrap -->
     <script src="../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
@@ -236,15 +251,8 @@ else {
     <script src="../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
     <script src= "../assets/js/custom.min.js"></script>
-    <script type="text/javascript" src=<?php echo "../resources/libraries/tablesorter/jquery.tablesorter.js" ?>></script>
+  
     <!-- Scripts -->
-    <script type="text/javascript">
-        $(document).ready(function(){
-                $("#logList").tablesorter({headers: { 7:{sorter: false}, }});
-            }
-        );
-    </script>
-
     <script type="text/javascript">
       function changeEntries(val) {
         var xhttp = new XMLHttpRequest();
@@ -274,6 +282,15 @@ else {
         console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
       });
     </script>
-
+    <script type="text/javascript">
+        $(function() {
+        $('.log-list').tablesorter();
+        $('.tablesorter-bootstrap').tablesorter({
+        theme : 'bootstrap',
+        headerTemplate: '{content} {icon}',
+        widgets    : ['zebra','columns', 'uitheme']
+        });
+        });
+      </script>
 </body>
 </html>
