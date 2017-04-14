@@ -80,7 +80,7 @@
                     <td class="col">
                         <div id="r_fm">
                             <?php
-                                echo "<p>$r_fm</p>"; 
+                                echo "<p style='word-break: break-all;'>$r_fm</p>"; 
                             ?>
                         </div>
                 </td>
@@ -200,7 +200,7 @@ REQ;
 
                                         <div id="ot">
                                         <?php
-                                            echo "<p>$ot</p>"; 
+                                            echo "<p style='word-break: break-all;'>$ot</p>"; 
                                         ?>
                                         </div>
 
