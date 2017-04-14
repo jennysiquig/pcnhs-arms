@@ -23,5 +23,5 @@ $message = "Signatory Deleted";
 $popover = new Popover();
 $popover->set_popover($alert_type, $message);
 $_SESSION['sign_del'] = $popover->get_popover();
-header("location: ../signatories.php");
+header("location: ../signatory_list.php");
 ?>
