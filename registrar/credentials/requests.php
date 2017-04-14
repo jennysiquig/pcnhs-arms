@@ -65,7 +65,7 @@
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content">
-							<div class="credential-request">
+							<div class="credential-request table-list">
 								<table class="tablesorter-bootstrap">
 									<thead>
 										<tr class="headings">
@@ -111,7 +111,11 @@
 																<td class=" ">$stud_name</td>
 																<td class=" ">$cred_name</td>
 																<td class=" ">$request_purpose</td>
-																<td class=" "><a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose&new_request=true" class="btn btn-default btn-xs"> Process Request</a></td>
+																<td class=" ">
+																<center>
+																	<a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose&new_request=true" class="btn btn-default"> Process Request</a>
+																</center>
+																</td>
 												</tr>
 UNCLAIMED;
 											}

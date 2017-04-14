@@ -96,7 +96,7 @@
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">Purpose <span class="required">*</span>
 						</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<select id="purpose" class="form-control" name="purpose" required>
+							<select id="purpose" class="form-control" onchange="disableOthers();" name="purpose" required>
 								<option value="">Choose..</option>
 								<option value="employment">Employment</option>
 							</select>
@@ -106,7 +106,7 @@
 							<label class="control-label col-md-4 col-sm-3 col-xs-12">Others:
 							</label>
 							<div class="col-md-5 col-sm-6 col-xs-12">
-								<input type="text" name="others" class="form-control col-md-7 col-xs-12">
+								<input id="others" type="text" name="others" class="form-control col-md-7 col-xs-12">
 							</div>
 						</div>
 						<div class="ln_solid"></div>
@@ -137,7 +137,6 @@
 		<script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
 		<!-- input mask -->
 		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../assets/js/custom.min.js"></script>
 		<script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
@@ -168,6 +167,18 @@
 			};
 
 			$("#full-name").easyAutocomplete(options);
+		</script>
+		<script type="text/javascript">
+			function disableOthers() {
+				var purpose = document.getElementById('purpose').value;
+				console.log(purpose);
+
+				if(purpose=="") {
+					document.getElementById('others').removeAttribute('disabled');
+				}else {
+					document.getElementById('others').setAttribute('disabled','');
+				}
+			}
 		</script>
 		<!-- Scripts -->
 	</body>

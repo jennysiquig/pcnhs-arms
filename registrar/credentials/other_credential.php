@@ -21,11 +21,6 @@
 	}else {
 		$request_purpose = "";
 	}
-// Redirect to other page if credential is not form 137 or diploma
-	if($credential > 2) {
-		header("location: other_credential.php?stud_id=$stud_id&credential=$credential");
-		die();
-	}
 
 	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
@@ -35,6 +30,7 @@
 		    $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
 		    $date = date("Y-m-d");
 		    $request_purpose = htmlspecialchars($_GET['purpose']);
+
 
 	    	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `status`, `date_processed`, `request_purpose`, `per_id`) VALUES ('$cred_id', '$stud_id', 'p', '$date', '$request_purpose', '$personnel_id');";
 
@@ -50,7 +46,7 @@
 ?>
 <html>
 	<head>
-		<title>Generate Credential</title>
+		<title>Other Credential Request</title>
 		<link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
@@ -89,10 +85,10 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "choose_template.php?stud_id=$stud_id" ?> method="POST" >
+			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "phpinsert/other_credential_insert.php?stud_id=$stud_id"; ?> method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Form 137 <small></small></h2>
+						<h2>Other Credential Request <small>Other credential requests will be processed here.</small></h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -100,7 +96,7 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					*Form 137 Template Here*
+					
 					<div class="clearfix"></div>
 					<br>
 					<div class="form-group">
@@ -133,55 +129,6 @@
 							<input required="required" class="form-control" name="request_purpose" placeholder="" value=<?php echo "'$request_purpose'"; ?>>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Admitted To:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="admitted_to" value="" placeholder="ex: Grade 11">
-						</div>
-					</div>
-				<!--  -->
-				<!--  -->
-				<div class="form-group">
-					<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Signatory <span class="required">*</span>
-				</label>
-				<div class="col-md-6 col-sm-6 col-xs-12">
-					<select id="credential" class="form-control" name="signatory">
-						<option value="">-- Choose Signatory --</option>
-						<option value="" disabled="">-- Head Teacher --</option>
-						<?php
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
-							$statement = "SELECT * FROM signatories WHERE position='HEAD TEACHER'";
-							$result = $conn->query($statement);
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-									$sign_id = $row['sign_id'];
-									$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
-									echo "<option value='$sign_id'>$sign_name</option>";
-								}
-							}
-						?>
-						<option value="" disabled="">-- Principal --</option>
-						<?php
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$sign_id = $row['sign_id'];
-										$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
-										echo "<option value='$sign_id'>$sign_name</option>";
-									}
-								}
-							?>
-					</select>
-				</div>
-			</div>
 			<!--  -->
 		</div>
 	</div>

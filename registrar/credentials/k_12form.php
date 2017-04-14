@@ -24,7 +24,7 @@
     $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
     $date = htmlspecialchars($_GET['date'], ENT_QUOTES);
     $admitted_to = htmlspecialchars($_GET['admitted_to'], ENT_QUOTES);
-    $request_purpose = htmlspecialchars($_GET['request_purpose']);
+    $request_purpose = strtoupper(htmlspecialchars($_GET['request_purpose']));
 
     $checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
@@ -40,8 +40,6 @@
 
         mysqli_query($conn, $statement1);
     }
-    $_SESSION['user_activity'][] = "Student $stud_id requested Credential $cred_id.";
-
 ?>
 <html>
 	<head>

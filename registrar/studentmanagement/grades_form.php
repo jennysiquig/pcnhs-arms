@@ -41,7 +41,7 @@
 
 
 
-    if($input_year1 <= $compare_year1 || $input_year2 <= $compare_year2) {
+    if($input_year1 <= $compare_year1 || $input_year2 <= $compare_year2 || $input_year1 >= $input_year2 || $input_year2 != ($input_year1+1)) {
         $_SESSION['error_message'] = "<p style='color: red'><b>Invalid School Year</b></p>";
         $yr_level_check = $_GET['yr_level'];
         //header("location: add_grades.php?stud_id=$stud_id&yr_level=$yr_level_check");

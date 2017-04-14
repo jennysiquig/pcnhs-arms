@@ -108,7 +108,7 @@
 													<span class="add-on input-group-addon">
 														<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
 													</span>
-													<input type="text" name="transaction_date" id="transaction_date" class="form-control" value=" " />
+													<input type="text" name="transaction_date" id="transaction_date" class="form-control" value="" />
 													<span class="input-group-btn">
 														<button type="submit" class="btn btn-primary">Go</button>
 													</span>
@@ -308,8 +308,8 @@ TRANS;
 					'This Month': [moment().startOf('month'), moment().endOf('month')],
 					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
 				  },
-			    startDate: moment().subtract(29, 'days'),
-				endDate: moment()
+			    startDate: moment().startOf('month'),
+				endDate: moment().endOf('month')
 			}, function(start, end, label) {
 			  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
 			});

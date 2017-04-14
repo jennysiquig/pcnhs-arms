@@ -11,8 +11,8 @@
     $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
     $date = htmlspecialchars($_POST['date'], ENT_QUOTES);
     $admitted_to = htmlspecialchars($_POST['admitted_to'], ENT_QUOTES);
-    $request_purpose = htmlspecialchars($_POST['request_purpose']);
-    $remarks = htmlspecialchars($_POST['remarks'], ENT_QUOTES);
+    $request_purpose = strtoupper(htmlspecialchars($_POST['request_purpose']));
+    //$remarks = htmlspecialchars($_POST['remarks'], ENT_QUOTES);
 
     $checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
@@ -41,7 +41,7 @@
 		}
 	}
 
-	header("location: k_12form.php?stud_id=$stud_id&cred_id=$cred_id&request_type=$request_type&signatory=$signatory&personnel_id=$personnel_id&date=$date&admitted_to=$admitted_to&request_purpose=$request_purpose&remarks=$remarks");
+	header("location: k_12form.php?stud_id=$stud_id&cred_id=$cred_id&request_type=$request_type&signatory=$signatory&personnel_id=$personnel_id&date=$date&admitted_to=$admitted_to&request_purpose=$request_purpose");
 	
 
 	
