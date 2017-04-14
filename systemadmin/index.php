@@ -80,7 +80,7 @@
                  <div class="col-sm-5"></div>
                     <div class="col-sm-7">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="search_key" placeholder="Search Personnels">
+                            <input type="text" class="form-control" name="search_key" placeholder="Search Personnel">
                                 <span class="input-group-btn">
                                        <button class="btn btn-primary">Go</button>
                                 </span>
@@ -92,7 +92,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-               <h2><i class="fa fa-tasks"> </i> PCNHS-ARMS User Activity Logs</h2>
+               <h2><i class="fa fa-tasks"> </i> PCNHS ARMS User Activity Logs</h2>
               <ul class="nav navbar-right panel_toolbox">
               </ul>
               <div class="clearfix"></div>
@@ -124,7 +124,7 @@
             </div>
             <!-- Date Picker -->
             <div class="x_content">
-                              <div class="row">
+                    <div class="row">
                     <form class="form-horizontal form-label-left">
                         <div class="form-group">
                           <label class="control-label col-md-10">Show Number Of Entries:</label>
@@ -159,8 +159,10 @@
                             </thead>
 
                             <tbody>
-                <?php
-                  $statement = "";
+                        <?php
+                            $log_date = "";
+                            $search = "";
+                            $statement = "";
                             $start=0;
                             $limit=20;
 
@@ -181,64 +183,64 @@
                                     $page=1;
                                   }
 
-                            if(isset($_GET['log_date'])) {
-                              $log_date = $_GET['log_date'];
-                              $from_and_to_date = explode("-", $log_date);
-                              $sqldate_format_from = explode("/", $from_and_to_date[0]);
-                              $m = $sqldate_format_from[0];
-                              $d = $sqldate_format_from[1];
-                              $y = $sqldate_format_from[2];
-                              $m = preg_replace('/\s+/', '', $m);
-                              $d = preg_replace('/\s+/', '', $d);
-                              $y = preg_replace('/\s+/', '', $y);
+                                if(isset($_GET['log_date'])) {
+                                  $log_date = $_GET['log_date'];
+                                  $from_and_to_date = explode("-", $log_date);
 
-                              $from = $m."/".$d."/".$y;
+                                  $from = $from_and_to_date[0];
+                                  $from = preg_replace('/\s+/', '', $from);
 
-                              $sqldate_format_to = explode("/", $from_and_to_date[1]);
-                              $m = $sqldate_format_to[0];
-                              $d = $sqldate_format_to[1];
-                              $y = $sqldate_format_to[2];
-                              $m = preg_replace('/\s+/', '', $m);
-                              $d = preg_replace('/\s+/', '', $d);
-                              $y = preg_replace('/\s+/', '', $y);
-
-                              $to = $m."/".$d."/".$y;
+                                  $to = $from_and_to_date[1];
+                                  $to = preg_replace('/\s+/', '', $to);
 
                                     $statement = "SELECT * FROM pcnhsdb.user_logs 
                                                   WHERE log_date 
                                                   BETWEEN '$from' and '$to'
                                                   ORDER BY log_id DESC                                           
                                                   LIMIT $start, $limit;";
+
+                                    if (isset($_GET['search_key'])){
+                                      $search = $_GET['search_key'];
+                                      $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                                    WHERE log_date 
+                                                    BETWEEN '$from' and '$to' AND user_name 
+                                                    LIKE '%$search%'
+                                                    OR account_type LIKE '%$search%'
+                                                    OR user_act LIKE '%$search%'
+                                                    ORDER BY log_id DESC
+                                                    LIMIT $start, $limit";
+                                    }else{
+                                        $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                                  WHERE log_date 
+                                                  BETWEEN '$from' and '$to'
+                                                  ORDER BY log_id DESC                                           
+                                                  LIMIT $start, $limit;";
+                                    }
+
                                   }else{
                                     $log_date = date('m/d/y').'-'.date('m/d/y');
                                     $statement = "SELECT * FROM pcnhsdb.user_logs
                                             ORDER BY log_id DESC 
                                                   LIMIT $start, $limit";
+                                    if (isset($_GET['search_key'])){
+                                      $search = $_GET['search_key'];
+                                      $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                                    WHERE user_name 
+                                                    LIKE '%$search%'
+                                                    OR account_type LIKE '%$search%'
+                                                    OR user_act LIKE '%$search%'
+                                                    ORDER BY log_id DESC
+                                                    LIMIT $start, $limit";
+                                  }else {
+                                    $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                                  ORDER BY log_id DESC                                           
+                                                  LIMIT $start, $limit;";
                                   }
+                                }
 
-                            if (isset($_GET['search_key'])){
-                                $search = $_GET['search_key'];
-                                $statement = "SELECT * FROM pcnhsdb.user_logs WHERE user_name 
-                                              LIKE '%$search%'
-                                              OR account_type LIKE '%$search%'
-                                              OR user_act LIKE '%$search%'
-                                              ORDER BY log_id DESC
-                                              LIMIT $start, $limit";
-                            }else{
-                                $statement = "SELECT * FROM pcnhsdb.user_logs
-                                              ORDER BY log_id DESC
-                                              LIMIT $start, $limit";
-                            }
 
-              $result = $conn->query($statement);
-                            if ($result ->num_rows == 0) {
-                                echo <<<NORES
-                                    <tr class="odd pointer">
-                                    <span class="badge badge-danger">NO RESULT</span>        
-                                    </tr>
-NORES;
-                            }
-                            else if ($result->num_rows > 0) {
+                            $result = $conn->query($statement);
+                            if ($result->num_rows > 0) {
                                 while($row = $result->fetch_assoc()) {
                                     $log_id = $row['log_id'];
                                     $log_date = $row['log_date'];
@@ -265,88 +267,78 @@ LOGLIST;
                             ?>
                             </tbody>
                         </table>
-              <?php
+                        <?php
 
-                                          $statement = "";
-                            $start=0;
-                            $limit;
+                        if(isset($_GET['log_date'])) {
+                                  $log_date = $_GET['log_date'];
+                                  $from_and_to_date = explode("-", $log_date);
 
-                            if(isset($_SESSION['entry'])){
-                              $limit = $_SESSION['entry'];
-                            }else {
-                              $limit = 20;
-                            }
+                                  $from = $from_and_to_date[0];
+                                  $from = preg_replace('/\s+/', '', $from);
 
-                            if(isset($_GET['page'])){
-                              $page=$_GET['page'];
-                              $start=($page-1)*$limit;
-                            }else{
-                              $page=1;
-                            }
+                                  $to = $from_and_to_date[1];
+                                  $to = preg_replace('/\s+/', '', $to);
 
-                if(isset($_GET['log_date'])) {
-                              $log_date = $_GET['log_date'];
-                              $from_and_to_date = explode("-", $log_date);
-                              $sqldate_format_from = explode("/", $from_and_to_date[0]);
-                              $m = $sqldate_format_from[0];
-                              $d = $sqldate_format_from[1];
-                              $y = $sqldate_format_from[2];
-                              $m = preg_replace('/\s+/', '', $m);
-                              $d = preg_replace('/\s+/', '', $d);
-                              $y = preg_replace('/\s+/', '', $y);
-
-                              $from = $m."/".$d."/".$y;
-
-                              $sqldate_format_to = explode("/", $from_and_to_date[1]);
-                              $m = $sqldate_format_to[0];
-                              $d = $sqldate_format_to[1];
-                              $y = $sqldate_format_to[2];
-                              $m = preg_replace('/\s+/', '', $m);
-                              $d = preg_replace('/\s+/', '', $d);
-                              $y = preg_replace('/\s+/', '', $y);
-
-                              $to = $m."/".$d."/".$y;
-
-                                  $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                    $statement = "SELECT * FROM pcnhsdb.user_logs 
                                                   WHERE log_date 
                                                   BETWEEN '$from' and '$to'
-                                                  ORDER BY log_id DESC 
-                                                  LIMIT $start, $limit;";
+                                                  ORDER BY log_id DESC;";
+
+                                    if (isset($_GET['search_key'])){
+                                      $search = $_GET['search_key'];
+                                      $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                                    WHERE log_date 
+                                                    BETWEEN '$from' and '$to' AND user_name 
+                                                    LIKE '%$search%'
+                                                    OR account_type LIKE '%$search%'
+                                                    OR user_act LIKE '%$search%'
+                                                    ORDER BY log_id DESC";
+                                    }else{
+                                        $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                                  WHERE log_date 
+                                                  BETWEEN '$from' and '$to'
+                                                  ORDER BY log_id DESC;";
+                                    }
+
                                   }else{
                                     $log_date = date('m/d/y').'-'.date('m/d/y');
                                     $statement = "SELECT * FROM pcnhsdb.user_logs
-                                            ORDER BY log_id DESC 
-                                                  LIMIT $start, $limit";
-                                  }?>
-              
-                           <?php
+                                            ORDER BY log_id DESC ";
+                                    if (isset($_GET['search_key'])){
+                                      $search = $_GET['search_key'];
+                                      $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                                    WHERE user_name 
+                                                    LIKE '%$search%'
+                                                    OR account_type LIKE '%$search%'
+                                                    OR user_act LIKE '%$search%'
+                                                    ORDER BY log_id DESC";
+                                  }else {
+                                    $statement = "SELECT * FROM pcnhsdb.user_logs 
+                                                  ORDER BY log_id DESC;";
+                                  }
+                                }
+                        $rows = mysqli_num_rows(mysqli_query($conn, $statement));
 
-                    $statement = "select * from user_logs";
-                    $rows = mysqli_num_rows(mysqli_query($conn, $statement));
+                        if ($rows > 30000) {
 
-                    if ($rows > 30000) {
+                           $alert_type = "info";
+                           $error_message = "REMINDER: USER ACTIVITY LOGS TABLE WILL BE TRUNCATED ";
+                           $popover = new Popover();
+                           $popover->set_popover($alert_type, $error_message);
+                           $_SESSION['trunc_notif'] = $popover->get_popover(); 
 
-                       $alert_type = "info";
-                       $error_message = "REMINDER: USER ACTIVITY LOGS TABLE WILL BE TRUNCATED ";
-                       $popover = new Popover();
-                       $popover->set_popover($alert_type, $error_message);
-                       $_SESSION['trunc_notif'] = $popover->get_popover(); 
+                           $sql = "TRUNCATE TABLE user_logs";
+                           mysqli_query($conn, $sql);
+                          }else{
+                          $total = ceil($rows/$limit);
+                          
+                          echo "<p>Showing $limit of $rows Entries</p>";
 
-                       $sql = "TRUNCATE TABLE user_logs";
-                       mysqli_query($conn, $sql);
-                      }
-                    else
-
-                      {
-                    $total = ceil($rows/$limit);
-                    
-                    echo "<p>Showing $limit of $rows Entries</p>";
-
-                    echo '<div class="pull-right">
+                          echo '<div class="pull-right">
                       <div class="col s12">
                       <ul class="pagination center-align">';
                       if($page > 1) {
-                        echo "<li class=''><a href='index.php?page=".($page-1)."'>Previous</a></li>";
+                        echo "<li class=''><a href='index.php?page=".($page-1)."&log_date=$log_date&search_key=$search'>Previous</a></li>";
                       }else if($total <= 0) {
                         echo '<li class="disabled"><a>Previous</a></li>';
                       }else {
@@ -380,9 +372,9 @@ LOGLIST;
                       // Google Like Pagination
                       for($i = $y;$i <= $x; $i++) {
                         if($i==$page) {
-                          echo "<li class='active'><a href='index.php?page=$i'>$i</a></li>";
+                          echo "<li class='active'><a href='index.php?page=$i&log_date=$log_date&search_key=$search'>$i</a></li>";
                         } else {
-                            echo "<li class=''><a href='index.php?page=$i'>$i</a></li>";
+                            echo "<li class=''><a href='index.php?page=$i&log_date=$log_date&search_key=$search'>$i</a></li>";
                           }
                       }
 
@@ -390,7 +382,7 @@ LOGLIST;
                       if($total == 0) {
                         echo "<li class='disabled'><a>Next</a></li>";
                       }else if($page!=$total) {
-                        echo "<li class=''><a href='index.php?page=".($page+1)."'>Next</a></li>";
+                        echo "<li class=''><a href='index.php?page=".($page+1)."&log_date=$log_date&search_key=$search'>Next</a></li>";
                       }else {
                         echo "<li class='disabled'><a>Next</a></li>";
                       }
