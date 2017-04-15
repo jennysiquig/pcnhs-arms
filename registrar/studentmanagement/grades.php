@@ -318,12 +318,14 @@ YR1;
 
 											// href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level
 											// will check if this subject is existing in the other subjects
-											$query_othersubj = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id' AND subj_id = '$subj_id';";
+											$query_othersubj = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id' AND subj_id = '$subj_id' and comment = 'PASSED';";
 
 											$result_othersubj = $conn->query($query_othersubj);
 											if ($result_othersubj->num_rows > 0) {
 												$status = "PASSED";
 												$action = "<a class='btn btn-primary btn-xs disabled'>Add to Other Subjects</a>";
+											}else {
+												$status = "FAILED";
 											}
 
 											echo <<<YR1
