@@ -386,8 +386,6 @@ SUBJS;
 
       $('.subj-list').tablesorter();
 
-
-
       $('.tablesorter-bootstrap').tablesorter({
         theme : 'bootstrap',
         headerTemplate: '{content} {icon}',
