@@ -112,14 +112,14 @@
                         <table id="signList" class="tablesorter-bootstrap">
                             <thead>
                             <tr>
-                                <th data-sorter="false">Signatory ID</th>
-                                <th data-sorter="false">First Name</th>
-                                <th data-sorter="false">Middle Initial</th>
-                                <th data-sorter="false">Last Name</th>
-                                <th data-sorter="false">Degree</th>
-                                <th data-sorter="false">Position</th>
-                                <th data-sorter="false">Year Started</th>
-                                <th data-sorter="false">Year Ended</th>
+                                <th>Signatory ID</th>
+                                <th>First Name</th>
+                                <th>Middle Initial</th>
+                                <th>Last Name</th>
+                                <th>Degree</th>
+                                <th>Position</th>
+                                <th>Year Started</th>
+                                <th>Year Ended</th>
                                 <th data-sorter="false">Action</th>
                             </tr>
                             </thead>

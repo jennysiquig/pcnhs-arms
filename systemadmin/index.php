@@ -141,13 +141,13 @@ else {
                     <table id="logList" class="tablesorter-bootstrap">
                         <thead>
                             <tr>
-                                <th data-sorter="false">Log ID</th>
-                                <th data-sorter="false">Date</th>
-                                <th data-sorter="false">Username</th>
-                                <th data-sorter="false">Access Type</th>
-                                <th data-sorter="false">Login Time</th>
-                                <th data-sorter="false">User Activity</th>
-                                <th data-sorter="false">Logout Time</th>
+                                <th>Log ID</th>
+                                <th>Date</th>
+                                <th>Username</th>
+                                <th>Access Type</th>
+                                <th>Login Time</th>
+                                <th>User Activity</th>
+                                <th>Logout Time</th>
                             </tr>
                             </thead>
                             <tbody>

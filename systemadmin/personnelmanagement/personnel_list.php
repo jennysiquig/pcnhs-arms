@@ -108,11 +108,11 @@
                         <table id="personnelList" class="tablesorter-bootstrap">
                             <thead>
                             <tr>
-                                <th data-sorter="false">Personnel ID</th>
-                                <th data-sorter="false">Username</th>
-                                <th data-sorter="false">Position</th>
-                                <th data-sorter="false">Access Type</th>
-                                <th data-sorter="false">Account Status</th>
+                                <th>Personnel ID</th>
+                                <th>Username</th>
+                                <th>Position</th>
+                                <th>Access Type</th>
+                                <th>Account Status</th>
                                 <th data-sorter="false">Action</th>
                             </tr>
                             </thead>
