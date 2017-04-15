@@ -1,7 +1,6 @@
 <?php
 	session_start(); 
 	require_once "../../../resources/config.php"; 
-
 	$curr_id = htmlspecialchars($_POST['curr_id'], ENT_QUOTES);
 	$curr_name = htmlspecialchars($_POST['curr_name'], ENT_QUOTES);
 	$year_ended = htmlspecialchars($_POST['year_ended'], ENT_QUOTES);

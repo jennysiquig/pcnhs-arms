@@ -19,7 +19,6 @@
 			$yr_lvl = 1;
 	}
 	$willInsert = true;
-	
 
 	//$yr_lvl = htmlspecialchars($_POST['yr_lvl'], ENT_QUOTES);
 	$schl_yr = htmlspecialchars($_POST['schl_year'], ENT_QUOTES);

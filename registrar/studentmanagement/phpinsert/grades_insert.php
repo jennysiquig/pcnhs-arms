@@ -20,7 +20,6 @@
 			header('Content-type:text/csv');
 			header("Content-Disposition: attachment; filename=$stud_id-year-level-$yr_level-partial-save.csv");
 			header("Content-Transfer-Encoding: UTF-8");
-
 			
 			$list = array($_POST['subj_id'],$_POST['fin_grade'],$_POST['credit_earned']);
 			foreach ($list as $fields) {

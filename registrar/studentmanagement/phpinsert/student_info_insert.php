@@ -4,7 +4,6 @@
 	if(!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}
-
 	session_start();
 
 
@@ -33,7 +32,6 @@
 	$total_elem_years = htmlspecialchars(filter_var($_POST['total_elem_years'], FILTER_SANITIZE_STRING));
 	$gpa = htmlspecialchars(filter_var($_POST['gpa'], FILTER_SANITIZE_STRING));
 	$willInsert = true;
-	
 	
 // validate gpa
 	if($gpa > 99.99 || $gpa < 75) {

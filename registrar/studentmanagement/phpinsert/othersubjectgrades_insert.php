@@ -1,7 +1,6 @@
 <?php
 	session_start();
 	require_once "../../../resources/config.php";
-
 	if(!$conn) {
 		die();
 	}
@@ -24,7 +23,5 @@
 	$_SESSION['user_activity'][] = "ADDED NEW OTHER SUBJECT GRADE OF: $stud_id";
 
 	header("location: ../grades.php?stud_id=$stud_id");
-
-
 
 ?>

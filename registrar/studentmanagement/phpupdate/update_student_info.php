@@ -5,6 +5,7 @@
 	if(!$conn) {
 		die();
 	}
+	
 	$willInsert = true;
 	$stud_id = htmlspecialchars($_POST['stud_id'], ENT_QUOTES);
 	$lastName = htmlspecialchars($_POST['lastName'], ENT_QUOTES);
@@ -50,5 +51,4 @@
 
 		header("location: ../student_info.php?stud_id=$stud_id");
 	}
-	
 ?>
