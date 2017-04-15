@@ -255,7 +255,8 @@
                                     //$subj_id = $row['subj_id'];
                                     $subj_id = $row['subj_id'];
                                     $subj_name = $row['subj_name'];
-                                    $subj_level = $row['subj_level'];
+                                    $subj_level = $row['subj_level'];  
+                                    $credit_earned = $row['credit_earned'];
                                     $numberOfSubj += 1;
 
                                     $grades_pos = 1;
@@ -324,7 +325,7 @@ SUBJ;
                                                     </td>
                                                     <td>
                                                         <div class="col-md-5">
-                                                            <input type="text" id="credit-$x" class="form-control" name="credit_earned[]"  onkeypress="dateModified();" placeholder="" value="">
+                                                            <input type="text" id="credit-$x" class="form-control" name="credit_earned[]"  onkeypress="dateModified();" placeholder="" value="$credit_earned">
                                                         </div>
                                                     </td>
                                                     <td>
