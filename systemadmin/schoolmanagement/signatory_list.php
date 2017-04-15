@@ -61,6 +61,9 @@
                 </span>
                 </div>
             </div>
+            <div class="pull-right">
+            <a><i class="fa fa-info-circle"></i> Search Signatories by <strong>Name / Year / Title / Position</strong></a>
+          </div>
         </div>
     </form>
 
@@ -114,12 +117,12 @@
                             <tr>
                                 <th>Signatory ID</th>
                                 <th>First Name</th>
-                                <th>Middle Initial</th>
+                                <th>M. I.</th>
                                 <th>Last Name</th>
                                 <th>Degree</th>
                                 <th>Position</th>
-                                <th>Year Started</th>
-                                <th>Year Ended</th>
+                                <th>Yr Started</th>
+                                <th>Yr Ended</th>
                                 <th data-sorter="false">Action</th>
                             </tr>
                             </thead>

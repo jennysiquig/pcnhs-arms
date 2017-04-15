@@ -82,6 +82,9 @@ else {
                                 </span>
                         </div>
                     </div>
+              <div class="pull-right">
+            <a><i class="fa fa-info-circle"></i> Search User Logs by <strong>Username or Activity</strong></a>
+          </div>
                 </div>
             </form>
 
@@ -109,7 +112,7 @@ else {
                           </span>
                           <input type="text" name="log_date" id="log_date" class="form-control" value=" " />
                           <span class="input-group-btn">
-                            <button type="submit" class="btn btn-primary">Go</button>
+                            <button type="submit" class="btn btn-primary">Search</button>
                           </span>
                         </div>
                       </div>
@@ -208,8 +211,7 @@ else {
                   $search = $_GET['search_key'];
                   $statement2 = "SELECT * FROM pcnhsdb.user_logs WHERE 
                                  user_name  LIKE '%$search%'
-                                 OR user_act LIKE '%$search%'
-                                 OR log_id LIKE '%$search%'                                       
+                                 OR user_act LIKE '%$search%'                                     
                                  ORDER BY log_id DESC
                                  LIMIT $start, $limit";
                 }
