@@ -61,11 +61,39 @@
                 </div>
                 <div class="x_content">
                     <!-- First -->
-                    <form id=<?php $stud_id = $_GET['stud_id']; echo "$stud_id"; ?> class="form-horizontal form-label-left" name="val-gr" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/othersubjectgrades_insert.php?stud_id=$stud_id"; ?> method="POST">
+                    <?php
+                        $stud_id = $_GET['stud_id'];
+                        $schl_name = "";
+                        $yr_level = "";
+                        $subj_name = "";
+                        $subj_level = "";
+                        $subj_id = "";
+                        $subj_order = "";
+                        if(isset($_GET['schl_name'])) {
+                            $schl_name = htmlspecialchars($_GET['schl_name']);
+                        }
+                        if(isset($_GET['yr_level'])) {
+                            $yr_level = htmlspecialchars($_GET['yr_level']);
+                        }
+                        if(isset($_GET['subj_name'])) {
+                            $subj_name = htmlspecialchars($_GET['subj_name']);
+                        }
+                        if(isset($_GET['subj_level'])) {
+                            $subj_level = htmlspecialchars($_GET['subj_level']);
+                        }
+                        if(isset($_GET['subj_id'])) {
+                            $subj_id = htmlspecialchars($_GET['subj_id']);
+                        }
+                        if(isset($_GET['subj_order'])) {
+                            $subj_order = htmlspecialchars($_GET['subj_order']);
+                        }
+
+                    ?>
+                    <form id=<?php $stud_id = $_GET['stud_id']; echo "$stud_id"; ?> class="form-horizontal form-label-left" name="val-gr" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/othersubjectgrades_insert.php?stud_id=$stud_id&subj_id=$subj_id&subj_order=$subj_order"; ?> method="POST">
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" minlength="3" required=" " type="text" name="schl_name">
+                                <input id="name" class="form-control col-md-7 col-xs-12" minlength="3" required=" " type="text" name="schl_name" value=<?php echo "'$schl_name'"; ?>>
                             </div>
                         </div>
                         <div class="item form-group">
@@ -77,19 +105,19 @@
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="number" maxlength="2" min="1" max="10" name="yr_level" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="number" maxlength="2" min="1" max="10" name="yr_level" required=" " value=<?php echo "'$yr_level'"; ?>>
                             </div>
                         </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" minlength="3" name="subj_name" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" minlength="3" name="subj_name" required=" " value=<?php echo "'$subj_name'"; ?>>
                             </div>
                         </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="number" maxlength="2" min="1" max="10" name="subj_level" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="number" maxlength="2" min="1" max="10" name="subj_level" required=" " value=<?php echo "'$subj_level'"; ?>> 
                             </div>
                         </div>
                          <div class="item form-group">
@@ -106,13 +134,13 @@
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Final Grade <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" data-inputmask="'mask': '99'" name="fin_grade" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="fin_grade" onkeypress="return isNumberKey(event)">
                             </div>
                         </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Credit Earned <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="credit_earned" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="credit_earned" onkeypress="return isNumberKey(event)">
                             </div>
                         </div>
                             <div class="clearfix"></div>
@@ -197,6 +225,17 @@
 
             function releaseData() {
                 $('#' + stud_unique_id).sisyphus().manuallyReleaseData();
+            }
+        </script>
+        <script type="text/javascript">
+            function isNumberKey(evt, n){
+            console.log(n);
+              var charCode = (evt.which) ? evt.which : evt.keyCode;
+              if (charCode != 46 && charCode > 31 
+                && (charCode < 48 || charCode > 57))
+                 return false;
+
+              return true;
             }
         </script>
         </body>

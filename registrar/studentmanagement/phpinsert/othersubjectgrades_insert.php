@@ -16,6 +16,8 @@
 	$subj_type = strtoupper(htmlspecialchars($_POST['subj_type'], ENT_QUOTES));
 	$fin_grade = htmlspecialchars($_POST['fin_grade'], ENT_QUOTES);
 	$credit_earned = htmlspecialchars($_POST['credit_earned'], ENT_QUOTES);
+	$subj_id = htmlspecialchars($_GET['subj_id']);
+	$subj_order = htmlspecialchars($_GET['subj_order']);
 	$comment = "";
 	$willInsert = true;
 
@@ -71,7 +73,7 @@
 		$comment = "PASSED";
 	}
 
-	$insertothersubj = "INSERT INTO `pcnhsdb`.`othersubjects` (`stud_id`, `subj_name`, `subj_level`, `subj_type`, `schl_name`, `schl_year`, `yr_level`, `fin_grade`, `credit_earned`, `comment`) VALUES ('$stud_id', '$subj_name', $subj_level, '$subj_type', '$schl_name', '$schl_year', '$yr_level', '$fin_grade', '$credit_earned', '$comment');";
+	$insertothersubj = "INSERT INTO `pcnhsdb`.`othersubjects` (`stud_id`, `subj_id`, `subj_name`, `subj_level`, `subj_type`, `schl_name`, `schl_year`, `yr_level`, `fin_grade`, `credit_earned`, `comment`, `subj_order`) VALUES ('$stud_id', '$subj_id', '$subj_name', $subj_level, '$subj_type', '$schl_name', '$schl_year', '$yr_level', '$fin_grade', '$credit_earned', '$comment', '$subj_order');";
 
 	if($willInsert) {
 		mysqli_query($conn, $insertothersubj);

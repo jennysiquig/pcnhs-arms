@@ -243,8 +243,7 @@ REMOVE;
 						                          <td>$subj_name</td>
 						                          <td>$subj_level</td>
 						                          <td>$subj_type</td>
-
-						                          <td>$comment</td>
+						                          <td>$fin_grade</td>
 						                          <td>
 													<a class="btn btn-danger btn-xs" href=phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id>Remove Record</a>
 						                          </td>
@@ -291,6 +290,7 @@ YR1;
 							<th data-sorter="false">Subject</th>
 							<th data-sorter="false">Subject Level</th>
 							<th data-sorter="false">Year Level</th>
+							<th data-sorter="false">Status</th>
 							<th data-sorter="false">Action</th>
 						</tr>
 					</thead>
@@ -300,25 +300,41 @@ YR1;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id natural join grades where stud_id = '$stud_id' AND comment = 'FAILED' ;";
 
+									$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id natural join grades where stud_id = '$stud_id' AND comment = 'FAILED' ;";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
 										while($row = $result->fetch_assoc()) {
+											$status = "";
+											$subj_id = $row['subj_id'];
+											$subj_order = $row['subj_order'];
 											$schl_name = $row['schl_name'];
 											$yr_level = $row['yr_level'];
 											$subj_name = $row['subj_name'];
 											$subj_level = $row['subj_level'];
+
+											$action = "<a class='btn btn-primary btn-xs' href='add_othersubject_grades.php?stud_id=$stud_id&schl_name=$schl_name&yr_level=$yr_level&subj_name=$subj_name&subj_level=$subj_level&subj_id=$subj_id&subj_order=$subj_order'>Add to Other Subjects</a>";
+
 											// href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level
+											// will check if this subject is existing in the other subjects
+											$query_othersubj = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id' AND subj_id = '$subj_id';";
+
+											$result_othersubj = $conn->query($query_othersubj);
+											if ($result_othersubj->num_rows > 0) {
+												$status = "PASSED";
+												$action = "<a class='btn btn-primary btn-xs disabled'>Add to Other Subjects</a>";
+											}
+
 											echo <<<YR1
 												<tr>
 						                          <td>$subj_name</td>
 						                          <td>$subj_level</td>
 						                          <td>$yr_level</td>
+						                          <td>$status</td>
 						                          <td>
 						                          	<center>
-						                          	<a class="btn btn-primary btn-xs" >Add To Other Subjects</a>
+						                          		$action
 						                          	</center>
 						                          </td>
 						                        </tr>
