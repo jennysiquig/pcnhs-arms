@@ -89,7 +89,7 @@
                         }
 
                     ?>
-                    <form id=<?php $stud_id = $_GET['stud_id']; echo "$stud_id"; ?> class="form-horizontal form-label-left" name="val-gr" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/othersubjectgrades_insert.php?stud_id=$stud_id&subj_id=$subj_id&subj_order=$subj_order"; ?> method="POST">
+                    <form id=<?php $stud_id = $_GET['stud_id']; echo "$stud_id"; ?> class="form-horizontal form-label-left other_subj" name="val-gr" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/othersubjectgrades_insert.php?stud_id=$stud_id&subj_id=$subj_id&subj_order=$subj_order"; ?> data-parsley-validate method="POST">
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
@@ -132,15 +132,21 @@
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Final Grade <span style="color:red;">*</span></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Final Grade</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="fin_grade" onkeypress="return isNumberKey(event)">
                             </div>
                         </div>
                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Special Grade</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="special_grade" placeholder="For subjects with special grades only.">
+                            </div>
+                        </div>
+                        <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Credit Earned <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="credit_earned" onkeypress="return isNumberKey(event)">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="credit_earned">
                             </div>
                         </div>
                             <div class="clearfix"></div>
@@ -181,12 +187,12 @@
                 $.listen('parsley:field:validate', function() {
                 validateFront();
                 });
-                $('#val-gr .btn').on('click', function() {
-                $('#val-gr').parsley().validate();
+                $('.other_subj #send').on('click', function() {
+                $('.other_subj').parsley().validate();
                 validateFront();
                 });
                 var validateFront = function() {
-                if (true === $('#val-gr').parsley().isValid()) {
+                if (true === $('.other_subj').parsley().isValid()) {
                 $('.bs-callout-info').removeClass('hidden');
                 $('.bs-callout-warning').addClass('hidden');
                 } else {
@@ -231,8 +237,7 @@
             function isNumberKey(evt, n){
             console.log(n);
               var charCode = (evt.which) ? evt.which : evt.keyCode;
-              if (charCode != 46 && charCode > 31 
-                && (charCode < 48 || charCode > 57))
+              if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
                  return false;
 
               return true;

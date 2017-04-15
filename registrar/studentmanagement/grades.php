@@ -207,8 +207,8 @@ REMOVE;
 							<th data-sorter="false">Subject Level</th>
 							<th data-sorter="false">Subject Type</th>
 							<th data-sorter="false">Final Grade</th>
-<!-- 							<th data-sorter="false">Credit Earned</th>
-							<th data-sorter="false">Remarks</th> -->
+							<th data-sorter="false">Credit Earned</th>
+							<th data-sorter="false">Remarks</th>
 							<th data-sorter="false">Action</th>
 						</tr>
 					</thead>
@@ -233,8 +233,7 @@ REMOVE;
 											$fin_grade = $row['fin_grade'];
 											$credit_earned = $row['credit_earned'];
 											$comment = $row['comment'];
-													//<td>$fin_grade</td>
-						                          	//<td>$credit_earned</td>
+													
 											echo <<<YR1
 												<tr>
 						                          <th scope="row">$schl_name</th>
@@ -244,6 +243,8 @@ REMOVE;
 						                          <td>$subj_level</td>
 						                          <td>$subj_type</td>
 						                          <td>$fin_grade</td>
+						                          <td>$credit_earned</td>
+						                          <td>$comment</td>
 						                          <td>
 													<a class="btn btn-danger btn-xs" href=phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id>Remove Record</a>
 						                          </td>

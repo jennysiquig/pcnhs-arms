@@ -141,7 +141,7 @@
 					if($curr_code == "K-12") {
 						$willInsert = false;
 						$alert_type = "danger";
-						$error_message = "Enter 'P' for PROMOTED or 'R' for RETAINED. ";
+						$error_message = "Error saving to database. ";
 						$popover = new Popover();
 						$popover->set_popover($alert_type, $error_message);	
 						$_SESSION['error_pop'] = $popover->get_popover();
