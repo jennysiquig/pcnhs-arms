@@ -51,11 +51,11 @@ if ($result1->num_rows > 0) {
     $popover = new Popover();
     $popover->set_popover($alert_type, $error_message);
     $_SESSION['error_pop'] = $popover->get_popover();
-    header("location" . $_SERVER["HTTP_REFERER"]);
-    die(header("Location: ../personnel_add.php"));
+    //header("location" . $_SERVER["HTTP_REFERER"]);
+    header("Location: ../personnel_add.php");
 }
 
-if ($result2->num_rows > 0) {
+ if ($result2->num_rows > 0) {
     $_SESSION['error_msg_personnel2'] = "User name: $uname already exists";
     $insertChck = false;
     $alert_type = "danger";
@@ -63,8 +63,8 @@ if ($result2->num_rows > 0) {
     $popover = new Popover();
     $popover->set_popover($alert_type, $error_message);
     $_SESSION['error_pop2'] = $popover->get_popover();
-    header("location" . $_SERVER["HTTP_REFERER"]);
-    die(header("Location: ../personnel_add.php"));
+    //header("location" . $_SERVER["HTTP_REFERER"]);
+    header("Location: ../personnel_add.php");
 }
 else {
     $statement = $conn->prepare("INSERT INTO `pcnhsdb`.`personnel` (`per_id`, `uname`,`password`, `last_name`, `first_name`, `mname`, `position`, `access_type`, `accnt_status`) 

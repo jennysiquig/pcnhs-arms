@@ -34,12 +34,12 @@ if ($resultCheckPw->num_rows > 0) {
             
             $per_delete = "DELETED PERSONNEL ACCOUNT: $per_id";
             $_SESSION['user_activity'][] = $per_delete;
-            $alert_type = "info";
-            $message = "Personnel Account Deleted Successfully";
+            $alert_type = "danger";
+            $message = "Personnel Account Deleted";
             $popover = new Popover();
             $popover->set_popover($alert_type, $message);
             $_SESSION['success_personnel_delete'] = $popover->get_popover();
-            header("location: ../personnels.php");
+            header("location: ../personnel_list.php");
         }
         else {
             $alert_type = "danger";

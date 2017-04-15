@@ -1,14 +1,37 @@
-<!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
-<?php include ('include_files/session_check.php'); ?>
+<?php
+    session_start();
+    // Session Timeout
+    $time = time();
+    $session_timeout = 1800; //seconds
+    
+    if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
+      header("location: ../../../logout.php");
+    }
+
+    $_SESSION['last_activity'] = $time;
+    if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
+        if($_SESSION['account_type'] != "systemadmin") {
+            echo "<p>Access Failed <a href='../index.php'>Back to Home</a></p>";
+            die();
+        }
+    }else {
+        header('Location: ../../../login.php');
+    }
+        date_default_timezone_set('Asia/Manila');
+        $loTime = date("h:i:sa");
+        $curr_date = date("m/d/Y");
+?>
+<!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>View Signatories</title>
-    <link rel="shortcut icon" href="../../assets/images/pines.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="../assets/images/ico/fav.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< .merge_file_a19480
     <!-- jQuery -->
     <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 
@@ -40,6 +63,43 @@
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
 <?php include "../../resources/templates/admin/top-nav.php"; ?>
 <!-- Content Start -->
+=======
+    
+      <!-- jQuery -->
+      <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+      <!-- Tablesorter themes -->
+      <!-- bootstrap -->
+      <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+      <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+      <!-- Tablesorter: required -->
+      <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+      <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+      <!-- NProgress -->
+      <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+      
+      <!-- Bootstrap -->
+      <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Font Awesome -->
+      <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+      
+      <!-- Datatables -->
+      <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+      <!-- Date Range Picker -->
+      <link href="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+      <!-- Custom Theme Style -->
+      <link href="../../assets/css/custom.min.css" rel="stylesheet">
+      <!-- Custom Theme Style -->
+      <link href="../../assets/css/customstyle.css" rel="stylesheet">
+    
+  </head>
+  <body class="nav-md">
+    <!-- Sidebar -->
+        <?php include "../../resources/templates/admin/sidebar.php"; ?>
+        <?php include "../../resources/templates/admin/top-nav.php"; ?>
+    <!-- Contents Here -->
+>>>>>>> .merge_file_a19032
 <div class="right_col" role="main">
              <div class="col-md-5">
         <ol class="breadcrumb">
@@ -57,14 +117,16 @@
 
                     <input type="text" class="form-control" name="search_key" placeholder="Search Signatories">
                     <span class="input-group-btn">
-                  <button class="btn btn-primary">Go</button>
+                  <button class="btn btn-primary">Search</button>
                 </span>
                 </div>
             </div>
+              <div class="pull-right">
+                <a><i class="fa fa-info-circle"></i> Search Signatories by <strong> Name / Year / Position / Title </strong></a>
+            </div>
         </div>
     </form>
-
-    <div class="clearfix"></div>
+     <div class="clearfix"></div>
     <div class="">
 
         <div class="clearfix"></div>
@@ -74,34 +136,36 @@
                     <h2><i class="fa fa-users"> </i> Signatories</h2>
                     <div class="clearfix"></div>
                       <br/>
-                     <?php
+                <?php
                         if (isset($_SESSION['sign_del'])) {
-                          echo $_SESSION['sign_del'];
-                          unset($_SESSION['sign_del']);
+                            echo $_SESSION['sign_del'];
+                            unset($_SESSION['sign_del']);
                         }
                      ?>
-                </div>
-                <div class="x_content">
-                  <div class="row">
-            
+            </div>
+
+            <div class="x_content">
+                    <div class="row">
                     <form class="form-horizontal form-label-left">
                         <div class="form-group">
                           <label class="control-label col-md-10">Show Number Of Entries:</label>
                           <div class="col-sm-2">
                               <select class="form-control" onchange="changeEntries(this.value)">
                                 <option value="20" 
-                                  <?php if (isset($_SESSION['sign_entry'])) { if ($_SESSION['sign_entry'] == 20) { echo "selected"; } } ?> >20</option>
+                                  <?php if (isset($_SESSION['sign_entry'])) { if ($_SESSION['sign_entry'] == 20) { echo "selected"; } } ?> 
+                                  >20</option>
                                 <option value="50"
-                                   <?php if (isset($_SESSION['sign_entry'])) { if ($_SESSION['sign_entry'] == 50) { echo "selected"; } } ?>
-                                  >50</option>
+                                   <?php if (isset($_SESSION['sign_entry'])) { if ($_SESSION['sign_entry'] == 50) { echo "selected"; } } ?> 
+                                   >50</option>
                                 <option value="100"
-                                   <?php if (isset($_SESSION['sign_entry'])) { if ($_SESSION['sign_entry'] == 100) { echo "selected"; } } ?>
-                                  >100</option>
+                                   <?php if (isset($_SESSION['sign_entry'])) { if ($_SESSION['sign_entry'] == 100) { echo "selected"; } } ?> 
+                                   >100</option>
                               </select>
                           </div>
                         </div>
                       </form>
               </div>
+<<<<<<< .merge_file_a19480
               <?php
                 if (isset($_GET['sign_year']) && $_GET['sign_year'] != "") {
                   $sign_disp = $_GET['sign_year'];
@@ -120,12 +184,25 @@
                                 <th data-sorter="false">Position</th>
                                 <th data-sorter="false">Year Started</th>
                                 <th data-sorter="false">Year Ended</th>
+=======
+                    <div class="sign-list">
+                        <table id="signList" class="tablesorter-bootstrap">
+                            <thead>
+                            <tr>
+                                <th data-sorter="true">Signatory ID&nbsp</th>
+                                <th data-sorter="true">First Name&nbsp</th>
+                                <th data-sorter="true">M. I.&nbsp</th>
+                                <th data-sorter="true">Last Name</th>
+                                <th data-sorter="true">Degree</th>
+                                <th data-sorter="true">Position</th>
+                                <th data-sorter="true">Year Started</th>
+                                <th data-sorter="true">Year Ended</th>
+>>>>>>> .merge_file_a19032
                                 <th data-sorter="false">Action</th>
                             </tr>
                             </thead>
-
                             <tbody>
-                            <?php
+                                                          <?php
                               $statement = "";
                               $start = 0;
                               $limit = 20;
@@ -172,7 +249,8 @@
                               if ($result->num_rows == 0) {
                                 echo <<<NORES
                                     <tr class="odd pointer">
-                                    <span class="badge badge-danger">NO RESULT</span>        
+                                    <span class="badge badge-danger">NO RESULT</span>
+                                    <br><br>        
                                     </tr>
 NORES;
                               }
@@ -197,7 +275,7 @@ NORES;
                                                         <td class=" ">$yr_started</td>
                                                         <td class=" ">$yr_ended</td>
                                                         <td class=" ">
-                                                        <a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View Profile</a>
+                                                        <a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-primary btn-s"><i class="fa fa-user"></i> View</a>
                                                         </td>                                                       
                                             </tr>
 SIGNLIST;
@@ -271,11 +349,13 @@ SIGNLIST;
 
                           echo "</ul></div></div>";
                           ?>
-                    </div>
-                </div>
+                      
             </div>
+          </div>
         </div>
+      </div>
     </div>
+<<<<<<< .merge_file_a19480
 </div>
 <!-- Content End -->
 <?php include "../../resources/templates/registrar/footer.php"; ?>
@@ -291,8 +371,28 @@ SIGNLIST;
 <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
 <script src= "../../assets/js/custom.min.js"></script>
+=======
+  </div>
+  <!-- Contents Here -->
+  
+    <?php include "../../resources/templates/admin/footer.php"; ?>
 
-<script type="text/javascript">
+    <!-- Scripts -->
+    <!-- Bootstrap -->
+    <script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src= "../../resources/libraries/fastclick/lib/fastclick.js"></script>
+    <!-- input mask -->
+    <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <!-- Date Range Picker -->
+    <script src="../../resources/libraries/moment/min/moment.min.js"></script>
+    <script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="../../resources/libraries/nprogress/nprogress.js"></script>
+>>>>>>> .merge_file_a19032
+
+    <!-- Custom Theme Scripts -->
+    <script src= "../../assets/js/custom.min.js"></script>
+    <script type="text/javascript">
       function changeEntries(val) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -303,6 +403,7 @@ SIGNLIST;
         xhttp.open("GET", "../entry/signatory_entry.php?sign_entry="+val, true);
         xhttp.send();
       }
+<<<<<<< .merge_file_a19480
 </script>
   <script type="text/javascript">
       $(function() {
@@ -314,5 +415,20 @@ SIGNLIST;
       });
       });
   </script>
+=======
+    </script>
+    <script type="text/javascript">
+        $(function() {
+        $('.sign-list').tablesorter();
+        $('.tablesorter-bootstrap').tablesorter({
+        theme : 'bootstrap',
+        headerTemplate: '{content} {icon}',
+        widgets    : ['zebra','columns', 'uitheme']
+        });
+        });
+      </script>
+    </body>
+</html>
+>>>>>>> .merge_file_a19032
 </body>
 </html>
