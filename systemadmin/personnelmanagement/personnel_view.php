@@ -83,7 +83,7 @@
                                 $result = $conn->query($statement);
 
                                 if (!$result) {
-                                    header("location: personnel_list.php");
+                                    header("location: personnels.php");
                                     die();
                                 }
 
@@ -100,7 +100,7 @@
                                     }
                                 }
                                 else {
-                                    header("location: personnel_list.php");
+                                    header("location: personnels.php");
                                     die();
                                 }
                             ?>
@@ -183,7 +183,7 @@
                                 <div class="col-md-5 col-md-offset-3 pull-left">
                                     <a href = <?php echo "personnel_edit.php?per_id=$per_id" ?> button type="submit" class="btn btn-primary " >Edit Profile</a>
                                     <a href = "" button type="submit" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-sm" >Remove</a> &nbsp&nbsp&nbsp&nbsp
-                                    <a href = "personnel_list.php" button type="submit" class="btn btn-primary " >View Personnels</a>
+                                    <a href = "personnels.php" button type="submit" class="btn btn-primary " >View Personnels</a>
                                 </div>
                             </div>
 
@@ -201,7 +201,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel2"><i class="fa fa-exclamation-circle"></i> Remove Personnel</h4>
+                        <h4 class="modal-title" id="myModalLabel2"><i class="fa fa-lock"></i> Change Password</h4>
                     </div>
                     <div class="modal-body">
                            

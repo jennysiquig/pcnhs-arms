@@ -74,7 +74,7 @@
                                     $result = $conn->query($statement);
 
                                     if (!$result) {
-                                      header("location: personnel_list.php");
+                                      header("location: personnels.php");
                                       die();
                                     }
 
@@ -91,7 +91,7 @@
                                       }
                                     }
                                     else {
-                                      header("location: personnel_list.php");
+                                      header("location: personnels.php");
                                       die();
                                     }
                                   ?>

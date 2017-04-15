@@ -317,6 +317,8 @@ STUDLIST;
                         echo "<li class='disabled'><a>Next</a></li>";
                       }
                         echo "</ul></div></div>";
+                      
+
                 ?>
               </div>
             </div>

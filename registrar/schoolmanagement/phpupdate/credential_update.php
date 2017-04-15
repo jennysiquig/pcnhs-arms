@@ -1,5 +1,4 @@
-<?php
-	session_start(); 
+<?php 
 	require_once "../../../resources/config.php"; 
 
 	$cred_id = htmlspecialchars($_POST['cred_id'], ENT_QUOTES);

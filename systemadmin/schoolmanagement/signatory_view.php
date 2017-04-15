@@ -74,7 +74,7 @@
                             $result = $conn->query($statement);
 
                             if (!$result) {
-                                header("location: signatory_list.php");
+                                header("location: signatories.php");
                                 die();
                             }
                             if ($result->num_rows > 0) {
@@ -89,7 +89,7 @@
                                 }
                             }
                             else {
-                                header("location: signatory_list.php");
+                                header("location: signatories.php");
                                 die();
                             }
                                 $conn->close();
@@ -156,7 +156,7 @@
                                 <br />
                                 <a href = <?php echo "signatory_edit.php?sign_id=$sign_id" ?> button type="submit" class="btn btn-primary " >Edit Signatory</a>
                                 <a href = "" button type="submit" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-sm" >Remove</a> &nbsp&nbsp&nbsp&nbsp
-                                <a href = "signatory_list.php" button type="submit" class="btn btn-primary " >View Signatories</a>
+                                <a href = "signatories.php" button type="submit" class="btn btn-primary " >View Signatories</a>
                             </div>
                         </div>
                     </form>
