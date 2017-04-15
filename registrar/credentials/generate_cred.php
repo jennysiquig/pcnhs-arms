@@ -136,7 +136,7 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Admitted To:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" required="required" type="text" name="admitted_to" value="" placeholder="ex: Grade 11">
+							<input class="form-control col-md-7 col-xs-12" type="text" name="admitted_to" value="" placeholder="ex: Grade 11 | Empty value will be set to 'N/A'.">
 						</div>
 					</div>
 				<!--  -->

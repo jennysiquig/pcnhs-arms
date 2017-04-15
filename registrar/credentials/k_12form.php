@@ -8,16 +8,15 @@
     if(!$conn) {
         die();
     }
-    if(!isset($_SESSION['generated'])) {
-        $_SESSION['generated'] = true;
+    if(!isset($_SESSION['generated_form'])) {
+        $_SESSION['generated_form'] = true;
     }else {
-        if($_SESSION['generated']) {
-            unset($_SESSION['generated']);
+        if($_SESSION['generated_form']) {
+            unset($_SESSION['generated_form']);
             header("location: ../../index.php");
             die();
         }
-    }
-    
+    }    
     $cred_id = htmlspecialchars($_GET['cred_id'], ENT_QUOTES);
     $request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
     $signatory = htmlspecialchars($_GET['signatory'], ENT_QUOTES);
@@ -26,20 +25,6 @@
     $admitted_to = htmlspecialchars($_GET['admitted_to'], ENT_QUOTES);
     $request_purpose = strtoupper(htmlspecialchars($_GET['request_purpose']));
 
-    $checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
-    $result = $conn->query($checkpending);
-    if($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $req_id = $row['req_id'];
-            $update = "UPDATE `pcnhsdb`.`requests` SET `request_type`='$request_type', `status`='u' ,`admitted_to` = '$admitted_to' , `sign_id`='$signatory' WHERE `req_id`='$req_id';";
-
-            mysqli_query($conn, $update);
-        }
-    }else {
-         $statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `admitted_to`, `request_purpose`, `sign_id`, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$admitted_to', '$request_purpose' ,'$signatory', '$personnel_id');";
-
-        mysqli_query($conn, $statement1);
-    }
 ?>
 <html>
 	<head>

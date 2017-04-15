@@ -302,6 +302,7 @@
 											<thead>
 												<tr class="headings">
 													<th class="column-title">Credential Name</th>
+													<th class="column-title">Purpose</th>
 													<th class="column-title">Date Processed</th>
 													<th class="column-title">Credential Status</th>
 													<th class="column-title">Date Released</th>
@@ -312,11 +313,12 @@
 													if(!$conn) {
 														die("Connection failed: " . mysqli_connect_error());
 													}
-													$statement = "SELECT date_processed, date_released, status, cred_name FROM pcnhsdb.requests natural join students natural join credentials where stud_id = '$stud_id';";
+													$statement = "SELECT request_purpose, date_processed, date_released, status, cred_name FROM pcnhsdb.requests natural join students natural join credentials where stud_id = '$stud_id';";
 													$result = $conn->query($statement);
 													if ($result->num_rows > 0) {
 														// output data of each row
 														while($row = $result->fetch_assoc()) {
+															$request_purpose = $row['request_purpose'];
 															$cred_name = $row['cred_name'];
 															$date_processed = $row['date_processed'];
 															$date_released = $row['date_released'];
@@ -332,6 +334,7 @@
 															echo <<<CREDC
 																<tr>
 																	<td>$cred_name</td>
+																	<td>$request_purpose</td>
 																	<td>$date_processed</td>
 																	<td>$status</td>
 																	<td>$date_released</td>
