@@ -257,10 +257,6 @@ UNCLAIMED;
 		<script src= "../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- NProgress -->
 		<script src="../resources/libraries/nprogress/nprogress.js"></script>
-		<!-- Flot plugins -->
-		<script src="../resources/libraries/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-		<script src="../resources/libraries/flot-spline/js/jquery.flot.spline.min.js"></script>
-		<script src="../resources/libraries/flot.curvedlines/curvedLines.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../assets/js/custom.min.js"></script>
 		<script type="text/javascript">

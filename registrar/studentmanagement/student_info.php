@@ -108,18 +108,18 @@
 				  <li class="active">Student Personal Information</li>
 				</ol>
 			</div>
-			<div class="row">
-				<div class="col-md-9">
-					<a class="btn btn-default" href=<?php echo $_SERVER['HTTP_REFERER']; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
-				</div>
-			</div>
-			<div class="clearfix"></div>
 			<?php
 				if(isset($_SESSION['success'])) {
 					echo $_SESSION['success'];
 					unset($_SESSION['success']);
 				}
 			?>
+			<div class="row">
+				<div class="col-md-9">
+					<a class="btn btn-default" href=<?php echo $_SERVER['HTTP_REFERER']; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+				</div>
+			</div>
+			<div class="clearfix"></div>
 			<form class="form-horizontal form-label-left">
 				<div class="x_panel">
 					<div class="x_title">

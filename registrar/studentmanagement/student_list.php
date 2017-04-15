@@ -120,9 +120,9 @@
               </form>
               </div>
               <?php
-                if(isset($_GET['schl_year']) && $_GET['schl_year'] != "") {
-                  $school_year2 = $_GET['schl_year'];
-                  echo "<p>Showing Students in School Year of $school_year2</p>";
+                if(isset($_GET['search_key'])) {
+                  $search_key = strtoupper($_GET['search_key']);
+                  echo "<p class='table-list'>Searching for <strong>$search_key</strong></p>";
                 }
               ?>
               <div class="stud-list">
@@ -166,47 +166,26 @@
                     $search = "";
                     if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                       $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
-                      $statement = "SELECT 
-                                        *
-                                    FROM
-                                        students
-                                            LEFT JOIN
-                                        curriculum ON students.curr_id = curriculum.curr_id
-                                            NATURAL JOIN
-                                        grades
-                                    WHERE
-                                        last_name LIKE '%$search'
-                                            OR first_name LIKE '%$search'
-                                            OR stud_id LIKE '%$search'
-                                            OR CONCAT(first_name, ' ', last_name) LIKE '%$search'
-                                            OR CONCAT(last_name,
-                                                ' ',
-                                                first_name,
-                                                ' ',
-                                                mid_name) LIKE '%$search'
-                                            OR CONCAT(first_name,
-                                                ' ',
-                                                mid_name,
-                                                ' ',
-                                                last_name) LIKE '%$search'
-                                            OR (schl_year = '$search' AND yr_level = 4)
-                                    GROUP BY stud_id
-                                    LIMIT $start , $limit;";
+                      $statement = 
+                              "SELECT 
+                                  *
+                              FROM
+                                  students
+                                      LEFT JOIN
+                                  curriculum ON students.curr_id = curriculum.curr_id 
+                              WHERE
+                                  last_name LIKE '$search%'
+                                      OR first_name LIKE '$search%'
+                                      OR stud_id LIKE '$search%'
+                                      OR CONCAT(first_name, ' ', last_name) LIKE '$search%'
+                                      OR curr_code LIKE '$search%'
+                                      OR curr_name LIKE '$search%'
+                              GROUP BY stud_id
+                              LIMIT $start , $limit;";
                     }else {
                       $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id limit $start, $limit;";
                     }
-
-                    if(isset($_GET['schl_year']) && $_GET['schl_year'] != "") {
-                      $school_year = htmlspecialchars($_GET['schl_year'], ENT_QUOTES);
-                      $school_year1 = explode("-", $school_year);
-                      $from = $school_year1[0];
-                      $to = $school_year1[1];
-                      $statement = "SELECT * FROM pcnhsdb.students natural join grades where schl_year between '$from' and '$to' and yr_level = 4;";
-                      
-                    }
-                    
-                    
-
+                                    
                     $result = $conn->query($statement);
                     if ($result->num_rows > 0) {
                     // output data of each row
@@ -253,7 +232,7 @@ STUDLIST;
                 <?php
                   if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                       $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
-                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '%$search' or first_name like '%$search' or stud_id like '%$search' or concat(first_name,' ',last_name) like '%$search' or concat(last_name,' ',first_name,' ',mid_name) like '%$search' or concat(first_name,' ',mid_name,' ',last_name) like '%$search' or (schl_year = '$search' and yr_level = 4);";
+                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' or (schl_year = '$search' and yr_level = 4);";
                   }else {
                     $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id;";
                   }

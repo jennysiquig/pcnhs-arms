@@ -12,7 +12,7 @@
 	$first_name = strtoupper(htmlspecialchars(filter_var($_POST['first_name'], FILTER_SANITIZE_STRING)));
 	$mid_name = strtoupper(htmlspecialchars(filter_var($_POST['mid_name'], FILTER_SANITIZE_STRING)));
 	$last_name = strtoupper(htmlspecialchars(filter_var($_POST['last_name'], FILTER_SANITIZE_STRING)));
-	$gender = strtoupper(htmlspecialchars(filter_var($_POST['gender'], FILTER_SANITIZE_STRING)));
+	$gender = htmlspecialchars(filter_var($_POST['gender'], FILTER_SANITIZE_STRING));
 
 	$birth_date = htmlspecialchars(filter_var($_POST['birthdate']));
 
@@ -87,7 +87,8 @@
 
 	
 	//1 ========================
-	$statement1 = "INSERT INTO `pcnhsdb`.`students` (`stud_id`, `first_name`, `mid_name`, `last_name`, `gender`, `birth_date`, `province`, `towncity`, `barangay`, `second_school_name`, `curr_id`, `prog_id`) VALUES ('$stud_id' , '$first_name', '$mid_name', '$last_name', '$gender', '$birth_date', '$province', '$towncity', '$barangay', '$second_school_name', '$curriculum', '$program')";
+	
+	$statement1 = "INSERT INTO `pcnhsdb`.`students` (`stud_id`, `first_name`, `mid_name`, `last_name`, `gender`, `birth_date`, `barangay`, `towncity`, `province`, `second_school_name`, `curr_id`, `prog_id`) VALUES ('$stud_id' , '$first_name', '$mid_name', '$last_name', '$gender', '$birth_date', '$barangay', '$towncity', '$province', '$second_school_name', '$curriculum', '$program')";
 
 	//2 ========================
 	$statement2 = "INSERT INTO `pcnhsdb`.`parent` (`stud_id`, `pname`, `occupation`, `address` ) VALUES ('$stud_id', '$pname', '$parent_occupation', '$parent_address')";

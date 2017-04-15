@@ -62,17 +62,18 @@
 			<form id="validate-add" class="form-horizontal form-label-left" name="validate-add" data-parsley-validate action= "phpinsert/student_info_insert.php" method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Student Personal Information</h2>
+						<h2>Student Personal Information </h2>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
 						<div class="col-md-12 col-sm-6 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Student</h2>
+									<h2>Student <small style="color: red;"><i class="fa fa-info-circle"></i> If the information is not available, please enter "NONE"</small></h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="item form-group">
+
 									<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum of Student *</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										<select id="curr-select" class="form-control col-md-7 col-xs-12" name="curriculum" required="">
@@ -98,7 +99,7 @@ OPTION1;
 														
 												?>
 											</select>
-											<p style="color: red">Refer to the curriculum that is indicated on the Form 137.</p>
+											<p style="color: red"><i class="fa fa-info-circle"></i> Refer to the curriculum that is indicated on the Form 137.</p>
 										</div>
 									</div>
 									<div class="x_content">
@@ -125,7 +126,7 @@ OPTION1;
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name *</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input class="form-control col-md-7 col-xs-12" type="text" name="mid_name">
+												<input class="form-control col-md-7 col-xs-12" type="text" name="mid_name" required>
 											</div>
 										</div>
 										<div class="item form-group">
