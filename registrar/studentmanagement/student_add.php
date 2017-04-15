@@ -256,7 +256,7 @@ OPTION1;
 											<div class="item form-group">
 												<label class="control-label col-md-4 col-sm-4 col-xs-12">Total Elementary Years *</label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<input class="form-control  col-md-7 col-xs-12" type="text" name="total_elem_years" pattern="[6-9]" maxlength="1" required="">
+													<input class="form-control  col-md-7 col-xs-12" type="text" name="total_elem_years" pattern="[4-9]" maxlength="1" required="">
 												</div>
 											</div>
 											<div class="item form-group">
