@@ -227,7 +227,7 @@
                                     <th>Subject</th>
                                     <th>Subject Level</th>
                                     <th>Final Grade</th>
-                                    <th>Credits Earned <br> (For K-12, enter 'P' for <br>'Promoted' or 'R' for 'Retained')</th>
+                                    <th>Credits Earned <br> (Enter P or R for K-12)</th>
                                     <th>Special Grade <br>(Optional. For NSEC only.)</th>
                                 </tr>
                             </thead>

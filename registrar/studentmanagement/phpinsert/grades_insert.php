@@ -44,6 +44,7 @@
 
 			$curr_id = $_GET['curr_id'];
 			$curr_code = "";
+
 			$checkcurriculum = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id;";
 			$result = $conn->query($checkcurriculum);
 			if($result->num_rows>0) {
@@ -68,7 +69,19 @@
 				$subj_id = htmlspecialchars($_POST['subj_id'][$key]);
 				$fin_grade = htmlspecialchars($_POST['fin_grade'][$key]);
 				$credit_earned = htmlspecialchars($_POST['credit_earned'][$key]);
+				$special_grade = htmlspecialchars($_POST['special_grade'][$key]);
 // 	
+
+				if(!empty($special_grade) && $curr_code != "NSEC") {
+					$willInsert = false;
+					$alert_type = "danger";
+					$error_message = "Special grades are for NSEC Students only.";
+					$popover = new Popover();
+					$popover->set_popover($alert_type, $error_message);	
+					$_SESSION['error_pop'] = $popover->get_popover();
+					header("Location: " . $_SERVER["HTTP_REFERER"]);
+					die();
+				}
 
 				if($fin_grade > 74 && $credit_earned == 0 && is_numeric($credit_earned)) {
 					$willInsert = false;
@@ -79,19 +92,9 @@
 					$_SESSION['error_pop'] = $popover->get_popover();
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
-				}elseif ($fin_grade < 75 && $credit_earned == 0) {
-					$credit_earned = 1;
 				}
+
 				if(!is_numeric($credit_earned)) {
-					$curr_id = $_GET['curr_id'];
-					$curr_code = "";
-					$checkcurriculum = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id;";
-					$result = $conn->query($checkcurriculum);
-					if($result->num_rows>0) {
-						while ($row = $result->fetch_assoc()) {
-						    $curr_code = $row['curr_code'];
-						}
-					}
 					if($curr_code != "K-12") {
 						$willInsert = false;
 						$alert_type = "danger";
@@ -117,10 +120,16 @@
 							header("Location: " . $_SERVER["HTTP_REFERER"]);
 							die();
 						}
+
+						if($fin_grade < 75) {
+							$credit_earned = "RETAINED";;
+						}
+						if($fin_grade > 75) {
+							$credit_earned = "PROMOTED";
+						}
 					}
 				}
 				if(is_numeric($credit_earned)) {
-			
 					if($curr_code == "K-12") {
 						$willInsert = false;
 						$alert_type = "danger";
@@ -165,7 +174,7 @@
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
 				}
-				if($fin_grade < 75 && $fin_grade != 0) {
+				if($fin_grade < 75 && $fin_grade != 0 && $curr_code != "K-12") {
 					$credit_earned = 0;
 					$comment ="FAILED";
 					$total_credit -= 1;
@@ -197,14 +206,6 @@
 					die();
 				}
 				if(!is_numeric($total_credit)) {
-					// $willInsert = false;
-					// $alert_type = "danger";
-					// $error_message = "Empty Total Credits Earned.";
-					// $popover = new Popover();
-					// $popover->set_popover($alert_type, $error_message);	
-					// $_SESSION['error_pop'] = $popover->get_popover();
-					// header("Location: " . $_SERVER["HTTP_REFERER"]);
-					// die();
 					$total_credit = "N/A";
 				}
 
