@@ -100,13 +100,15 @@
 		<!-- Top Navigation -->
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
-			<div class="col-md-9">
-				<ol class="breadcrumb">
-				  <li><a href="../index.php">Home</a></li>
-				  <li><a href="#">Student Management</a></li>
-				  <li><a href="student_list.php">Student List</a></li>
-				  <li class="active">Student Personal Information</li>
-				</ol>
+			<div class="row">
+				<div class="col-md-9">
+					<ol class="breadcrumb">
+					  <li><a href="../index.php">Home</a></li>
+					  <li><a href="#">Student Management</a></li>
+					  <li><a href="student_list.php">Student List</a></li>
+					  <li class="active">Student Personal Information</li>
+					</ol>
+				</div>
 			</div>
 			<?php
 				if(isset($_SESSION['success'])) {

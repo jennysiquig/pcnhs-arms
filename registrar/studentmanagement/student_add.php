@@ -42,6 +42,7 @@
 		<!-- Top Navigation -->
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<div class="right_col" role="main">
+		<div class="row">
 			<div class="col-md-9">
 				<ol class="breadcrumb">
 				  <li><a href="../index.php">Home</a></li>
@@ -49,18 +50,18 @@
 				  <li class="active">Add Student Record</li>
 				</ol>
 			</div>
-			
-			<div class="clearfix"></div>
-			<div class="row">
-			<!-- Generate Error Message Here  -->
+			 </div>
+			 <!-- Generate Error Message Here  -->
 	            <?php
 	                if(isset($_SESSION['error_pop'])) {
 	                    echo $_SESSION['error_pop'];
 	                    unset($_SESSION['error_pop']);
 	                }
 	            ?>
-            </div>
+           
             <!--  -->
+			<div class="clearfix"></div>
+			
 			<form id="validate-add" class="form-horizontal form-label-left" name="validate-add" data-parsley-validate action= "phpinsert/student_info_insert.php" method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
