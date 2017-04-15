@@ -73,7 +73,7 @@
 		$comment = "PASSED";
 	}
 
-	$insertothersubj = "INSERT INTO `pcnhsdb`.`othersubjects` (`stud_id`, `subj_id`, `subj_name`, `subj_level`, `subj_type`, `schl_name`, `schl_year`, `yr_level`, `fin_grade`, `credit_earned`, `comment`, `subj_order`) VALUES ('$stud_id', '$subj_id', '$subj_name', $subj_level, '$subj_type', '$schl_name', '$schl_year', '$yr_level', '$fin_grade', '$credit_earned', '$comment', '$subj_order');";
+	$insertothersubj = "INSERT INTO `pcnhsdb`.`othersubjects` (`subj_id`, `stud_id`,  `subj_name`, `subj_level`, `subj_type`, `schl_name`, `schl_year`, `yr_level`, `fin_grade`, `credit_earned`, `comment`, `subj_order`) VALUES ('$subj_id', '$stud_id', '$subj_name', $subj_level, '$subj_type', '$schl_name', '$schl_year', '$yr_level', '$fin_grade', '$credit_earned', '$comment', '$subj_order');";
 
 	if($willInsert) {
 		mysqli_query($conn, $insertothersubj);

@@ -12,19 +12,32 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		
-		<!-- NProgress -->
-    	<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
-		<!-- Bootstrap -->
-		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<!-- Font Awesome -->
-		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
-		<!-- Datatables -->
-		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
-		<!-- Custom Theme Style -->
-		<link href="../../assets/css/custom.min.css" rel="stylesheet">
-		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+		 <!-- jQuery -->
+	    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+	    <!-- Tablesorter themes -->
+	    <!-- bootstrap -->
+	    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+	    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+	    <!-- Tablesorter: required -->
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+	    <!-- NProgress -->
+	    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+	    <!-- Bootstrap -->
+	    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Font Awesome -->
+	    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	    
+	    <!-- Datatables -->
+	    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	    
+	    <!-- Custom Theme Style -->
+	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
+	     <!-- Custom Theme Style -->
+	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -64,15 +77,16 @@
 				</div>
 				<div class="x_content">
 					<div class="col-md-12 col-sm-6 col-xs-12">
-					<table class="table table-bordered">
+					<div class="table-list">
+					<table class="tablesorter-bootstrap">
 		                <thead>
 		                <tr>
-		                    <th>Year Level</th>
-		                    <th>School Year</th>
-		                    <th>School Days</th>
-		                    <th>Days Attended</th>
-		                    <th>Total Years in School</th>
-		                    <th>Action</th>
+		                    <th data-sorter="false">Year Level</th>
+		                    <th data-sorter="false">School Year</th>
+		                    <th data-sorter="false">School Days</th>
+		                    <th data-sorter="false">Days Attended</th>
+		                    <th data-sorter="false">Total Years in School</th>
+		                    <th data-sorter="false">Action</th>
 		                </tr>
 		                </thead>
 		                <tbody>
@@ -130,6 +144,7 @@ REMOVE;
 						</tbody>
 					</table>
 					</div>
+					</div>
 					<?php
 						$next_attendance = $attendance_count+1;
 						if($attendance_count < 4) {
@@ -146,8 +161,6 @@ REMOVE;
 			</div>
 		<?php include "../../resources/templates/registrar/footer.php"; ?>
 		<!-- Scripts -->
-		<!-- jQuery -->
-		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 		<!-- Bootstrap -->
 		<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 		<!-- FastClick -->
@@ -209,5 +222,15 @@ REMOVE;
 				}	
 			}
 		</script>
+		<script type="text/javascript">
+	      $(function() {
+	      $('.table-list').tablesorter();
+	      $('.tablesorter-bootstrap').tablesorter({
+	      theme : 'bootstrap',
+	      headerTemplate: '{content} {icon}',
+	      widgets    : ['zebra','columns', 'uitheme']
+	      });
+	      });
+	    </script>
 	</body>
 </html>
