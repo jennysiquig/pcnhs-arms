@@ -70,10 +70,10 @@
 				$credit_earned = htmlspecialchars($_POST['credit_earned'][$key]);
 // 	
 
-				if($fin_grade > 65 && $credit_earned == 0 && is_numeric($credit_earned)) {
+				if($fin_grade > 74 && $credit_earned == 0 && is_numeric($credit_earned)) {
 					$willInsert = false;
 					$alert_type = "danger";
-					$error_message = "Invalid Credit Earned input. Enter Credit Earned that is greater than 0 if the Final Grade is greater than 65";
+					$error_message = "Invalid Credit Earned input. Enter Credit Earned that is greater than 0 if the Final Grade is greater than 74";
 					$popover = new Popover();
 					$popover->set_popover($alert_type, $error_message);	
 					$_SESSION['error_pop'] = $popover->get_popover();
@@ -118,8 +118,6 @@
 							die();
 						}
 					}
-
-					
 				}
 				if(is_numeric($credit_earned)) {
 			
@@ -170,19 +168,23 @@
 				if($fin_grade < 75 && $fin_grade != 0) {
 					$credit_earned = 0;
 					$comment ="FAILED";
+					$total_credit -= 1;
+					if($total_credit < 1) {
+						$total_credit = 0;
+					}
 				}else {
 					$comment = "PASSED";
 				}
 		//
 				if($average_grade > 99.999) {
-				$willInsert = false;
-				$alert_type = "danger";
-				$error_message = "You have entered an Invalid Average Grade.";
-				$popover = new Popover();
-				$popover->set_popover($alert_type, $error_message);	
-				$_SESSION['error_pop'] = $popover->get_popover();
-				header("Location: " . $_SERVER["HTTP_REFERER"]);
-				die();
+					$willInsert = false;
+					$alert_type = "danger";
+					$error_message = "You have entered an Invalid Average Grade.";
+					$popover = new Popover();
+					$popover->set_popover($alert_type, $error_message);	
+					$_SESSION['error_pop'] = $popover->get_popover();
+					header("Location: " . $_SERVER["HTTP_REFERER"]);
+					die();
 				}
 				if(empty($average_grade)) {
 					$willInsert = false;

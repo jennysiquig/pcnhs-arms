@@ -4,10 +4,10 @@
 		die();
 	}	
 	$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
-	$yr_level = htmlspecialchars($_GET['yr_level'], ENT_QUOTES);
+	$osubj_id = htmlspecialchars($_GET['osubj_id'], ENT_QUOTES);
 
 
-	$statement1 = "DELETE FROM `pcnhsdb`.`othersubjects` WHERE `stud_id`='$stud_id' and yr_level = '$yr_level';";
+	$statement1 = "DELETE FROM `pcnhsdb`.`othersubjects` WHERE `stud_id`='$stud_id' and osubj_id = '$osubj_id';";
 	
 	
 	mysqli_query($conn, $statement1);

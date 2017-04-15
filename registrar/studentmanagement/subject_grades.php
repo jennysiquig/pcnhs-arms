@@ -20,19 +20,32 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		
-		<!-- NProgress -->
-		<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
-		<!-- Bootstrap -->
-		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<!-- Font Awesome -->
-		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
-		<!-- Datatables -->
-		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
-		<!-- Custom Theme Style -->
-		<link href="../../assets/css/custom.min.css" rel="stylesheet">
-		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+		<!-- jQuery -->
+	    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+	    <!-- Tablesorter themes -->
+	    <!-- bootstrap -->
+	    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+	    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+	    <!-- Tablesorter: required -->
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+	    <!-- NProgress -->
+	    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+	    <!-- Bootstrap -->
+	    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Font Awesome -->
+	    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	    
+	    <!-- Datatables -->
+	    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	    
+	    <!-- Custom Theme Style -->
+	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
+	     <!-- Custom Theme Style -->
+	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -72,14 +85,14 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<table class="table table-bordered">
+					<table class="tablesorter-bootstrap">
 		            	<thead>
 		                	<tr>
-		                    	<th>Subject</th>
-		                        <th>Subject Level</th>
-		                        <th>Final Grade</th>
-		                        <th>Credits Earned</th>
-		                        <th>Remarks</th>
+		                    	<th data-sorter="false">Subject</th>
+		                        <th data-sorter="false">Subject Level</th>
+		                        <th data-sorter="false">Final Grade</th>
+		                        <th data-sorter="false">Credits Earned</th>
+		                        <th data-sorter="false">Remarks</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -121,8 +134,6 @@ YR1;
 		</div>
 		<?php include "../../resources/templates/registrar/footer.php"; ?>
 		<!-- Scripts -->
-		<!-- jQuery -->
-		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 		<!-- Bootstrap -->
 		<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 		<!-- FastClick -->
@@ -134,5 +145,15 @@ YR1;
 		<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../assets/js/custom.min.js"></script>
+		<script type="text/javascript">
+	      $(function() {
+	      $('.table-list').tablesorter();
+	      $('.tablesorter-bootstrap').tablesorter({
+	      theme : 'bootstrap',
+	      headerTemplate: '{content} {icon}',
+	      widgets    : ['zebra','columns', 'uitheme']
+	      });
+	      });
+	    </script>
 	</body>
 </html>

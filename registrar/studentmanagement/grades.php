@@ -24,19 +24,32 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		
-		<!-- NProgress -->
-    	<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
-		<!-- Bootstrap -->
-		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<!-- Font Awesome -->
-		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
-		<!-- Datatables -->
-		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
-		<!-- Custom Theme Style -->
-		<link href="../../assets/css/custom.min.css" rel="stylesheet">
-		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+		 <!-- jQuery -->
+	    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
+
+	    <!-- Tablesorter themes -->
+	    <!-- bootstrap -->
+	    <link href="../../resources/libraries/tablesorter/css/bootstrap-v3.min.css" rel="stylesheet">
+	    <link href="../../resources/libraries/tablesorter/css/theme.bootstrap.css" rel="stylesheet">
+
+	    <!-- Tablesorter: required -->
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
+	    <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
+	    <!-- NProgress -->
+	    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
+	    <!-- Bootstrap -->
+	    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Font Awesome -->
+	    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	    
+	    <!-- Datatables -->
+	    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	    
+	    <!-- Custom Theme Style -->
+	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
+	     <!-- Custom Theme Style -->
+	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
 		
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -82,15 +95,16 @@
 				</div>
 				<div class="x_content">
 					<div class="col-md-12 col-sm-6 col-xs-12">
-					<table class="table table-bordered">
+					<div class="table-list">
+					<table class="tablesorter-bootstrap">
 		                <thead>
 		                <tr>
-		                	<th>School Name</th>
-		                    <th>Year Level</th>
-		                    <th>School Year</th>
-		                    <th>Average Grade</th>
-		                    <th>Total Credits Earned</th>
-		                    <th>Action</th>
+		                	<th data-sorter="false">School Name</th>
+		                    <th data-sorter="false">Year Level</th>
+		                    <th data-sorter="false">School Year</th>
+		                    <th data-sorter="false">Average Grade</th>
+		                    <th data-sorter="false">Total Credits Earned</th>
+		                    <th data-sorter="false">Action</th>
 		                </tr>
 		                </thead>
 		                <tbody>
@@ -150,6 +164,7 @@ REMOVE;
 						</tbody>
 					</table>
 					</div>
+					</div>
 					<?php
 						$next_grade = $grade_count+1;
 						if($grade_count < 4) {
@@ -175,19 +190,20 @@ REMOVE;
 				</div>
 
 			<div class="x_content">
-				<table class="table table-bordered">
+				<div class="table-list">
+				<table class="tablesorter-bootstrap">
 					<thead>
 						<tr>
-							<th>School Name</th>
-							<th>School Year</th>
-							<th>Year Level</th>
-							<th>Subject</th>
-							<th>Subject Level</th>
-							<th>Subject Type</th>
-							<th>Final Grade</th>
-							<th>Credit Earned</th>
-							<th>Remarks</th>
-							<th>Action</th>
+							<th data-sorter="false">School Name</th>
+							<th data-sorter="false">School Year</th>
+							<th data-sorter="false">Year Level</th>
+							<th data-sorter="false">Subject</th>
+							<th data-sorter="false">Subject Level</th>
+							<th data-sorter="false">Subject Type</th>
+							<th data-sorter="false">Final Grade</th>
+<!-- 							<th data-sorter="false">Credit Earned</th>
+							<th data-sorter="false">Remarks</th> -->
+							<th data-sorter="false">Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -201,6 +217,7 @@ REMOVE;
 									if ($result->num_rows > 0) {
 										// output data of each row
 										while($row = $result->fetch_assoc()) {
+											$osubj_id = $row['osubj_id'];
 											$schl_name = $row['schl_name'];
 											$schl_year = $row['schl_year'];
 											$yr_level = $row['yr_level'];
@@ -210,7 +227,8 @@ REMOVE;
 											$fin_grade = $row['fin_grade'];
 											$credit_earned = $row['credit_earned'];
 											$comment = $row['comment'];
-
+													//<td>$fin_grade</td>
+						                          	//<td>$credit_earned</td>
 											echo <<<YR1
 												<tr>
 						                          <th scope="row">$schl_name</th>
@@ -219,11 +237,10 @@ REMOVE;
 						                          <td>$subj_name</td>
 						                          <td>$subj_level</td>
 						                          <td>$subj_type</td>
-						                          <td>$fin_grade</td>
-						                          <td>$credit_earned</td>
+
 						                          <td>$comment</td>
 						                          <td>
-													<a href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level>Remove Record</a>
+													<a class="btn btn-danger btn-xs" href=phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id>Remove Record</a>
 						                          </td>
 						                        </tr>
 
@@ -236,6 +253,7 @@ YR1;
 		                        
 		                      </tbody>
 		                    </table>
+		                    </div>
 						<div class="row">
 							<div class="col-md-12 col-sm-6 col-xs-12">
 								<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
@@ -260,12 +278,14 @@ YR1;
 
 				<div class="x_content">
 					<!--  -->
-				<table class="table table-bordered">
+				<div class="table-list">
+				<table class="tablesorter-bootstrap">
 					<thead>
 						<tr>
-							<th>Subject</th>
-							<th>Subject Level</th>
-							<th>Year Level</th>
+							<th data-sorter="false">Subject</th>
+							<th data-sorter="false">Subject Level</th>
+							<th data-sorter="false">Year Level</th>
+							<th data-sorter="false">Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -274,21 +294,27 @@ YR1;
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id where stud_id = '$stud_id' AND comment = 'FAILED' ;";
+									$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id natural join grades where stud_id = '$stud_id' AND comment = 'FAILED' ;";
 
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
 										while($row = $result->fetch_assoc()) {
+											$schl_name = $row['schl_name'];
 											$yr_level = $row['yr_level'];
 											$subj_name = $row['subj_name'];
 											$subj_level = $row['subj_level'];
-
+											// href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level
 											echo <<<YR1
 												<tr>
 						                          <td>$subj_name</td>
 						                          <td>$subj_level</td>
 						                          <td>$yr_level</td>
+						                          <td>
+						                          	<center>
+						                          	<a class="btn btn-primary btn-xs" >Add To Other Subjects</a>
+						                          	</center>
+						                          </td>
 						                        </tr>
 
 YR1;
@@ -300,6 +326,7 @@ YR1;
 		                        
 		                      </tbody>
 		                    </table>	
+		                   </div>
 		                </div>
 		              </div>
 		            </div>
@@ -310,8 +337,6 @@ YR1;
 		</div>
 		<?php include "../../resources/templates/registrar/footer.php"; ?>
 		<!-- Scripts -->
-		<!-- jQuery -->
-		<script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 		<!-- Bootstrap -->
 		<script src="../../resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
 		<!-- FastClick -->
@@ -403,5 +428,15 @@ YR1;
 				}	
 			}
 		</script>
+		<script type="text/javascript">
+	      $(function() {
+	      $('.table-list').tablesorter();
+	      $('.tablesorter-bootstrap').tablesorter({
+	      theme : 'bootstrap',
+	      headerTemplate: '{content} {icon}',
+	      widgets    : ['zebra','columns', 'uitheme']
+	      });
+	      });
+	    </script>
 	</body>
 </html>

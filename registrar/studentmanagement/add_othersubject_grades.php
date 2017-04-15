@@ -1,5 +1,6 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
+<?php $stud_id = $_GET['stud_id']; ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,6 +43,17 @@
         <?php include "../../resources/templates/registrar/top-nav.php"; ?>
         <div class="right_col" role="main">
             <div class="clearfix"></div>
+            <?php
+                if(isset($_SESSION['error_pop'])) {
+                    echo $_SESSION['error_pop'];
+                    unset($_SESSION['error_pop']);
+                }
+            ?>
+            <div class="row">
+                <div class="col-md-9">
+                    <a class="btn btn-default" href=<?php echo "../studentmanagement/grades.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+                </div>
+            </div>
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Other Subject Grades</h2>
@@ -49,11 +61,11 @@
                 </div>
                 <div class="x_content">
                     <!-- First -->
-                    <form id="val-gr" class="form-horizontal form-label-left" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/othersubjectgrades_insert.php?stud_id=$stud_id" ?> method="POST" novalidate>
+                    <form id=<?php $stud_id = $_GET['stud_id']; echo "$stud_id"; ?> class="form-horizontal form-label-left" name="val-gr" action=<?php $stud_id = $_GET['stud_id']; echo "phpinsert/othersubjectgrades_insert.php?stud_id=$stud_id"; ?> method="POST">
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" required=" " type="text" name="schl_name">
+                                <input id="name" class="form-control col-md-7 col-xs-12" minlength="3" required=" " type="text" name="schl_name">
                             </div>
                         </div>
                         <div class="item form-group">
@@ -71,7 +83,7 @@
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text"  name="subj_name" required=" ">
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" minlength="3" name="subj_name" required=" ">
                             </div>
                         </div>
                         <div class="item form-group">
@@ -87,6 +99,7 @@
                                     <option value="">-- No Selected --</option>
                                     <option value="summer">Summer</option>
                                     <option value="transferee">Transferee</option>
+                                    <option value="regular">Regular</option>
                                 </select>
                             </div>
                         </div>
@@ -102,17 +115,12 @@
                                 <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="credit_earned" required=" ">
                             </div>
                         </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Remarks <span style="color:red;">*</span></label>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="comment" required=" ">
-                            </div>
-                        </div>
                             <div class="clearfix"></div>
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <!-- <div class="col-md-6"></div> -->
-                                <div class="col-md-2 pull-right">
+                                <div class="col-md-6 pull-right">
+                                    <button type="reset" class="btn btn-default" onclick="releaseData();">Clear Fields</button>
                                     <button id="send" type="submit" class="btn btn-success"><i class="fa fa-save m-right-xs"></i> Save</button>
                                 </div>
                             </div>
@@ -134,6 +142,8 @@
             <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
             <!-- NProgress -->
             <script src="../../resources/libraries/nprogress/nprogress.js"></script>
+            <!-- Local Storage -->
+            <script src= "../../resources/libraries/sisyphus/sisyphus.js"></script>
             <!-- Custom Theme Scripts -->
             <script src= "../../assets/js/custom.min.js"></script>
             <!-- Scripts -->
@@ -169,6 +179,25 @@
                 });
             </script>
                 <!-- /jquery.inputmask -->
+            <script type="text/javascript">
+            var val_gr = document.getElementsByName("val-gr");
+            var stud_unique_id = val_gr[0].id;
+      
 
+            $( function() {
+                        $('#' + stud_unique_id).sisyphus({
+                            autoRelease: false,
+                        });
+                    });
+        </script>
+        <script type="text/javascript">
+            var val_gr = document.getElementsByName("val-gr");
+            var stud_unique_id = val_gr[0].id;
+            
+
+            function releaseData() {
+                $('#' + stud_unique_id).sisyphus().manuallyReleaseData();
+            }
+        </script>
         </body>
     </html>

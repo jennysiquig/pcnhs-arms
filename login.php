@@ -127,14 +127,14 @@
         <!-- Custom Theme Scripts -->
         <script src= "assets/js/custom.min.js"></script>
         <script type="text/javascript">
-            jQuery(document).ready(function() {
+            $(function() {
     
                 /*
                     Fullscreen background
                 */
                 $.backstretch([
                                 "assets/images/backgrounds/bg.png"
-                             ], {duration: 3000, fade: 750});
+                             ], {fade: 750});
                 
                 /*
                     Form validation
