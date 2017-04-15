@@ -12,7 +12,7 @@
 	
 	mysqli_query($conn, $statement1);
 	
-	$_SESSION['user_activity'][] = "REMOVED OTHER SUBJECTS OF: $stud_id";
+	$_SESSION['user_activity'][] = "REMOVED OTHER SUBJECTS OF:<br> $stud_id";
 	header("location: ../grades.php?stud_id=$stud_id");
 
 ?>

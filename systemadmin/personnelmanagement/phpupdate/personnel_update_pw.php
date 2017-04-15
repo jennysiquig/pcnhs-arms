@@ -35,7 +35,7 @@ if ($resultCheckPw->num_rows > 0) {
             SET `uname`='$uname', `password`='$hashed', `last_name`='$last_name', `first_name`='$first_name', `mname`='$mname', `position`='$position', `access_type` = '$access_type',`accnt_status`='$accnt_status' 
             WHERE personnel.per_id = '$per_id'";
             mysqli_query($conn, $updatestmnt);
-            $per_edit = "EDITED PERSONNEL ACCOUNT: $per_id";
+            $per_edit = "EDITED PERSONNEL ACCOUNT PW: $per_id";
             $_SESSION['user_activity'][] = $per_edit;
 
             $alert_type = "info";

@@ -43,6 +43,7 @@
       <!-- Tablesorter: required -->
       <script src="../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
       <script src="../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+
       <!-- NProgress -->
       <link href="../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
       
@@ -146,20 +147,22 @@
                           </div>
                         </div>
                       </form>
-              </div>
-                <div class="activity-log">
-                    <table id="logList" class="tablesorter-bootstrap">
-                        <thead>
-                            <tr>
-                                <th data-sorter="true">Log ID</th>
-                                <th data-sorter="true">Date</th>
-                                <th data-sorter="true">Username</th>
-                                <th data-sorter="true">Access Type</th>
-                                <th data-sorter="true">Login Time</th>
-                                <th data-sorter="true">User Activity</th>
-                                <th data-sorter="true">Logout Time</th>
-                            </tr>
-                            </thead>
+                </div>
+              <div class="table-responsive subj-list">
+                <table class="tablesorter-bootstrap">
+                  <thead>
+                    <tr class="headings">
+                      <th class="column-title">Log ID</th>
+                      <th class="column-title">Date</th>
+                      <th class="column-title">Username</th>
+                      <th class="column-title">Access Type</th>
+                      <th class="column-title">Login Time</th>
+                      <th class="column-title">User Activity</th>
+                      <th class="column-title">Logout Time</th>
+
+                    </th>
+                  </tr>
+                </thead>
 
                             <tbody>
                               <?php
@@ -291,16 +294,19 @@
         xhttp.send();
       }
     </script>
-    <script type="text/javascript">
-        $(function() {
-        $('.activity-log').tablesorter();
-        $('.tablesorter-bootstrap').tablesorter({
+  <script type="text/javascript">
+    $(function() {
+
+      $('.subj-list').tablesorter();
+
+      $('.tablesorter-bootstrap').tablesorter({
         theme : 'bootstrap',
         headerTemplate: '{content} {icon}',
         widgets    : ['zebra','columns', 'uitheme']
-        });
-        });
-      </script>
+      });
+
+    });
+    </script>
     </body>
 </html>
 </body>

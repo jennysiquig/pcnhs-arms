@@ -123,18 +123,19 @@
                         </div>
                       </form>
               </div>
-                    <div class="personnel-list">
-                        <table id="personnelList" class="tablesorter-bootstrap">
-                            <thead>
-                            <tr>
-                                <th data-sorter="true">Personnel ID</th>
-                                <th data-sorter="true">Username</th>
-                                <th data-sorter="true">Position</th>
-                                <th data-sorter="true">Access Type</th>
-                                <th data-sorter="true">Account Status</th>
-                                <th data-sorter="false">Action</th>
-                            </tr>
-                            </thead>
+              <div class="table-responsive subj-list">
+                <table class="tablesorter-bootstrap">
+                  <thead>
+                    <tr class="headings">
+                      <th class="column-title">Personnel ID</th>
+                      <th class="column-title">Username</th>
+                      <th class="column-title">Position</th>
+                      <th class="column-title">Access Type</th>
+                      <th class="column-title">Account Status</th>
+                      <th class="column-title" data-sorter="false">Action</th>
+                    </th>
+                  </tr>
+                </thead>
                             <tbody>
                             <?php
                               $statement = "";
@@ -204,16 +205,16 @@ NORES;
                                     $accnt_status = $row['accnt_status'];
 
                                     if ($row['accnt_status'] == "ACTIVE") {
-                                      $accnt_status = "<center><button class='btn btn-success btn-s'> <i class='fa fa-eye'></i>&nbsp Activated &ensp;&ensp;</button></center>";
+                                      $accnt_status = "<center><button class='btn btn-success btn-xs'> <i class='fa fa-eye'></i>&nbsp Activated &ensp;&ensp;</button></center>";
                                     }
                                     else {
-                                      $accnt_status = "<center><button class='btn btn-danger btn-s'> <i class='fa fa-eye-slash'></i>&nbsp Deactivated</button></center>";
+                                      $accnt_status = "<center><button class='btn btn-danger btn-xs'> <i class='fa fa-eye-slash'></i>&nbsp Deactivated</button></center>";
                                     }
                                     if ($row['access_type'] == "REGISTRAR") {
-                                      $access_type = "<center><button class='btn btn-warning btn-s'> <i class='fa fa-pencil'></i>&nbsp Registrar  &ensp;&ensp;&ensp;&nbsp </button></center>";
+                                      $access_type = "<center><button class='btn btn-warning btn-xs'> <i class='fa fa-pencil'></i>&nbsp Registrar  &ensp;&ensp;&ensp;&nbsp </button></center>";
                                     }
                                     else {
-                                      $access_type = "<center><button class='btn btn-dark btn-s'> <i class='fa fa-wrench'></i>&nbsp Administrator</button></center>";
+                                      $access_type = "<center><button class='btn btn-dark btn-xs'> <i class='fa fa-wrench'></i>&nbsp Administrator</button></center>";
                                     }
                                   echo <<<PERSONNELLIST
                                           <tr class="odd pointer">
@@ -224,7 +225,7 @@ NORES;
                                                         <td class=" ">$accnt_status</td>
                                                         <td class=" ">
                                                         <center>
-                                                        <center><a href= "personnel_view.php?per_id=$per_id" class="btn btn-primary btn-s">
+                                                        <center><a href= "personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-user"></i> View Profile</a></center>
                                                         </td>           
                                             </tr>
@@ -333,16 +334,19 @@ PERSONNELLIST;
         xhttp.send();
       }
     </script>
-    <script type="text/javascript">
-        $(function() {
-        $('.personnel-list').tablesorter();
-        $('.tablesorter-bootstrap').tablesorter({
+  <script type="text/javascript">
+    $(function() {
+
+      $('.subj-list').tablesorter();
+
+      $('.tablesorter-bootstrap').tablesorter({
         theme : 'bootstrap',
         headerTemplate: '{content} {icon}',
         widgets    : ['zebra','columns', 'uitheme']
-        });
-        });
-      </script>
+      });
+
+    });
+    </script>
     </body>
 </html>
 </body>

@@ -131,21 +131,22 @@
                         </div>
                       </form>
               </div>
-                    <div class="sign-list">
-                        <table id="signList" class="tablesorter-bootstrap">
-                            <thead>
-                            <tr>
-                                <th data-sorter="true">Signatory ID&nbsp</th>
-                                <th data-sorter="true">First Name&nbsp</th>
-                                <th data-sorter="true">M. I.&nbsp</th>
-                                <th data-sorter="true">Last Name</th>
-                                <th data-sorter="true">Degree</th>
-                                <th data-sorter="true">Position</th>
-                                <th data-sorter="true">Year Started</th>
-                                <th data-sorter="true">Year Ended</th>
-                                <th data-sorter="false">Action</th>
-                            </tr>
-                            </thead>
+              <div class="table-responsive subj-list">
+                <table class="tablesorter-bootstrap">
+                  <thead>
+                    <tr class="headings">
+                      <th class="column-title">Signatory ID</th>
+                      <th class="column-title">First Name</th>
+                      <th class="column-title">M. I.</th>
+                      <th class="column-title">Last Name</th>
+                      <th class="column-title">Degree</th>
+                      <th class="column-title">Position</th>
+                      <th class="column-title">Year Started</th>
+                      <th class="column-title">Year Ended</th>
+                      <th class="column-title" data-sorter="false">Action</th>
+                    </th>
+                  </tr>
+                </thead>
                             <tbody>
                                                           <?php
                               $statement = "";
@@ -220,7 +221,7 @@ NORES;
                                                         <td class=" ">$yr_started</td>
                                                         <td class=" ">$yr_ended</td>
                                                         <td class=" ">
-                                                        <a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-primary btn-s"><i class="fa fa-user"></i> View</a>
+                                                        <a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View</a>
                                                         </td>                                                       
                                             </tr>
 SIGNLIST;
@@ -331,16 +332,19 @@ SIGNLIST;
         xhttp.send();
       }
     </script>
-    <script type="text/javascript">
-        $(function() {
-        $('.sign-list').tablesorter();
-        $('.tablesorter-bootstrap').tablesorter({
+  <script type="text/javascript">
+    $(function() {
+
+      $('.subj-list').tablesorter();
+
+      $('.tablesorter-bootstrap').tablesorter({
         theme : 'bootstrap',
         headerTemplate: '{content} {icon}',
         widgets    : ['zebra','columns', 'uitheme']
-        });
-        });
-      </script>
+      });
+
+    });
+    </script>
     </body>
 </html>
 </body>
