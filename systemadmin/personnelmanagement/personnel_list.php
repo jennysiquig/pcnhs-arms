@@ -65,6 +65,9 @@
                 </span>
                 </div>
             </div>
+            <div class="pull-right">
+            <a><i class="fa fa-info-circle"></i> Search Personnel Accounts by <strong>Username / Name / Position / Account Status </strong></a>
+          </div>
         </div>
     </form>
     <div class="clearfix"></div>

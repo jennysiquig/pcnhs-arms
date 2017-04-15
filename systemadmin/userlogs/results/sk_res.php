@@ -27,7 +27,8 @@ LOGLIST;
 elseif ($statement2_res->num_rows == 0) {
     echo <<<NORES
                                 <tr class="odd pointer">
-                                    <span class="badge badge-danger">NO RESULT</span>        
+                                    <span class="badge badge-danger">NO RESULT</span> 
+                                    <br><br>       
                                 </tr>
 NORES;
 }
