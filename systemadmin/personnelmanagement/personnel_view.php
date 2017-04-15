@@ -83,7 +83,7 @@
                                 $result = $conn->query($statement);
 
                                 if (!$result) {
-                                    header("location: personnels.php");
+                                    header("location: personnel_list.php");
                                     die();
                                 }
 
@@ -100,7 +100,7 @@
                                     }
                                 }
                                 else {
-                                    header("location: personnels.php");
+                                    header("location: personnel_list.php");
                                     die();
                                 }
                             ?>
@@ -201,7 +201,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel2"><i class="fa fa-lock"></i> Change Password</h4>
+                        <h4 class="modal-title" id="myModalLabel2"><i class="fa fa-warning"></i> Remove Personnel</h4>
                     </div>
                     <div class="modal-body">
                            
