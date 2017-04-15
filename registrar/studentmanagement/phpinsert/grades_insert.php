@@ -41,6 +41,7 @@
 			$insertgrades = "";
 			$comment = "";
 			$willInsert = true;
+			$hasSpecialGrade = false;
 
 			$curr_id = $_GET['curr_id'];
 			$curr_code = "";
@@ -69,8 +70,15 @@
 				$subj_id = htmlspecialchars($_POST['subj_id'][$key]);
 				$fin_grade = htmlspecialchars($_POST['fin_grade'][$key]);
 				$credit_earned = htmlspecialchars($_POST['credit_earned'][$key]);
-				$special_grade = htmlspecialchars($_POST['special_grade'][$key]);
+				$special_grade = strtoupper(htmlspecialchars($_POST['special_grade'][$key]));
 // 	
+				if(!empty($fin_grade) && !empty($special_grade) && $curr_code == "NSEC") {
+					$special_grade = "";
+				}
+				if(empty($fin_grade) && !empty($special_grade)) {
+					$fin_grade = 99;
+					$hasSpecialGrade = true;
+				}
 
 				if(!empty($special_grade) && $curr_code != "NSEC") {
 					$willInsert = false;
@@ -208,8 +216,10 @@
 				if(!is_numeric($total_credit)) {
 					$total_credit = "N/A";
 				}
-
-				$insertgrades .= "INSERT INTO `pcnhsdb`.`studentsubjects` (`stud_id`, `subj_id`, `schl_year`, `yr_level`, `fin_grade`, `comment`, `credit_earned`) VALUES ('$stud_id', '$subj_id', '$schl_year', '$yr_level', '$fin_grade', '$comment', '$credit_earned');";
+				if($hasSpecialGrade) {
+					$fin_grade = 0.0;
+				}
+				$insertgrades .= "INSERT INTO `pcnhsdb`.`studentsubjects` (`stud_id`, `subj_id`, `schl_year`, `yr_level`, `fin_grade`, `comment`, `credit_earned`,  `special_grade`) VALUES ('$stud_id', '$subj_id', '$schl_year', '$yr_level', '$fin_grade', '$comment', '$credit_earned', '$special_grade');";
 				
 			}
 			$insertaverage = "INSERT INTO `pcnhsdb`.`grades` (`stud_id`, `schl_name`, `schl_year`, `yr_level`, `average_grade`, `total_credit`) VALUES ('$stud_id', '$schl_name', '$schl_year', '$yr_level', '$average_grade', '$total_credit');";

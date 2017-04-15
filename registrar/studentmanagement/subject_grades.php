@@ -91,6 +91,7 @@
 		                    	<th data-sorter="false">Subject</th>
 		                        <th data-sorter="false">Subject Level</th>
 		                        <th data-sorter="false">Final Grade</th>
+		                        <th data-sorter="false">Special Grade</th>
 		                        <th data-sorter="false">Credits Earned</th>
 		                        <th data-sorter="false">Remarks</th>
 		                    </tr>
@@ -100,7 +101,7 @@
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = '$yr_level' and stud_id = '$stud_id';";
+									$query = "SELECT special_grade, subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = '$yr_level' and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
@@ -110,12 +111,14 @@
 											$fin_grade = $row['fin_grade'];
 											$credit_earned = $row['credit_earned'];
 											$comment = $row['comment'];
+											$special_grade = $row['special_grade'];
 
 											echo <<<YR1
 												<tr>
 						                          <th scope="row">$subj_name</th>
 						                          <td>$subj_level</td>
 						                          <td>$fin_grade</td>
+						                          <td>$special_grade</td>
 						                          <td>$credit_earned</td>
 						                          <td>$comment</td>
 						                        </tr>

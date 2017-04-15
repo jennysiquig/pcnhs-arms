@@ -370,11 +370,15 @@ NUM;
                         <div class="clearfix"></div>
                         <br>
                         <div class="row">
+                            <div class="col-md-5">
+                                 <button type="button" class="btn btn-success" onclick="computeCredit(); computeAverage();"><i class="glyphicon glyphicon-plus"></i> Compute</button>
+                            </div>
+                           
                             <div class="pull-right">
                                 <button type="reset" class="btn btn-default" onclick="releaseData();">Clear Fields</button>
                                 
                                 <button type="" id="send" class="btn btn-primary" onclick="saveToFile();" data-toggle="tooltip" data-placement="top" title="Save grades as CSV"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
-                                <button type="submit" id="send" class="btn btn-success" onclick="saveToDB(); computeCredit(); computeAverage();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
+                                <button type="submit" id="send" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
                             </div>
                             
                         </div>
