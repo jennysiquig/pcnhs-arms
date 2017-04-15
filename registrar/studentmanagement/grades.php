@@ -148,9 +148,15 @@ GRADES;
 													<button class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');">Remove Record</button>
 REMOVE;
 												}else {
-													echo <<<REMOVE
-													<button class="btn btn-danger btn-xs" disabled>Remove Record</button>
+													if($yr_level < 4 && $result->num_rows == $yr_level) {
+														echo <<<REMOVE
+															<button class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');">Remove Record</button>
 REMOVE;
+													}else {
+														echo <<<REMOVE
+															<button class="btn btn-danger btn-xs" disabled>Remove Record</button>
+REMOVE;
+													}
 												}
 											
 											echo "</center>
