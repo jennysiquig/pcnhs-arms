@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-    <?php
-        date_default_timezone_set('Asia/Manila');
-        session_start();
-        include_once 'resources/classes/Popover.php';
+<?php
+header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+date_default_timezone_set('Asia/Manila');
+session_start();
+include_once 'resources/classes/Popover.php';
+if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
+//header('Location: login.php');
+}else {
+$account_type = $_SESSION['account_type'];
+header("Location: $account_type/index.php");
+}
 
-        if(!isset($_SESSION['logged_in']) && !isset($_SESSION['account_type'])){
-          //header('Location: login.php');
-        }else {
-          $account_type = $_SESSION['account_type'];
-          header("Location: $account_type/index.php");
-        }
-        
-        
 
-      ?>
+?>
     <head>
 
         <meta charset="utf-8">
