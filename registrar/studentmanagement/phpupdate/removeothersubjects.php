@@ -11,8 +11,16 @@
 	
 	
 	mysqli_query($conn, $statement1);
-	
-	$_SESSION['user_activity'][] = "REMOVED OTHER SUBJECTS OF:<br> $stud_id";
+	try {
+		$_SESSION['user_activity'][] = "REMOVED OTHER SUBJECTS OF:<br> $stud_id";
+	}catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+			echo 'Logging out...';
+	}finally {
+			header("refresh: 3; url='../../../logout.php'");
+			die();
+	}
+
 	header("location: ../grades.php?stud_id=$stud_id");
 
 

@@ -46,7 +46,16 @@
 		mysqli_query($conn, $updatestmnt2);
 		mysqli_query($conn, $updatestmnt3);
 
-		$_SESSION['user_activity'][] = "UPDATED INFORMATION OF: $stud_id";
+		try {
+			$_SESSION['user_activity'][] = "UPDATED INFORMATION OF: $stud_id";
+		}catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+			echo 'Logging out...';
+		}finally {
+			header("refresh: 3; url='../../../logout.php'");
+			die();
+		}
+		
 
 		header("location: ../student_info.php?stud_id=$stud_id");
 	}

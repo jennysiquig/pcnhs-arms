@@ -222,7 +222,15 @@
 				mysqli_multi_query($conn, $insertgrades);
 				echo "<p>Updating Database, please wait...</p>";
 				header("refresh:3;url=../grades.php?stud_id=$stud_id");
+			try {
 				$_SESSION['user_activity'][] = "ADDED NEW GRADES: $stud_id - $yr_level";
+			}catch (Exception $e) {
+				echo 'Caught exception: ',  $e->getMessage(), "\n";
+				echo 'Logging out...';
+			}finally {
+				header("refresh: 3; url='../../../logout.php'");
+				die();
+			}
 			}
 		}
 	}

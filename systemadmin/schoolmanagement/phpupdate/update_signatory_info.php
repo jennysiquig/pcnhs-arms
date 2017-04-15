@@ -22,9 +22,16 @@
 
     mysqli_query($conn, $updatestmt);
 
-   	$sign_edit = "EDITED SIGNATORY: $sign_id";    
-   	$_SESSION['user_activity'][] = $sign_edit;
-
+   	$sign_edit = "EDITED SIGNATORY: $sign_id";   
+   	try { 
+   		$_SESSION['user_activity'][] = $sign_edit;
+   	}catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+			echo 'Logging out...';
+	}finally {
+		header("refresh: 3; url='../../../logout.php'");
+		die();
+	}
     $alert_type = "info";
     $message = "Signatory Information Edited Successfully";
     $popover = new Popover();

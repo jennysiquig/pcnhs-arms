@@ -50,8 +50,15 @@ else {
 	$statement->execute();
 
 	$sign_add = "ADDED SIGNATORY: $sign_id";
-	$_SESSION['user_activity'][] = $sign_add;
-
+	try {
+		$_SESSION['user_activity'][] = $sign_add;
+	}catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+			echo 'Logging out...';
+	}finally {
+			header("refresh: 3; url='../../../logout.php'");
+			die();
+	}
 	$alert_type = "success";
 	$message = "Signatory Added Successfully";
 	$popover = new Popover();
