@@ -57,7 +57,7 @@
 
                     <input type="text" class="form-control" name="search_key" placeholder="Search Signatories">
                     <span class="input-group-btn">
-                  <button class="btn btn-primary">Go</button>
+                  <button class="btn btn-primary">Search</button>
                 </span>
                 </div>
             </div>
