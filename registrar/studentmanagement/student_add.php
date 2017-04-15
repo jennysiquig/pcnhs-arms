@@ -51,13 +51,15 @@
 			</div>
 			
 			<div class="clearfix"></div>
+			<div class="row">
 			<!-- Generate Error Message Here  -->
-            <?php
-                if(isset($_SESSION['error_pop'])) {
-                    echo $_SESSION['error_pop'];
-                    unset($_SESSION['error_pop']);
-                }
-            ?>
+	            <?php
+	                if(isset($_SESSION['error_pop'])) {
+	                    echo $_SESSION['error_pop'];
+	                    unset($_SESSION['error_pop']);
+	                }
+	            ?>
+            </div>
             <!--  -->
 			<form id="validate-add" class="form-horizontal form-label-left" name="validate-add" data-parsley-validate action= "phpinsert/student_info_insert.php" method="POST" >
 				<div class="x_panel">
