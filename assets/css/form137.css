@@ -48,6 +48,7 @@ body{
 	border-bottom-width: 4px;
 	border-bottom-color: black;
 	border-bottom-style: double;
+	padding-bottom: 2px;
 }
 
 #heading-1{

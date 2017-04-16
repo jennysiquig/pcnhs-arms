@@ -224,7 +224,7 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 																<td class=" ">$request_purpose</td>
 																<td class=" ">
 																	<center>
-																		<a href="../../pcnhs-arms/registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose&new_request=true" class="btn btn-default"> Process Request</a>
+																		<a href="../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose&new_request=true" class="btn btn-default"> Process Request</a>
 																	</center>
 																</td>
 												</tr>

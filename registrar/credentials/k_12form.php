@@ -8,15 +8,7 @@
     if(!$conn) {
         die();
     }
-    if(!isset($_SESSION['generated_form'])) {
-        $_SESSION['generated_form'] = true;
-    }else {
-        if($_SESSION['generated_form']) {
-            unset($_SESSION['generated_form']);
-            header("location: ../../index.php");
-            die();
-        }
-    }    
+    
     $cred_id = htmlspecialchars($_GET['cred_id'], ENT_QUOTES);
     $request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
     $signatory = htmlspecialchars($_GET['signatory'], ENT_QUOTES);
@@ -1036,12 +1028,13 @@ A4;
 
 			<!-- FORM 137 -->
 
-			<div class="row no-print">
-				<div class="col-xs-12">
-					<button class="btn btn-success pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+      <div class="row no-print">
+        <br>
+        <div class="col-md-8">
           <a href="../../registrar" class="btn btn-success pull-right"><i class="fa fa-home"></i> Back to Home</a>
-				</div>
-			</div>
+          <button class="btn btn-success pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+        </div>
+      </div>
 
 		</div>
 	

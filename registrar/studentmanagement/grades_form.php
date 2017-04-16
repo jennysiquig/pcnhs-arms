@@ -36,12 +36,9 @@
     $input_year1 = intval($explode_date_input[0]);
     $input_year2 = intval($explode_date_input[1]);
 
-    $compare_year1 = intval($explode_date_compare[0]);
-    $compare_year2 = intval($explode_date_compare[1]);
 
 
-
-    if($input_year1 <= $compare_year1 || $input_year2 <= $compare_year2 || $input_year1 >= $input_year2 || $input_year2 != ($input_year1+1)) {
+    if($input_year1 >= $input_year2 || $input_year2 != ($input_year1+1)) {
         $_SESSION['error_message'] = "<p style='color: red'><b>Invalid School Year</b></p>";
         $yr_level_check = $_GET['yr_level'];
         //header("location: add_grades.php?stud_id=$stud_id&yr_level=$yr_level_check");
@@ -259,10 +256,24 @@
                                     $credit_earned = $row['credit_earned'];
                                     $numberOfSubj += 1;
 
+
                                     $grades_pos = 1;
                                     $credits_pos = 2;
-                                    
-                                    if(isset($_SESSION['grades_array'])) {
+                                    if((intval($input_year2) >= 1990 && intval($input_year2) <= 1998) && ($subj_name == "RHGP" || $subj_name == "RHGP I" || $subj_name == "RHGP II" || $subj_name == "RHGP III" || $subj_name == "RHGP IV")) {
+                                        $subj_id = "";
+                                        $subj_name = "";
+                                        $subj_level = "";  
+                                        $credit_earned = "";
+                                        $numberOfSubj -= 1;
+                                    }elseif(intval($input_year2) >= 2003  && ($subj_name == "RHGP" || $subj_name == "RHGP I" || $subj_name == "RHGP II" || $subj_name == "RHGP III" || $subj_name == "RHGP IV")) {
+                                        $subj_id = "";
+                                        $subj_name = "";
+                                        $subj_level = "";  
+                                        $credit_earned = "";
+                                        $numberOfSubj -= 1;
+
+                                    } else {
+                                       if(isset($_SESSION['grades_array'])) {
                                         $grades_array = $_SESSION['grades_array'];
 
                                         if(empty($grades_array[$grades_pos][$x])) {
@@ -276,72 +287,70 @@
                                             $credits = $grades_array[$credits_pos][$x];
                                         }
                                          echo <<<SUBJ
-                                                <tr>
-                                                    <td>
-                                                        <div class="item form-group">
-                                                            <div class="col-md-5">
-                                                                <input class="form-control" name="subj_id[]" value="$subj_id"  style="width: 50px;" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$subj_name</td>
-                                                    <td>$subj_level</td>
-                                                    <td>
+                                            <tr>
+                                                <td>
+                                                    <div class="item form-group">
                                                         <div class="col-md-5">
-                                                            <input type="text" id="grade-$x" class="form-control" name="fin_grade[]"  onkeypress="return isNumberKey(event), dateModified();" placeholder="" value="$grades">
+                                                            <input class="form-control" name="subj_id[]" value="$subj_id"  style="width: 50px;" readonly>
                                                         </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="col-md-5">
-                                                            <input type="text" id="credit-$x" class="form-control" name="credit_earned[]" onkeypress="dateModified();" placeholder="" value="$credits">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="col-md-5">
-                                                            <input type="text" class="form-control" name="special_grade[]" placeholder="" value="">
-                                                        </div>
-
-                                                    </td>
-                                                    
-                                                </tr>
+                                                    </div>
+                                                </td>
+                                                <td>$subj_name</td>
+                                                <td>$subj_level</td>
+                                                <td>
+                                                    <div class="col-md-5">
+                                                        <input type="text" id="grade-$x" class="form-control" name="fin_grade[]"  onkeypress="return isNumberKey(event), dateModified();" placeholder="" value="$grades">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-md-5">
+                                                        <input type="text" id="credit-$x" class="form-control" name="credit_earned[]" onkeypress="dateModified();" placeholder="" value="$credits">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control" name="special_grade[]" placeholder="" value="">
+                                                    </div>
+                                                </td>
+                                                
+                                            </tr>
                                 
 SUBJ;
                                     }else {
                                         echo <<<SUBJ
-                                                <tr>
-                                                    <td>
-                                                        <div class="item form-group">
-                                                            <div class="col-md-5">
-                                                                <input class="form-control" name="subj_id[]" value="$subj_id"  style="width: 50px;" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$subj_name</td>
-                                                    <td>$subj_level</td>
-                                                    <td>
+                                            <tr>
+                                                <td>
+                                                    <div class="item form-group">
                                                         <div class="col-md-5">
-                                                            <input type="text" id="grade-$x" class="form-control" name="fin_grade[]" onkeypress="return isNumberKey(event), dateModified(this.value);" placeholder="" value="">
+                                                            <input class="form-control" name="subj_id[]" value="$subj_id"  style="width: 50px;" readonly>
                                                         </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="col-md-5">
-                                                            <input type="text" id="credit-$x" class="form-control" name="credit_earned[]"  onkeypress="dateModified();" placeholder="" value="$credit_earned">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="col-md-5">
-                                                            <input type="text" class="form-control" name="special_grade[]" onblur="dateModified();" placeholder="" value="">
-                                                        </div>
-
-                                                    </td>
-                                                    
-                                                </tr>
+                                                    </div>
+                                                </td>
+                                                <td>$subj_name</td>
+                                                <td>$subj_level</td>
+                                                <td>
+                                                    <div class="col-md-5">
+                                                        <input type="text" id="grade-$x" class="form-control" name="fin_grade[]" onkeypress="return isNumberKey(event), dateModified(this.value);" placeholder="" value="">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-md-5">
+                                                        <input type="text" id="credit-$x" class="form-control" name="credit_earned[]"  onkeypress="dateModified();" placeholder="" value="$credit_earned">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control" name="special_grade[]" onblur="dateModified();" placeholder="" value="">
+                                                    </div>
+                                                </td>
+                                                
+                                            </tr>
                                 
 SUBJ;
                                     }
-                                    $x+=1;
-                                    
-                                   
+                                    $x+=1; 
+                                    }
+                                                                       
                                     }//while end
                                  }//if end
                                         echo <<<NUM

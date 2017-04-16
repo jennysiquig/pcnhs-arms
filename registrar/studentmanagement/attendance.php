@@ -91,6 +91,7 @@
 		                </thead>
 		                <tbody>
 							<?php
+								$attendance_count = 0;
 								if(!$conn) {
 									die();
 								}else {
@@ -103,7 +104,6 @@
 
 									$statement = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' order by yr_lvl asc;";
 									$result = $conn->query($statement);
-									$attendance_count = 0;
 									if($result->num_rows > 0) {
 										// output data of each row
 										while($row = $result->fetch_assoc()) {
@@ -113,6 +113,7 @@
 											$days_attended = $row['days_attended'];
 											$school_days = $row['school_days'];
 											$total_years_in_school = $row['total_years_in_school'];
+
 											echo <<<GRADES
 												<tr>
 						                          <th scope="row">$yr_lvl</th>
@@ -146,12 +147,25 @@ REMOVE;
 					</div>
 					</div>
 					<?php
-						$next_attendance = $attendance_count+1;
-						if($attendance_count < 4) {
-							echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_lvl=$next_attendance'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
+						if($attendance_count < 1) {
+							$year_check = $attendance_count+1;
 						}else {
-							echo "<a class='btn btn-success pull-right disabled'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
+							$year_check = $attendance_count;
 						}
+						
+						$checkgrade = "SELECT * FROM pcnhsdb.grades where stud_id = '$stud_id' and yr_level = $year_check;";
+						$result_checkgrade = $conn->query($checkgrade);
+						if($result_checkgrade->num_rows>0) {
+							$next_attendance = $attendance_count+1;
+							if($attendance_count < 4) {
+								echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_lvl=$next_attendance'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
+							}else {
+								echo "<a class='btn btn-success pull-right disabled'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
+							}
+						}else {
+								echo "<a class='btn btn-success pull-right disabled'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
+						}
+						
 					?>
 					</div>
 			

@@ -94,6 +94,7 @@
 		                        <th data-sorter="false">Special Grade</th>
 		                        <th data-sorter="false">Credits Earned</th>
 		                        <th data-sorter="false">Remarks</th>
+		                        <th data-sorter="false">Action</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -101,11 +102,12 @@
 									if(!$conn) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
-									$query = "SELECT special_grade, subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = '$yr_level' and stud_id = '$stud_id';";
+									$query = "SELECT studsubj_id, special_grade, subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = '$yr_level' and stud_id = '$stud_id';";
 									$result = $conn->query($query);
 									if ($result->num_rows > 0) {
 										// output data of each row
 										while($row = $result->fetch_assoc()) {
+											$studsubj_id = $row['studsubj_id'];
 											$subj_name = $row['subj_name'];
 											$subj_level = $row['subj_level'];
 											$fin_grade = $row['fin_grade'];
@@ -121,6 +123,11 @@
 						                          <td>$special_grade</td>
 						                          <td>$credit_earned</td>
 						                          <td>$comment</td>
+						                          <td>
+													<center>
+														<button class='btn btn-danger btn-xs' onclick="deleteGrade('$stud_id', '$studsubj_id', '$yr_level');"><i class="fa fa-trash"></i> Delete</a></button>
+													</center>
+						                          </td>
 						                        </tr>
 
 YR1;
@@ -157,6 +164,17 @@ YR1;
 	      widgets    : ['zebra','columns', 'uitheme']
 	      });
 	      });
+	    </script>
+	    <script type="text/javascript">
+		    function deleteGrade(stud_id, studsubj_id, yr_level) {
+		    	console.log(stud_id);
+		    	console.log(studsubj_id);
+		    	console.log(yr_level);
+		    	if(confirm("Are you sure?")) {
+		    		//<a href='phpupdate/removesubjectgrade.php?stud_id=$stud_id&studsubj_id=$studsubj_id&yr_level=$yr_level'>
+		    		window.location.assign("phpupdate/removesubjectgrade.php?stud_id="+stud_id+"&studsubj_id="+studsubj_id+"&yr_level="+yr_level);
+		    	}
+		    }
 	    </script>
 	</body>
 </html>

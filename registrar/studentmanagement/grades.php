@@ -142,19 +142,22 @@
 						                          <td>
 													<center>
 													<a class="btn btn-primary btn-xs" href="subject_grades.php?stud_id=$stud_id&yr_level=$yr_level">View Grades</a>
+													<a href="edit_grade.php?stud_id=$stud_id&yr_level=$yr_level"><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></a>
 GRADES;
 											if($result->num_rows == $yr_level && !$already_generated) {
 												echo <<<REMOVE
-													<button class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');">Remove Record</button>
+													
+													<button class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
+
 REMOVE;
 												}else {
 													if($yr_level < 4 && $result->num_rows == $yr_level) {
 														echo <<<REMOVE
-															<button class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');">Remove Record</button>
+															<button class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
 REMOVE;
 													}else {
 														echo <<<REMOVE
-															<button class="btn btn-danger btn-xs" disabled>Remove Record</button>
+															<button class="btn btn-danger btn-xs" disabled><i class="fa fa-trash"></i></button>
 REMOVE;
 													}
 												}
@@ -248,6 +251,7 @@ REMOVE;
 						                          <td>
 													<a class="btn btn-danger btn-xs" href=phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id>Remove Record</a>
 						                          </td>
+
 						                        </tr>
 
 YR1;
