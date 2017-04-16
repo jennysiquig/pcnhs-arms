@@ -36,6 +36,7 @@
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
      <!-- Custom Theme Style -->
     <link href="../../assets/css/customstyle.css" rel="stylesheet">
+    <link href="../../assets/css/easy-autocomplete-custom.css" rel="stylesheet">
 
   </head>
     <body class="nav-md">
@@ -59,14 +60,14 @@
             <div class="col-sm-7">
                 <div class="input-group">
 
-                    <input type="text" class="form-control" name="search_key" placeholder="Search Personnel Accounts">
+                    <input id = "search_key" type="text" class="form-control" name="search_key" placeholder="Search Personnel Accounts">
                     <span class="input-group-btn">
                   <button class="btn btn-primary">Search</button>
                 </span>
                 </div>
             </div>
             <div class="pull-right">
-            <a><i class="fa fa-info-circle"></i> Search Personnel Accounts by <strong>Username / Name / Position / Account Status </strong></a>
+            <a><i class="fa fa-info-circle"></i> Search Personnel Accounts by <strong>Username / Position / Account Status </strong></a>
           </div>
         </div>
     </form>
@@ -106,7 +107,12 @@
                         </div>
                       </form>
               </div>
-
+              <?php
+                if(isset($_GET['search_key'])) {
+                  $search_key = strtoupper($_GET['search_key']);
+                  echo "<p class='table-list'>Search result for : <strong>$search_key</strong></p>";
+                }
+              ?>
                     <div class="personnel-list table-list">
                         <table id="personnelList" class="tablesorter-bootstrap">
                             <thead>
@@ -298,6 +304,7 @@ PERSONNELLIST;
 <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
 <script src= "../../assets/js/custom.min.js"></script>
+<script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
 <!-- Scripts -->
 
 <script type="text/javascript">
@@ -321,6 +328,34 @@ PERSONNELLIST;
       widgets    : ['zebra','columns', 'uitheme']
       });
       });
+    </script>
+        <script type="text/javascript">
+        var options = {
+        url: function(phrase) {
+          return "phpscript/personnel_search.php?query="+phrase;
+        },
+
+        getValue: function(element) {
+          return element.uname;
+        },
+
+        ajaxSettings: {
+          dataType: "json",
+          method: "POST",
+          data: {
+            dataType: "json"
+          }
+        },
+
+        preparePostData: function(data) {
+          data.phrase = $("#search_key").val();
+          return data;
+        },
+
+        requestDelay: 200
+      };
+
+      $("#search_key").easyAutocomplete(options);
     </script>
 </body>
 </html>

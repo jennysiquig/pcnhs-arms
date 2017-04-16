@@ -35,6 +35,7 @@
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
      <!-- Custom Theme Style -->
     <link href="../../assets/css/customstyle.css" rel="stylesheet">
+    <link href="../../assets/css/easy-autocomplete-custom.css" rel="stylesheet">
 </head>
 <body class="nav-md">
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
@@ -55,7 +56,7 @@
             <div class="col-sm-7">
                 <div class="input-group">
 
-                    <input type="text" class="form-control" name="search_key" placeholder="Search Signatories">
+                    <input id = "search_key" type="text" class="form-control" name="search_key" placeholder="Search Signatories">
                     <span class="input-group-btn">
                   <button class="btn btn-primary">Search</button>
                 </span>
@@ -106,9 +107,9 @@
                       </form>
               </div>
               <?php
-                if (isset($_GET['sign_year']) && $_GET['sign_year'] != "") {
-                  $sign_disp = $_GET['sign_year'];
-                  echo "<p>Showing Signatories in School Year of $sign_disp</p>";
+                if(isset($_GET['search_key'])) {
+                  $search_key = strtoupper($_GET['search_key']);
+                  echo "<p class='table-list'>Search result for : <strong>$search_key</strong></p>";
                 }
               ?>
                     <div class="signatory-list table-list">
@@ -295,6 +296,7 @@ SIGNLIST;
 <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
 <script src= "../../assets/js/custom.min.js"></script>
+<script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
 
 <script type="text/javascript">
       function changeEntries(val) {
@@ -308,14 +310,37 @@ SIGNLIST;
         xhttp.send();
       }
 </script>
+        <script type="text/javascript">
+        var options = {
+        url: function(phrase) {
+          return "phpscript/signatory_search.php?query="+phrase;
+        },
+        getValue: function(element) {
+          return element.name;
+        },
+        ajaxSettings: {
+          dataType: "json",
+          method: "POST",
+          data: {
+            dataType: "json"
+          }
+        },
+        preparePostData: function(data) {
+          data.phrase = $("#search_key").val();
+          return data;
+        },
+          requestDelay: 200
+        };
+      $("#search_key").easyAutocomplete(options);
+  </script>
   <script type="text/javascript">
       $(function() {
       $('.signatory-list').tablesorter();
       $('.tablesorter-bootstrap').tablesorter({
-      theme : 'bootstrap',
-      headerTemplate: '{content} {icon}',
-      widgets    : ['zebra','columns', 'uitheme']
-      });
+        theme : 'bootstrap',
+        headerTemplate: '{content} {icon}',
+        widgets    : ['zebra','columns', 'uitheme']
+        });
       });
   </script>
 </body>
