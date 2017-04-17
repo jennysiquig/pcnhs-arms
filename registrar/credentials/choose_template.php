@@ -56,8 +56,5 @@
 
 
 	header("location: k_12form.php?stud_id=$stud_id&cred_id=$cred_id&request_type=$request_type&signatory=$signatory&personnel_id=$personnel_id&date=$date&admitted_to=$admitted_to&request_purpose=$request_purpose");
-	
-
-	
 
 ?>
