@@ -213,21 +213,65 @@ REQ;
 
                                 </tr>
                             </table>
-
+                            <?php
+                            $personnel_id = $_SESSION['per_id'];
+                             $statement = "SELECT * FROM personnel WHERE per_id='$personnel_id'";
+                             $result = $conn->query($statement);
+                             if ($result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
+                                        $registrar_id = $row['per_id'];
+                                        $registrar_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
+                                        $registrar_name = strtoupper($registrar_name);
+                                        $position_reg = $row['position'];
+                                        $position_reg = strtolower($position_reg);
+                                        $position_reg = ucfirst($position_reg);
+                                    }
+                             }
+                             ?>
+                            <?php
+                            $signatory_1 = $_POST['signatory_1'];
+                             $statement1 = "SELECT * FROM signatories WHERE sign_id='$signatory_1'";
+                             $result1 = $conn->query($statement1);
+                             if ($result1->num_rows > 0) {
+                                    while($row1 = $result1->fetch_assoc()) {
+                                        $sign_id1 = $row1['sign_id'];
+                                        $sign_name1 = $row1['first_name'].' '.substr($row1['mname'], 0, 1).'. '.$row1['last_name'];
+                                        $sign_name1 = strtoupper($sign_name1);
+                                        $position1 = $row1['position'];
+                                        $position1 = strtolower($position1);
+                                        $position1 = ucfirst($position1);
+                                    }
+                             }
+                             ?>
+                            <?php
+                            $signatory_2 = $_POST['signatory_2'];
+                             $statement2 = "SELECT * FROM signatories WHERE sign_id='$signatory_2'";
+                             $result2 = $conn->query($statement1);
+                             if ($result2->num_rows > 0) {
+                                    while($row2 = $result2->fetch_assoc()) {
+                                        $sign_id2 = $row2['sign_id'];
+                                        $sign_name2 = $row2['first_name'].' '.substr($row2['mname'], 0, 1).'. '.$row2['last_name'];
+                                        $sign_name2 = strtoupper($sign_name2);
+                                        $position2 = $row2['position'];
+                                        $position2 = strtolower($position2);
+                                        $position2 = ucfirst($position2);
+                                    }
+                             }
+                             ?>                             
                             <div id="box-2">
                                 <p id="b2-r1-p1">Prepared by:</p>
-                                <div id="b2-r2-name"></div>
-                                <div id="b2-r3-pos"></div>
+                                <div id="b2-r2-name"><p><?php echo $registrar_name; ?></p></div>
+                                <div id="b2-r3-pos"><p><?php echo $position_reg; ?></p></div>
                             </div>
                             <div id="box-3">
                                 <p id="b3-r1-p1">Checked by:</p>
-                                <div id="b3-r2-name"></div>
-                                <div id="b3-r3-pos"></div>
+                                <div id="b3-r2-name"><p><?php echo $sign_name1; ?></p></div>
+                                <div id="b3-r3-pos"><p><?php echo $position1; ?></p></div>
                             </div>
                             <div id="box-4">
                                 <p id="b4-r1-p1">Checked &amp; Verified by:</p>
-                                <div id="b4-r2-name"></div>
-                                <div id="b4-r3-pos"></div>
+                                <div id="b4-r2-name"><p><?php echo $sign_name2; ?></p></div>
+                                <div id="b4-r3-pos"><p><?php echo $position2; ?></p></div>
                             </div>
                             </div>
                         </div>

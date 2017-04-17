@@ -2,13 +2,6 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <?php
-	
-
-	if(isset($_SESSION['generated'])) {
-        unset($_SESSION['generated']);
-        header("location: ../../index.php");
-        die();
-    }
 
 	$stud_id = "";
 	$credential = "";
@@ -23,20 +16,8 @@
 		header("location: ../index.php");
 	}
 
-	if(isset($_GET['purpose'])) {
-		$request_purpose = strtoupper(htmlspecialchars($_GET['purpose'], ENT_QUOTES));
-	}else {
-		$request_purpose = "";
-	}
-// Redirect to other page if credential is not form 137 or diploma
-	if($credential > 2) {
-		header("location: other_credential.php?stud_id=$stud_id&credential=$credential");
-		die();
-	}
-	if($credential == 2) {
-		header("location: generate_diploma.php?stud_id=$stud_id&credential=$credential");
-		die();
-	}
+
+
 
 	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
@@ -52,15 +33,9 @@
 	    	mysqli_query($conn, $statement1);
 	    	header("location: requests.php");
 	    	die();
-		}
-    }
 
-    $school_year = "SELECT max(schl_year) as schl_year from studentsubjects where stud_id = '$stud_id'";
-    $ans = $conn->query($school_year);
-    if ($ans->num_rows>0) {
-    	while ($row = $ans->fetch_assoc()) {
-    		$last_yr_attended = $row['schl_year'];
-    	}
+	    	
+		}
     }
 
 	
@@ -106,10 +81,10 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "choose_template.php?stud_id=$stud_id" ?> method="POST" >
+			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "diplomaprint.php?stud_id=$stud_id" ?> method="POST" >
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Form 137 <small></small></h2>
+						<h2>Diploma<small>Second Copy</small></h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 						</li>
@@ -117,7 +92,6 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					*Form 137 Template Here*
 					<div class="clearfix"></div>
 					<br>
 					<div class="form-group">
@@ -126,8 +100,6 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <p>
 							<input type="radio" class="flat" name="request_type" id="tor-individual" value="individual" checked="" required /> Individual Request:
-							<input type="radio" class="flat" name="request_type" id="tor-bulk" value="school" />
-							School Request:
 							
 						</p>
                         </div>
@@ -150,18 +122,6 @@
 							<input required="required" class="form-control" name="request_purpose" placeholder="" value=<?php echo "'$request_purpose'"; ?>>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Admitted To:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" type="text" name="admitted_to" value="" placeholder="ex: Grade 11 | Empty value will be set to 'N/A'.">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Last School Year Attended</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" type="text" name="admitted_to" readonly value=<?php echo "'$last_yr_attended'";?>>
-						</div>
-					</div>
 				<!--  -->
 				<!--  -->
 				<div class="form-group">
@@ -169,31 +129,39 @@
 				</label>
 				<div class="col-md-6 col-sm-6 col-xs-12">
 					<select id="credential" class="form-control" name="signatory" required="">
-						<option value="">-- Choose Signatory --</option>
+						<option value="">No Selected</option>
+						<optgroup label="HEAD TEACHER"></optgroup>
 						<?php
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
-
-							$school_years = explode(" ", $last_yr_attended);
-							$yr_started = $school_years[0];
-							$yr_ended = $school_years[2];
-
-							$statement = "SELECT * FROM signatories WHERE ('$yr_ended' 
-										  BETWEEN yr_started AND yr_ended)
-										  AND position NOT LIKE 'SUPERINTENDENT'";
-
+							$statement = "SELECT * FROM signatories WHERE position='HEAD TEACHER'";
 							$result = $conn->query($statement);
 							if ($result->num_rows > 0) {
+								// output data of each row
 								while($row = $result->fetch_assoc()) {
 									$sign_id = $row['sign_id'];
-									$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'].'  ('
-												 .$row['position'].',  '.$row['title'].' '.$row['yr_started'].'-'.$row['yr_ended'].')';
+									$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
 									echo "<option value='$sign_id'>$sign_name</option>";
 								}
 							}
 						?>
-
+						<optgroup label="PRINCIPAL"></optgroup>
+						<?php
+								if(!$conn) {
+									die("Connection failed: " . mysqli_connect_error());
+								}
+								$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
+								$result = $conn->query($statement);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										$sign_id = $row['sign_id'];
+										$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+										echo "<option value='$sign_id'>$sign_name</option>";
+									}
+								}
+							?>
 					</select>
 				</div>
 			</div>

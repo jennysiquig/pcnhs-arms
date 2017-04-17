@@ -108,8 +108,8 @@
 						<div class="row">
 							<div class="form-group">
 								<div class="col-md-9 center-margin">
-									<label>Choose Signatory <span class="required">*</span></label>
-									<select id="credential" class="form-control" name="signatory">
+									<label>Choose Signatory 1<span class="required">*</span></label>
+									<select id="credential" class="form-control" required="" name="signatory_1">
 										<option value="">No Selected</option>
 										<optgroup label="HEAD TEACHER"></optgroup>
 										<?php
@@ -147,6 +147,48 @@
 								</div>
 							</div>
 						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-md-9 center-margin">
+									<label>Choose Signatory 2<span class="required">*</span></label>
+									<select id="credential" class="form-control" name="signatory_2">
+										<option value="">No Selected</option>
+										<optgroup label="HEAD TEACHER"></optgroup>
+										<?php
+											if(!$conn) {
+												die("Connection failed: " . mysqli_connect_error());
+											}
+											$statement = "SELECT * FROM signatories WHERE position='HEAD TEACHER'";
+											$result = $conn->query($statement);
+											if ($result->num_rows > 0) {
+												// output data of each row
+												while($row = $result->fetch_assoc()) {
+													$sign_id = $row['sign_id'];
+													$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+													echo "<option value='$sign_id'>$sign_name</option>";
+												}
+											}
+										?>
+										<optgroup label="PRINCIPAL"></optgroup>
+										<?php
+												if(!$conn) {
+													die("Connection failed: " . mysqli_connect_error());
+												}
+												$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
+												$result = $conn->query($statement);
+												if ($result->num_rows > 0) {
+													// output data of each row
+													while($row = $result->fetch_assoc()) {
+														$sign_id = $row['sign_id'];
+														$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+														echo "<option value='$sign_id'>$sign_name</option>";
+													}
+												}
+											?>
+									</select>
+								</div>
+							</div>
+						</div>						
 						<br>
 						<button id="generatebutton" class="btn btn-primary pull-right" type="submit">
 							<i class="fa fa-print m-right-xs"></i> Generate Credential</button>
