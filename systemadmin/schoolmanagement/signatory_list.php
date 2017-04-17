@@ -120,7 +120,7 @@
                                 <th>First Name</th>
                                 <th>M. I.</th>
                                 <th>Last Name</th>
-                                <th>Degree</th>
+                                <th>Title</th>
                                 <th>Position</th>
                                 <th>Yr Started</th>
                                 <th>Yr Ended</th>
