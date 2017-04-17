@@ -85,7 +85,7 @@ SP;
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Program</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                
+                                <select class="form-control col-md-7 col-xs-12" name="prog_id">
                                     <?php
                                     if(!$conn) {
                                     die("Connection failed: " . mysqli_connect_error());
@@ -99,8 +99,7 @@ SP;
                                     $prog_name = $row['prog_name'];
                                     $prog_id = $row['prog_id'];
                                     echo <<<SP
-                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="program" readonly value='$prog_name'>
-                                        
+                                        <option value='$prog_id'>$prog_name</option>
 SP;
                                     }
                                     }else {
@@ -108,38 +107,11 @@ SP;
                                         die();
                                     }
                                     ?>
-                                
+                                </select>
+                                <p style="color: red">Default Student Program.</p>
                             </div>
                         </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Program ID</label>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                
-                                    <?php
-                                    if(!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $stud_id = $_GET['stud_id'];
-                                    $statement = "SELECT prog_id, prog_name FROM pcnhsdb.students left join programs using (prog_id) where stud_id = '$stud_id'";
-                                    $result = $conn->query($statement);
-                                    if ($result->num_rows > 0) {
-                                    // output data of each row
-                                    while($row = $result->fetch_assoc()) {
-                                    $prog_name = $row['prog_name'];
-                                    $prog_id = $row['prog_id'];
-                                    echo <<<SP
-                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="prog_id" readonly value='$prog_id'>
-                                        
-SP;
-                                    }
-                                    }else {
-                                        header("location: ../../index.php");
-                                        die();
-                                    }
-                                    ?>
-                                
-                            </div>
-                        </div>
+                        
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Curriculum</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
@@ -164,35 +136,7 @@ SP;
                                     }
                                     ?>
                                 </select>
-                                <p style="color: red">Curriculum that is indicated on Form-137.</p>
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Curriculum</label>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <select class="form-control col-md-7 col-xs-12" name="curriculum_subj">
-                                    <option value="none">-- No Selected --</option>>
-                                    <?php
-                                    if(!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $stud_id = $_GET['stud_id'];
-                                    $statement = "SELECT * FROM pcnhsdb.curriculum";
-                                    $result = $conn->query($statement);
-                                    if ($result->num_rows > 0) {
-                                    // output data of each row
-                                    while($row = $result->fetch_assoc()) {
-                                    $curr_name = $row['curr_name'];
-                                    $curr_id = $row['curr_id'];
-                                    echo "<option value='$curr_id'>$curr_name</option>";
-                                    }
-                                    }else {
-                                        header("location: ../../index.php");
-                                        die();
-                                    }
-                                    ?>
-                                </select>
-                                <p style="color: red"><b>Note: </b><b>Select only</b> if the <b>Subject Curriculum</b> is different to <b>Student Curriculum</b> </p>
+                                <p style="color: red">Default Student Curriculum.</p>
                             </div>
                         </div>
                         <div class="item form-group">
@@ -297,6 +241,65 @@ OPTION2;
                                 </div>
                                 </div>
                             </div>
+                        <div class="ln_solid"></div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Change Program</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <select class="form-control col-md-7 col-xs-12" name="subjprog_id">
+                                    <option value="none">-- No Selected --</option>
+                                    <?php
+                                    if(!$conn) {
+                                    die("Connection failed: " . mysqli_connect_error());
+                                    }
+                                    $stud_id = $_GET['stud_id'];
+                                    $statement = "SELECT prog_id, prog_name FROM programs ";
+                                    $result = $conn->query($statement);
+                                    if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while($row = $result->fetch_assoc()) {
+                                    $prog_name = $row['prog_name'];
+                                    $prog_id = $row['prog_id'];
+                                    echo <<<SP
+                                        <option value='$prog_id'>$prog_name</option>
+SP;
+                                    }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
+                                    }
+                                    ?>
+                                </select>
+                                <a style="color: red"><i class="fa fa-info-circle"></i> Select to override the default <strong>Student Program.</strong></a>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Change Curriculum</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <select class="form-control col-md-7 col-xs-12" name="curriculum_subj">
+                                    <option value="none">-- No Selected --</option>
+                                    <?php
+                                    if(!$conn) {
+                                    die("Connection failed: " . mysqli_connect_error());
+                                    }
+                                    $stud_id = $_GET['stud_id'];
+                                    $statement = "SELECT * FROM pcnhsdb.curriculum";
+                                    $result = $conn->query($statement);
+                                    if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while($row = $result->fetch_assoc()) {
+                                    $curr_name = $row['curr_name'];
+                                    $curr_id = $row['curr_id'];
+                                    echo "<option value='$curr_id'>$curr_name</option>";
+                                    }
+                                    }else {
+                                        header("location: ../../index.php");
+                                        die();
+                                    }
+                                    ?>
+                                </select>
+                                <a style="color: red"><i class="fa fa-info-circle"></i> Select to override the default <strong>Student Curriculum.</strong></a>
+                            </div>
+                        </div>
                             <div class="clearfix"></div>
                             <div class="ln_solid"></div>
                             <div class="form-group">

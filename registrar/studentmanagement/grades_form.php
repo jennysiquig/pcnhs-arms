@@ -168,8 +168,8 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Program:</label>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                     <?php
-                                        $sp = $_GET['program'];
-                                        echo "<input class='form-control' value='$sp' name='program' readonly>";
+                                       
+                                        echo "<input class='form-control' value='$prog_id' name='program' readonly>";
                                     ?>
                                     </div>
                                 </div>
@@ -237,8 +237,15 @@
                                     $curriculum = $_GET['curriculum_subj'];
                                 }
                                 
+                                $prog_id;
+                                if($_GET['subjprog_id'] == "none") {
+                                    $prog_id = $_GET['prog_id'];
+                                }else {
+                                    $prog_id = $_GET['subjprog_id'];
+                                }
+                                
                                 $yr_level_needed = $_GET['yr_level'];
-                                $prog_id = $_GET['prog_id'];
+                                
                                 $total_unit = 0;
                                 $numberOfSubj = 0;
                                 $x = 0;
