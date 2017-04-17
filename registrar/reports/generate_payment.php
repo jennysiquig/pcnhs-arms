@@ -75,19 +75,78 @@
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
 						<div class="x_title">
-							<h2>Accomplishment Reports</h2>
+							<h2>Payment Remittance Report</h2>
 							<ul class="nav navbar-right panel_toolbox">
 							</ul>
 							<div class="clearfix"></div>
 						</div>
 
-						<div>
-							
+						<div class="x-content">
+						<form class="form-vertical" action="paymentprint.php" method="POST">
+						<div class="row">
+							<div class="form-group">
+								<p>
+									<div class="col-md-9 center-margin">
+									<label>Payment Date</label>
+										<?php
+											$payment_date = $_GET['payment_date'];
+											echo "<input class='form-control' value='$payment_date' name='payment_date'>";
+
+										?>
+									</div>
+								</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-md-9 center-margin">
+									<label>Choose Signatory <span class="required">*</span></label>
+									<select id="credential" class="form-control" name="signatory">
+										<option value="">No Selected</option>
+										<optgroup label="HEAD TEACHER"></optgroup>
+										<?php
+											if(!$conn) {
+												die("Connection failed: " . mysqli_connect_error());
+											}
+											$statement = "SELECT * FROM signatories WHERE position='HEAD TEACHER'";
+											$result = $conn->query($statement);
+											if ($result->num_rows > 0) {
+												// output data of each row
+												while($row = $result->fetch_assoc()) {
+													$sign_id = $row['sign_id'];
+													$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+													echo "<option value='$sign_id'>$sign_name</option>";
+												}
+											}
+										?>
+										<optgroup label="PRINCIPAL"></optgroup>
+										<?php
+												if(!$conn) {
+													die("Connection failed: " . mysqli_connect_error());
+												}
+												$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
+												$result = $conn->query($statement);
+												if ($result->num_rows > 0) {
+													// output data of each row
+													while($row = $result->fetch_assoc()) {
+														$sign_id = $row['sign_id'];
+														$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+														echo "<option value='$sign_id'>$sign_name</option>";
+													}
+												}
+											?>
+									</select>
+								</div>
+							</div>
+						</div>
+						<br>
+						<button id="generatebutton" class="btn btn-primary pull-right" type="submit">
+							<i class="fa fa-print m-right-xs"></i> Generate Credential</button>
+					</form>
 							
 
 						</div>
 
-						<a id="generatebutton" class="btn btn-primary" href=""><i class="fa fa-print m-right-xs"></i> Generate Credentials</a>
 
 						</div>
 					</div>

@@ -137,7 +137,8 @@
 									
 									
 								?>
-								<a href= <?php echo "generate_accomp.php?accomplishment_date=$accomplishment_date_get"; ?>><button type="button" class="btn btn-success pull-right">Generate Report</button></a></form>
+								<a href= <?php echo "generate_accomp.php?accomplishment_date=$accomplishment_date_get"; ?>><button type="button" class="btn btn-success pull-right">Generate Report</button></a>
+								
 								</div>
 
 								

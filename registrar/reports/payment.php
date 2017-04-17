@@ -113,8 +113,23 @@
 								</form>
 							</div>
 							<br>
+							<?php
+									$payment_date_get = "";
+									if(isset($_GET['payment_date'])) {
+										$payment_date_get = $_GET['payment_date'];
+										$payment_date_get = preg_replace('/\s+/', '', $payment_date_get);
+
+									}else {
+										$date_from = date("m/01/Y");
+										$date_to = date("m/d/Y");
+										$payment_date_get = $date_from.' - '.$date_to;
+										$payment_date_get = preg_replace('/\s+/', '', $payment_date_get);
+									}
+									
+									
+								?>
 							<div class="col-md-8">
-								<a href="paymentprint.php"><button type="button" class="btn btn-success pull-right">Generate Report</button></a>
+								<a href= <?php echo "generate_payment.php?payment_date=$payment_date_get"; ?>><button type="button" class="btn btn-success pull-right">Generate Payment</button></a>
 								</div>
 						</div>
 	                      <!-- Date Picker -->

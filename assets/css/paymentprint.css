@@ -1,12 +1,20 @@
+/*CSS*/
+@media print {  
+  @page {
+    size: 8.5in 13in; /* landscape */
+    /* you can also specify margins here: */
+    margin: 5mm;
+    margin-right: 30mm; /* for compatibility with both A4 and Letter */
+  }
+}
 .main{
-<<<<<<< HEAD
-	width: 11in;
 	height: 8.5in;
 	background-color: white;
-	font-color: black;	
+	color: black;	
+	max-width: 10in;
+	width: auto;
 }
-
-.top{
+.container {
 	
 }
 
@@ -16,15 +24,19 @@ h4{
 }
 
 table{
-	border: 1px solid black;
-	margin-left: 80px;
+	/*width: 10in;*/
+	margin-left: 20px;
 }
-
+table, th, td {
+    border: 1.5px solid black;
+    border-collapse: collapse;
+    color: black;
+}
 th{
-	width: 250px;
-	height: 22px;
+/*	width: 250px;
+	height: 22px;*/
 	text-align: center;
-	border: 1px solid black;
+	/*border: 1px solid black;*/
 }
 
 .date{
@@ -87,11 +99,6 @@ th{
 	padding-left: 5px;
 	padding-top: 2px;
 	padding-bottom: 2px;
-}*/
-=======
-	width: 2339px;
-	height: 1654px;
-	background-color: white;	
 }
 
 h4{
@@ -103,4 +110,5 @@ th{
 	height: 25px;
 	text-align: center;
 }
->>>>>>> 526272fc89a52c3ffcf5ae38f117a98d89cbdfb2
+
+*/

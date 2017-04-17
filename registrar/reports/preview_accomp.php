@@ -20,19 +20,24 @@
 <html>
   <head>
 
-    <link rel="stylesheet" href="../../assets/css/accreport.css">
     <title>Accomplishment Report</title>
     <link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">    
-    
+    <!-- Bootstrap -->
+    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Font Awesome -->
+    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Datatables -->
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
     <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../../assets/css/accreport.css">
+    <style type="text/css" media="print">
+           .no-print { display: none; }
+        </style>
     </head>
 
     <body>
@@ -228,7 +233,16 @@ REQ;
                         </div>
                     </div>
                 </div>
+                
         </div>
+
+        <div class="row no-print">
+        <br>
+        <div class="col-md-8">
+          <a href="../../registrar" class="btn btn-success pull-right"><i class="fa fa-home"></i> Back to Home</a>
+          <button class="btn btn-success pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+        </div>
+      </div>
     </body>
 </html>
 
