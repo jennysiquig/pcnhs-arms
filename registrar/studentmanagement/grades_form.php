@@ -387,7 +387,7 @@ NUM;
                         <br>
                         <div class="row">
                             <div class="col-md-5">
-                                 <button type="button" class="btn btn-success" onclick="computeCredit(); computeAverage();"><i class="glyphicon glyphicon-plus"></i> Compute</button>
+                                 <button type="button" class="btn btn-primary" onclick="computeCredit(); computeAverage();"><i class="glyphicon glyphicon-plus"></i> Compute</button>
                             </div>
                            
                             <div class="pull-right">

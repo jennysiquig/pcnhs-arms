@@ -306,7 +306,7 @@ SP;
                                 <!-- <div class="col-md-6"></div> -->
                                 <div class="col-md-3 pull-right">
                                     <a href=<?php echo "grades.php?stud_id=$stud_id"; ?> class="btn btn-default">Cancel</a>
-                                    <button id="send" type="submit" class="btn btn-success"><i class="fa fa-paper-plane-o m-right-xs"></i> Submit</button>
+                                    <button id="send" type="submit" class="btn btn-primary"> Next</button>
                                    
                                 </div>
                             </div>

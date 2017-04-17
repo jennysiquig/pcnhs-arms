@@ -45,6 +45,7 @@
 	if(!$conn) {
 		die();
 	}
+    
 	$cred_id;
 	$statement = "SELECT curr_id FROM pcnhsdb.students where stud_id = '$stud_id';";
 	$result = $conn->query($statement); 

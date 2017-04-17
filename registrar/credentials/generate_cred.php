@@ -2,6 +2,13 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <?php
+	
+
+	if(isset($_SESSION['generated'])) {
+        unset($_SESSION['generated']);
+        header("location: ../../index.php");
+        die();
+    }
 
 	$stud_id = "";
 	$credential = "";
@@ -45,8 +52,6 @@
 	    	mysqli_query($conn, $statement1);
 	    	header("location: requests.php");
 	    	die();
-
-	    	
 		}
     }
 
