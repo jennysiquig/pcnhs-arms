@@ -8,6 +8,8 @@
 ?>
 <html>
 	<head>
+		<title>Payment Remittance</title>
+		<link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
