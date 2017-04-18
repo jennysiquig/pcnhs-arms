@@ -181,9 +181,10 @@
                                       OR curr_code LIKE '$search%'
                                       OR curr_name LIKE '$search%'
                               GROUP BY stud_id
+                              order by date_modified desc
                               LIMIT $start , $limit;";
                     }else {
-                      $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id limit $start, $limit;";
+                      $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by date_modified desc limit $start, $limit;";
                     }
                                     
                     $result = $conn->query($statement);
@@ -232,9 +233,9 @@ STUDLIST;
                 <?php
                   if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                       $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
-                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' or (schl_year = '$search' and yr_level = 4);";
+                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' or (schl_year = '$search' and yr_level = 4) order by date_modified;";
                   }else {
-                    $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id;";
+                    $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by date_modified desc;";
                   }
                   
 

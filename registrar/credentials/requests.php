@@ -69,6 +69,7 @@
 								<table class="tablesorter-bootstrap">
 									<thead>
 										<tr class="headings">
+											<th class="column-title" data-sorter="false">Queue Number</th>
 											<th class="column-title" data-sorter="false">Date of Request</th>
 											<th class="column-title" data-sorter="false">Student Name</th>
 											<th class="column-title" data-sorter="false">Requested Credential</th>
@@ -93,11 +94,14 @@
 										if(!$conn) {
 											die("Connection failed: " . mysqli_connect_error());
 										}
-										$statement = "SELECT stud_id, req_id, cred_id, request_purpose, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_id, cred_name, request_type FROM pcnhsdb.requests natural join students natural join credentials where status='p' limit $start, $limit;";
+										$statement = "SELECT stud_id, req_id, cred_id, request_purpose, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_id, cred_name, request_type FROM pcnhsdb.requests natural join students natural join credentials where status='p' order by date_processed asc limit $start, $limit;";
 										$result = $conn->query($statement);
+
+										$q_n = 0;
 										if ($result->num_rows > 0) {
 											// output data of each row
 											while($row = $result->fetch_assoc()) {
+												$q_n += 1;
 												$date_processed = $row['date processed'];
 												$stud_name = $row['stud_name'];
 												$cred_name = $row['cred_name'];
@@ -108,6 +112,7 @@
 
 												echo <<<UNCLAIMED
 												<tr class="odd pointer">
+																<td class=" ">$q_n</td>
 																<td class=" ">$date_processed</td>
 																<td class=" ">$stud_name</td>
 																<td class=" ">$cred_name</td>

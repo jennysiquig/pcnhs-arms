@@ -209,30 +209,48 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Last School Year Attended</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" type="text" name="admitted_to" readonly value=<?php echo "'$last_yr_attended'";?>>
+							<input class="form-control col-md-7 col-xs-12" type="text" name="last_yr_attended" readonly value=<?php echo "'$last_yr_attended'";?>>
 							<p><i class="fa fa-info-circle"></i> If the Last School Year Attended is empty, please add grades and attendance first before generating credentials.</p>
 						</div>
 					</div>
-				<!--  -->
-				<!--  -->
 				<div class="form-group">
-					<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Signatory <span class="required">*</span>
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">Current Principal <span class="required">*</span>
 				</label>
 				<div class="col-md-6 col-sm-6 col-xs-12">
 					<select id="credential" class="form-control" name="signatory" required="">
-						<option value="">-- Choose Signatory --</option>
 						<?php
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
 
-							$school_years = explode(" ", $last_yr_attended);
-							$yr_started = $school_years[0];
-							$yr_ended = $school_years[2];
+							$statement = "SELECT * FROM signatories where position = 'PRINCIPAL' order by yr_started desc limit 1";
 
-							$statement = "SELECT * FROM signatories WHERE ('$yr_ended' 
-										  BETWEEN yr_started AND yr_ended)
-										  AND position NOT LIKE 'SUPERINTENDENT'";
+							$result = $conn->query($statement);
+							if ($result->num_rows > 0) {
+								while($row = $result->fetch_assoc()) {
+									$sign_id = $row['sign_id'];
+									$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'].'  ('
+												 .$row['position'].',  '.$row['title'].' '.$row['yr_started'].'-'.$row['yr_ended'].')';
+									echo "<option value='$sign_id'>$sign_name</option>";
+								}
+							}
+						?>
+
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">Signatory
+				</label>
+				<div class="col-md-6 col-sm-6 col-xs-12">
+					<select id="credential" class="form-control" name="for_signature">
+						<option value="">Choose Signatory</option>
+						<?php
+							if(!$conn) {
+								die("Connection failed: " . mysqli_connect_error());
+							}
+
+							$statement = "SELECT * FROM signatories where position = 'HEAD TEACHER' order by yr_started;";
 
 							$result = $conn->query($statement);
 							if ($result->num_rows > 0) {

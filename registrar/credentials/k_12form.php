@@ -164,19 +164,36 @@
              <?php
 
              $statement = "SELECT * FROM signatories WHERE sign_id='$signatory'";
-             $result = $conn->query($statement);
-             if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        $sign_id = $row['sign_id'];
-                        $sign_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
-                        $sign_name = strtoupper($sign_name);
-                        $position = $row['position'];
-                        $position = strtolower($position);
-                        $position = ucfirst($position);
-                    }
-             }
+               $result = $conn->query($statement);
+               if ($result->num_rows > 0) {
+                      while($row = $result->fetch_assoc()) {
+                          $sign_id = $row['sign_id'];
+                          $sign_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
+                          $sign_name = strtoupper($sign_name);
+                          $position = $row['position'];
+                          $position = strtolower($position);
+                          $position = ucfirst($position);
+                      }
+               }
              ?>
-
+             <?php
+                if(isset($_GET['for_signature']) && $_GET['for_signature'] != "") {
+                  $for_signature = $_GET['for_signature'];
+                  $for_sign_astm = "SELECT * FROM signatories WHERE sign_id='$for_signature'";
+                    $result_1 = $conn->query($for_sign_astm);
+                    if ($result_1->num_rows > 0) {
+                          while($row_1 = $result_1->fetch_assoc()) {
+                              $sign_id_1 = $row_1['sign_id'];
+                              $sign_name_1 = $row_1['first_name'].' '.substr($row_1['mname'], 0, 1).'. '.$row_1['last_name'];
+                              $sign_name_1 = strtoupper($sign_name_1);
+                              $position_1 = $row_1['position'];
+                              $position_1 = strtolower($position_1);
+                              $position_1 = ucfirst($position_1);
+                          }
+                   }
+                }
+                
+             ?>
                   
 
                   <?php
@@ -193,6 +210,7 @@
                                 $yr_lvl2 = $row['yr_lvl'];
                                 $days_attended2 = $row['days_attended'];
                                 $school_days2 = $row['school_days'];
+                                $total_years_in_school_2 = $row['total_years_in_school'];
                             }
                         }
 
@@ -214,6 +232,7 @@
                                 $yr_lvl4 = $row['yr_lvl'];
                                 $days_attended4 = $row['days_attended'];
                                 $school_days4 = $row['school_days'];
+                                $total_years_in_school_4 = $row['total_years_in_school'];
                             }
                         }
 
@@ -458,6 +477,7 @@ YR1;
                                         $yr_lvl1 = $row['yr_lvl'];
                                         $days_attended1 = $row['days_attended'];
                                         $school_days1 = $row['school_days'];
+                                        $total_years_in_school_1 = $row['total_years_in_school'];
 
                                         echo <<<A1
                                         <p id="b2-r18-p1">Days of School:</p>
@@ -467,7 +487,7 @@ YR1;
                                         <div id="b2-r18-d2" class="underline">$days_attended1</div>
 
                                         <p id="b2-r19-p1">Total Number of Years in School:</p>
-                                        <div id="b2-r19-d1" class="underline"></div>
+                                        <div id="b2-r19-d1" class="underline">$total_years_in_school_1</div>
 A1;
                                     }
                                 }else {
@@ -593,7 +613,7 @@ YR2;
                                  </tbody>
                             </table>
                               <?php
-                                $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 1;";
+                                $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 2;";
                                 $result = $conn->query($attendance1);
                                 if ($result->num_rows > 0) {
                                 // output data of each row
@@ -602,6 +622,7 @@ YR2;
                                         $yr_lvl2 = $row['yr_lvl'];
                                         $days_attended2 = $row['days_attended'];
                                         $school_days2 = $row['school_days'];
+                                        $total_years_in_school_2 = $row['total_years_in_school'];
 
                                         echo <<<A1
                                         <p id="b2-r18-p1">Days of School:</p>
@@ -611,7 +632,7 @@ YR2;
                                         <div id="b2-r18-d2" class="underline">$days_attended2</div>
 
                                         <p id="b2-r19-p1">Total Number of Years in School:</p>
-                                        <div id="b2-r19-d1" class="underline"></div>
+                                        <div id="b2-r19-d1" class="underline">$total_years_in_school_2</div>
 A1;
                                     }
                                 }else {
@@ -759,6 +780,7 @@ YR3;
                                         $yr_lvl3 = $row['yr_lvl'];
                                         $days_attended3 = $row['days_attended'];
                                         $school_days3 = $row['school_days'];
+                                        $total_years_in_school_3 = $row['total_years_in_school'];
                                         echo <<<A4
                                         <p id="b2-r18-p1">Days of School:</p>
                                         <div id="b2-r18-d1" class="underline">$school_days3</div>
@@ -767,6 +789,7 @@ YR3;
                                         <div id="b2-r18-d2" class="underline">$days_attended3</div>
 
                                         <p id="b2-r19-p1">Total Number of Years in School:</p>
+                                        <div id="b2-r19-d1" class="underline">$total_years_in_school_3</div>
 A4;
                                         
                                     }
@@ -904,6 +927,7 @@ YR4;
                                         $yr_lvl4 = $row['yr_lvl'];
                                         $days_attended4 = $row['days_attended'];
                                         $school_days4 = $row['school_days'];
+                                        $total_years_in_school_4 = $row['total_years_in_school'];
 
                                         echo <<<A4
                                         <p id="b2-r18-p1">Days of School:</p>
@@ -913,7 +937,7 @@ YR4;
                                         <div id="b2-r18-d2" class="underline">$days_attended4</div>
 
                                         <p id="b2-r19-p1">Total Number of Years in School:</p>
-                                        <div id="b2-r19-d1" class="underline"></div>
+                                        <div id="b2-r19-d1" class="underline">$total_years_in_school_4</div>
 A4;
                                     }
                                 }else {
@@ -1011,10 +1035,23 @@ A4;
                             </div>
 
                             <div id="box-9">
-                            <p id="b9-r1-p1">Checked &amp; Verified by:</p>
+                            <p id="b9-r1-p1"></p>
                             <div id="b9-r2-name"> <?php echo $sign_name; ?> </div>
                             <div id="b9-r3-pos"> <p> <?php echo $position; ?></p> </div>
                             </div>
+
+                            <?php 
+                              if(isset($_GET['for_signature']) && $_GET['for_signature'] != "") {
+                                echo <<<FORSIGN
+                                <div id="box-9">
+                                <p id="b9-r1-p1">Checked &amp; Verified by:</p>
+                                <div id="b9-r2-name">$sign_name_1</div>
+                                <div id="b9-r3-pos"><p> $position_1</p> </div>
+                                </div>
+FORSIGN;
+                              }
+
+                            ?>
 
                         </div>
 

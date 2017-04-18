@@ -1,5 +1,6 @@
 <?php
   include_once "pathconfig.php";
+  $username = strtoupper($_SESSION['username']);
 ?>
 <?php
 echo <<<SB
@@ -18,7 +19,7 @@ echo <<<SB
 					</div>
 					<div class="profile_info">
 						<span>Welcome,</span>
-						<h2>Registrar</h2>
+						<h2>$username</h2>
 					</div>
 				</div>
 				<!-- /menu profile quick info -->

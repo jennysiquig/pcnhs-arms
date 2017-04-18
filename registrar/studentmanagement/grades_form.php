@@ -225,7 +225,7 @@
                                     <th>Subject Level</th>
                                     <th>Final Grade</th>
                                     <th>Credits Earned <br> (Enter P or R for K-12)</th>
-                                    <th>Special Grade <br>(Optional. For NSEC only.)</th>
+                                    <th>Special Grade <br>(For NSEC only.)</th>
                                 </tr>
                             </thead>
                             <tbody id="subj_list">

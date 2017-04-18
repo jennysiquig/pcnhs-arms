@@ -18,6 +18,7 @@
 	$cred_id = htmlspecialchars($_POST['credential'], ENT_QUOTES);
     $request_type = htmlspecialchars($_POST['request_type'], ENT_QUOTES);
     $signatory = htmlspecialchars($_POST['signatory'], ENT_QUOTES);
+    $for_signature = htmlspecialchars($_POST['for_signature'], ENT_QUOTES);
     $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
     $date = htmlspecialchars($_POST['date'], ENT_QUOTES);
     $admitted_to = htmlspecialchars($_POST['admitted_to'], ENT_QUOTES);
@@ -56,6 +57,6 @@
 	}
 
 
-	header("location: k_12form.php?stud_id=$stud_id&cred_id=$cred_id&request_type=$request_type&signatory=$signatory&personnel_id=$personnel_id&date=$date&admitted_to=$admitted_to&request_purpose=$request_purpose");
+	header("location: k_12form.php?stud_id=$stud_id&cred_id=$cred_id&request_type=$request_type&signatory=$signatory&personnel_id=$personnel_id&date=$date&admitted_to=$admitted_to&request_purpose=$request_purpose&for_signature=$for_signature");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
   require_once "pathconfig.php";
-  $username = $_SESSION['username'];
+  $username = strtoupper($_SESSION['username']);
 ?>
 <?php
 echo <<<SB

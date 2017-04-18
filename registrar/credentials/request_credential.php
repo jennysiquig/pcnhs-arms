@@ -93,6 +93,9 @@
 							<select id="purpose" class="form-control" onchange="disableOthers();" name="purpose">
 								<option value="">Choose..</option>
 								<option value="employment">Employment</option>
+								<option value="local">Local</option>
+								<option value="abroad">Abroad</option>
+								<option value="change of name">Change of Name</option>
 							</select>
 						</div>
 						</div>

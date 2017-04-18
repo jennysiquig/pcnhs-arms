@@ -124,7 +124,7 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Last School Year Attended</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input class="form-control col-md-7 col-xs-12" type="text" name="admitted_to" readonly value=<?php echo "'$last_yr_attended'";?>>
+							<input class="form-control col-md-7 col-xs-12" type="text" name="" readonly value=<?php echo "'$last_yr_attended'";?>>
 						</div>
 					</div>
 				<!--  -->
