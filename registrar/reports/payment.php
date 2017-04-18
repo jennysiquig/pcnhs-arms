@@ -143,7 +143,6 @@
 											<th class="column-title" data-sorter="false">Name</th>
 											<th class="column-title" data-sorter="false">Item</th>
 											<th class="column-title" data-sorter="false">Amount</th>
-											<th class="column-title" data-sorter="false">No. of Copies</th>
 											<th class="column-title" data-sorter="false">Remarks</th>
 											
 										</th>
@@ -209,6 +208,7 @@
 					                    	$credential = $row['cred_name'];
 					                    	$pay_amt = $row['pay_amt'];
 					                    	$remarks = $row['remarks'];
+					                    	$remarks = strtoupper($remarks);
 					                    	
 					                    	//remarks
 					                    echo <<<PAYMENT
@@ -218,8 +218,6 @@
 												<td class=" ">$student</td>
 												<td class=" ">$credential</td>		
 												<td class=" ">$pay_amt</td>
-												<td class=" ">1</td>
-
 												<td class=" ">$remarks</td>
 												
 												
