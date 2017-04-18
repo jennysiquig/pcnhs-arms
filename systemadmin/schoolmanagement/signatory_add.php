@@ -150,13 +150,20 @@
 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Position</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="position" class="form-control col-md-7 col-xs-12" required="required" type="text" name="position"
-                                    data-parsley-pattern="^[a-zA-Z\,\-\.\s]+$"
-                                    data-parsley-pattern-message="Invalid Format"
-                                    data-parsley-maxlength="50"
-                                    data-parsley-maxlength-message="Error">
-                                </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="pselect" class="form-control col-md-7 col-xs-12" required="required" name="position">
+                                    <option value="">--NO SELECTED--</option>
+                                    <?php
+                                    $position= $row['position'];
+                                    echo <<<OPTION0
+                                            <option value="HEAD TEACHER">HEAD TEACHER</option>
+                                            <option value="PRINCIPAL">PRINCIPAL</option>
+                                            <option value="REGISTRAR">REGISTRAR</option>
+                                            <option value="SUPERINTENDENT">SUPERINTENDENT</option>
+OPTION0;
+                                    ?>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group">
