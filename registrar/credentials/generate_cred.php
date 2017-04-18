@@ -23,22 +23,18 @@
 		header("location: ../index.php");
 	}
 
-	if(isset($_GET['purpose'])) {
+	if(isset($_GET['purpose']) || $_GET['purpose'] != "") {
 		$request_purpose = strtoupper(htmlspecialchars($_GET['purpose'], ENT_QUOTES));
 	}else {
-		$request_purpose = "";
+		$request_purpose = $_GET['others'];
 	}
+	
 // Redirect to other page if credential is not form 137 or diploma
 	if($credential > 2) {
 		header("location: other_credential.php?stud_id=$stud_id&credential=$credential");
 		die();
 	}
-	if($credential == 2) {
-		header("location: generate_diploma.php?stud_id=$stud_id&credential=$credential");
-		die();
-	}
-
-	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
+	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' and cred_id = '$cred_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
     if($result->num_rows == 0) {
     	if(isset($_GET['new_request']) && $_GET['new_request']) {
@@ -53,6 +49,14 @@
 	    	header("location: requests.php");
 	    	die();
 		}
+    }
+
+    $school_year = "SELECT max(schl_year) as schl_year from studentsubjects where stud_id = '$stud_id'";
+    $ans = $conn->query($school_year);
+    if ($ans->num_rows>0) {
+    	while ($row = $ans->fetch_assoc()) {
+    		$last_yr_attended = $row['schl_year'];
+    	}
     }
 
 	
@@ -148,6 +152,12 @@
 							<input class="form-control col-md-7 col-xs-12" type="text" name="admitted_to" value="" placeholder="ex: Grade 11 | Empty value will be set to 'N/A'.">
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Last School Year Attended</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input class="form-control col-md-7 col-xs-12" type="text" name="admitted_to" readonly value=<?php echo "'$last_yr_attended'";?>>
+						</div>
+					</div>
 				<!--  -->
 				<!--  -->
 				<div class="form-group">
@@ -156,38 +166,30 @@
 				<div class="col-md-6 col-sm-6 col-xs-12">
 					<select id="credential" class="form-control" name="signatory" required="">
 						<option value="">-- Choose Signatory --</option>
-						<option value="" disabled="">-- Head Teacher --</option>
 						<?php
 							if(!$conn) {
 								die("Connection failed: " . mysqli_connect_error());
 							}
-							$statement = "SELECT * FROM signatories WHERE position='HEAD TEACHER'";
+
+							$school_years = explode(" ", $last_yr_attended);
+							$yr_started = $school_years[0];
+							$yr_ended = $school_years[2];
+
+							$statement = "SELECT * FROM signatories WHERE ('$yr_ended' 
+										  BETWEEN yr_started AND yr_ended)
+										  AND position NOT LIKE 'SUPERINTENDENT'";
+
 							$result = $conn->query($statement);
 							if ($result->num_rows > 0) {
-								// output data of each row
 								while($row = $result->fetch_assoc()) {
 									$sign_id = $row['sign_id'];
-									$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
+									$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'].'  ('
+												 .$row['position'].',  '.$row['title'].' '.$row['yr_started'].'-'.$row['yr_ended'].')';
 									echo "<option value='$sign_id'>$sign_name</option>";
 								}
 							}
 						?>
-						<option value="" disabled="">-- Principal --</option>
-						<?php
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$sign_id = $row['sign_id'];
-										$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
-										echo "<option value='$sign_id'>$sign_name</option>";
-									}
-								}
-							?>
+
 					</select>
 				</div>
 			</div>
