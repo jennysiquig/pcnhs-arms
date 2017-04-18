@@ -87,8 +87,7 @@
                     $stud_id = "";
                     $cred_id = $_GET['credential'];
                     $purpose = $_GET['purpose'];
-
-
+                    $others = $_GET['others'];
                     if($_GET['full-name']) {
                       $search = htmlspecialchars($_GET['full-name']);
                       $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id where concat(first_name, ' ', last_name) like '$search%'";
@@ -119,7 +118,7 @@
                       <td>
                         <span class="">
                         <center>
-                          <a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$purpose&new_request=true" class="btn btn-default"><i class="fa fa-plus"></i> Add Request</a>
+                          <a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$purpose&others=$others&new_request=true" class="btn btn-default"><i class="fa fa-plus"></i> Add Request</a>
 
                           <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default"><i class="fa fa-user"></i> View Profile</a>
                           </center>

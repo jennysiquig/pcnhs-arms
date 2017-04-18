@@ -27,7 +27,7 @@
       $admitted_to = "N/A";
     }
 
-    $checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
+    $checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' and cred_id = '$cred_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
     if($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {

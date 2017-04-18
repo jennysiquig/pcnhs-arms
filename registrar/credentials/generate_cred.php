@@ -23,22 +23,18 @@
 		header("location: ../index.php");
 	}
 
-	if(isset($_GET['purpose'])) {
+	if(isset($_GET['purpose']) || $_GET['purpose'] != "") {
 		$request_purpose = strtoupper(htmlspecialchars($_GET['purpose'], ENT_QUOTES));
 	}else {
-		$request_purpose = "";
+		$request_purpose = $_GET['others'];
 	}
+	
 // Redirect to other page if credential is not form 137 or diploma
 	if($credential > 2) {
 		header("location: other_credential.php?stud_id=$stud_id&credential=$credential");
 		die();
 	}
-	if($credential == 2) {
-		header("location: generate_diploma.php?stud_id=$stud_id&credential=$credential");
-		die();
-	}
-
-	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
+	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' and cred_id = '$cred_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
     if($result->num_rows == 0) {
     	if(isset($_GET['new_request']) && $_GET['new_request']) {
