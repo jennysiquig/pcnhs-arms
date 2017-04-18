@@ -91,7 +91,7 @@
 						<!-- Date Picker -->
 						<div class="row">
 							<div class="col-md-4">
-								Select Date of Accomplishment
+								Select Date of Payment
 								<form class="form-horizontal" action="payment.php" method="get">
 									<fieldset>
 										
@@ -103,7 +103,7 @@
 													</span>
 													<input type="text" name="payment_date" id="payment_date" class="form-control" value=" " />
 													<span class="input-group-btn">
-														<button type="submit" class="btn btn-primary">Go!</button>
+														<button type="submit" class="btn btn-primary">Go</button>
 													</span>
 												</div>
 											</div>
@@ -129,7 +129,7 @@
 									
 								?>
 							<div class="col-md-8">
-								<a href= <?php echo "generate_payment.php?payment_date=$payment_date_get"; ?>><button type="button" class="btn btn-success pull-right">Generate Payment</button></a>
+								<a href= <?php echo "generate_payment.php?payment_date=$payment_date_get"; ?>><button type="button" class="btn btn-success pull-right">Generate Report</button></a>
 								</div>
 						</div>
 	                      <!-- Date Picker -->

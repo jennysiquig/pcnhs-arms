@@ -3,12 +3,12 @@
 <?php include('include_files/session_check.php'); ?>
 <?php
 	
-	if($_SESSION['generated_form137']) {
+	if(isset($_SESSION['generated_form137'])) {
             unset($_SESSION['generated_form137']);
             header("location: ../../index.php");
             die();
        }
-      if($_SESSION['generated_diploma']) {
+      if(isset($_SESSION['generated_diploma'])) {
             unset($_SESSION['generated_diploma']);
             header("location: ../../index.php");
             die();
@@ -39,12 +39,54 @@
 	
 // Redirect to other page if credential is not form 137 or diploma
 	if($credential > 2) {
-		header("location: other_credential.php?stud_id=$stud_id&credential=$credential");
-		die();
+		$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' and cred_id = '$credential' order by req_id desc limit 1;";
+    	$result = $conn->query($checkpending);
+		if($result->num_rows <= 0) {
+	    	if(isset($_GET['new_request']) && $_GET['new_request']) {
+				$cred_id = htmlspecialchars($_GET['credential'], ENT_QUOTES);
+			    $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
+			    $date = date("Y-m-d");
+			    //$request_purpose = htmlspecialchars($_GET['purpose']);
+
+		    	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `status`, `date_processed`, `request_purpose`, `per_id`) VALUES ('$cred_id', '$stud_id', 'p', '$date', '$request_purpose', '$personnel_id');";
+
+		    	mysqli_query($conn, $statement1);
+		    	header("location: requests.php");
+		    	die();
+			}else {
+		    	header("location: other_credential.php?stud_id=$stud_id&credential=$credential&purpose=$request_purpose");
+				die();
+		    }
+	    }else {
+		    	header("location: other_credential.php?stud_id=$stud_id&credential=$credential&purpose=$request_purpose");
+				die();
+		    }
+		
 	}
 	if($credential == 2) {
-		header("location: generate_diploma.php?stud_id=$stud_id&credential=$credential&purpose=$request_purpose&new_request=true");
-		die();
+		$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' and cred_id = '$credential' order by req_id desc limit 1;";
+    	$result = $conn->query($checkpending);
+		if($result->num_rows <= 0) {
+	    	if(isset($_GET['new_request']) && $_GET['new_request']) {
+				$cred_id = htmlspecialchars($_GET['credential'], ENT_QUOTES);
+			    $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
+			    $date = date("Y-m-d");
+			    //$request_purpose = htmlspecialchars($_GET['purpose']);
+
+		    	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `status`, `date_processed`, `request_purpose`, `per_id`) VALUES ('$cred_id', '$stud_id', 'p', '$date', '$request_purpose', '$personnel_id');";
+
+		    	mysqli_query($conn, $statement1);
+		    	header("location: requests.php");
+		    	die();
+			}else {
+		    	header("location: generate_diploma.php?stud_id=$stud_id&credential=$credential&purpose=$request_purpose");
+				die();
+		    }
+	    }else {
+		    	header("location: generate_diploma.php?stud_id=$stud_id&credential=$credential&purpose=$request_purpose");
+				die();
+		    }
+		
 	}
 
 	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' and cred_id = '$credential' order by req_id desc limit 1;";
@@ -54,7 +96,7 @@
 			$cred_id = htmlspecialchars($_GET['credential'], ENT_QUOTES);
 		    $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
 		    $date = date("Y-m-d");
-		    $request_purpose = htmlspecialchars($_GET['purpose']);
+		    $request_purpose = strtoupper(htmlspecialchars($_GET['purpose']));
 
 	    	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `status`, `date_processed`, `request_purpose`, `per_id`) VALUES ('$cred_id', '$stud_id', 'p', '$date', '$request_purpose', '$personnel_id');";
 
@@ -126,7 +168,6 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					*Form 137 Template Here*
 					<div class="clearfix"></div>
 					<br>
 					<div class="form-group">
@@ -169,6 +210,7 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Last School Year Attended</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input class="form-control col-md-7 col-xs-12" type="text" name="admitted_to" readonly value=<?php echo "'$last_yr_attended'";?>>
+							<p><i class="fa fa-info-circle"></i> If the Last School Year Attended is empty, please add grades and attendance first before generating credentials.</p>
 						</div>
 					</div>
 				<!--  -->

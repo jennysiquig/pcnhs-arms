@@ -48,6 +48,9 @@
 		$statement->bind_param("isi", $cred_id, $cred_name, $price);
 	
 		$statement->execute();
+
+		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
+		echo "<br>";
 		$_SESSION['user_activity'][] = "ADDED NEW CREDENTIAL: $cred_name";
 		header('location: ../credentials.php');
 

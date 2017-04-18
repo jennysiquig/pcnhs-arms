@@ -73,7 +73,7 @@
             </div>
           </div>
           <div class="pull-right">
-            <a><i class="fa fa-info-circle"></i> Search Student by <strong>Last Name/First Name</strong></a>
+            <a><i class="fa fa-info-circle"></i> Search Student by <strong>Last Name / First Name / Curriculum</strong></a>
           </div>
         </div>
       </form>

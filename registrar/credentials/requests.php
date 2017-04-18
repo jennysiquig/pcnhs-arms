@@ -102,6 +102,7 @@
 												$stud_name = $row['stud_name'];
 												$cred_name = $row['cred_name'];
 												$request_purpose = $row['request_purpose'];
+												$request_purpose = strtoupper($request_purpose);
 												$cred_id = $row['cred_id'];
 												$stud_id = $row['stud_id'];
 
@@ -113,7 +114,7 @@
 																<td class=" ">$request_purpose</td>
 																<td class=" ">
 																<center>
-																	<a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose&new_request=true" class="btn btn-default"> Process Request</a>
+																	<a href="../../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose" class="btn btn-default"> Process Request</a>
 																</center>
 																</td>
 												</tr>

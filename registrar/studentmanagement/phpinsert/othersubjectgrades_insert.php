@@ -128,13 +128,32 @@
 	}
 
 	$insertothersubj = "INSERT INTO `pcnhsdb`.`othersubjects` (`subj_id`, `stud_id`,  `subj_name`, `subj_level`, `subj_type`, `schl_name`, `schl_year`, `yr_level`, `fin_grade`, `credit_earned`, `comment`, `subj_order`, `special_grade`) VALUES ($subj_id, '$stud_id', '$subj_name', $subj_level, '$subj_type', '$schl_name', '$schl_year', '$yr_level', '$fin_grade', '$credit_earned', '$comment', $subj_order, '$special_grade');";
+	
 
 	if($willInsert) {
-		echo mysqli_query($conn, $insertothersubj);
+		$student_grade = "SELECT * FROM pcnhsdb.grades where stud_id = '$stud_id' and schl_year='$schl_year';";
+		$result_1 = $conn->query($student_grade);
+
+		if($result_1->num_rows>0) {
+			while ($row = $result_1->fetch_assoc()) {
+				$total_credit = $row['total_credit'];
+				$total_credit = doubleval($total_credit) + doubleval($credit_earned);
+
+			    $totalcreditupdate = "UPDATE `pcnhsdb`.`grades` SET `total_credit`='$total_credit' WHERE stud_id = '$stud_id' and schl_year = '$schl_year';";
+
+			    mysqli_query($conn, $totalcreditupdate);
+			}
+		}
+		mysqli_query($conn, $insertothersubj);
+
+		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
+		echo "<br>";
+
+		$_SESSION['user_activity'][] = "ADDED NEW OTHER SUBJECT GRADE OF: $stud_id";
 		header("location: ../grades.php?stud_id=$stud_id");
 	}
 	
-	$_SESSION['user_activity'][] = "ADDED NEW OTHER SUBJECT GRADE OF: $stud_id";
+	
 
 	
 

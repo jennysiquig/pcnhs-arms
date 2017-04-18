@@ -7,8 +7,9 @@
  ?>
 <!DOCTYPE html>
 <?php 
-	if(isset($_GET['stud_id'])) {
+	if(isset($_GET['stud_id']) && isset($_GET['yr_level'])) {
 		$stud_id = $_GET['stud_id'];
+		$yr_level = $_GET['yr_level'];
 	}else {
 		header("location: student_list.php");
 	}
@@ -94,7 +95,7 @@
 									die();
 								}
 
-									$statement = "SELECT * FROM pcnhsdb.grades WHERE stud_id = '$stud_id' order by yr_level asc;";
+									$statement = "SELECT * FROM pcnhsdb.grades WHERE stud_id = '$stud_id' and yr_level = '$yr_level' order by yr_level asc;";
 									$result = $conn->query($statement);
 									$grade_count = 0;
 									if($result->num_rows > 0) {

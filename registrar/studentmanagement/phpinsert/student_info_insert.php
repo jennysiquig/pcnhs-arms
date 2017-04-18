@@ -73,7 +73,7 @@
 
 	}
 // Duplicate Checker
-	$selectStudents = "SELECT * from students where stud_id = '$stud_id' and first_name = '$first_name' and last_name = '$last_name' and birth_date = '$birth_date';";
+	$selectStudents = "SELECT * from students where stud_id = '$stud_id' and (first_name = '$first_name' and last_name = '$last_name' and birth_date = '$birth_date');";
 	$result = $conn->query($selectStudents);
 	if ($result->num_rows > 0) {
 		$willInsert = false;
@@ -82,7 +82,7 @@
 			$popover = new Popover();
 			$popover->set_popover($alert_type, $error_message);	
 			$_SESSION['error_pop'] = $popover->get_popover();
-		header("Location: " . $_SERVER["HTTP_REFERER"]);
+			header("Location: " . $_SERVER["HTTP_REFERER"]);
 	}	
 
 	
@@ -106,7 +106,10 @@
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $message);	
 		$_SESSION['success'] = $popover->get_popover();
+		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
+		echo "<br>";
 		$_SESSION['user_activity'][] = "ADDED NEW STUDENT: $first_name $last_name";
+
 		header("Location: ../student_info.php?stud_id=$stud_id");
 	}
 	

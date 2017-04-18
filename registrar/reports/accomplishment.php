@@ -111,7 +111,7 @@
 													</span>
 													<input type="text" name="accomplishment_date" id="accomplishment_date" class="form-control" value="accomplishment_date" />
 													<span class="input-group-btn">
-														<button type="submit" class="btn btn-primary">Go!</button>
+														<button type="submit" class="btn btn-primary">Go</button>
 													</span>
 												</div>
 											</div>

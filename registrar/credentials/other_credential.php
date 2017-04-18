@@ -22,25 +22,6 @@
 		$request_purpose = "";
 	}
 
-	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
-    $result = $conn->query($checkpending);
-    if($result->num_rows == 0) {
-    	if(isset($_GET['new_request']) && $_GET['new_request']) {
-			$cred_id = htmlspecialchars($_GET['credential'], ENT_QUOTES);
-		    $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
-		    $date = date("Y-m-d");
-		    $request_purpose = htmlspecialchars($_GET['purpose']);
-
-
-	    	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `status`, `date_processed`, `request_purpose`, `per_id`) VALUES ('$cred_id', '$stud_id', 'p', '$date', '$request_purpose', '$personnel_id');";
-
-	    	mysqli_query($conn, $statement1);
-	    	header("location: requests.php");
-	    	die();
-
-	    	
-		}
-    }
 
 	
 ?>
@@ -105,8 +86,6 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <p>
 							<input type="radio" class="flat" name="request_type" id="tor-individual" value="individual" checked="" required /> Individual Request:
-							<input type="radio" class="flat" name="request_type" id="tor-bulk" value="school" />
-							School Request:
 							
 						</p>
                         </div>

@@ -5,6 +5,17 @@ session_start();
 $time = time();
 $session_timeout = 1800; //seconds
 
+if(isset($_SESSION['generated_form137'])) {
+	unset($_SESSION['generated_form137']);
+	header("location: index.php");
+	die();
+}
+if(isset($_SESSION['generated_diploma'])) {
+	unset($_SESSION['generated_diploma']);
+	header("location: index.php");
+	die();
+}
+
 if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
 	$_SESSION['timeout_message'] = "You have been logged out due to inactivity. Please Login Again.";
 	header("location: ../logout.php");
@@ -213,6 +224,7 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 												$stud_name = $row['stud_name'];
 												$cred_name = $row['cred_name'];
 												$request_purpose = $row['request_purpose'];
+												$request_purpose = strtoupper($request_purpose);
 												$cred_id = $row['cred_id'];
 												$stud_id = $row['stud_id'];
 
@@ -224,7 +236,7 @@ if(isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])){
 																<td class=" ">$request_purpose</td>
 																<td class=" ">
 																	<center>
-																		<a href="../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose&new_request=true" class="btn btn-default"> Process Request</a>
+																		<a href="../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose" class="btn btn-default"> Process Request</a>
 																	</center>
 																</td>
 												</tr>

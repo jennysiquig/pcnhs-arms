@@ -37,6 +37,9 @@
 		$statement->bind_param("is", $prog_id, $prog_name);
 	
 		$statement->execute();
+
+		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
+		echo "<br>";
 		$_SESSION['user_activity'][] = "ADDED NEW PROGRAM: $prog_name";
 		header('location: ../student_programs.php');
 	}

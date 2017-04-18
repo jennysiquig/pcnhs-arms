@@ -94,7 +94,7 @@
 				if($fin_grade > 74 && $credit_earned == 0 && is_numeric($credit_earned)) {
 					$willInsert = false;
 					$alert_type = "danger";
-					$error_message = "Invalid Credit Earned input. Enter Credit Earned that is greater than 0 if the Final Grade is greater than 74";
+					$error_message = "Credit Earned cannot be 0 if the Final Grade is greater than 74.";
 					$popover = new Popover();
 					$popover->set_popover($alert_type, $error_message);	
 					$_SESSION['error_pop'] = $popover->get_popover();
@@ -106,7 +106,7 @@
 					if($curr_code != "K-12") {
 						$willInsert = false;
 						$alert_type = "danger";
-						$error_message = "'P' for PROMOTED or 'R' for RETAINED is for K-12 curriculum only. ";
+						$error_message = "Please check the Credit Earned Input.";
 						$popover = new Popover();
 						$popover->set_popover($alert_type, $error_message);	
 						$_SESSION['error_pop'] = $popover->get_popover();
@@ -121,7 +121,7 @@
 							$credit_earned = "";
 							$willInsert = false;
 							$alert_type = "danger";
-							$error_message = "Invalid Credit Earned input. Enter 'P' for PROMOTED or 'R' for RETAINED.";
+							$error_message = "Please check the Credit Earned Input.";
 							$popover = new Popover();
 							$popover->set_popover($alert_type, $error_message);	
 							$_SESSION['error_pop'] = $popover->get_popover();

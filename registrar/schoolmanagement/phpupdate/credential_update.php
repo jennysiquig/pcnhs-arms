@@ -8,6 +8,9 @@
 	$updatestm = "UPDATE `pcnhsdb`.`credentials` SET `cred_name`='$cred_name', `price`='$price' WHERE `cred_id`='$cred_id';";
 
 	mysqli_query($conn, $updatestm);
+
+	echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
+	echo "<br>";
 	$_SESSION['user_activity'][] = "EDITED CREDENTIAL: $cred_name";
 	header("location: ../credentials.php");
 ?>

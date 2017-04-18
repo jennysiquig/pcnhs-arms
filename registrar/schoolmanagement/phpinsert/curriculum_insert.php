@@ -57,6 +57,9 @@
 		$statement->bind_param("issii", $curr_id, $curr_code, $curr_name, $year_started,$year_ended);
 
 		$statement->execute();
+
+		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
+		echo "<br>";
 		$_SESSION['user_activity'][] = "ADDED NEW CURRICULUM: $curr_name";
 		header('location: ../curriculum.php');
 

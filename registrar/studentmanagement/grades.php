@@ -249,7 +249,7 @@ REMOVE;
 						                          <td>$credit_earned</td>
 						                          <td>$comment</td>
 						                          <td>
-													<a class="btn btn-danger btn-xs" href=phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id>Remove Record</a>
+													<a class="btn btn-danger btn-xs" href="phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id&schl_year=$schl_year&credit_earned=$credit_earned">Remove Record</a>
 						                          </td>
 
 						                        </tr>

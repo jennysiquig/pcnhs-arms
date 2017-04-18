@@ -88,6 +88,9 @@
 
 	if($willInsert) {
 		mysqli_query($conn, $insertattendance);
+
+		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
+		echo "<br>";
 		$_SESSION['user_activity'][] = "ADDED NEW ATTENDANCE OF: $stud_id";
 		header("location: ../attendance.php?stud_id=$stud_id");
 	}

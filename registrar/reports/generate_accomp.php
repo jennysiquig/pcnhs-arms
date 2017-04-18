@@ -191,7 +191,7 @@
 						</div>						
 						<br>
 						<button id="generatebutton" class="btn btn-primary pull-right" type="submit">
-							<i class="fa fa-print m-right-xs"></i> Generate Credential</button>
+							<i class="fa fa-print m-right-xs"></i> Generate</button>
 					</form>
 				</div>
 				<div class="row">

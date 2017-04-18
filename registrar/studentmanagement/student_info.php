@@ -321,6 +321,7 @@
 														// output data of each row
 														while($row = $result->fetch_assoc()) {
 															$request_purpose = $row['request_purpose'];
+															$request_purpose = strtoupper($request_purpose);
 															$cred_name = $row['cred_name'];
 															$date_processed = $row['date_processed'];
 															$date_released = $row['date_released'];

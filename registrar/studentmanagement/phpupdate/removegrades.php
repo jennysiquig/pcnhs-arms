@@ -13,6 +13,9 @@
 	
 	mysqli_query($conn, $statement1);
 	mysqli_query($conn, $statement2);
+
+	echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
+		echo "<br>";
 	$_SESSION['user_activity'][] = "REMOVED GRADES OF: $stud_id";
 	header("location: ../grades.php?stud_id=$stud_id");
 

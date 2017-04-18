@@ -101,6 +101,9 @@
 	if($willInsert) {
 		mysqli_query($conn, $insertsubject);
 		mysqli_multi_query($conn, $multipleinsert);
+
+		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
+		echo "<br>";
 		$_SESSION['user_activity'][] = "ADDED NEW SUBJECT: $subj_name";
 		echo "<p>Updating Database, please wait...</p>";
 		header("Refresh:3; url=../student_subjects.php");

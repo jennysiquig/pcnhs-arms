@@ -65,9 +65,9 @@
         $DADay = $d;
         $DAyear = $y;
 				$admitted_to = htmlspecialchars($_GET['admitted_to'], ENT_QUOTES);
-        $locale = 'en_US';
-        $nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
-        $DADay = $nf->format($DADay);
+        //$locale = 'en_US';
+        //$nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
+        //$DADay = $nf->format($DADay);
 
 			?>
 

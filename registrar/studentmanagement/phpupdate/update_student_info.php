@@ -41,11 +41,29 @@
 
 	$updatestmnt3 = "UPDATE `pcnhsdb`.`primaryschool` SET `total_elem_years`='$total_elem_years', `gen_average`='$gpa' WHERE `stud_id`='$stud_id';";
 
+	// Update Student Attendance
+	$yr_lvl = 0;
+	$n = 1;
+	$attendance_1 = "SELECT  * FROM pcnhsdb.attendance where stud_id = '$stud_id' order by yr_lvl asc;";
+	$result_attendance = $conn->query($attendance_1);
+	if($result_attendance->num_rows>0) {
+		while($row_1 = $result_attendance->fetch_assoc()) {
+			$yr_lvl = $row_1['yr_lvl'];
+			$total_years_in_school = intval($total_elem_years)+$n;
+
+			$update_aty = "UPDATE `pcnhsdb`.`attendance` SET `total_years_in_school`='$total_years_in_school' WHERE `stud_id`='$stud_id' and yr_lvl = '$yr_lvl';";
+			mysqli_query($conn, $update_aty);
+			$n+=1;
+		}
+	}
+
 	if($willInsert) {
 		mysqli_query($conn, $updatestmnt1);
 		mysqli_query($conn, $updatestmnt2);
 		mysqli_query($conn, $updatestmnt3);
 
+		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
+		echo "<br>";
 		$_SESSION['user_activity'][] = "UPDATED INFORMATION OF: $stud_id";
 
 		header("location: ../student_info.php?stud_id=$stud_id");
