@@ -4,7 +4,15 @@
 <?php session_start(); ?>
 <?php $stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES) ?>
 <?php
-
+    if(!isset($_SESSION['generated_diploma'])) {
+      $_SESSION['generated_diploma'] = true;
+    }else {
+        if($_SESSION['generated_diploma']) {
+          unset($_SESSION['generated_diploma']);
+          header("location: ../index.php");
+          die();
+        }
+    }
     $stud_id = $_GET['stud_id'];
     $query = "SELECT * FROM students where stud_id = '$stud_id'";
 
@@ -23,20 +31,20 @@
     $curr_month = str_replace('Jan','Enero',$curr_month);
     $curr_month = str_replace('Feb','Pebrero',$curr_month);
     $curr_month = str_replace('Mar','Marso',$curr_month);
-	$curr_month = str_replace('Apr','Abril',$curr_month);
-	$curr_month = str_replace('May','Mayo',$curr_month);
-	$curr_month = str_replace('Jun','Hunyo',$curr_month);
-	$curr_month = str_replace('Jul','Hulyo',$curr_month);
-	$curr_month = str_replace('Aug','Agosto',$curr_month);
-	$curr_month = str_replace('Sep','Setyembre',$curr_month);
-	$curr_month = str_replace('Oct','Oktubre',$curr_month);
-	$curr_month = str_replace('Nov','Nobyembre',$curr_month);
-	$curr_month = str_replace('Dec','Disyembre',$curr_month);
+    $curr_month = str_replace('Apr','Abril',$curr_month);
+    $curr_month = str_replace('May','Mayo',$curr_month);
+    $curr_month = str_replace('Jun','Hunyo',$curr_month);
+    $curr_month = str_replace('Jul','Hulyo',$curr_month);
+    $curr_month = str_replace('Aug','Agosto',$curr_month);
+    $curr_month = str_replace('Sep','Setyembre',$curr_month);
+    $curr_month = str_replace('Oct','Oktubre',$curr_month);
+    $curr_month = str_replace('Nov','Nobyembre',$curr_month);
+    $curr_month = str_replace('Dec','Disyembre',$curr_month);
 	
 // 	Insert request to DB
     
     $stud_id = $_GET['stud_id'];
-	$cred_id = htmlspecialchars($_POST['credential'], ENT_QUOTES);
+	   $cred_id = htmlspecialchars($_POST['credential'], ENT_QUOTES);
     $request_type = htmlspecialchars($_POST['request_type'], ENT_QUOTES);
     $signatory_1 = htmlspecialchars($_POST['signatory_principal'], ENT_QUOTES);
     $signatory_2 = htmlspecialchars($_POST['signatory_superintendent'], ENT_QUOTES);
@@ -68,7 +76,7 @@
         }
     }else {
          $statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `admitted_to`, `request_purpose`, `sign_id`, second_sign_id, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$admitted_to', '$request_purpose' ,'$signatory_1','$signatory_2', '$personnel_id');";
-
+         echo $statement1;
         mysqli_query($conn, $statement1);
     }
  

@@ -8,6 +8,17 @@
 	$request_type = "";
 	$request_purpose = "";
 
+	if(isset($_SESSION['generated_form137'])) {
+            unset($_SESSION['generated_form137']);
+            header("location: ../../index.php");
+            die();
+       }
+      if(isset($_SESSION['generated_diploma'])) {
+            unset($_SESSION['generated_diploma']);
+            header("location: ../../index.php");
+            die();
+       }
+
 	if(isset($_GET['stud_id']) && isset($_GET['credential'])) {
 		$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
 		$credential = htmlspecialchars($_GET['credential'], ENT_QUOTES);
@@ -16,17 +27,15 @@
 		header("location: ../index.php");
 	}
 
-
-
-
-	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' order by req_id desc limit 1;";
+	$request_purpose = htmlspecialchars($_GET['purpose']);
+	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' and cred_id = '$credential' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
-    if($result->num_rows == 0) {
+    if($result->num_rows <= 0) {
     	if(isset($_GET['new_request']) && $_GET['new_request']) {
 			$cred_id = htmlspecialchars($_GET['credential'], ENT_QUOTES);
 		    $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
 		    $date = date("Y-m-d");
-		    $request_purpose = htmlspecialchars($_GET['purpose']);
+		    //$request_purpose = htmlspecialchars($_GET['purpose']);
 
 	    	$statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `status`, `date_processed`, `request_purpose`, `per_id`) VALUES ('$cred_id', '$stud_id', 'p', '$date', '$request_purpose', '$personnel_id');";
 

@@ -28,9 +28,9 @@
  	$updatestm1 = "UPDATE `pcnhsdb`.`requests` SET `status`='r', `date_released`= current_date() WHERE `req_id`= '$req_id';";
 
  	if($request_type == "individual") {
- 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `pay_amt`, `stud_id`) VALUES (current_date(), '$price', '$stud_id');";
+ 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `pay_amt`, `stud_id`, remarks) VALUES (current_date(), '$price', '$stud_id','Regular');";
  	}else {
- 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `pay_amt`, `stud_id`) VALUES (current_date(), 0, 0, '$stud_id');";
+ 		$insertstm1 = "INSERT INTO `pcnhsdb`.`payment` (`pay_date`, `pay_amt`, `stud_id`, remarks) VALUES (current_date(), 0, 0, '$stud_id', 'Regular');";
  	}
 
  	mysqli_query($conn, $updatestm1);

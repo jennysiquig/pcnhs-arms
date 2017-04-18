@@ -4,11 +4,11 @@
 	// Query
 	require_once '../../resources/config.php';
     
-    if(!isset($_SESSION['generated'])) {
-        $_SESSION['generated'] = true;
+    if(!isset($_SESSION['generated_form137'])) {
+        $_SESSION['generated_form137'] = true;
     }else {
-        if($_SESSION['generated']) {
-            unset($_SESSION['generated']);
+        if($_SESSION['generated_form137']) {
+            unset($_SESSION['generated_form137']);
             header("location: ../../index.php");
             die();
         }

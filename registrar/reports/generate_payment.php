@@ -101,7 +101,7 @@
 							<div class="form-group">
 								<div class="col-md-9 center-margin">
 									<label>Choose Signatory <span class="required">*</span></label>
-									<select id="credential" class="form-control" name="signatory">
+									<select id="credential" class="form-control" name="signatory" required="">
 										<option value="">No Selected</option>
 										<optgroup label="HEAD TEACHER"></optgroup>
 										<?php

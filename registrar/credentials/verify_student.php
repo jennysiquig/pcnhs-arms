@@ -83,11 +83,15 @@
                   <tbody>
                     
                     <?php
-
+                    $others = "";
+                    if(isset($_GET['others']) && $_GET['others'] != "") {
+                        $others = $_GET['others'];
+                      }else {
+                        $others = "";
+                    }
                     $stud_id = "";
                     $cred_id = $_GET['credential'];
                     $purpose = $_GET['purpose'];
-                    $others = $_GET['others'];
                     if($_GET['full-name']) {
                       $search = htmlspecialchars($_GET['full-name']);
                       $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id where concat(first_name, ' ', last_name) like '$search%'";

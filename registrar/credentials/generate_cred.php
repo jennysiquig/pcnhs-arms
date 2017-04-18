@@ -3,13 +3,16 @@
 <?php include('include_files/session_check.php'); ?>
 <?php
 	
-
-	if(isset($_SESSION['generated'])) {
-        unset($_SESSION['generated']);
-        header("location: ../../index.php");
-        die();
-    }
-
+	if($_SESSION['generated_form137']) {
+            unset($_SESSION['generated_form137']);
+            header("location: ../../index.php");
+            die();
+       }
+      if($_SESSION['generated_diploma']) {
+            unset($_SESSION['generated_diploma']);
+            header("location: ../../index.php");
+            die();
+       }
 	$stud_id = "";
 	$credential = "";
 	$request_type = "";
@@ -23,10 +26,15 @@
 		header("location: ../index.php");
 	}
 
-	if(isset($_GET['purpose']) || $_GET['purpose'] != "") {
+	if(isset($_GET['purpose']) && $_GET['purpose'] != "") {
 		$request_purpose = strtoupper(htmlspecialchars($_GET['purpose'], ENT_QUOTES));
 	}else {
-		$request_purpose = $_GET['others'];
+		if(isset($_GET['others']) && $_GET['others'] != "") {
+			$request_purpose = $_GET['others'];
+		}else {
+			$request_purpose = "";
+		}
+		
 	}
 	
 // Redirect to other page if credential is not form 137 or diploma
@@ -34,7 +42,12 @@
 		header("location: other_credential.php?stud_id=$stud_id&credential=$credential");
 		die();
 	}
-	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' and cred_id = '$cred_id' order by req_id desc limit 1;";
+	if($credential == 2) {
+		header("location: generate_diploma.php?stud_id=$stud_id&credential=$credential&purpose=$request_purpose&new_request=true");
+		die();
+	}
+
+	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' and cred_id = '$credential' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
     if($result->num_rows == 0) {
     	if(isset($_GET['new_request']) && $_GET['new_request']) {
