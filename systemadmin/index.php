@@ -67,7 +67,7 @@ else {
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
             <li class="disabled">System Logs</li>
-            <li class="active">View System Logs</li>
+            <li class="active">View Activity Logs</li>
           </ol>
         </div>
 

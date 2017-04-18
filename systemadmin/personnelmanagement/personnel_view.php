@@ -183,7 +183,7 @@
                                 <div class="col-md-5 col-md-offset-3 pull-left">
                                     <a href = <?php echo "personnel_edit.php?per_id=$per_id" ?> button type="submit" class="btn btn-primary " >Edit Profile</a>
                                     <a href = "" button type="submit" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-sm" >Remove</a> &nbsp&nbsp&nbsp&nbsp
-                                    <a href = "personnel_list.php" button type="submit" class="btn btn-primary " >View Personnels</a>
+                                    <a href = "personnel_list.php" button type="submit" class="btn btn-primary " >View Personnel Accounts</a>
                                 </div>
                             </div>
 

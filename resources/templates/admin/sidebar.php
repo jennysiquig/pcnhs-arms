@@ -40,7 +40,7 @@ echo <<<SB
                     </ul>
                   </li>
 
-                  <li><a><i class="fa fa-users"></i>Personnel Accounts <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-users"></i>Personnel Management<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="$base_url/systemadmin/personnelmanagement/personnel_list.php">View Personnel Accounts</a></li>
                       <li><a href="$base_url/systemadmin/personnelmanagement/personnel_add.php">Add Personnel Account</a></li>
