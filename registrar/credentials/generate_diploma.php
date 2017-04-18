@@ -127,6 +127,38 @@
 							<input class="form-control col-md-7 col-xs-12" type="text" name="" readonly value=<?php echo "'$last_yr_attended'";?>>
 						</div>
 					</div>
+					<div class="form-group">
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">Date of Graduation</label>
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<select id="credential" class="form-control" name="grad_month" required="">
+								<option value="">-- Select Month --</option>
+								<?php
+									$i = 1;
+										$month = strtotime('-3 month');
+											while($i <= 12) {
+											    $month_name = date('F', $month);
+												    echo "<option value='$month_name'>$month_name</option>";
+												    $month = strtotime('+1 month', $month);
+											    $i++;
+										}
+								?>
+							</select>
+
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<select id="credential" class="form-control" name="grad_day" required="">
+								<option value="">-- Select Day --</option>
+								    <?php $day = date("d");
+                                    	for ($day = 1; $day <= 31; $day++) {
+                                        	echo "<option value='$day'>$day</option>";
+                                        } 
+                                    ?>
+							</select>
+						</div>
+					</div
 				<!--  -->
 				<div class="form-group">
 					<label class="control-label col-md-3 col-sm-3 col-xs-12">Choose Signatory for Principal <span class="required">*</span>

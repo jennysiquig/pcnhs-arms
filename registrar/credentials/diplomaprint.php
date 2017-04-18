@@ -42,7 +42,7 @@
     $ans_prin = $conn->query($prin);
     if ($ans_prin->num_rows>0) {
       while ($row = $ans_prin->fetch_assoc()) {
-        $prin_name =$row['first_name']." ".$row['mname'].".  ".$row['last_name'];
+        $prin_name =$row['first_name']." ".$row['mname'].".  ".$row['last_name']." ".$row['title'];
       }
     }
 
@@ -51,7 +51,7 @@
     $ans_sn = $conn->query($super_int);
     if ($ans_sn->num_rows>0) {
       while ($row = $ans_sn->fetch_assoc()) {
-        $si_name =$row['first_name']." ".$row['mname'].".  ".$row['last_name'];
+        $si_name =$row['first_name']." ".$row['mname'].".  ".$row['last_name']." ".$row['title'];
       }
     }
 
@@ -62,7 +62,7 @@
     $curr_p = $conn->query($curr_principal);
     if ($curr_p->num_rows>0) {
         while ($row = $curr_p->fetch_assoc()) {
-          $current_principal = $row['first_name']." ".$row['mname'].".  ".$row['last_name'];
+          $current_principal = $row['first_name']." ".$row['mname'].".  ".$row['last_name']." ".$row['title'];
         }
     }
 
@@ -73,7 +73,7 @@
     }else if ($grad_month === "March")    {
           $grad_month_fil = str_replace('March','Marso',$grad_month);
     }else if ($grad_month === "April")    {
-          $grad_month_fil = str_replace('April','Abril',$grad_month);
+          $grad_month_fil = str_replace('April','Abril',$grad_mfonth);
     }else if ($grad_month === "May")      {
           $grad_month_fil = str_replace('May','Mayo',$grad_month);
     }else if ($grad_month === "June")     {
@@ -101,7 +101,6 @@
     $signatory_2 = htmlspecialchars($_POST['signatory_superintendent'], ENT_QUOTES);
     $personnel_id = htmlspecialchars($_SESSION['per_id'], ENT_QUOTES);
     $date = htmlspecialchars($_POST['date'], ENT_QUOTES);
-    $admitted_to = htmlspecialchars($_POST['admitted_to'], ENT_QUOTES);
     $request_purpose = strtoupper(htmlspecialchars($_POST['request_purpose']));
     //$remarks = htmlspecialchars($_POST['remarks'], ENT_QUOTES);
     
@@ -127,7 +126,6 @@
         }
     }else {
          $statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `admitted_to`, `request_purpose`, `sign_id`, second_sign_id, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$admitted_to', '$request_purpose' ,'$signatory_1','$signatory_2', '$personnel_id');";
-         echo $statement1;
         mysqli_query($conn, $statement1);
     }
  
@@ -139,6 +137,7 @@
 <title>Preview Credential</title>
 <head>
     <link href="../../assets/css/diploma.css" rel="stylesheet" >
+    <link rel="shortcut icon" href="../../assets/images/ico/fav.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -153,8 +152,9 @@
 <page>
 <div id="outer">
 
-      <img id="img1" src="../../assets/images/deped.png"> 
-      <img id="img2" src="../../assets/images/pines.png"> 
+      <img src="../../assets/images/ed.png" id="img1"> 
+      <img src="../../assets/images/pinesdiploma.png" id="img2">
+      
 
       <br/><br/>
        <span class="text1"> REPUBLIKA NG PILIPINAS </span>
@@ -187,21 +187,68 @@
         <span class="text2"> Signed in Baguio City, Philippines this <span id="dd1" name="date"></span> day of <?php echo "$grad_day";?> <span id="mm1" name="month"><?php echo "$grad_month";?> </span>, <span="text" id="dd1" name="year"><?php echo "$yr_ended";?></span></span><br/><br/>
 
 
-            <div id="parent">
-              <div id="mid"><?php echo "$si_name";?> <br>Superintendent</div>
-            </div>
-            
-            <div id="parent">
-              <div id="mid"><?php echo "$prin_name";?> Principal</div>
-            </div>
-            
-            <div id="parent">
-              <div id="mid"><?php echo "$current_principal";?> Principal</div>
-            </div>
+          <?php
+          if ($curr_year == $yr_ended) {
+                      echo<<<signatories
+              <br><br>
+              <style>
+                  table {
+                      font-family: Times New Roman;
+                      border-collapse: collapse;
+                      width: 100%;
+                  }
+            </style>
+              <table>
+                <thead>
+                    <tr>
+                      <th align = "center">$current_principal</th>
+                      <th align = "center">$si_name</th>
+                    </tr>
+                    <tr>
+                      <th align = "center">Principal</th>
+                      <th align = "center">Superintendent</th>
+                    </tr>
+                  </thead>
+              <table>
+signatories;
 
+            }else if ($curr_year != $yr_ended){
+          echo<<<signatories
+              <br><br>
+              <style>
+                  table {
+                      font-family: Times New Roman;
+                      border-collapse: collapse;
+                      width: 100%;
+                  }
+            </style>
+              <table>
+                <thead>
+                    <tr>
+                      <th align = "center">$current_principal</th>
+                      <th align = "center">$si_name</th>
+                      <th align = "center">$prin_name</th>
+                    </tr>
+                    <tr>
+                      <th align = "center">Principal</th>
+                      <th align = "center">Superintendent</th>
+                      <th align = "center">Principal</th>
+                    </tr>
+                  </thead>
+              <table>
+signatories;
+            }
+          ?>
+              </div>
+           </div>
+                 <div class="row no-print">
+        <br>
+        <div class="col-md-8">
+          <a href="../../registrar" > Back to Home</a>
+          <button class="btn btn-success pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+        </div>
+      </div>
 
-</div>
-</div>
-</page>      
-</body>
+        </page>      
+    </body>
 </html>

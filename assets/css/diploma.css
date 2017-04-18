@@ -1,77 +1,103 @@
 
 
 #outer{
-	height: 1250px;
-    width: 1450px;
+
     text-align: center;
-    border: 8px solid #787878;
+    border: 30px solid transparent;
+    padding: 10px;
+    border-image: url("../images/border.png") 80 80 stretch;
+    margin: auto;
+
 }
 
+@font-face {
+    font-family: 'EdwardianScriptITC'; 
+    src: url('../fonts/EdwardianScriptITC.ttf');
+}
+
+@page {
+    size: landscape;
+    margin: 0;
+}
+
+@media print {  
+  @page {
+    size: 14in 17in;
+    size: landscape; /* landscape */
+    /* you can also specify margins here: */
+    margin: 5mm;
+    margin-right: 30mm; /* for compatibility with both A4 and Letter */
+  }
+}
 .text1{
-	font-size: 20px;
+	font-size: 15px;
 	font-weight: bold;
-	letter-spacing: 3px;
+	font-family: Times New Roman;
 
 }
-#subtext{
-	font-size: 13px;
+.subtext{
+	font-size: 18px;
 	font-weight: bold;
-	letter-spacing: 2px;
+	font-family: times New Roman
 
 }
 .text2{
-   	font-size: 24px;
+   	font-size: 20px;
 	font-family: Times New Roman;
-	
-	letter-spacing: 3px;
 	font-style: italic;
 	font-weight: bold;
-	word-spacing: 35px;
+	word-spacing: 30px;
 }
 
 .text3{
-	font-size: 30px;
-	font-style: italic;
+	font-size: 38px;
 	font-family: EdwardianScriptITC;
-	letter-spacing: 5px;
-	font-weight: bold;
+	letter-spacing: 4px;
 	text-align: justify;
 }
 
 
 #img1{
-	width: 200;
-	height: 200;
 	float: left;
-	margin: 30px;
+	margin: 5px;
 	filter: grayscale(100%);
 }
 #img2{
-	width: 200;
-	height: 200;
+
 	float: right;
-	margin: 30px;
+	margin: 5px;
 	
 }
 
 #img3{
-	width: 1100;
-	height: 100;
+	width: 750px;
+	height: 80px;
 	margin:auto;
 
 	
 }
 
-input[type=text] {
-	width: 700px;
-	height: 50px;
-	font-size: 50px;
-	font-family: Edwardian Script;
-	text-align: center;
-	border: none;
-	line-height: 5px;
-	
+
+#big{
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 200%;
 }
+
+#big2{
+	font-size: 35px;
+	font-weight: bold;
+	line-height: 200%;
+}
+
+
+#name{
+	font-size: 58px;
+	font-family: EdwardianScriptITC;
+	letter-spacing: 4px;
+	text-align: justify;
+}
+
 #dd{
 	width: 60px;
 	height: 40px;
@@ -102,6 +128,15 @@ input[type=text] {
 	font-style: italic;
 	font-weight: bold
 }
+#dd2{
+	width: 60px;
+	height: 40px;
+	font-size: 28px;
+	font-family: Times New Roman;
+	line-height: 200%;
+	letter-spacing: 1px;
+	font-style: italic;
+}
 
 #mm1{
 	width: 100px;
@@ -113,4 +148,21 @@ input[type=text] {
 	font-style: italic;
 	font-weight: bold;
 }
- 
+
+.clearfix {
+    overflow: auto;
+}
+.div-left{
+    float:left;
+    padding-left:10px;
+}
+.div-right{
+    float:right;
+    padding-right:10px;
+}
+#mid,div-left,div-right {
+	line-height: 100px;
+}
+
+
+

@@ -210,7 +210,7 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Last School Year Attended</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input class="form-control col-md-7 col-xs-12" type="text" name="last_yr_attended" readonly value=<?php echo "'$last_yr_attended'";?>>
-							<p><i class="fa fa-info-circle"></i> If the Last School Year Attended is empty, please add grades and attendance first before generating credentials.</p>
+							<p><i class="fa fa-info-circle"></i> If the Last School Year Attended is empty, please add grades and attendance first before generating credential.</p>
 						</div>
 					</div>
 				<div class="form-group">
@@ -264,6 +264,7 @@
 						?>
 
 					</select>
+					<p><i class="fa fa-info-circle"></i> Choose only if the Principal is not present for signing.</p>
 				</div>
 			</div>
 			<!--  -->

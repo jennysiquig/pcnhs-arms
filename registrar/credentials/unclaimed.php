@@ -100,7 +100,7 @@
 										if(!$conn) {
 											die("Connection failed: " . mysqli_connect_error());
 										}
-										$statement = "SELECT req_id, stud_id, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_id, cred_name, request_type FROM pcnhsdb.requests natural join students natural join credentials where status='u' limit $start, $limit;";
+										$statement = "SELECT req_id, stud_id, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_id, cred_name, request_type FROM pcnhsdb.requests natural join students natural join credentials where status='u' order by date_processed desc limit $start, $limit;";
 										$result = $conn->query($statement);
 										if ($result->num_rows > 0) {
 											// output data of each row
@@ -132,7 +132,7 @@ UNCLAIMED;
 								</tbody>
 							</table>
 							<?php
-							$statement = "SELECT req_id, stud_id, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='u';";
+							$statement = "SELECT req_id, stud_id, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='u' order by date_processed desc;";
 							
 							$rows = mysqli_num_rows(mysqli_query($conn, $statement));
 							$total = ceil($rows/$limit);

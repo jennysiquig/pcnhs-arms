@@ -97,7 +97,7 @@
 								if(!$conn) {
 									die("Connection failed: " . mysqli_connect_error());
 								}
-								$statement = "SELECT stud_id, date_released as 'date released', concat(first_name, ' ' ,last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='r' limit $start, $limit;";
+								$statement = "SELECT stud_id, date_released as 'date released', concat(first_name, ' ' ,last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='r' order by date_released desc limit $start, $limit;";
 								$result = $conn->query($statement);
 								if ($result->num_rows > 0) {
 									// output data of each row
