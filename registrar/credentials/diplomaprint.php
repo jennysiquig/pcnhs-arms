@@ -73,7 +73,7 @@
     }else if ($grad_month === "March")    {
           $grad_month_fil = str_replace('March','Marso',$grad_month);
     }else if ($grad_month === "April")    {
-          $grad_month_fil = str_replace('April','Abril',$grad_mfonth);
+          $grad_month_fil = str_replace('April','Abril',$grad_month);
     }else if ($grad_month === "May")      {
           $grad_month_fil = str_replace('May','Mayo',$grad_month);
     }else if ($grad_month === "June")     {

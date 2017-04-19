@@ -171,7 +171,7 @@ PAYMENT;
 					}
 					}
 					?>
-					
+					<div class="row">
 						<div class="col-md-12">
 							<div id="box-1">
 								<p id="b1-r1-p1">Prepared by:</p>
@@ -185,7 +185,7 @@ PAYMENT;
 								<div id="b2-r3-pos"> <p> <?php echo $position; ?></p> </div>
 							</div>
 						</div>
-					
+					</div>
 				</div>
 				<br>
 

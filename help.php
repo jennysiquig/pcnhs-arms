@@ -80,7 +80,7 @@
     <script src= "assets/js/custom.min.js"></script>
     <!-- Scripts -->
     <script type="text/javascript">
-        PDFObject.embed("resources/files/ebook.pdf", "#pdf1");
+        PDFObject.embed("resources/files/MANUAL.pdf", "#pdf1");
     </script>
   </body>
 </html>
