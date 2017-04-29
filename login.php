@@ -97,7 +97,10 @@ header("Location: $account_type/index.php");
 
                                 </form>
                                 <br>
-                                 <center><a href="#" data-toggle="tooltip" data-placement="top" title="Contact System Administrator to reset password."><i class="fa fa-info-circle"></i> Forgot Password?</a></center>
+                                <center>
+                                 <a href="#" data-toggle="tooltip" data-placement="top" title="Contact System Administrator to reset password."><i class="fa fa-info-circle"></i> Forgot Password?</a>
+                                </center>
+                                <a class="pull-right" href="editconfig.php" style="color: #888; font-size: 12px;"><i class="fa fa-gear"></i> Settings</a>
                             </div>
                         </div>
                     </div>
@@ -111,7 +114,7 @@ header("Location: $account_type/index.php");
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="assets/js/jquery.backstretch.min.js"></script>
         <!-- jQuery -->
-    
+
         <!-- Bootstrap -->
         <script src="resources/libraries/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- FastClick -->
@@ -125,23 +128,23 @@ header("Location: $account_type/index.php");
         <script src= "assets/js/custom.min.js"></script>
         <script type="text/javascript">
             $(function() {
-    
+
                 /*
                     Fullscreen background
                 */
                 $.backstretch([
                                 "assets/images/backgrounds/bg.png"
                              ], {fade: 750});
-                
+
                 /*
                     Form validation
                 */
                 $('.login-form input[type="text"], .login-form input[type="password"], .login-form textarea').on('focus', function() {
                     $(this).removeClass('input-error');
                 });
-                
+
                 $('.login-form').on('submit', function(e) {
-                    
+
                     $(this).find('input[type="text"], input[type="password"], textarea').each(function(){
                         if( $(this).val() == "" ) {
                             e.preventDefault();
@@ -151,16 +154,16 @@ header("Location: $account_type/index.php");
                             $(this).removeClass('input-error');
                         }
                     });
-                    
+
                 });
-                
-                
+
+
             });
         </script>
         <!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>
         <![endif]-->
-        
+
     </body>
 
 </html>
