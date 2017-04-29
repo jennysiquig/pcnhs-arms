@@ -4,7 +4,7 @@
     // Session Timeout
     $time = time();
     $session_timeout = 1800; //seconds
-    
+
     if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
       session_unset();
       session_destroy();
@@ -16,7 +16,7 @@
     }else {
     	header('Location: ../../login.php');
     }
-    
+
  ?>
 <html lang="en">
   <head>
@@ -24,17 +24,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    
-    
+
+
+
     <!-- Bootstrap -->
     <link href="resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <!-- Datatables -->
     <link href="resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom Theme Style -->
     <link href="assets/css/custom.min.css" rel="stylesheet">
     <link href="assets/css/tstheme/style.css" rel="stylesheet">
@@ -55,15 +55,15 @@
       <div id="pdf1">
 
       </div>
-      
-      
-      
+
+
+
       <!-- Content -->
       <div class="clearfix"></div>
     </div>
     <!-- Footer -->
     <?php include "resources/templates/registrar/footer.php"; ?>
-    
+
     <!-- Scripts -->
     <!-- jQuery -->
     <script src="resources/libraries/jquery/dist/jquery.min.js" ></script>

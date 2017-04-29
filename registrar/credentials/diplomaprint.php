@@ -58,19 +58,13 @@
     $curr_year = date("Y");
 
     $curr_principal = "SELECT * FROM SIGNATORIES WHERE yr_ended = '$curr_year'
-                        AND position = 'PRINCIPAL';";
-
+                        AND position LIKE 'PRINCIPAL';"; 
     $curr_p = $conn->query($curr_principal);
-    if(!$curr_p) {
-        $current_principal = "";
-    }else {
-      if ($curr_p->num_rows>0) {
-          while ($row = $curr_p->fetch_assoc()) {
-            $current_principal = $row['first_name']." ".$row['mname'].".  ".$row['last_name']." ".$row['title'];
-          }
-      }
+    if ($curr_p->num_rows>0) {
+        while ($row = $curr_p->fetch_assoc()) {
+          $current_principal = $row['first_name']." ".$row['mname'].".  ".$row['last_name']." ".$row['title'];
+        }
     }
-
 
     if ($grad_month === "January") {
           $grad_month_fil = str_replace('January','Enero',$grad_month);
@@ -90,16 +84,16 @@
           $grad_month_fil = str_replace('August','Agosto',$grad_month);
     }else if ($grad_month === "September"){
           $grad_month_fil = str_replace('September','Setyembre',$grad_month);
-    }else if ($grad_month === "October")  {
+    }else if ($grad_month === "October")  {  
           $grad_month_fil = str_replace('October','Oktubre',$grad_month);
     }else if ($grad_month === "November") {
           $grad_month_fil = str_replace('November','Nobyembre',$grad_month);
     }else if ($grad_month === "December") {
           $grad_month_fil = str_replace('December','Disyembre',$grad_month);
     }
-
+	
 // 	Insert request to DB
-
+    
     $stud_id = $_GET['stud_id'];
 	  $cred_id = htmlspecialchars($_POST['credential'], ENT_QUOTES);
     $request_type = htmlspecialchars($_POST['request_type'], ENT_QUOTES);
@@ -109,18 +103,18 @@
     $date = htmlspecialchars($_POST['date'], ENT_QUOTES);
     $request_purpose = strtoupper(htmlspecialchars($_POST['request_purpose']));
     //$remarks = htmlspecialchars($_POST['remarks'], ENT_QUOTES);
-
+    
     if(isset($_POST['admitted_to'])) {
         $admitted_to = htmlspecialchars($_POST['admitted_to'], ENT_QUOTES);
     }else {
         $admitted_to = "";
     }
-
+    
     if(empty($admitted_to)) {
         $admitted_to = "N/A";
     }
-
-
+    
+	
 	$checkpending = "SELECT * FROM pcnhsdb.requests where status = 'p' and stud_id = '$stud_id' and cred_id = '$cred_id' order by req_id desc limit 1;";
     $result = $conn->query($checkpending);
     if($result->num_rows > 0) {
@@ -134,9 +128,9 @@
          $statement1 = "INSERT INTO `pcnhsdb`.`requests` (`cred_id`, `stud_id`, `request_type`, `status`, `date_processed`, `admitted_to`, `request_purpose`, `sign_id`, second_sign_id, `per_id`) VALUES ('$cred_id', '$stud_id', '$request_type', 'u', '$date', '$admitted_to', '$request_purpose' ,'$signatory_1','$signatory_2', '$personnel_id');";
         mysqli_query($conn, $statement1);
     }
-
+ 
 ?>
-
+    
 
 <html>
 
@@ -148,19 +142,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
       <style type="text/css" media="print">
        .no-print { display: none; }
       </style>
 
 </head>
-<body>
+<body> 
 <page>
 <div id="outer">
 
-      <img src="../../assets/images/ed.png" id="img1">
+      <img src="../../assets/images/ed.png" id="img1"> 
       <img src="../../assets/images/pinesdiploma.png" id="img2">
-
+      
 
       <br/><br/>
        <span class="text1"> REPUBLIKA NG PILIPINAS </span>
@@ -177,9 +171,9 @@
       <span class="text1"> PAARALAN (School) </span><br/>
       <span class="text3"> Pinatutunayan nito na si </span><br/>
       <span class="text2"> This certifies that </span><br/><br/>
-
+      
        <span id="big2"> <?php echo "$stud_name";?> </span><br/>
-
+    
        <span class="text3">ay kasiya-siyang nakatupad sa mga kinakailangan sa pagtatapas sa kurikulum ng</span><br/>
        <span class="text2"> has satisfactorily completed the requirements for graduation from the</span><br/>
         <span class="text3">Edukasyong Sekundarya na itinakda para sa Mataas na Paaralan ng Republika ng</span><br/>
@@ -255,6 +249,6 @@ signatories;
         </div>
       </div>
 
-        </page>
+        </page>      
     </body>
 </html>

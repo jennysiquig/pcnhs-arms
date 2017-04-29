@@ -4,7 +4,7 @@
     // Session Timeout
     $time = time();
     $session_timeout = 1800; //seconds
-
+    
     if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
       session_unset();
       session_destroy();
@@ -16,7 +16,7 @@
     }else {
         header('Location: ../../login.php');
     }
-
+    
  ?>
 <html>
     <head>
@@ -46,13 +46,13 @@
         <style>
         .pdfobject-container { height: 600px;}
         </style>
-
+    
         </head>
         <body class="nav-md">
             <?php include "resources/templates/admin/sidebar.php"; ?>
             <?php include "resources/templates/admin/top-nav.php"; ?>
             <!-- Content Start -->
-
+ 
         <div class="right_col" role="main">
         <!-- Content -->
             <div id="pdf1">
