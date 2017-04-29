@@ -51,7 +51,7 @@
         <div id="urlfield" class="form-group">
           <label class="col-md-4 control-label" for="textinput">URL Path</label>
           <div class="col-md-4">
-          <input id="urlpath" name="urlpath" type="text" class="form-control input-md" value="pcnhs-arms" required="">
+          <input id="urlpath" name="urlpath" type="text" class="form-control input-md" value="pcnhs-arms" placeholder="Default: pcnhs-arms" required="">
           </div>
         </div>
 
@@ -61,19 +61,19 @@
         <div class="form-group">
           <label class="col-md-4 control-label" for="textinput">Database Host</label>
           <div class="col-md-4">
-          <input id="textinput" name="dbhost" type="text" class="form-control input-md" value="localhost" required="">
+          <input id="textinput" name="dbhost" type="text" class="form-control input-md" value="localhost" placeholder="Default: localhost" required="">
           </div>
         </div>
         <div class="form-group">
           <label class="col-md-4 control-label" for="textinput">Database Name</label>
           <div class="col-md-4">
-          <input id="textinput" name="dbname" type="text" class="form-control input-md" value="pcnhsdb" required="">
+          <input id="textinput" name="dbname" type="text" class="form-control input-md" value="pcnhsdb" placeholder="Default: pcnhsdb" required="">
           </div>
         </div>
         <div class="form-group">
           <label class="col-md-4 control-label" for="textinput">Database Username</label>
           <div class="col-md-4">
-          <input id="textinput" name="dbuser" type="text" class="form-control input-md" value="root" required="">
+          <input id="textinput" name="dbuser" type="text" class="form-control input-md" value="root" placeholder="Default: pcnhs or root" required="">
           </div>
         </div>
         <div class="form-group">
@@ -97,7 +97,7 @@
   </body>
   <script>
     function enableURL() {
-      document.getElementById("urlfield").innerHTML = '<label class="col-md-4 control-label" for="textinput">URL Path</label><div class="col-md-4"><input id="urlpath" name="urlpath" type="text" class="form-control input-md" required=""></div>';
+      document.getElementById("urlfield").innerHTML = '<label class="col-md-4 control-label" for="textinput">URL Path</label><div class="col-md-4"><input id="urlpath" name="urlpath" type="text" class="form-control input-md" placeholder="Default: pcnhs-arms" required=""></div>';
     }
     function disableURL() {
         document.getElementById("urlfield").innerHTML = "";
