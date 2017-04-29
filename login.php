@@ -100,7 +100,6 @@ header("Location: $account_type/index.php");
                                 <center>
                                  <a href="#" data-toggle="tooltip" data-placement="top" title="Contact System Administrator to reset password."><i class="fa fa-info-circle"></i> Forgot Password?</a>
                                 </center>
-                                <a class="pull-right" href="editconfig.php" style="color: #888; font-size: 12px;"><i class="fa fa-gear"></i> Settings</a>
                             </div>
                         </div>
                     </div>

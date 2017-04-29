@@ -1,5 +1,5 @@
 <?php
-    $base_url='https://localhost';
+    $base_url='http://localhost/pcnhs-arms';
     $host='localhost';
     $db='pcnhsdb';
     $user='root';
