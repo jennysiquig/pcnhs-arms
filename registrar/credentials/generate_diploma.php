@@ -234,7 +234,7 @@
 	<!-- this row will not appear when printing -->
 	<div class="row no-print">
 		<div class="col-xs-12">
-			<button class="btn btn-success pull-right"><i class="fa fa-paper-plane"></i> Submit</button>
+			<button class="btn btn-primary pull-right"><i class="fa fa-print"></i> Generate</button>
 			<a class="btn btn-default pull-right" href=<?php echo "choose_credential.php?stud_id=$stud_id"; ?>>Cancel</a>
 		</div>
 	</div>

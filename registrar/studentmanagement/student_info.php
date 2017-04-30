@@ -178,63 +178,63 @@ die();
 																		</thead>
 																		<tbody>
 																			<?php
-																				if(!$conn) {
-																					die();
-																				}else {
-																					$already_generated =  false;
-																					$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
-																					$result = $conn->query($statement);
-																					if($result->num_rows > 0) {
-																						$already_generated =  true;
-																					}
-																					$statement = "SELECT * FROM pcnhsdb.grades WHERE stud_id = '$stud_id' order by yr_level asc;";
-																					$result = $conn->query($statement);
-																					$grade_count = 0;
-																					if($result->num_rows > 0) {
-																						// output data of each row
-																						while($row = $result->fetch_assoc()) {
-																							$grade_count += 1;
-																							$schl_name = $row['schl_name'];
-																							$yr_level = $row['yr_level'];
-																							$schl_year = $row['schl_year'];
-																							$average_grade = $row['average_grade'];
-																							$average_grade = number_format($average_grade, 2);
-																							$total_credit = $row['total_credit'];
-																							echo <<<GRADES
-																									<tr>
-																					<th scope="row">$schl_name</th>
-																					<td>$yr_level</td>
-																					<td>$schl_year</td>
-																					<td>$average_grade</td>
-																					<td>$total_credit</td>
-																					<td>
-																												<center>
-																												<a class="btn btn-primary btn-xs" href="subject_grades.php?stud_id=$stud_id&yr_level=$yr_level">View Grades</a>
-																												<a href="edit_grade.php?stud_id=$stud_id&yr_level=$yr_level"><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></a>
+													if(!$conn) {
+													die();
+													}else {
+													$already_generated =  false;
+													$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
+													$result = $conn->query($statement);
+													if($result->num_rows > 0) {
+													$already_generated =  true;
+													}
+													$statement = "SELECT * FROM pcnhsdb.grades WHERE stud_id = '$stud_id' order by yr_level asc;";
+													$result = $conn->query($statement);
+													$grade_count = 0;
+													if($result->num_rows > 0) {
+													// output data of each row
+													while($row = $result->fetch_assoc()) {
+													$grade_count += 1;
+													$schl_name = $row['schl_name'];
+													$yr_level = $row['yr_level'];
+													$schl_year = $row['schl_year'];
+													$average_grade = $row['average_grade'];
+													$average_grade = number_format($average_grade, 2);
+													$total_credit = $row['total_credit'];
+													echo <<<GRADES
+														<tr>
+															<th scope="row">$schl_name</th>
+															<td>$yr_level</td>
+															<td>$schl_year</td>
+															<td>$average_grade</td>
+															<td>$total_credit</td>
+															<td>
+																<center>
+																<a class="btn btn-primary btn-xs" href="subject_grades.php?stud_id=$stud_id&yr_level=$yr_level">View Grades</a>
+																<a href="edit_grade.php?stud_id=$stud_id&yr_level=$yr_level"><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></a>
 GRADES;
-																										if($result->num_rows == $yr_level && !$already_generated) {
-																											echo <<<REMOVE
-																												
-																												<button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
+																if($result->num_rows == $yr_level && !$already_generated) {
+																echo <<<REMOVE
+																
+																<button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
 REMOVE;
-																											}else {
-																												if($yr_level < 4 && $result->num_rows == $yr_level) {
-																													echo <<<REMOVE
-																														<button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
+																}else {
+																if($yr_level < 4 && $result->num_rows == $yr_level) {
+																echo <<<REMOVE
+																<button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
 REMOVE;
-																												}else {
-																													echo <<<REMOVE
-																														<button type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash"></i></button>
+																}else {
+																echo <<<REMOVE
+																<button type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash"></i></button>
 REMOVE;
-																												}
-																											}
-																										
-																										echo "</center>
-																					</td>
-																				</tr>";
-																							}
-																						}
-																					}
+																}
+																}
+																
+																echo "</center>
+															</td>
+														</tr>";
+														}
+														}
+														}
 																				?>
 																			</tbody>
 																		</table>
@@ -277,41 +277,41 @@ REMOVE;
 																		</tr>
 																	</thead>
 																	<tbody>
-																		<?php
-																								if(!$conn) {
-																									die("Connection failed: " . mysqli_connect_error());
-																								}
-																								$query = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id';";
-																								$result = $conn->query($query);
-																								if ($result->num_rows > 0) {
-																									// output data of each row
-																									while($row = $result->fetch_assoc()) {
-																										$osubj_id = $row['osubj_id'];
-																										$schl_name = $row['schl_name'];
-																										$schl_year = $row['schl_year'];
-																										$yr_level = $row['yr_level'];
-																										$subj_name = $row['subj_name'];
-																										$subj_level = $row['subj_level'];
-																										$subj_type = $row['subj_type'];
-																										$fin_grade = $row['fin_grade'];
-																										$credit_earned = $row['credit_earned'];
-																										$comment = $row['comment'];
-																												
-																										echo <<<YR1
-																											<tr>
-																						<th scope="row">$schl_name</th>
-																						<td>$schl_year</td>
-																						<td>$yr_level</td>
-																						<td>$subj_name</td>
-																						<td>$subj_level</td>
-																						<td>$subj_type</td>
-																						<td>$fin_grade</td>
-																						<td>$credit_earned</td>
-																						<td>$comment</td>
-																						<td>
-																														<a class="btn btn-danger btn-xs" href="phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id&schl_year=$schl_year&credit_earned=$credit_earned">Remove Record</a>
-																						</td>
-																					</tr>
+																	<?php
+																	if(!$conn) {
+																	die("Connection failed: " . mysqli_connect_error());
+																	}
+																	$query = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id';";
+																	$result = $conn->query($query);
+																	if ($result->num_rows > 0) {
+																	// output data of each row
+																	while($row = $result->fetch_assoc()) {
+																	$osubj_id = $row['osubj_id'];
+																	$schl_name = $row['schl_name'];
+																	$schl_year = $row['schl_year'];
+																	$yr_level = $row['yr_level'];
+																	$subj_name = $row['subj_name'];
+																	$subj_level = $row['subj_level'];
+																	$subj_type = $row['subj_type'];
+																	$fin_grade = $row['fin_grade'];
+																	$credit_earned = $row['credit_earned'];
+																	$comment = $row['comment'];
+
+																	echo <<<YR1
+																	<tr>
+																		<th scope="row">$schl_name</th>
+																		<td>$schl_year</td>
+																		<td>$yr_level</td>
+																		<td>$subj_name</td>
+																		<td>$subj_level</td>
+																		<td>$subj_type</td>
+																		<td>$fin_grade</td>
+																		<td>$credit_earned</td>
+																		<td>$comment</td>
+																		<td>
+																			<a class="btn btn-danger btn-xs" href="phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id&schl_year=$schl_year&credit_earned=$credit_earned">Remove Record</a>
+																		</td>
+																	</tr>
 YR1;
 																									}
 																								}
@@ -352,47 +352,47 @@ YR1;
 																</thead>
 																<tbody>
 																	<?php
-																							if(!$conn) {
-																								die("Connection failed: " . mysqli_connect_error());
-																							}
-																							$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id natural join grades where stud_id = '$stud_id' AND comment = 'FAILED' ;";
-																							$result = $conn->query($query);
-																							if ($result->num_rows > 0) {
-																								// output data of each row
-																								while($row = $result->fetch_assoc()) {
-																									$status = "";
-																									$subj_id = $row['subj_id'];
-																									$subj_order = $row['subj_order'];
-																									$schl_name = $row['schl_name'];
-																									$yr_level = $row['yr_level'];
-																									$subj_name = $row['subj_name'];
-																									$subj_level = $row['subj_level'];
-																									$action = "<a class='btn btn-primary btn-xs' href='add_othersubject_grades.php?stud_id=$stud_id&schl_name=$schl_name&yr_level=$yr_level&subj_name=$subj_name&subj_level=$subj_level&subj_id=$subj_id&subj_order=$subj_order'>Add to Other Subjects</a>";
-																									// href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level
-																									// will check if this subject is existing in the other subjects
-																									$query_othersubj = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id' AND subj_id = '$subj_id' and comment = 'PASSED';";
-																									$result_othersubj = $conn->query($query_othersubj);
-																									if ($result_othersubj->num_rows > 0) {
-																										$status = "PASSED";
-																										$action = "<a class='btn btn-primary btn-xs disabled'>Add to Other Subjects</a>";
-																									}else {
-																										$status = "FAILED";
-																									}
-																									echo <<<YR1
-																										<tr>
-																					<td>$subj_name</td>
-																					<td>$subj_level</td>
-																					<td>$yr_level</td>
-																					<td>$status</td>
-																					<td>
-																							<center>
-																								$action
-																							</center>
-																					</td>
-																				</tr>
+																	if(!$conn) {
+																	die("Connection failed: " . mysqli_connect_error());
+																	}
+																	$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id natural join grades where stud_id = '$stud_id' AND comment = 'FAILED' ;";
+																	$result = $conn->query($query);
+																	if ($result->num_rows > 0) {
+																	// output data of each row
+																	while($row = $result->fetch_assoc()) {
+																	$status = "";
+																	$subj_id = $row['subj_id'];
+																	$subj_order = $row['subj_order'];
+																	$schl_name = $row['schl_name'];
+																	$yr_level = $row['yr_level'];
+																	$subj_name = $row['subj_name'];
+																	$subj_level = $row['subj_level'];
+																	$action = "<a class='btn btn-primary btn-xs' href='add_othersubject_grades.php?stud_id=$stud_id&schl_name=$schl_name&yr_level=$yr_level&subj_name=$subj_name&subj_level=$subj_level&subj_id=$subj_id&subj_order=$subj_order'>Add to Other Subjects</a>";
+																	// href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level
+																	// will check if this subject is existing in the other subjects
+																	$query_othersubj = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id' AND subj_id = '$subj_id' and comment = 'PASSED';";
+																	$result_othersubj = $conn->query($query_othersubj);
+																	if ($result_othersubj->num_rows > 0) {
+																	$status = "PASSED";
+																	$action = "<a class='btn btn-primary btn-xs disabled'>Add to Other Subjects</a>";
+																	}else {
+																	$status = "FAILED";
+																	}
+																	echo <<<YR1
+																	<tr>
+																		<td>$subj_name</td>
+																		<td>$subj_level</td>
+																		<td>$yr_level</td>
+																		<td>$status</td>
+																		<td>
+																			<center>
+																			$action
+																			</center>
+																		</td>
+																	</tr>
 YR1;
-																								}
-																							}
+																	}
+																	}
 																							
 																	?>
 																	

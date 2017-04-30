@@ -8,6 +8,27 @@
 	}else {
 		header("location: ../index.php");
 	}
+
+	$first_name;
+	$last_name;
+	$curriculum;
+	$statement = "SELECT * FROM pcnhsdb.students left join curriculum on students.curr_id = curriculum.curr_id where students.stud_id = '$stud_id' limit 1";
+	$result = $conn->query($statement);
+	if (!$result) {
+	//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
+	header("location: student_list.php");
+	die();
+	}
+	if ($result->num_rows>0) {
+	while ($row=$result->fetch_assoc()) {
+	$curriculum = $row['curr_name'];
+	$first_name = $row['first_name'];
+	$last_name = $row['last_name'];
+	}
+	} else {
+	header("location: student_list.php");
+	die();
+	}
 	
 ?>
 <html>
@@ -54,7 +75,11 @@
 			<form id="choose_cred" class="form-horizontal form-label-left" data-parsley-validate action=<?php echo "generate_cred.php?stud_id=$stud_id" ?> method="GET" >
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Generate Credential</h2>
+						<h2>Generate Credential
+							<small><b>Student ID: </b><?php echo "$stud_id"; ?></small>
+							<small><b>Student Name: </b><?php echo "$last_name".', '."$first_name"; ?></small>
+							<small><b>Curriculum: </b><?php echo "$curriculum"; ?></small>
+						</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"></a>
 						</li>
@@ -97,7 +122,7 @@
 			</div>
 			<div class="row no-print">
 				<div class="col-xs-12">
-					<button type="submit" class="btn btn-success pull-right">Next</button>
+					<button type="submit" class="btn btn-success pull-right submit">Next</button>
 					<a class="btn btn-default pull-right" href=<?php echo "../studentmanagement/student_info.php?stud_id=$stud_id"; ?>>Cancel</a>
 				</div>
 			</div>
@@ -127,7 +152,7 @@
 				$.listen('parsley:field:validate', function() {
 				validateFront();
 				});
-				$('#choose_cred .btn').on('click', function() {
+				$('#choose_cred .submit').on('click', function() {
 				$('#choose_cred').parsley().validate();
 				validateFront();
 				});

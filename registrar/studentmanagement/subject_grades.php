@@ -8,6 +8,27 @@
 	}else {
 		header("location: student_list.php");
 	}
+
+	$first_name;
+	$last_name;
+	$curriculum;
+	$statement = "SELECT * FROM pcnhsdb.students left join curriculum on students.curr_id = curriculum.curr_id where students.stud_id = '$stud_id' limit 1";
+	$result = $conn->query($statement);
+	if (!$result) {
+	//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
+	header("location: student_list.php");
+	die();
+	}
+	if ($result->num_rows>0) {
+	while ($row=$result->fetch_assoc()) {
+	$curriculum = $row['curr_name'];
+	$first_name = $row['first_name'];
+	$last_name = $row['last_name'];
+	}
+	} else {
+	header("location: student_list.php");
+	die();
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,7 +101,11 @@
 			<div class="clearfix"></div>
 						<div class="x_panel">
 				<div class="x_title">
-					<h2>Subject Grades</h2>
+					<h2>Subject Grades
+						<small><b>Student ID: </b><?php echo "$stud_id"; ?></small>
+						<small><b>Student Name: </b><?php echo "$last_name".', '."$first_name"; ?></small>
+						<small><b>Curriculum: </b><?php echo "$curriculum"; ?></small>
+					</h2>
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
