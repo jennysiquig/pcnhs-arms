@@ -1,6 +1,37 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <?php $stud_id = $_GET['stud_id']; ?>
+<?php
+if(isset($_GET['stud_id'])) {
+  $stud_id = $_GET['stud_id'];
+}else {
+
+  header("location: student_list.php");
+  die();
+}
+
+
+$first_name;
+$last_name;
+$curriculum;
+$statement = "SELECT * FROM pcnhsdb.students left join curriculum on students.curr_id = curriculum.curr_id where students.stud_id = '$stud_id' limit 1";
+$result = $conn->query($statement);
+if (!$result) {
+//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
+header("location: student_list.php");
+die();
+}
+if ($result->num_rows>0) {
+while ($row=$result->fetch_assoc()) {
+$curriculum = $row['curr_name'];
+$first_name = $row['first_name'];
+$last_name = $row['last_name'];
+}
+} else {
+header("location: student_list.php");
+die();
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,26 +41,26 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        
+
+
         <!-- NProgress -->
         <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
         <!-- Bootstrap -->
         <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
         <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        
+
         <!-- Datatables -->
         <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-        
+
         <!-- Custom Theme Style -->
         <link href="../../assets/css/custom.min.css" rel="stylesheet">
         <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-        
+
         <!--[if lt IE 9]>
         <script src="../js/ie8-responsive-file-warning.js"></script>
         <![endif]-->
-        
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -58,6 +89,9 @@
                 <div class="x_title">
                     <h2>Other Subject Grades</h2>
                     <div class="clearfix"></div>
+                    <h5><b>Student ID: </b><?php echo "$stud_id"; ?></h5>
+          					<h5><b>Student Name: </b><?php echo "$last_name".', '."$first_name"; ?></h5>
+          					<h5><b>Curriculum: </b><?php echo "$curriculum"; ?></h5>
                 </div>
                 <div class="x_content">
                     <!-- First -->
@@ -117,7 +151,7 @@
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level <span style="color:red;">*</span></label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" type="number" maxlength="2" min="1" max="10" name="subj_level" required=" " value=<?php echo "'$subj_level'"; ?>> 
+                                <input id="name" class="form-control col-md-7 col-xs-12" type="number" maxlength="2" min="1" max="10" name="subj_level" required=" " value=<?php echo "'$subj_level'"; ?>>
                             </div>
                         </div>
                          <div class="item form-group">
@@ -163,7 +197,7 @@
                 </div>
             </div>
             <?php include "../../resources/templates/registrar/footer.php"; ?>
-            
+
             <!-- Scripts -->
             <!-- jQuery -->
             <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
@@ -216,7 +250,7 @@
             <script type="text/javascript">
             var val_gr = document.getElementsByName("val-gr");
             var stud_unique_id = val_gr[0].id;
-      
+
 
             $( function() {
                         $('#' + stud_unique_id).sisyphus({
@@ -227,7 +261,7 @@
         <script type="text/javascript">
             var val_gr = document.getElementsByName("val-gr");
             var stud_unique_id = val_gr[0].id;
-            
+
 
             function releaseData() {
                 $('#' + stud_unique_id).sisyphus().manuallyReleaseData();

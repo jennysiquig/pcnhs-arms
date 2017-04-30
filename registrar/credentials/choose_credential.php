@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
-<?php 
+<?php
 	$stud_id = "";
 	if(isset($_GET['stud_id'])) {
 		$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
@@ -29,7 +29,7 @@
 	header("location: student_list.php");
 	die();
 	}
-	
+
 ?>
 <html>
 	<head>
@@ -39,17 +39,17 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		
-		
+
+
+
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
@@ -58,7 +58,7 @@
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
-		
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -76,15 +76,11 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Generate Credential
-							<small><b>Student ID: </b><?php echo "$stud_id"; ?></small>
-							<small><b>Student Name: </b><?php echo "$last_name".', '."$first_name"; ?></small>
-							<small><b>Curriculum: </b><?php echo "$curriculum"; ?></small>
 						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"></a>
-						</li>
-					</ul>
 					<div class="clearfix"></div>
+					<h5><b>Student ID: </b><?php echo "$stud_id"; ?></h5>
+					<h5><b>Student Name: </b><?php echo "$last_name".', '."$first_name"; ?></h5>
+					<h5><b>Curriculum: </b><?php echo "$curriculum"; ?></h5>
 				</div>
 				<div class="x_content">
 					<div class="item form-group">
@@ -127,7 +123,7 @@
 				</div>
 			</div>
 		</form>
-		
+
 	</div>
 	<!-- Contents Here -->
 	<?php include "../../resources/templates/registrar/footer.php"; ?>

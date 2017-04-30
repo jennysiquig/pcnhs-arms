@@ -55,59 +55,11 @@
     <!-- Content Start -->
     <div class="right_col" role="main">
       <div class="row">
-        <div class="col-md-5">
-          <ol class="breadcrumb">
-            <li><a href="../index.php">Home</a></li>
-            <li class="disabled">Student Management</li>
-            <li class="active">Student List</li>
-          </ol>
+        <div class="col-md-4">
+  					<a class="btn btn-default" href=<?php echo "../studentmanagement/student_list.php"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
         </div>
-        <form class="form-horizontal form-label-left" action="student_list.php" method="GET">
-          <div class="">
-            <div class="col-sm-5"></div>
-            <div class="col-sm-7">
-              <div class="input-group">
-                  <input id="search_key" type="text" class="form-control" name="search_key" placeholder="Search Student...">
-                  <span class="input-group-btn">
-                    <button class="btn btn-primary">Search</button>
-                  </span>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="pull-right">
-        <div class="col-md-12">
-          <div class="container">
-        	<div class="row">
-                <div id="filter-panel" class="collapse filter-panel">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <form class="form-inline" role="form" action="advancedsearch.php" method="GET">
-                                <div class="form-group">
-                                    <div class="radio" style="margin-left:10px; margin-right:10px;">
-                                        <label><input type="radio" name="student_status" value="graduate"> Graduated</label>
-                                    </div>
-                                    <div class="radio" style="margin-left:10px; margin-right:10px;">
-                                        <label><input type="radio" name="student_status" value="current"> Currently Enrolled</label>
-                                    </div>
-                                    <button type="submit" class="btn btn-default filter-col">
-                                        <span class="glyphicon glyphicon-search"></span> Search
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#filter-panel">
-                    <span class="glyphicon glyphicon-cog"></span> Advanced Search
-                </button>
-        	</div>
-          <div class="pull-right">
-            <a><i class="fa fa-info-circle"></i> Search Student by <strong>Last Name / First Name / Curriculum</strong></a>
-          </div>
-        </div>
+        <div class="col-md-6">
+          <h3>Advanced Search Result</h3>
         </div>
       </div>
       <div class="row">

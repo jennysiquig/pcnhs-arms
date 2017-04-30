@@ -82,10 +82,10 @@ die();
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<!-- Custom Theme Style -->
@@ -131,11 +131,11 @@ die();
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Student Record
-							<small><b>Student ID: </b><?php echo "$stud_id"; ?></small>
-							<small><b>Student Name: </b><?php echo "$last_name".', '."$first_name"; ?></small>
-							<small><b>Curriculum: </b><?php echo "$curriculum"; ?></small>
 						</h2>
 						<div class="clearfix"></div>
+						<h5><b>Student ID: </b><?php echo "$stud_id"; ?></h5>
+						<h5><b>Student Name: </b><?php echo "$last_name".', '."$first_name"; ?></h5>
+						<h5><b>Curriculum: </b><?php echo "$curriculum"; ?></h5>
 					</div>
 					<div class="x_content">
 						<div class="col-md-12 col-sm-6 col-xs-12">
@@ -150,364 +150,10 @@ die();
 									<!-- start accordion -->
 									<div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
 										<div class="panel">
-											<a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse"
-												data-parent="#accordion" href="#collapseOne" aria-controls="collapseOne">
-												<h4 class="panel-title">Grades Record <small>Click to Expand</small></h4>
-											</a>
-											<div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
-												aria-labelledby="headingOne">
-												<div class="panel-body">
-													<div class="x_panel">
-														<div class="x_title">
-															<h2>Grades</h2>
-															<div class="clearfix"></div>
-														</div>
-														<div class="x_content">
-															<div class="col-md-12 col-sm-6 col-xs-12">
-																<div class="table-list">
-																	<table class="tablesorter-bootstrap">
-																		<thead>
-																			<tr>
-																				<th data-sorter="false">School Name</th>
-																				<th data-sorter="false">Year Level</th>
-																				<th data-sorter="false">School Year</th>
-																				<th data-sorter="false">Average Grade</th>
-																				<th data-sorter="false">Total Credits Earned</th>
-																				<th data-sorter="false">Action</th>
-																			</tr>
-																		</thead>
-																		<tbody>
-																			<?php
-													if(!$conn) {
-													die();
-													}else {
-													$already_generated =  false;
-													$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
-													$result = $conn->query($statement);
-													if($result->num_rows > 0) {
-													$already_generated =  true;
-													}
-													$statement = "SELECT * FROM pcnhsdb.grades WHERE stud_id = '$stud_id' order by yr_level asc;";
-													$result = $conn->query($statement);
-													$grade_count = 0;
-													if($result->num_rows > 0) {
-													// output data of each row
-													while($row = $result->fetch_assoc()) {
-													$grade_count += 1;
-													$schl_name = $row['schl_name'];
-													$yr_level = $row['yr_level'];
-													$schl_year = $row['schl_year'];
-													$average_grade = $row['average_grade'];
-													$average_grade = number_format($average_grade, 2);
-													$total_credit = $row['total_credit'];
-													echo <<<GRADES
-														<tr>
-															<th scope="row">$schl_name</th>
-															<td>$yr_level</td>
-															<td>$schl_year</td>
-															<td>$average_grade</td>
-															<td>$total_credit</td>
-															<td>
-																<center>
-																<a class="btn btn-primary btn-xs" href="subject_grades.php?stud_id=$stud_id&yr_level=$yr_level">View Grades</a>
-																<a href="edit_grade.php?stud_id=$stud_id&yr_level=$yr_level"><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></a>
-GRADES;
-																if($result->num_rows == $yr_level && !$already_generated) {
-																echo <<<REMOVE
-																
-																<button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
-REMOVE;
-																}else {
-																if($yr_level < 4 && $result->num_rows == $yr_level) {
-																echo <<<REMOVE
-																<button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
-REMOVE;
-																}else {
-																echo <<<REMOVE
-																<button type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash"></i></button>
-REMOVE;
-																}
-																}
-																
-																echo "</center>
-															</td>
-														</tr>";
-														}
-														}
-														}
-																				?>
-																			</tbody>
-																		</table>
-																	</div>
-																</div>
-																<?php
-																	$next_grade = $grade_count+1;
-																	if($grade_count < 4) {
-																		echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=$next_grade'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-																	}else {
-																		echo "<a class='btn btn-success pull-right disabled' href='#'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
-																	}
-																?>
-															</div>
-														</div>
-														<div class="x_panel">
-															<ul class="nav navbar-right panel_toolbox">
-																<li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
-															</li>
-														</ul>
-														<div class="x_title">
-															<h2>Other Subjects</h2>
-															<div class="clearfix"></div>
-														</div>
-														<div class="x_content">
-															<div class="table-list">
-																<table class="tablesorter-bootstrap">
-																	<thead>
-																		<tr>
-																			<th data-sorter="false">School Name</th>
-																			<th data-sorter="false">School Year</th>
-																			<th data-sorter="false">Year Level</th>
-																			<th data-sorter="false">Subject</th>
-																			<th data-sorter="false">Subject Level</th>
-																			<th data-sorter="false">Subject Type</th>
-																			<th data-sorter="false">Final Grade</th>
-																			<th data-sorter="false">Credit Earned</th>
-																			<th data-sorter="false">Remarks</th>
-																			<th data-sorter="false">Action</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																	<?php
-																	if(!$conn) {
-																	die("Connection failed: " . mysqli_connect_error());
-																	}
-																	$query = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id';";
-																	$result = $conn->query($query);
-																	if ($result->num_rows > 0) {
-																	// output data of each row
-																	while($row = $result->fetch_assoc()) {
-																	$osubj_id = $row['osubj_id'];
-																	$schl_name = $row['schl_name'];
-																	$schl_year = $row['schl_year'];
-																	$yr_level = $row['yr_level'];
-																	$subj_name = $row['subj_name'];
-																	$subj_level = $row['subj_level'];
-																	$subj_type = $row['subj_type'];
-																	$fin_grade = $row['fin_grade'];
-																	$credit_earned = $row['credit_earned'];
-																	$comment = $row['comment'];
-
-																	echo <<<YR1
-																	<tr>
-																		<th scope="row">$schl_name</th>
-																		<td>$schl_year</td>
-																		<td>$yr_level</td>
-																		<td>$subj_name</td>
-																		<td>$subj_level</td>
-																		<td>$subj_type</td>
-																		<td>$fin_grade</td>
-																		<td>$credit_earned</td>
-																		<td>$comment</td>
-																		<td>
-																			<a class="btn btn-danger btn-xs" href="phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id&schl_year=$schl_year&credit_earned=$credit_earned">Remove Record</a>
-																		</td>
-																	</tr>
-YR1;
-																									}
-																								}
-																								
-																		?>
-																		
-																	</tbody>
-																</table>
-															</div>
-															<div class="row">
-																<div class="col-md-12 col-sm-6 col-xs-12">
-																	<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="x_panel">
-														<ul class="nav navbar-right panel_toolbox">
-															<li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
-														</li>
-													</ul>
-													<div class="x_title">
-														<h2>Failed Subjects</h2>
-														<div class="clearfix"></div>
-													</div>
-													<div class="x_content">
-														<!--  -->
-														<div class="table-list">
-															<table class="tablesorter-bootstrap">
-																<thead>
-																	<tr>
-																		<th data-sorter="false">Subject</th>
-																		<th data-sorter="false">Subject Level</th>
-																		<th data-sorter="false">Year Level</th>
-																		<th data-sorter="false">Status</th>
-																		<th data-sorter="false">Action</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<?php
-																	if(!$conn) {
-																	die("Connection failed: " . mysqli_connect_error());
-																	}
-																	$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id natural join grades where stud_id = '$stud_id' AND comment = 'FAILED' ;";
-																	$result = $conn->query($query);
-																	if ($result->num_rows > 0) {
-																	// output data of each row
-																	while($row = $result->fetch_assoc()) {
-																	$status = "";
-																	$subj_id = $row['subj_id'];
-																	$subj_order = $row['subj_order'];
-																	$schl_name = $row['schl_name'];
-																	$yr_level = $row['yr_level'];
-																	$subj_name = $row['subj_name'];
-																	$subj_level = $row['subj_level'];
-																	$action = "<a class='btn btn-primary btn-xs' href='add_othersubject_grades.php?stud_id=$stud_id&schl_name=$schl_name&yr_level=$yr_level&subj_name=$subj_name&subj_level=$subj_level&subj_id=$subj_id&subj_order=$subj_order'>Add to Other Subjects</a>";
-																	// href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level
-																	// will check if this subject is existing in the other subjects
-																	$query_othersubj = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id' AND subj_id = '$subj_id' and comment = 'PASSED';";
-																	$result_othersubj = $conn->query($query_othersubj);
-																	if ($result_othersubj->num_rows > 0) {
-																	$status = "PASSED";
-																	$action = "<a class='btn btn-primary btn-xs disabled'>Add to Other Subjects</a>";
-																	}else {
-																	$status = "FAILED";
-																	}
-																	echo <<<YR1
-																	<tr>
-																		<td>$subj_name</td>
-																		<td>$subj_level</td>
-																		<td>$yr_level</td>
-																		<td>$status</td>
-																		<td>
-																			<center>
-																			$action
-																			</center>
-																		</td>
-																	</tr>
-YR1;
-																	}
-																	}
-																							
-																	?>
-																	
-																</tbody>
-															</table>
-														</div>
-													</div>
-												</div>
-												<!-- Panel 1 End -->
-											</div>
-										</div>
-									</div>
-									<div class="panel">
-										<a class="panel-heading collapsed" role="tab" id="headingTwo"
-											data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
-											aria-expanded="false" aria-controls="collapseTwo">
-											<h4 class="panel-title">Attendance Record <small>Click to Expand</small></h4>
-										</a>
-										<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
-											aria-labelledby="headingTwo">
-											<div class="panel-body">
-												<div class="table-list">
-													<table class="tablesorter-bootstrap">
-														<thead>
-															<tr>
-																<th data-sorter="false">Year Level</th>
-																<th data-sorter="false">School Year</th>
-																<th data-sorter="false">School Days</th>
-																<th data-sorter="false">Days Attended</th>
-																<th data-sorter="false">Total Years in School</th>
-																<th data-sorter="false">Action</th>
-															</tr>
-														</thead>
-														<tbody>
-															<?php
-																$attendance_count = 0;
-																if(!$conn) {
-																	die();
-																}else {
-																	$already_generated =  false;
-																	$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
-																	$result = $conn->query($statement);
-																	if($result->num_rows > 0) {
-																		$already_generated =  true;
-																	}
-																	$statement = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' order by yr_lvl asc;";
-																	$result = $conn->query($statement);
-																	if($result->num_rows > 0) {
-																		// output data of each row
-																		while($row = $result->fetch_assoc()) {
-																			$attendance_count += 1;
-																			$schl_yr = $row['schl_yr'];
-																			$yr_lvl = $row['yr_lvl'];
-																			$days_attended = $row['days_attended'];
-																			$school_days = $row['school_days'];
-																			$total_years_in_school = $row['total_years_in_school'];
-																			echo <<<GRADES
-																					<tr>
-																	<th scope="row">$yr_lvl</th>
-																	<td>$schl_yr</td>
-																	<td>$school_days</td>
-																	<td>$days_attended</td>
-																	<td>$total_years_in_school</td>
-																	<td>
-																								<center>
-GRADES;
-																						if($result->num_rows == $yr_lvl && !$already_generated) {
-																							echo <<<REMOVE
-																								<button type="button" class="btn btn-danger btn-xs" onclick="removeAttendance($yr_lvl,'$stud_id');">Remove Record</button>
-REMOVE;
-																							}else {
-																								echo <<<REMOVE
-																								<button type="button" class="btn btn-danger btn-xs" disabled>Remove Record</button>
-REMOVE;
-																							}
-																						
-																						echo "</center>
-																	</td>
-																</tr>";
-																			}
-																		}
-																	}
-																?>
-															</tbody>
-														</table>
-													</div>
-													<?php
-														if($attendance_count < 1) {
-															$year_check = $attendance_count+1;
-														}else {
-															$year_check = $attendance_count+1;
-														}
-														
-														$checkgrade = "SELECT * FROM pcnhsdb.grades where stud_id = '$stud_id' and yr_level = $year_check;";
-														$result_checkgrade = $conn->query($checkgrade);
-														if($result_checkgrade->num_rows>0) {
-															$next_attendance = $attendance_count+1;
-															if($attendance_count < 4) {
-																echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_lvl=$next_attendance'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-															}else {
-																echo "<a class='btn btn-success pull-right disabled'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-															}
-														}else {
-																echo "<a class='btn btn-success pull-right disabled'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
-														}
-														
-													?>
-												</div>
-											</div>
-										</div>
-										<div class="panel">
 											<a class="panel-heading collapsed" role="tab" id="headingThree"
 												data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
 												aria-expanded="false" aria-controls="collapseThree">
-												<h4 class="panel-title">Student Information <small>Click to Expand</small></h4>
+												<h4 class="panel-title">Student Information <small class="pull-right">Click to Expand</small></h4>
 											</a>
 											<div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
 												aria-labelledby="headingThree">
@@ -684,10 +330,364 @@ REMOVE;
 											</div>
 										</div>
 										<div class="panel">
+											<a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseOne" aria-controls="collapseOne">
+												<h4 class="panel-title">Grades Record <small class="pull-right">Click to Expand</small></h4>
+											</a>
+											<div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+												aria-labelledby="headingOne">
+												<div class="panel-body">
+													<div class="x_panel">
+														<div class="x_title">
+															<h2>Grades</h2>
+															<div class="clearfix"></div>
+														</div>
+														<div class="x_content">
+															<div class="col-md-12 col-sm-6 col-xs-12">
+																<div class="table-list">
+																	<table class="tablesorter-bootstrap">
+																		<thead>
+																			<tr>
+																				<th data-sorter="false">School Name</th>
+																				<th data-sorter="false">Year Level</th>
+																				<th data-sorter="false">School Year</th>
+																				<th data-sorter="false">Average Grade</th>
+																				<th data-sorter="false">Total Credits Earned</th>
+																				<th data-sorter="false">Action</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<?php
+													if(!$conn) {
+													die();
+													}else {
+													$already_generated =  false;
+													$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
+													$result = $conn->query($statement);
+													if($result->num_rows > 0) {
+													$already_generated =  true;
+													}
+													$statement = "SELECT * FROM pcnhsdb.grades WHERE stud_id = '$stud_id' order by yr_level asc;";
+													$result = $conn->query($statement);
+													$grade_count = 0;
+													if($result->num_rows > 0) {
+													// output data of each row
+													while($row = $result->fetch_assoc()) {
+													$grade_count += 1;
+													$schl_name = $row['schl_name'];
+													$yr_level = $row['yr_level'];
+													$schl_year = $row['schl_year'];
+													$average_grade = $row['average_grade'];
+													$average_grade = number_format($average_grade, 2);
+													$total_credit = $row['total_credit'];
+													echo <<<GRADES
+														<tr>
+															<th scope="row">$schl_name</th>
+															<td>$yr_level</td>
+															<td>$schl_year</td>
+															<td>$average_grade</td>
+															<td>$total_credit</td>
+															<td>
+																<center>
+																<a class="btn btn-primary btn-xs" href="subject_grades.php?stud_id=$stud_id&yr_level=$yr_level">View Grades</a>
+																<a href="edit_grade.php?stud_id=$stud_id&yr_level=$yr_level"><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></a>
+GRADES;
+																if($result->num_rows == $yr_level && !$already_generated) {
+																echo <<<REMOVE
+
+																<button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
+REMOVE;
+																}else {
+																if($yr_level < 4 && $result->num_rows == $yr_level) {
+																echo <<<REMOVE
+																<button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
+REMOVE;
+																}else {
+																echo <<<REMOVE
+																<button type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash"></i></button>
+REMOVE;
+																}
+																}
+
+																echo "</center>
+															</td>
+														</tr>";
+														}
+														}
+														}
+																				?>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+																<?php
+																	$next_grade = $grade_count+1;
+																	if($grade_count < 4) {
+																		echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_grades.php?stud_id=$stud_id&yr_level=$next_grade'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
+																	}else {
+																		echo "<a class='btn btn-success pull-right disabled' href='#'><i class='fa fa-plus m-right-xs'></i> Add Grades</a>";
+																	}
+																?>
+															</div>
+														</div>
+														<div class="x_panel">
+															<ul class="nav navbar-right panel_toolbox">
+																<li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+															</li>
+														</ul>
+														<div class="x_title">
+															<h2>Other Subjects</h2>
+															<div class="clearfix"></div>
+														</div>
+														<div class="x_content">
+															<div class="table-list">
+																<table class="tablesorter-bootstrap">
+																	<thead>
+																		<tr>
+																			<th data-sorter="false">School Name</th>
+																			<th data-sorter="false">School Year</th>
+																			<th data-sorter="false">Year Level</th>
+																			<th data-sorter="false">Subject</th>
+																			<th data-sorter="false">Subject Level</th>
+																			<th data-sorter="false">Subject Type</th>
+																			<th data-sorter="false">Final Grade</th>
+																			<th data-sorter="false">Credit Earned</th>
+																			<th data-sorter="false">Remarks</th>
+																			<th data-sorter="false">Action</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																	<?php
+																	if(!$conn) {
+																	die("Connection failed: " . mysqli_connect_error());
+																	}
+																	$query = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id';";
+																	$result = $conn->query($query);
+																	if ($result->num_rows > 0) {
+																	// output data of each row
+																	while($row = $result->fetch_assoc()) {
+																	$osubj_id = $row['osubj_id'];
+																	$schl_name = $row['schl_name'];
+																	$schl_year = $row['schl_year'];
+																	$yr_level = $row['yr_level'];
+																	$subj_name = $row['subj_name'];
+																	$subj_level = $row['subj_level'];
+																	$subj_type = $row['subj_type'];
+																	$fin_grade = $row['fin_grade'];
+																	$credit_earned = $row['credit_earned'];
+																	$comment = $row['comment'];
+
+																	echo <<<YR1
+																	<tr>
+																		<th scope="row">$schl_name</th>
+																		<td>$schl_year</td>
+																		<td>$yr_level</td>
+																		<td>$subj_name</td>
+																		<td>$subj_level</td>
+																		<td>$subj_type</td>
+																		<td>$fin_grade</td>
+																		<td>$credit_earned</td>
+																		<td>$comment</td>
+																		<td>
+																			<a class="btn btn-danger btn-xs" href="phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id&schl_year=$schl_year&credit_earned=$credit_earned">Remove Record</a>
+																		</td>
+																	</tr>
+YR1;
+																									}
+																								}
+
+																		?>
+
+																	</tbody>
+																</table>
+															</div>
+															<div class="row">
+																<div class="col-md-12 col-sm-6 col-xs-12">
+																	<a class="btn btn-success pull-right" href=<?php echo "../../registrar/studentmanagement/add_othersubject_grades.php?stud_id=$stud_id" ?>><i class="fa fa-plus m-right-xs"></i> Add Other Subject</a>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="x_panel">
+														<ul class="nav navbar-right panel_toolbox">
+															<li><a class="collapse-link"><i class="fa fa-chevron-up"></i> Toggle</a>
+														</li>
+													</ul>
+													<div class="x_title">
+														<h2>Failed Subjects</h2>
+														<div class="clearfix"></div>
+													</div>
+													<div class="x_content">
+														<!--  -->
+														<div class="table-list">
+															<table class="tablesorter-bootstrap">
+																<thead>
+																	<tr>
+																		<th data-sorter="false">Subject</th>
+																		<th data-sorter="false">Subject Level</th>
+																		<th data-sorter="false">Year Level</th>
+																		<th data-sorter="false">Status</th>
+																		<th data-sorter="false">Action</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<?php
+																	if(!$conn) {
+																	die("Connection failed: " . mysqli_connect_error());
+																	}
+																	$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id natural join grades where stud_id = '$stud_id' AND comment = 'FAILED' ;";
+																	$result = $conn->query($query);
+																	if ($result->num_rows > 0) {
+																	// output data of each row
+																	while($row = $result->fetch_assoc()) {
+																	$status = "";
+																	$subj_id = $row['subj_id'];
+																	$subj_order = $row['subj_order'];
+																	$schl_name = $row['schl_name'];
+																	$yr_level = $row['yr_level'];
+																	$subj_name = $row['subj_name'];
+																	$subj_level = $row['subj_level'];
+																	$action = "<a class='btn btn-primary btn-xs' href='add_othersubject_grades.php?stud_id=$stud_id&schl_name=$schl_name&yr_level=$yr_level&subj_name=$subj_name&subj_level=$subj_level&subj_id=$subj_id&subj_order=$subj_order'>Add to Other Subjects</a>";
+																	// href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level
+																	// will check if this subject is existing in the other subjects
+																	$query_othersubj = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id' AND subj_id = '$subj_id' and comment = 'PASSED';";
+																	$result_othersubj = $conn->query($query_othersubj);
+																	if ($result_othersubj->num_rows > 0) {
+																	$status = "PASSED";
+																	$action = "<a class='btn btn-primary btn-xs disabled'>Add to Other Subjects</a>";
+																	}else {
+																	$status = "FAILED";
+																	}
+																	echo <<<YR1
+																	<tr>
+																		<td>$subj_name</td>
+																		<td>$subj_level</td>
+																		<td>$yr_level</td>
+																		<td>$status</td>
+																		<td>
+																			<center>
+																			$action
+																			</center>
+																		</td>
+																	</tr>
+YR1;
+																	}
+																	}
+
+																	?>
+
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+												<!-- Panel 1 End -->
+											</div>
+										</div>
+									</div>
+									<div class="panel">
+										<a class="panel-heading collapsed" role="tab" id="headingTwo"
+											data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+											aria-expanded="false" aria-controls="collapseTwo">
+											<h4 class="panel-title">Attendance Record <small class="pull-right">Click to Expand</small></h4>
+										</a>
+										<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+											aria-labelledby="headingTwo">
+											<div class="panel-body">
+												<div class="table-list">
+													<table class="tablesorter-bootstrap">
+														<thead>
+															<tr>
+																<th data-sorter="false">Year Level</th>
+																<th data-sorter="false">School Year</th>
+																<th data-sorter="false">School Days</th>
+																<th data-sorter="false">Days Attended</th>
+																<th data-sorter="false">Total Years in School</th>
+																<th data-sorter="false">Action</th>
+															</tr>
+														</thead>
+														<tbody>
+															<?php
+																$attendance_count = 0;
+																if(!$conn) {
+																	die();
+																}else {
+																	$already_generated =  false;
+																	$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
+																	$result = $conn->query($statement);
+																	if($result->num_rows > 0) {
+																		$already_generated =  true;
+																	}
+																	$statement = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' order by yr_lvl asc;";
+																	$result = $conn->query($statement);
+																	if($result->num_rows > 0) {
+																		// output data of each row
+																		while($row = $result->fetch_assoc()) {
+																			$attendance_count += 1;
+																			$schl_yr = $row['schl_yr'];
+																			$yr_lvl = $row['yr_lvl'];
+																			$days_attended = $row['days_attended'];
+																			$school_days = $row['school_days'];
+																			$total_years_in_school = $row['total_years_in_school'];
+																			echo <<<GRADES
+																					<tr>
+																	<th scope="row">$yr_lvl</th>
+																	<td>$schl_yr</td>
+																	<td>$school_days</td>
+																	<td>$days_attended</td>
+																	<td>$total_years_in_school</td>
+																	<td>
+																								<center>
+GRADES;
+																						if($result->num_rows == $yr_lvl && !$already_generated) {
+																							echo <<<REMOVE
+																								<button type="button" class="btn btn-danger btn-xs" onclick="removeAttendance($yr_lvl,'$stud_id');">Remove Record</button>
+REMOVE;
+																							}else {
+																								echo <<<REMOVE
+																								<button type="button" class="btn btn-danger btn-xs" disabled>Remove Record</button>
+REMOVE;
+																							}
+
+																						echo "</center>
+																	</td>
+																</tr>";
+																			}
+																		}
+																	}
+																?>
+															</tbody>
+														</table>
+													</div>
+													<?php
+														if($attendance_count < 1) {
+															$year_check = $attendance_count+1;
+														}else {
+															$year_check = $attendance_count+1;
+														}
+
+														$checkgrade = "SELECT * FROM pcnhsdb.grades where stud_id = '$stud_id' and yr_level = $year_check;";
+														$result_checkgrade = $conn->query($checkgrade);
+														if($result_checkgrade->num_rows>0) {
+															$next_attendance = $attendance_count+1;
+															if($attendance_count < 4) {
+																echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_lvl=$next_attendance'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
+															}else {
+																echo "<a class='btn btn-success pull-right disabled'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
+															}
+														}else {
+																echo "<a class='btn btn-success pull-right disabled'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
+														}
+
+													?>
+												</div>
+											</div>
+										</div>
+										<div class="panel">
 											<a class="panel-heading collapsed" role="tab" id="headingFour"
 												data-toggle="collapse" data-parent="#accordion" href="#collapseFour"
 												aria-expanded="false" aria-controls="collapseFour">
-												<h4 class="panel-title">Requested Credential History <small>Click to Expand</small></h4>
+												<h4 class="panel-title">Requested Credential History <small class="pull-right">Click to Expand</small></h4>
 											</a>
 											<div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
 												aria-labelledby="headingFour">
@@ -785,7 +785,7 @@ CREDC;
 							<?php
 
                  echo <<<GEN
-									<a href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Please verify first if the grades and attendance are complete."><i class="fa fa-print m-right-xs"></i> Generate Credentials</button></a>
+									<a class="pull-right" href="../../registrar/credentials/choose_credential.php?stud_id=$stud_id"><button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Please verify first if the grades and attendance are complete."><i class="fa fa-print m-right-xs"></i> Generate Credentials</button></a>
 GEN;
               ?>
 						</div>
@@ -862,7 +862,7 @@ GEN;
 				if(remove) {
 					//console.log(stud_id);
 					window.location.assign("phpupdate/removeattendance.php?stud_id="+stud_id+"&yr_lvl="+yr_lvl);
-				}	
+				}
 			}
 		</script>
 	</body>
