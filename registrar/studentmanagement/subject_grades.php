@@ -68,14 +68,13 @@
 					<li><a href="../index.php">Home</a></li>
 					<li><a href="#">Student Management</a></li>
 					<li><a href="student_list.php">Student List</a></li>
-					<li><a href="#">Student Personal Information</a></li>
-					<li><a href="#">Grades</a></li>
+					<li><a href="#">Student Record</a></li>
 					<li class="active">Subject Grades</li>
 				</ol>
 			</div>
 			<div class="row">
 				<div class="col-md-9">
-					<a class="btn btn-default" href=<?php echo "../studentmanagement/grades.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+					<a class="btn btn-default" href=<?php echo "../studentmanagement/student_info.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
 				</div>
 			</div>
 			<div class="clearfix"></div>

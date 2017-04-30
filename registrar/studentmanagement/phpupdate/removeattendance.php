@@ -16,6 +16,6 @@
 	echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
 	echo "<br>";
 	$_SESSION['user_activity'][] = "REMOVED ATTENDANCE OF: $stud_id";
-	header("location: ../attendance.php?stud_id=$stud_id");
+	header("location: ../student_info.php?stud_id=$stud_id");
 
 ?>

@@ -14,5 +14,5 @@
 
 
 	mysqli_query($conn, $statement);
-	header("location: ../grades.php?stud_id=$stud_id");
+	header("location: ../student_info.php?stud_id=$stud_id");
 ?>

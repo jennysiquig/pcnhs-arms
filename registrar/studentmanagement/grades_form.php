@@ -54,7 +54,7 @@
         $popover = new Popover();
         $popover->set_popover($alert_type, $error_message); 
         $_SESSION['hasgrades'] = $popover->get_popover();
-        header("location: grades.php?stud_id=".$stud_id);
+        header("location: student_info.php?stud_id=".$stud_id);
         die();
     }
 ?>
@@ -113,7 +113,7 @@
             <!--  -->
             <div class="row">
                 <div class="col-md-9">
-                    <a class="btn btn-default" href=<?php echo "grades.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+                    <a class="btn btn-default" href=<?php echo "student_info.php?stud_id=$stud_id"; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
                 </div>
             </div>
             <div class="x_panel">

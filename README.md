@@ -8,7 +8,7 @@
 ## How to setup ##
 ### Requirements: ###
 1. WAMP Server or other local development servers.
-2. phpmyadmin (already included if you installed WAMP) 
+2. phpmyadmin (already included if you installed WAMP)
 3. pcnhsdb.sql file
 ### Steps: ###
 1. Download or clone this repository
