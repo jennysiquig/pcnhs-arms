@@ -30,6 +30,8 @@
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+		<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Datatables -->
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
@@ -286,5 +288,7 @@ REQ;
           <button class="btn btn-success pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
         </div>
       </div>
+      <!-- NProgress -->
+  		<script src="../../resources/libraries/nprogress/nprogress.js"></script>
     </body>
 </html>

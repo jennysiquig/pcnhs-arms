@@ -54,7 +54,8 @@
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
+		<!-- NProgress -->
+		<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		<!-- iCheck -->
@@ -248,6 +249,8 @@
 <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 <!-- iCheck -->
 	<script src="../../resources/libraries/iCheck/icheck.min.js"></script>
+	<!-- NProgress -->
+  <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
 <script src= "../../assets/js/custom.min.js"></script>
 <!-- Scripts -->

@@ -42,7 +42,8 @@
 		<link href="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-
+    <!-- NProgress -->
+		<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
@@ -160,7 +161,8 @@
 	<!-- Date Range Picker -->
 	<script src="../../resources/libraries/moment/min/moment.min.js"></script>
 	<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
-
+  <!-- NProgress -->
+  <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src= "../../assets/js/custom.js"></script>

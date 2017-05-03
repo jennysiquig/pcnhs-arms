@@ -313,7 +313,8 @@ REQ;
 	<!-- Date Range Picker -->
 	<script src="../../resources/libraries/moment/min/moment.min.js"></script>
 	<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
-
+  <!-- NProgress -->
+  <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src= "../../assets/js/custom.js"></script>

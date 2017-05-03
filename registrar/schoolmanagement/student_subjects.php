@@ -37,7 +37,8 @@
     <!-- Tablesorter: required -->
     <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
     <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
-
+		<!-- NProgress -->
+		<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -344,6 +345,8 @@ SUBJS;
 		<!-- input mask -->
 		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+		<!-- NProgress -->
+		<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../assets/js/custom.min.js"></script>
 	<!-- Scripts -->

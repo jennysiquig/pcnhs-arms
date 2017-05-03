@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/form-elements.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="resources/assets/css/custom.min.css" rel="stylesheet"> -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

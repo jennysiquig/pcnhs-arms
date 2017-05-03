@@ -174,6 +174,8 @@ UNCLAIMED;
 			<!-- input mask -->
 			<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 			<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+			<!-- NProgress -->
+		  <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 			<!-- Bootbox -->
 			<script src= "../../resources/libraries/bootbox/bootbox.min.js"></script>
 			<!-- Custom Theme Scripts -->
