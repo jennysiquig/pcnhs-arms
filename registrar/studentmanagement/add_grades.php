@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
-<?php         
+<?php
     ob_start();
 ?>
 <?php
     $stud_id = "";
-    if(isset($_GET['stud_id'])) {
+    if(isset($_GET['stud_id']) && isset($_GET['yr_level'])) {
         $stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
+        $yr_level = htmlspecialchars($_GET['yr_level']);
     }else {
         header("location: student_list.php");
     }
@@ -16,21 +17,16 @@
     $last_name;
     $curriculum;
     $statement = "SELECT * FROM pcnhsdb.students left join curriculum on students.curr_id = curriculum.curr_id where students.stud_id = '$stud_id' limit 1";
-    $result = $conn->query($statement);
+    $result = DB::query($statement);
     if (!$result) {
     //echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
     header("location: student_list.php");
     die();
     }
-    if ($result->num_rows>0) {
-    while ($row=$result->fetch_assoc()) {
-    $curriculum = $row['curr_name'];
-    $first_name = $row['first_name'];
-    $last_name = $row['last_name'];
-    }
-    } else {
-    header("location: student_list.php");
-    die();
+    foreach ($result as $row) {
+      $curriculum = $row['curr_name'];
+      $first_name = $row['first_name'];
+      $last_name = $row['last_name'];
     }
 ?>
 <html>
@@ -41,26 +37,26 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        
+
+
         <!-- NProgress -->
         <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
         <!-- Bootstrap -->
         <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
         <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        
+
         <!-- Datatables -->
         <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-        
+
         <!-- Custom Theme Style -->
         <link href="../../assets/css/custom.min.css" rel="stylesheet">
         <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-        
+
         <!--[if lt IE 9]>
         <script src="../js/ie8-responsive-file-warning.js"></script>
         <![endif]-->
-        
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -81,32 +77,28 @@
                 </div>
                 <div class="x_content">
                     <!-- First -->
-                    <?php 
-                        $stud_id = $_GET['stud_id'];
-                        $yr_level = $_GET['yr_level'];
 
-                    ?>
                     <form id="val-gr" class="form-horizontal form-label-left" action=<?php  echo "grades_form.php"; ?> method="GET" novalidate>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
-                                
+
                                     <?php
-                                 
+
                                     echo <<<SP
-                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="stud_id" readonly value='$stud_id'>                                     
+                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="stud_id" readonly value='$stud_id'>
 SP;
                                     ?>
-                                
+
                             </div>
                         </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Year Level</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                     <?php
-                                 
+
                                     echo <<<SP
-                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="yr_level" readonly value='$yr_level'>                                     
+                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="yr_level" readonly value='$yr_level'>
 SP;
                                     ?>
                             </div>
@@ -116,52 +108,34 @@ SP;
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <select class="form-control col-md-7 col-xs-12" name="prog_id">
                                     <?php
-                                    if(!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                    }
                                     $stud_id = $_GET['stud_id'];
                                     $statement = "SELECT prog_id, prog_name FROM pcnhsdb.students left join programs using (prog_id) where stud_id = '$stud_id'";
-                                    $result = $conn->query($statement);
-                                    if ($result->num_rows > 0) {
-                                    // output data of each row
-                                    while($row = $result->fetch_assoc()) {
-                                    $prog_name = $row['prog_name'];
-                                    $prog_id = $row['prog_id'];
-                                    echo <<<SP
-                                        <option value='$prog_id'>$prog_name</option>
+                                    $result = DB::query($statement);
+                                    foreach ($result as $row) {
+                                      $prog_name = $row['prog_name'];
+                                      $prog_id = $row['prog_id'];
+                                      echo <<<SP
+                                          <option value='$prog_id'>$prog_name</option>
 SP;
-                                    }
-                                    }else {
-                                        header("location: ../../index.php");
-                                        die();
                                     }
                                     ?>
                                 </select>
                                 <p style="color: red">Default Student Program.</p>
                             </div>
                         </div>
-                        
+
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Curriculum</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <select class="form-control col-md-7 col-xs-12" name="curriculum">
                                     <?php
-                                    if(!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                    }
                                     $stud_id = $_GET['stud_id'];
                                     $statement = "SELECT curr_id, curr_name FROM pcnhsdb.students left join curriculum using (curr_id) where stud_id = '$stud_id'";
-                                    $result = $conn->query($statement);
-                                    if ($result->num_rows > 0) {
-                                    // output data of each row
-                                    while($row = $result->fetch_assoc()) {
-                                    $curr_name = $row['curr_name'];
-                                    $curr_id = $row['curr_id'];
-                                    echo "<option value='$curr_id' selected>$curr_name</option>";
-                                    }
-                                    }else {
-                                        header("location: ../../index.php");
-                                        die();
+                                    $result = DB::query($statement);
+                                    foreach ($result as $row) {
+                                      $curr_name = $row['curr_name'];
+                                      $curr_id = $row['curr_id'];
+                                      echo "<option value='$curr_id' selected>$curr_name</option>";
                                     }
                                     ?>
                                 </select>
@@ -172,29 +146,20 @@ SP;
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <?php
-                                if(!$conn) {
-                                die("Connection failed: " . mysqli_connect_error());
-                                }
                                 $stud_id = $_GET['stud_id'];
                                 $statement = "SELECT * from students where stud_id = '$stud_id'";
-                                $result = $conn->query($statement);
-                                if ($result->num_rows > 0) {
-                                // output data of each row
-                                while($row = $result->fetch_assoc()) {
-                                $second_school_name = $row['second_school_name'];
-                                echo <<<OPTION2
-                                    <input class="form-control col-md-7 col-xs-12" required="required" type="text" name="schl_name" value="$second_school_name" placeholder="School Name">
+                                $result = DB::query($statement);
+                                foreach ($result as $row) {
+                                  $second_school_name = $row['second_school_name'];
+                                  echo <<<OPTION2
+                                      <input class="form-control col-md-7 col-xs-12" required="required" type="text" name="schl_name" value="$second_school_name" placeholder="School Name">
 OPTION2;
-                                    }
-                                    }else {
-                                        header("location: ../../index.php");
-                                        die();
-                                    }
-                                    ?>
+                                }
+                                ?>
                                 </div>
                             </div>
                             <!-- Error MSG -->
-                            
+
                             <!--  -->
                             <div class="item form-group">
 
@@ -202,57 +167,41 @@ OPTION2;
                                 <div class="col-md-4 col-sm-6 col-xs-12">
                                     <?php
                                         $stud_id = $_GET['stud_id'];
-                                        if(!$conn) {
-                                            die("Connection failed: " . mysqli_connect_error());
-                                        }
-
                                         if($_GET['yr_level'] > 1) {
 
                                             $pschool_year = "";
 
                                             $yr_level_1 = intval($_GET['yr_level'])-1;
                                             $statement = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = '$yr_level_1' and studentsubjects.stud_id = '$stud_id';";
-                                            $result = $conn->query($statement);
-                                            if ($result->num_rows > 0) {
-                                                // output data of each row
-                                                while($row = $result->fetch_assoc()) {
-                                                    $pschool_year = $row['schl_year'];
-                                                }
-                                            }else {
-                                                header("location: ../../index.php");
-                                                die();
+                                            $result = DB::query($statement);
+                                            foreach ($result as $row) {
+                                              $pschool_year = $row['schl_year'];
                                             }
 
                                             $explode_pschool_year = explode("-", $pschool_year);
 
                                             $yr1 = intval($explode_pschool_year[0]);
                                             $yr2 = intval($explode_pschool_year[1]);
-                                            
+
                                             $yr1plus1 = $yr1+1;
                                             $yr2plus1 = $yr2+1;
                                             $stryr = $yr1plus1.' - '.$yr2plus1;
 
                                         }else {
                                              $pschool_year = "";
-                                        
+
                                             $statement = "SELECT * FROM pcnhsdb.students NATURAL JOIN primaryschool where stud_id = '$stud_id';";
-                                            $result = $conn->query($statement);
-                                            if ($result->num_rows > 0) {
-                                                // output data of each row
-                                                while($row = $result->fetch_assoc()) {
-                                                    $pschool_year = $row['pschool_year'];
-                                                }
-                                            }else {
-                                                header("location: ../../index.php");
-                                                die();
+                                            $result = DB::query($statement);
+                                            foreach ($result as $row) {
+                                              $pschool_year = $row['pschool_year'];
                                             }
 
-                                            
+
                                             $explode_pschool_year = explode("-", $pschool_year);
 
                                             $yr1 = intval($explode_pschool_year[0]);
                                             $yr2 = intval($explode_pschool_year[1]);
-                                            
+
                                             $yr1plus1 = $yr1+1;
                                             $yr2plus1 = $yr2+1;
                                             $stryr = $yr1plus1.' - '.$yr2plus1;
@@ -277,24 +226,15 @@ OPTION2;
                                 <select class="form-control col-md-7 col-xs-12" name="subjprog_id">
                                     <option value="none">-- No Selected --</option>
                                     <?php
-                                    if(!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                    }
                                     $stud_id = $_GET['stud_id'];
                                     $statement = "SELECT prog_id, prog_name FROM programs ";
-                                    $result = $conn->query($statement);
-                                    if ($result->num_rows > 0) {
-                                    // output data of each row
-                                    while($row = $result->fetch_assoc()) {
-                                    $prog_name = $row['prog_name'];
-                                    $prog_id = $row['prog_id'];
-                                    echo <<<SP
-                                        <option value='$prog_id'>$prog_name</option>
+                                    $result = DB::query($statement);
+                                    foreach ($result as $row) {
+                                      $prog_name = $row['prog_name'];
+                                      $prog_id = $row['prog_id'];
+                                      echo <<<SP
+                                          <option value='$prog_id'>$prog_name</option>
 SP;
-                                    }
-                                    }else {
-                                        header("location: ../../index.php");
-                                        die();
                                     }
                                     ?>
                                 </select>
@@ -307,22 +247,13 @@ SP;
                                 <select class="form-control col-md-7 col-xs-12" name="curriculum_subj">
                                     <option value="none">-- No Selected --</option>
                                     <?php
-                                    if(!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                    }
                                     $stud_id = $_GET['stud_id'];
                                     $statement = "SELECT * FROM pcnhsdb.curriculum";
-                                    $result = $conn->query($statement);
-                                    if ($result->num_rows > 0) {
-                                    // output data of each row
-                                    while($row = $result->fetch_assoc()) {
-                                    $curr_name = $row['curr_name'];
-                                    $curr_id = $row['curr_id'];
-                                    echo "<option value='$curr_id'>$curr_name</option>";
-                                    }
-                                    }else {
-                                        header("location: ../../index.php");
-                                        die();
+                                    $result = DB::query($statement);
+                                    foreach ($result as $row) {
+                                      $curr_name = $row['curr_name'];
+                                      $curr_id = $row['curr_id'];
+                                      echo "<option value='$curr_id'>$curr_name</option>";
                                     }
                                     ?>
                                 </select>
@@ -336,7 +267,7 @@ SP;
                                 <div class="col-md-3 pull-right">
                                     <a href=<?php echo "student_info.php?stud_id=$stud_id"; ?> class="btn btn-default">Cancel</a>
                                     <button id="send" type="submit" class="btn btn-primary"> Next</button>
-                                   
+
                                 </div>
                             </div>
                         </form>
@@ -344,7 +275,7 @@ SP;
                 </div>
             </div>
             <?php include "../../resources/templates/registrar/footer.php"; ?>
-            
+
             <!-- Scripts -->
             <!-- jQuery -->
             <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>

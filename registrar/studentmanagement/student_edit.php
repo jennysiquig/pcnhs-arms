@@ -11,26 +11,26 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		
+
+
 		<!-- NProgress -->
     	<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-		
+
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
-		
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -82,7 +82,7 @@
 									<!--  -->
 										<?php
 
-											
+
 											$first_name;
 											$mid_name;
 											$last_name;
@@ -104,30 +104,26 @@
 											$gpa;
 
 											$statement = "SELECT * FROM pcnhsdb.students left join parent on students.stud_id = parent.stud_id left join primaryschool on students.stud_id = primaryschool.stud_id left join programs on students.prog_id = programs.prog_id left join curriculum on students.curr_id = curriculum.curr_id left join grades on students.stud_id = grades.stud_id where students.stud_id = '$stud_id'";
-											$result = $conn->query($statement);
-											if($result->num_rows>0) {
-												while($row=$result->fetch_assoc()) {
-													$curriculum = $row['curr_name'];
-													$first_name = $row['first_name'];
-													$mid_name = $row['mid_name'];
-													$last_name = $row['last_name'];
-													$gender = $row['gender'];
-													$birth_date = $row['birth_date'];
-													$province = $row['province'];
-													$towncity = $row['towncity'];
-													$barangay = $row['barangay'];
-													$last_schyear_attended = $row['schl_year'];
-													$program = $row['prog_name'];
-													$pname = $row['pname'];
-													$parent_occupation = $row['occupation'];
-													$parent_address = $row['address'];
-													$primary_schl_name = $row['psname'];
-													$primary_schl_year = $row['pschool_year'];
-													$total_elem_years = $row['total_elem_years'];
-													$gpa = $row['gen_average'];
-												}
-											}else {
-												header("location: student_list.php");
+											$result = DB::query($statement);
+											foreach ($result as $row) {
+												$curriculum = $row['curr_name'];
+												$first_name = $row['first_name'];
+												$mid_name = $row['mid_name'];
+												$last_name = $row['last_name'];
+												$gender = $row['gender'];
+												$birth_date = $row['birth_date'];
+												$province = $row['province'];
+												$towncity = $row['towncity'];
+												$barangay = $row['barangay'];
+												$last_schyear_attended = $row['schl_year'];
+												$program = $row['prog_name'];
+												$pname = $row['pname'];
+												$parent_occupation = $row['occupation'];
+												$parent_address = $row['address'];
+												$primary_schl_name = $row['psname'];
+												$primary_schl_year = $row['pschool_year'];
+												$total_elem_years = $row['total_elem_years'];
+												$gpa = $row['gen_average'];
 											}
 										?>
 									<!--  -->
@@ -177,7 +173,7 @@
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Birth Place: </label>
-										
+
 									</div>
 									<div class="item form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Province</label>
@@ -277,10 +273,10 @@
 								</div>
 							</div>
 						</div>
-						
-						
-						
-						
+
+
+
+
 						<div class="clearfix"></div>
 						<div class="ln_solid"></div>
 						<div class="form-group">
@@ -289,13 +285,13 @@
 								<button type="submit" class="btn btn-primary">Save Changes</button>
 							</div>
 						</div>
-						
+
 					</form>
 				</div>
 			</div>
-			
-			
-			
+
+
+
 			<!-- Content End -->
 			<?php include "../../resources/templates/registrar/footer.php"; ?>
 			<!-- Scripts -->

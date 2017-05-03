@@ -13,21 +13,16 @@
 	$last_name;
 	$curriculum;
 	$statement = "SELECT * FROM pcnhsdb.students left join curriculum on students.curr_id = curriculum.curr_id where students.stud_id = '$stud_id' limit 1";
-	$result = $conn->query($statement);
+	$result = DB::query($statement);
 	if (!$result) {
-	//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
-	header("location: student_list.php");
-	die();
+		//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
+		header("location: student_list.php");
+		die();
 	}
-	if ($result->num_rows>0) {
-	while ($row=$result->fetch_assoc()) {
-	$curriculum = $row['curr_name'];
-	$first_name = $row['first_name'];
-	$last_name = $row['last_name'];
-	}
-	} else {
-	header("location: student_list.php");
-	die();
+	foreach ($result as $row) {
+		$curriculum = $row['curr_name'];
+		$first_name = $row['first_name'];
+		$last_name = $row['last_name'];
 	}
 ?>
 <!DOCTYPE html>

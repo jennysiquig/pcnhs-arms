@@ -19,7 +19,7 @@
 			$yr_lvl = 1;
 	}
 	$willInsert = true;
-	
+
 
 	//$yr_lvl = htmlspecialchars($_POST['yr_lvl'], ENT_QUOTES);
 	$schl_yr = htmlspecialchars($_POST['schl_year'], ENT_QUOTES);
@@ -33,18 +33,18 @@
 		$alert_type = "danger";
 		$error_message = "You entered an Invalid number of Days Attended or School Days.";
 		$popover = new Popover();
-		$popover->set_popover($alert_type, $error_message);	
+		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		die();
 	}
-//validate days attended. 
+//validate days attended.
 	if($days_attended > $school_days) {
 		$willInsert = false;
 		$alert_type = "danger";
 		$error_message = "Days attended must be less than or equal to School Days.";
 		$popover = new Popover();
-		$popover->set_popover($alert_type, $error_message);	
+		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		die();
@@ -54,7 +54,7 @@
 		$alert_type = "danger";
 		$error_message = "Days attended must be less than or equal to Days in year (365).";
 		$popover = new Popover();
-		$popover->set_popover($alert_type, $error_message);	
+		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		die();
@@ -68,9 +68,9 @@
 		$alert_type = "danger";
 		$error_message = "You entered an Invalid School Year.";
 		$popover = new Popover();
-		$popover->set_popover($alert_type, $error_message);	
+		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
-		
+
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		die();
 	}
@@ -79,21 +79,29 @@
 		$alert_type = "danger";
 		$error_message = "You entered an Invalid Total Years in School.";
 		$popover = new Popover();
-		$popover->set_popover($alert_type, $error_message);	
+		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		die();
 	}
-	$insertattendance = "INSERT INTO `pcnhsdb`.`attendance` (`stud_id`, `schl_yr`, `yr_lvl`, `days_attended`, `school_days`, `total_years_in_school`) VALUES ('$stud_id', '$schl_yr', '$yr_lvl', '$days_attended', '$school_days', '$total_years_in_school');";
+	// $insertattendance = "INSERT INTO `pcnhsdb`.`attendance` (`stud_id`, `schl_yr`, `yr_lvl`, `days_attended`, `school_days`, `total_years_in_school`) VALUES ('$stud_id', '$schl_yr', '$yr_lvl', '$days_attended', '$school_days', '$total_years_in_school');";
 
 	if($willInsert) {
-		mysqli_query($conn, $insertattendance);
+		//mysqli_query($conn, $insertattendance);
+		DB::insert('attendance', array(
+			'stud_id' => $stud_id,
+			'schl_yr' => $schl_yr,
+			'yr_lvl' => $yr_lvl,
+			'days_attended' => $days_attended,
+			'school_days' => $school_days,
+			'total_years_in_school' => $total_years_in_school
+		));
 
 		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
 		echo "<br>";
 		$_SESSION['user_activity'][] = "ADDED NEW ATTENDANCE OF: $stud_id";
 		header("location: ../student_info.php?stud_id=$stud_id");
 	}
-	
+
 
 ?>

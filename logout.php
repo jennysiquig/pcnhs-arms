@@ -7,9 +7,6 @@
     $_SESSION ['loTime'] = $loTime;
     $timeout_message;
 
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
     if (isset($_SESSION['timeout_message'])) {
         $timeout_message = $_SESSION['timeout_message'];
     }
@@ -20,16 +17,20 @@
     $sDate = $_SESSION['sDate'];
     $liTime = $_SESSION['liTime'];
 
-    $user_act = $_SESSION ['user_activity'];
-
+    $user_act = "N/A";
     foreach ($_SESSION['user_activity'] as $user_act) {
-
-        $stmt = $conn->prepare("INSERT INTO `pcnhsdb`.`user_logs` (`log_id`,`user_name`,`account_type`,`log_date`,`log_in_time`,`log_out_time`,`user_act`) 
-                                    VALUES (?,?,?,?,?,?,?)");
-
-        $stmt->bind_param("issssss", $log_id, $username, $accnt_type, $sDate, $liTime, $loTime, $user_act);
-
-        $stmt->execute();
+      if(is_null($user_act)) {
+        $user_act = "N/A";
+      }
+        DB::insert('user_logs', array(
+          'log_id' => $log_id,
+          'user_name' => $username,
+          'account_type' => $accnt_type,
+          'log_date' => $sDate,
+          'log_in_time' => $liTime,
+          'log_out_time' => $loTime,
+          'user_act' => $user_act
+        ));
     }
 
     session_unset();
