@@ -1,6 +1,6 @@
-<?php 
+<?php
 	require_once "../../../resources/config.php";
-	include('../../../resources/classes/Popover.php'); 
+	include('../../../resources/classes/Popover.php');
 	session_start();
 
 	$willInsert = true;
@@ -37,16 +37,16 @@
 	}
 
 	$updatestm = "UPDATE `pcnhsdb`.`curriculum` SET `curr_name`='$curr_name', `year_ended`='$year_ended' WHERE `curr_id`='$curr_id';";
-	
+
 	if($willInsert) {
-		mysqli_query($conn, $updatestm);
+		DB::query($updatestm);
 
 		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
 		echo "<br>";
 		$_SESSION['user_activity'][] = "EDITED CURRICULUM: $curr_name";
 		header("location: ../curriculum.php");
-		
+
 	}
-	
-	
+
+
 ?>

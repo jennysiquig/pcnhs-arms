@@ -2,9 +2,6 @@
 	session_start();
 	require_once "../../../resources/config.php";
 	include '../../../resources/classes/Popover.php';
-	if(!$conn) {
-		die();
-	}
 	$willInsert = true;
 	$stud_id = htmlspecialchars($_POST['stud_id'], ENT_QUOTES);
 	$lastName = htmlspecialchars($_POST['lastName'], ENT_QUOTES);
@@ -45,28 +42,27 @@
 	$yr_lvl = 0;
 	$n = 1;
 	$attendance_1 = "SELECT  * FROM pcnhsdb.attendance where stud_id = '$stud_id' order by yr_lvl asc;";
-	$result_attendance = $conn->query($attendance_1);
-	if($result_attendance->num_rows>0) {
-		while($row_1 = $result_attendance->fetch_assoc()) {
+	$result_attendance = DB::query($attendance_1);
+	if (count($result_attendance) > 0) {
+		foreach ($result_attendance as $row_1) {
 			$yr_lvl = $row_1['yr_lvl'];
 			$total_years_in_school = intval($total_elem_years)+$n;
 
 			$update_aty = "UPDATE `pcnhsdb`.`attendance` SET `total_years_in_school`='$total_years_in_school' WHERE `stud_id`='$stud_id' and yr_lvl = '$yr_lvl';";
-			mysqli_query($conn, $update_aty);
+			DB::query($update_aty);
 			$n+=1;
 		}
 	}
 
 	if($willInsert) {
-		mysqli_query($conn, $updatestmnt1);
-		mysqli_query($conn, $updatestmnt2);
-		mysqli_query($conn, $updatestmnt3);
-
+		DB::query($updatestmnt1);
+		DB::query($updatestmnt2);
+		DB::query($updatestmnt3);
 		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
 		echo "<br>";
 		$_SESSION['user_activity'][] = "UPDATED INFORMATION OF: $stud_id";
 
 		header("location: ../student_info.php?stud_id=$stud_id");
 	}
-	
+
 ?>

@@ -9,25 +9,25 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		
-		
+
+
+
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/easy-autocomplete.css" rel="stylesheet">
-		
+
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
-		
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -41,7 +41,7 @@
 		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
-			
+
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>New Credential Request<small></small></h2>
@@ -52,8 +52,8 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				
-				
+
+
 				<form id="choose_cred" class="form-horizontal form-label-left" action="verify_student.php" method="GET" >
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="full-name">Full Name <span class="required">*</span>
@@ -68,14 +68,11 @@
                           <select id="credential" class="form-control" name="credential" required>
 							<option value="">Choose..</option>
 							<?php
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
+
 								$statement = "SELECT * FROM credentials";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
+								$result = DB::query($statement);
+								if (count($result) > 0) {
+									foreach ($result as $row) {
 										$cred_id = $row['cred_id'];
 										$cred_name = $row['cred_name'];
 
@@ -107,10 +104,10 @@
 							</div>
 						</div>
 						<div class="ln_solid"></div>
-								
+
 						<div class="clearfix"></div>
 						<br>
-					
+
 						<!--  -->
 						<!-- this row will not appear when printing -->
 						<div class="row no-print">

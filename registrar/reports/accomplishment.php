@@ -5,7 +5,7 @@
     // Session Timeout
     $time = time();
     $session_timeout = 1800; //seconds
-    
+
     if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
       session_unset();
       session_destroy();
@@ -21,7 +21,7 @@
     	header('Location: ../../login.php');
     }
     date_default_timezone_set('Asia/Manila');
-    
+
   ?>
 <html>
 	<head>
@@ -31,9 +31,9 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		
-		
+
+
+
 		<!-- jQuery -->
 	    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 
@@ -53,20 +53,20 @@
 	    <!-- Font Awesome -->
 	    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 	    <!-- Date Range Picker -->
-		<link href="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-	    
+		  <link href="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
 	    <!-- Datatables -->
 	    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-	    
+
 	    <!-- Custom Theme Style -->
 	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
 	     <!-- Custom Theme Style -->
 	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
-		
+
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
-		
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -102,7 +102,7 @@
 								Select Date of Accomplishment
 								<form class="form-horizontal" action="accomplishment.php" method="get" value="accomplishment_date">
 									<fieldset>
-										
+
 										<div class="control-group">
 											<div class="controls">
 												<div class="input-prepend input-group">
@@ -116,7 +116,7 @@
 												</div>
 											</div>
 										</div>
-										
+
 									</fieldset>
 								</form>
 							</div>
@@ -134,14 +134,14 @@
 										$accomplishment_date_get = $date_from.' - '.$date_to;
 										$accomplishment_date_get = preg_replace('/\s+/', '', $accomplishment_date_get);
 									}
-									
-									
+
+
 								?>
 								<a href= <?php echo "generate_accomp.php?accomplishment_date=$accomplishment_date_get"; ?>><button type="button" class="btn btn-success pull-right">Generate Report</button></a>
-								
+
 								</div>
 
-								
+
 						</div>
 	                      <!-- Date Picker -->
 						<div class="x_content">
@@ -152,21 +152,17 @@
 											<th class="column-title" data-sorter="false">Item</th>
 											<th class="column-title" data-sorter="false">Processed</th>
 											<th class="column-title" data-sorter="false">Released</th>
-											
+
 										</th>
-										
+
 									</tr>
 								</thead>
 								<tbody>
-									
+
 									<?php
-									$statement = "";
+									          $statement = "";
 				                    $start=0;
 				                    $limit=20;
-
-				                    if(!$conn) {
-				                    die("Connection failed: " . mysqli_connect_error());
-				                    }
 
 				                    if(isset($_GET['page'])){
 				                      $page=$_GET['page'];
@@ -176,9 +172,9 @@
 				                    }
 
 				                    $statement = "SELECT * FROM pcnhsdb.credentials;";
-				                    $result = $conn->query($statement);
-				                    if($result->num_rows>0){
-				                    	while ($row=$result->fetch_assoc()) {
+				                    $result = DB::query($statement);
+                            if (count($result) > 0) {
+                          		foreach ($result as $row) {
 				                    		$cred_id = $row['cred_id'];
 				                    	    $cred_name = $row['cred_name'];
 
@@ -190,24 +186,24 @@
 						                    	//echo $accomplishment_date;
 						                    	$from_and_to_date = explode("-", $accomplishment_date);
 						                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
-												$m = $sqldate_format_from[0];
-												$d = $sqldate_format_from[1];
-												$y = $sqldate_format_from[2];
-												$m = preg_replace('/\s+/', '', $m);
-												$d = preg_replace('/\s+/', '', $d);
-												$y = preg_replace('/\s+/', '', $y);
+          												$m = $sqldate_format_from[0];
+          												$d = $sqldate_format_from[1];
+          												$y = $sqldate_format_from[2];
+          												$m = preg_replace('/\s+/', '', $m);
+          												$d = preg_replace('/\s+/', '', $d);
+          												$y = preg_replace('/\s+/', '', $y);
 
-												$from = $y."-".$m."-".$d;
+          												$from = $y."-".$m."-".$d;
 
-												$sqldate_format_to = explode("/", $from_and_to_date[1]);
-												$m = $sqldate_format_to[0];
-												$d = $sqldate_format_to[1];
-												$y = $sqldate_format_to[2];
-												$m = preg_replace('/\s+/', '', $m);
-												$d = preg_replace('/\s+/', '', $d);
-												$y = preg_replace('/\s+/', '', $y);
+          												$sqldate_format_to = explode("/", $from_and_to_date[1]);
+          												$m = $sqldate_format_to[0];
+          												$d = $sqldate_format_to[1];
+          												$y = $sqldate_format_to[2];
+          												$m = preg_replace('/\s+/', '', $m);
+          												$d = preg_replace('/\s+/', '', $d);
+          												$y = preg_replace('/\s+/', '', $y);
 
-												$to = $y."-".$m."-".$d;
+          												$to = $y."-".$m."-".$d;
 												//echo $accomplishment_date;
 
 							                    $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to' and credentials.cred_id = $cred_id";
@@ -218,20 +214,19 @@
 							                    }
 
 
-							                    $result_1 = $conn->query($statement);
-								                if ($result_1->num_rows > 0) {
-								                    // output data of each row
-								                    while($row_1 = $result_1->fetch_assoc()) {
-								                    	
+							                    $result_1 = DB::query($statement);
+                                  if (count($result_1) > 0) {
+                                		foreach ($result_1 as $row_1) {
+
 								                   		$date_processed_count = $row_1['date_processed_count'];
 								                    	$date_released_count = $row_1['date_released_count'];
 								                    echo <<<REQ
-								                    	
+
 															<td class=" ">$date_processed_count</td>
 															<td class=" ">$date_released_count</td>
-														
+
 REQ;
-								                    	
+
 
 								                    }
 								                }
@@ -270,8 +265,8 @@ REQ;
 					                    	$accomplishment_date = date('m/d/y').'-'.date('m/d/y');
 					                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
 					            }
-					        $rows = mysqli_num_rows(mysqli_query($conn, $statement));
-							$total = ceil($rows/$limit);
+					        $rows = DB::count($statement);
+							    $total = ceil($rows/$limit);
 							echo '<div class="pull-right">
 									<div class="col s12">
 											<ul class="pagination center-align">';
@@ -318,7 +313,7 @@ REQ;
 	<!-- Date Range Picker -->
 	<script src="../../resources/libraries/moment/min/moment.min.js"></script>
 	<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
-	
+
 	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src= "../../assets/js/custom.js"></script>
@@ -353,7 +348,7 @@ REQ;
                  $("#date").datepicker();
            });
    		</script>
-   		
-	
+
+
 </body>
 </html>

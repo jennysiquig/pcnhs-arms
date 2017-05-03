@@ -19,7 +19,7 @@
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
     <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-</head> 
+</head>
 <body class="nav-md">
 <?php include "../../resources/templates/admin/sidebar.php"; ?>
 <?php include "../../resources/templates/admin/top-nav.php"; ?>
@@ -61,15 +61,10 @@
                         $yr_ended;
                         $position;
                         $statement = "SELECT * FROM pcnhsdb.signatories WHERE signatories.sign_id='$sign_id'";
-                        $result = $conn->query($statement);
+                        $result = DB::query($statement);
 
-                        if (!$result) {
-                            header("location: signatories.php");
-                            die();
-                        }
-
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
+                        if (count($result) > 0) {
+                          foreach ($result as $row) {
                                 $first_name = $row['first_name'];
                                 $mname = $row['mname'];
                                 $last_name = $row['last_name'];
@@ -160,7 +155,7 @@
                                     <?php $present = date("Y");
                                         for ($year = 1973; $year <= $present; $year++) {
                                             echo "<option value='$year'>$year</option>";
-                                            } 
+                                            }
                                         ?>
                                 </select>
                             </div>
@@ -240,7 +235,7 @@
 </script>
 
 <script>
-window.ParsleyValidator.addValidator('ge', 
+window.ParsleyValidator.addValidator('ge',
     function (value, requirement) {
         return parseFloat(value) >= parseFloat($(requirement).val());
     }, 32)

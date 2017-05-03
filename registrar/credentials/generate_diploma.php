@@ -22,22 +22,22 @@
 	if(isset($_GET['stud_id']) && isset($_GET['credential'])) {
 		$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
 		$credential = htmlspecialchars($_GET['credential'], ENT_QUOTES);
-		
+
 	}else {
 		header("location: ../index.php");
 	}
 
-	$request_purpose = strtoupper(htmlspecialchars($_GET['purpose']));
-	
+		$request_purpose = strtoupper(htmlspecialchars($_GET['purpose']));
+
     $school_year = "SELECT max(schl_year) as schl_year from studentsubjects where stud_id = '$stud_id'";
-    $ans = $conn->query($school_year);
-    if ($ans->num_rows>0) {
-    	while ($row = $ans->fetch_assoc()) {
+    $ans = DB::query($school_year);
+    if (count($ans) > 0) {
+    	foreach ($ans as $row) {
     		$last_yr_attended = $row['schl_year'];
     	}
     }
 
-	
+
 ?>
 <html>
 	<head>
@@ -47,14 +47,14 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		
-		
+
+
+
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 		<!-- iCheck -->
@@ -62,11 +62,11 @@
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-		
+
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
-		
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -99,7 +99,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <p>
 							<input type="radio" class="flat" name="request_type" id="tor-individual" value="individual" checked="" required /> Individual Request:
-							
+
 						</p>
                         </div>
                       </div>
@@ -154,7 +154,7 @@
 								    <?php $day = date("d");
                                     	for ($day = 1; $day <= 31; $day++) {
                                         	echo "<option value='$day'>$day</option>";
-                                        } 
+                                        }
                                     ?>
 							</select>
 						</div>
@@ -167,22 +167,19 @@
 					<select id="credential" class="form-control" name="signatory_principal" required="">
 						<option value="">-- Choose Signatory --</option>
 						<?php
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
 
 							$school_years = explode(" ", $last_yr_attended);
 							$yr_started = $school_years[0];
 							$yr_ended = $school_years[2];
 
-							$statement = "SELECT * FROM signatories WHERE ('$yr_ended' 
+							$statement = "SELECT * FROM signatories WHERE ('$yr_ended'
 										  BETWEEN yr_started AND yr_ended)
 										  AND (position NOT LIKE 'HEAD TEACHER')
 										  AND (position NOT LIKE 'SUPERINTENDENT')";
 
-							$result = $conn->query($statement);
-							if ($result->num_rows > 0) {
-								while($row = $result->fetch_assoc()) {
+							$result = DB::query($statement);
+							if (count($result) > 0) {
+								foreach ($result as $row) {
 									$sign_id = $row['sign_id'];
 									$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'].'  ('
 												 .$row['position'].',  '.$row['title'].' '.$row['yr_started'].'-'.$row['yr_ended'].')';
@@ -202,22 +199,19 @@
 					<select id="credential" class="form-control" name="signatory_superintendent" required="">
 						<option value="">-- Choose Signatory --</option>
 						<?php
-							if(!$conn) {
-								die("Connection failed: " . mysqli_connect_error());
-							}
 
 							$school_years = explode(" ", $last_yr_attended);
 							$yr_started = $school_years[0];
 							$yr_ended = $school_years[2];
 
-							$statement = "SELECT * FROM signatories WHERE ('$yr_ended' 
+							$statement = "SELECT * FROM signatories WHERE ('$yr_ended'
 										  BETWEEN yr_started AND yr_ended)
 										  AND (position NOT LIKE 'HEAD TEACHER')
 										  AND (position NOT LIKE 'PRINCIPAL')";
 
-							$result = $conn->query($statement);
-							if ($result->num_rows > 0) {
-								while($row = $result->fetch_assoc()) {
+							$result = DB::query($statement);
+							if (count($result) > 0) {
+								foreach ($result as $row) {
 									$sign_id = $row['sign_id'];
 									$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'].'  ('
 												 .$row['position'].',  '.$row['title'].' '.$row['yr_started'].'-'.$row['yr_ended'].')';

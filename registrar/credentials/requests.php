@@ -9,7 +9,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
+
 		<!-- jQuery -->
 	    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 
@@ -28,19 +28,19 @@
 	    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	    <!-- Font Awesome -->
 	    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	    
+
 	    <!-- Datatables -->
 	    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-	    
+
 	    <!-- Custom Theme Style -->
 	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
 	     <!-- Custom Theme Style -->
 	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
-		
+
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
-		
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -75,7 +75,7 @@
 											<th class="column-title" data-sorter="false">Purpose</th>
 											<th class="column-title no-link last" data-sorter="false"><span class="nobr">Action</span>
 										</th>
-										
+
 									</tr>
 								</thead>
 								<tbody>
@@ -90,15 +90,11 @@
 										$page=1;
 										}
 
-										if(!$conn) {
-											die("Connection failed: " . mysqli_connect_error());
-										}
 										$statement = "SELECT stud_id, req_id, cred_id, request_purpose, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_id, cred_name, request_type FROM pcnhsdb.requests natural join students natural join credentials where status='p' order by req_id asc limit $start, $limit;";
-										$result = $conn->query($statement);
+										$result = DB::query($statement);
 
-										if ($result->num_rows > 0) {
-											// output data of each row
-											while($row = $result->fetch_assoc()) {
+										if (count($result) > 0) {
+											foreach ($result as $row) {
 												$date_processed = $row['date processed'];
 												$stud_name = $row['stud_name'];
 												$cred_name = $row['cred_name'];
@@ -122,14 +118,14 @@
 UNCLAIMED;
 											}
 										}
-										
+
 									?>
 								</tbody>
 							</table>
 							<?php
 							$statement = "SELECT req_id, stud_id, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='p' order by req_id asc;";
-							
-							$rows = mysqli_num_rows(mysqli_query($conn, $statement));
+
+							$rows = DB::count($statement);
 							$total = ceil($rows/$limit);
 							echo '<div class="pull-right">
 									<div class="col s12">
@@ -156,7 +152,7 @@ UNCLAIMED;
 													echo "<li class='disabled'><a>Next</a></li>";
 													}
 											echo "</ul></div></div>";
-											
+
 									?>
 								</div>
 							</div>

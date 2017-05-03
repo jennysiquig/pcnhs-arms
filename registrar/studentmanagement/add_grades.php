@@ -2,7 +2,7 @@
 <?php require_once "../../resources/config.php"; ?>
 <?php include('include_files/session_check.php'); ?>
 <?php
-    ob_start();
+  ob_start();
 ?>
 <?php
     $stud_id = "";
@@ -174,6 +174,7 @@ OPTION2;
                                             $yr_level_1 = intval($_GET['yr_level'])-1;
                                             $statement = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = '$yr_level_1' and studentsubjects.stud_id = '$stud_id';";
                                             $result = DB::query($statement);
+                                            
                                             foreach ($result as $row) {
                                               $pschool_year = $row['schl_year'];
                                             }

@@ -2,16 +2,12 @@
 	session_start();
 	require_once "../../../resources/config.php";
 	include('../../../resources/classes/Popover.php');
-	if(!$conn) {
-		die();
-	}
 	$stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES);
 	$yr_lvl = 1;
 	$statement = "SELECT * FROM pcnhsdb.attendance where stud_id = '$stud_id' order by yr_lvl desc limit 1;";
-	$result = $conn->query($statement);
-	if ($result->num_rows > 0) {
-		// output data of each row
-		while($row = $result->fetch_assoc()) {
+	$result = DB::query($statement);
+	if (count($result) > 0) {
+		foreach ($result as $row) {
 			$yr_lvl = $row['yr_lvl'];
 			$yr_lvl = $yr_lvl+1;
 		}
@@ -87,7 +83,7 @@
 	// $insertattendance = "INSERT INTO `pcnhsdb`.`attendance` (`stud_id`, `schl_yr`, `yr_lvl`, `days_attended`, `school_days`, `total_years_in_school`) VALUES ('$stud_id', '$schl_yr', '$yr_lvl', '$days_attended', '$school_days', '$total_years_in_school');";
 
 	if($willInsert) {
-		//mysqli_query($conn, $insertattendance);
+		//mysqli_query(, $insertattendance);
 		DB::insert('attendance', array(
 			'stud_id' => $stud_id,
 			'schl_yr' => $schl_yr,

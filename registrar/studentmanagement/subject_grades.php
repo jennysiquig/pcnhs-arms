@@ -14,15 +14,14 @@
 	$curriculum;
 	$statement = "SELECT * FROM pcnhsdb.students left join curriculum on students.curr_id = curriculum.curr_id where students.stud_id = '$stud_id' limit 1";
 	$result = DB::query($statement);
-	if (!$result) {
-		//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
-		header("location: student_list.php");
-		die();
-	}
-	foreach ($result as $row) {
+	if (count($result) > 0) {
+		foreach ($result as $row) {
 		$curriculum = $row['curr_name'];
 		$first_name = $row['first_name'];
 		$last_name = $row['last_name'];
+	}else {
+		header("location: student_list.php");
+		die();
 	}
 ?>
 <!DOCTYPE html>
@@ -118,14 +117,10 @@
 		                </thead>
 		                <tbody>
 		                      	<?php
-									if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
-									}
 									$query = "SELECT studsubj_id, special_grade, subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = '$yr_level' and stud_id = '$stud_id';";
-									$result = $conn->query($query);
-									if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
+									$result = DB::query($query);
+									if (count($result) > 0) {
+										foreach ($result as $row) {
 											$studsubj_id = $row['studsubj_id'];
 											$subj_name = $row['subj_name'];
 											$subj_level = $row['subj_level'];

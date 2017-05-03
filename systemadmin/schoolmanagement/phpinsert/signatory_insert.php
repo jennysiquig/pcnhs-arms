@@ -14,10 +14,6 @@ $yr_ended = htmlspecialchars($_POST['yr_ended'], FILTER_SANITIZE_STRING);
 $position = htmlspecialchars($_POST['position'], FILTER_SANITIZE_STRING);
 $insertChck = true;
 
-if (!$conn) {
-	die("Connection failed: " . mysqli_connect_error());
-}
-
 if (empty($sign_id) || empty($first_name) || empty($mname) || empty($last_name) || empty($title) || empty($yr_started) || empty($year_ended) || empty($position)) {
 	$insertChck = false;
 	$alert_type = "danger";
@@ -28,13 +24,10 @@ if (empty($sign_id) || empty($first_name) || empty($mname) || empty($last_name) 
 	header("location" . $_SERVER["HTTP_REFERER"]);
 }
 
-$queryCheck = "SELECT * from signatories where sign_id = ?";
-$preparedQuery = $conn->prepare($queryCheck);
-$preparedQuery->bind_param("s", $sign_id);
-$preparedQuery->execute();
-$result = $preparedQuery->get_result();
+$queryCheck = "SELECT * from signatories where sign_id = '$sign_id';";
+$result = DB::query($queryCheck);
 
-if ($result->num_rows > 0) {
+if (count($result) > 0) {
 	$_SESSION['error_msg_signatory'] = "Signatory ID: $sign_id already exists";
 	$insertChck = false;
 	$alert_type = "danger";
@@ -45,9 +38,16 @@ if ($result->num_rows > 0) {
 	header("location" . $_SERVER["HTTP_REFERER"]);
 }
 else {
-	$statement = $conn->prepare("INSERT INTO `pcnhsdb`.`signatories` (`sign_id`, `last_name`, `first_name`, `mname`, `title`, `yr_started`, `yr_ended`, `position`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-	$statement->bind_param("sssssiis", $sign_id, $last_name, $first_name, $mname, $title, $yr_started, $yr_ended, $position);
-	$statement->execute();
+	DB::insert('signatories', array(
+		'sign_id' => $sign_id,
+		'last_name' => $last_name,
+		'first_name' => $first_name,
+		'mname' => $mname,
+		'title' => $title,
+		'yr_started' => $yr_started,
+		'yr_ended' => $yr_ended,
+		'position' => $position
+	));
 
 	$sign_add = "ADDED SIGNATORY: $sign_id";
 	$_SESSION['user_activity'][] = $sign_add;
@@ -58,8 +58,6 @@ else {
 	$popover->set_popover($alert_type, $message);
 	$_SESSION['success_signatory'] = $popover->get_popover();
 	header("location: ../signatory_view.php?sign_id=$sign_id");
-	$statement->close();
-	$conn->close();
 }
 
 ?>

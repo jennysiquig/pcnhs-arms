@@ -3,9 +3,6 @@
 	include('../../../resources/classes/Popover.php');
 	session_start();
 
-	if(!$conn) {
-		die();
-	}
 
 	$sign_id = htmlspecialchars($_POST['sign_id'], ENT_QUOTES);
 	$first_name = htmlspecialchars($_POST['first_name'], ENT_QUOTES);
@@ -16,21 +13,21 @@
 	$yr_ended = htmlspecialchars($_POST['yr_ended'], ENT_QUOTES);
 	$position = htmlspecialchars($_POST['position'], ENT_QUOTES);
 
-	$updatestmt = "UPDATE `pcnhsdb`.`signatories` 
-				   SET `first_name`='$first_name', `mname`='$mname', `last_name`='$last_name',`title`='$title', `yr_started`='$yr_started', `yr_ended`='$yr_ended', `position`='$position' 
+	$updatestmt = "UPDATE `pcnhsdb`.`signatories`
+				   SET `first_name`='$first_name', `mname`='$mname', `last_name`='$last_name',`title`='$title', `yr_started`='$yr_started', `yr_ended`='$yr_ended', `position`='$position'
 				   WHERE signatories.sign_id = '$sign_id'";
 
-    mysqli_query($conn, $updatestmt);
+    DB::query($updatestmt);
 
-   	$sign_edit = "EDITED SIGNATORY: $sign_id";    
+   	$sign_edit = "EDITED SIGNATORY: $sign_id";
    	$_SESSION['user_activity'][] = $sign_edit;
 
     $alert_type = "info";
     $message = "Signatory Information Edited Successfully";
     $popover = new Popover();
-    $popover->set_popover($alert_type, $message);   
+    $popover->set_popover($alert_type, $message);
     $_SESSION['success_signatory_edit'] = $popover->get_popover();
 
-	header("location: ../signatory_view.php?sign_id=$sign_id");
+		header("location: ../signatory_view.php?sign_id=$sign_id");
 
 ?>

@@ -19,15 +19,15 @@ if (isset($_GET['log_date'])) {
   $d = preg_replace('/\s+/', '', $d);
   $y = preg_replace('/\s+/', '', $y);
   $to = $y . "-" . $m . "-" . $d;
-  $statement = "SELECT * FROM pcnhsdb.user_logs 
-                WHERE log_date 
+  $statement = "SELECT * FROM pcnhsdb.user_logs
+                WHERE log_date
                 BETWEEN '$from' and '$to'
-                ORDER BY log_id DESC                                           
+                ORDER BY log_id DESC
                 LIMIT $start, $limit;";
 }
 
 $statement_disp = "select * from user_logs";
-$rows = mysqli_num_rows(mysqli_query($conn, $statement_disp));
+$rows = DB::count($statement_disp);
 
 if ($rows > 50000) {
   $alert_type = "info";
@@ -36,7 +36,7 @@ if ($rows > 50000) {
   $popover->set_popover($alert_type, $error_message);
   $_SESSION['trunc_notif'] = $popover->get_popover();
   $sql = "TRUNCATE TABLE user_logs";
-  mysqli_query($conn, $sql);
+  DB::query($sql);
 }
 else {
   $total = ceil($rows / $limit);

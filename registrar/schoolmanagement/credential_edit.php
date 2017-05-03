@@ -3,18 +3,12 @@
 <!DOCTYPE html>
 <?php
 	$cred_id = $_GET['cred_id'];
-	if(!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
+
 	$statement = "SELECT * FROM pcnhsdb.credentials where cred_id = $cred_id";
-	$result = $conn->query($statement);
-	if(!$result) {
-		header("location: credentials.php");
-		die();
-	}
-	if ($result->num_rows > 0) {
-		// output data of each row
-		while($row = $result->fetch_assoc()) {
+	$result = DB::query($statement);
+
+	if (count($result) > 0) {
+		foreach ($result as $row) {
 			$cred_id = $row['cred_id'];
 			$cred_name = $row['cred_name'];
 			$price = $row['price'];
@@ -32,25 +26,25 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		
-		
+
+
+
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-		
+
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
-		
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -75,7 +69,7 @@
 			</div>
 			<div class="">
 				<div class="row top_tiles">
-					
+
 				</div>
 			</div>
 			<div class="row">
@@ -97,7 +91,7 @@
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="cred_id" value=<?php echo $cred_id; ?> readonly="">
 								</div>
 							</div>
-							
+
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Credential Name</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -110,7 +104,7 @@
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="price" value=<?php echo $price; ?>>
 								</div>
 							</div>
-							
+
 							<div class="form-group">
 								<div class="col-md-5  pull-right">
 									<button type="submit" class="btn btn-default" onclick="history.go(-1);return true";>Cancel</button>

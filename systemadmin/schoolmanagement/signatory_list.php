@@ -27,10 +27,10 @@
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <!-- Datatables -->
     <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
      <!-- Custom Theme Style -->
@@ -87,13 +87,13 @@
                 </div>
                 <div class="x_content">
                   <div class="row">
-            
+
                     <form class="form-horizontal form-label-left">
                         <div class="form-group">
                           <label class="control-label col-md-10">Show Number Of Entries:</label>
                           <div class="col-sm-2">
                               <select class="form-control" onchange="changeEntries(this.value)">
-                                <option value="20" 
+                                <option value="20"
                                   <?php if (isset($_SESSION['sign_entry'])) { if ($_SESSION['sign_entry'] == 20) { echo "selected"; } } ?> >20</option>
                                 <option value="50"
                                    <?php if (isset($_SESSION['sign_entry'])) { if ($_SESSION['sign_entry'] == 50) { echo "selected"; } } ?>
@@ -148,9 +148,6 @@
                               else {
                                 $page = 1;
                               }
-                              if (!$conn) {
-                                die("Connection failed: " . mysqli_connect_error());
-                              }
                               if (isset($_GET['search_key'])) {
                                 $search = $_GET['search_key'];
                                 $statement = "SELECT * FROM pcnhsdb.signatories WHERE sign_id LIKE '%$search%'
@@ -172,17 +169,9 @@
                                 $statement = "SELECT * FROM pcnhsdb.signatories
                                               LIMIT $start, $limit";
                               }
-                              $result = $conn->query($statement);
-                              if ($result->num_rows == 0) {
-                                echo <<<NORES
-                                    <tr class="odd pointer">
-                                    <span class="badge badge-danger">NO RESULT</span>
-                                    <br><br>        
-                                    </tr>
-NORES;
-                              }
-                              else if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
+                              $result = DB::query($statement);
+                              if (count($result) > 0) {
+                              		foreach ($result as $row) {
                                   $sign_id = $row['sign_id'];
                                   $first_name = $row['first_name'];
                                   $mname = $row['mname'];
@@ -203,17 +192,24 @@ NORES;
                                                         <td class=" ">$yr_ended</td>
                                                         <td class=" ">
                                                         <a href= "signatory_view.php?sign_id=$sign_id" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View Profile</a>
-                                                        </td>                                                       
+                                                        </td>
                                             </tr>
 SIGNLIST;
                                 }
+                              }else {
+                                echo <<<NORES
+                                    <tr class="odd pointer">
+                                    <span class="badge badge-danger">NO RESULT</span>
+                                    <br><br>
+                                    </tr>
+NORES;
                               }
                             ?>
                             </tbody>
                         </table>
                         <?php
                           $statement = "select * from signatories";
-                          $rows = mysqli_num_rows(mysqli_query($conn, $statement));
+                          $rows = DB::count($statement);
                           $total = ceil($rows / $limit);
                           echo "<p>Showing $limit Entries</p>";
                           echo '<div class="pull-right">

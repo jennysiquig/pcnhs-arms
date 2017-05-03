@@ -5,5 +5,5 @@
     DB::$dbName='pcnhsdb';
     DB::$user='root';
     DB::$password='';
-    //$conn = new mysqli($host,$user,$password,$dbName);
+    // = new mysqli($host,$user,$password,$dbName);
 ?>

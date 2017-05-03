@@ -39,15 +39,7 @@
 
     $checkgrade = "SELECT * from pcnhsdb.grades where stud_id = '$stud_id' AND yr_level = $yr_level";
     $result = DB::query($checkgrade);
-    $count = 0;
-    foreach ($result as $row) {
-      if(is_null($row)) {
-        $count+=1;
-        echo $row['subj_id'];
-      }
-
-    }
-    if ($count > 0) {
+    if (count($result) > 0) {
         $alert_type = "danger";
         $error_message = "Student $stud_id grades for year level $yr_level is already existing.";
         $popover = new Popover();

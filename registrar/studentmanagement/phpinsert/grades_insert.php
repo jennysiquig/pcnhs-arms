@@ -21,7 +21,7 @@
 			header("Content-Disposition: attachment; filename=$stud_id-year-level-$yr_level-partial-save.csv");
 			header("Content-Transfer-Encoding: UTF-8");
 
-			
+
 			$list = array($_POST['subj_id'],$_POST['fin_grade'],$_POST['credit_earned']);
 			foreach ($list as $fields) {
 				fputcsv($out, $fields);
@@ -29,9 +29,6 @@
 			fclose($out);
 		}elseif($_SESSION['save-type'] == "save-to-db") {
 			require_once "../../../resources/config.php";
-			if(!$conn) {
-				die();
-			}
 			$stud_id = htmlspecialchars($_POST['stud_id'], ENT_QUOTES);
 			$schl_year = htmlspecialchars($_POST['schl_year'], ENT_QUOTES);
 			$yr_level = htmlspecialchars($_POST['yr_level'], ENT_QUOTES);
@@ -47,31 +44,31 @@
 			$curr_code = "";
 
 			$checkcurriculum = "SELECT * FROM pcnhsdb.curriculum where curr_id = $curr_id;";
-			$result = $conn->query($checkcurriculum);
-			if($result->num_rows>0) {
-				while ($row = $result->fetch_assoc()) {
+			$result = DB::query($checkcurriculum);
+			if (count($result) > 0) {
+				foreach ($result as $row) {
 					$curr_code = $row['curr_code'];
 				}
 			}
 
 			$checkgrade = "SELECT * from pcnhsdb.grades where stud_id = '$stud_id' AND yr_level = '$yr_level'";
-		    $result = $conn->query($checkgrade);
-		    if ($result->num_rows > 0) {
+		    $result = DB::query($checkgrade);
+				if (count($result) > 0) {
 		        $alert_type = "danger";
 		        $error_message = "Student $stud_id grades for year level $yr_level is already existing.";
 		        $popover = new Popover();
-		        $popover->set_popover($alert_type, $error_message); 
+		        $popover->set_popover($alert_type, $error_message);
 		        $_SESSION['hasgrades'] = $popover->get_popover();
 		        header("location: student_info.php?stud_id=".$stud_id);
 		        die();
 		    }
-// 
+//
 			foreach ($_POST['subj_id'] as $key => $value) {
 				$subj_id = htmlspecialchars($_POST['subj_id'][$key]);
 				$fin_grade = htmlspecialchars($_POST['fin_grade'][$key]);
 				$credit_earned = htmlspecialchars($_POST['credit_earned'][$key]);
 				$special_grade = strtoupper(htmlspecialchars($_POST['special_grade'][$key]));
-// 	
+//
 				if(!empty($fin_grade) && !empty($special_grade) && $curr_code == "NSEC") {
 					$special_grade = "";
 				}
@@ -85,7 +82,7 @@
 					$alert_type = "danger";
 					$error_message = "Special grades are for NSEC Students only.";
 					$popover = new Popover();
-					$popover->set_popover($alert_type, $error_message);	
+					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
@@ -96,7 +93,7 @@
 					$alert_type = "danger";
 					$error_message = "Credit Earned cannot be 0 if the Final Grade is greater than 74.";
 					$popover = new Popover();
-					$popover->set_popover($alert_type, $error_message);	
+					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
@@ -108,7 +105,7 @@
 						$alert_type = "danger";
 						$error_message = "Please check the Credit Earned Input.";
 						$popover = new Popover();
-						$popover->set_popover($alert_type, $error_message);	
+						$popover->set_popover($alert_type, $error_message);
 						$_SESSION['error_pop'] = $popover->get_popover();
 						header("Location: " . $_SERVER["HTTP_REFERER"]);
 						die();
@@ -123,7 +120,7 @@
 							$alert_type = "danger";
 							$error_message = "Please check the Credit Earned Input.";
 							$popover = new Popover();
-							$popover->set_popover($alert_type, $error_message);	
+							$popover->set_popover($alert_type, $error_message);
 							$_SESSION['error_pop'] = $popover->get_popover();
 							header("Location: " . $_SERVER["HTTP_REFERER"]);
 							die();
@@ -143,41 +140,41 @@
 						$alert_type = "danger";
 						$error_message = "Error saving to database. ";
 						$popover = new Popover();
-						$popover->set_popover($alert_type, $error_message);	
+						$popover->set_popover($alert_type, $error_message);
 						$_SESSION['error_pop'] = $popover->get_popover();
 						header("Location: " . $_SERVER["HTTP_REFERER"]);
 						die();
 					}
 				}
-				
+
 
 				if(empty($fin_grade) || empty($credit_earned)) {
 					$willInsert = false;
 					$alert_type = "danger";
 					$error_message = "Please complete the form before saving to database.";
 					$popover = new Popover();
-					$popover->set_popover($alert_type, $error_message);	
+					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
-				} 
+				}
 				if($fin_grade > 99.99 || $fin_grade < 65) {
 					$willInsert = false;
 					$alert_type = "danger";
 					$error_message = "You have entered an Invalid Final Grade.";
 					$popover = new Popover();
-					$popover->set_popover($alert_type, $error_message);	
+					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
 				}
-		// 
+		//
 				if($credit_earned < 0 || $credit_earned > 100) {
 					$willInsert = false;
 					$alert_type = "danger";
 					$error_message = "You have entered an Invalid Credits Earned.";
 					$popover = new Popover();
-					$popover->set_popover($alert_type, $error_message);	
+					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
@@ -198,7 +195,7 @@
 					$alert_type = "danger";
 					$error_message = "You have entered an Invalid Average Grade.";
 					$popover = new Popover();
-					$popover->set_popover($alert_type, $error_message);	
+					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
@@ -208,7 +205,7 @@
 					$alert_type = "danger";
 					$error_message = "Empty Average Grade.";
 					$popover = new Popover();
-					$popover->set_popover($alert_type, $error_message);	
+					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
 					header("Location: " . $_SERVER["HTTP_REFERER"]);
 					die();
@@ -219,8 +216,9 @@
 				if($hasSpecialGrade) {
 					$fin_grade = 0.0;
 				}
-				$insertgrades .= "INSERT INTO `pcnhsdb`.`studentsubjects` (`stud_id`, `subj_id`, `schl_year`, `yr_level`, `fin_grade`, `comment`, `credit_earned`,  `special_grade`) VALUES ('$stud_id', '$subj_id', '$schl_year', '$yr_level', '$fin_grade', '$comment', '$credit_earned', '$special_grade');";
-				
+				$insertgrades[] = "INSERT INTO `pcnhsdb`.`studentsubjects` (`stud_id`, `subj_id`, `schl_year`, `yr_level`, `fin_grade`, `comment`, `credit_earned`,  `special_grade`) VALUES ('$stud_id', '$subj_id', '$schl_year', '$yr_level', '$fin_grade', '$comment', '$credit_earned', '$special_grade');";
+
+
 			}
 			$insertaverage = "INSERT INTO `pcnhsdb`.`grades` (`stud_id`, `schl_name`, `schl_year`, `yr_level`, `average_grade`, `total_credit`) VALUES ('$stud_id', '$schl_name', '$schl_year', '$yr_level', '$average_grade', '$total_credit');";
 
@@ -228,8 +226,10 @@
 				unset($_SESSION['grade']);
 				unset($_SESSION['credits']);
 				unset($_SESSION['save-type']);
-				mysqli_query($conn, $insertaverage);
-				mysqli_multi_query($conn, $insertgrades);
+				DB::query($insertaverage);
+				foreach ($insertgrades as $statement) {
+					DB::query($statement);
+				}
 				echo "<p>Updating Database, please wait...</p>";
 				header("refresh:3;url=../student_info.php?stud_id=$stud_id");
 				$_SESSION['user_activity'][] = "ADDED NEW GRADES: $stud_id - $yr_level";

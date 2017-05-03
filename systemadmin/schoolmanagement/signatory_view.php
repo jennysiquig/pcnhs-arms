@@ -71,14 +71,10 @@
                             $yr_ended;
                             $position;
                             $statement = "SELECT * FROM pcnhsdb.signatories WHERE signatories.sign_id = '$sign_id'";
-                            $result = $conn->query($statement);
+                            $result = DB::query($statement);
 
-                            if (!$result) {
-                                header("location: signatory_list.php");
-                                die();
-                            }
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
+                            if (count($result) > 0) {
+                              foreach ($result as $row) {
                                     $first_name = $row['first_name'];
                                     $mname = $row['mname'];
                                     $last_name = $row['last_name'];
@@ -92,7 +88,6 @@
                                 header("location: signatory_list.php");
                                 die();
                             }
-                                $conn->close();
                         ?>
 
                         <div class="item form-group">

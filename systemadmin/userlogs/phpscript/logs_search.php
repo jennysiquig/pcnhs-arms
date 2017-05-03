@@ -1,16 +1,12 @@
 <?php
 	require_once "../../../resources/config.php";
 	$search = $_GET['query'];
-	
-	if(!$conn) {
-		$response = "Database Connection Error";
-	}
 
 	$query = "SELECT * FROM pcnhsdb.user_logs where user_name like '$search%';";
 
-	$result = $conn->query($query);
-	if($result->num_rows>0) {
-		while($row=$result->fetch_assoc()) {
+	$result = DB::query($query);
+	if (count($result) > 0) {
+		foreach ($result as $row) {
 			$user_name = $row['user_name'];
 			$response[] = array(
 				'user_name' => "$user_name",

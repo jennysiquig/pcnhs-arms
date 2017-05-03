@@ -19,7 +19,7 @@
         <!-- Custom Theme Style -->
         <link href="../../assets/css/custom.min.css" rel="stylesheet">
         <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-    </head> 
+    </head>
     <body class="nav-md">
         <?php include "../../resources/templates/admin/sidebar.php"; ?>
         <?php include "../../resources/templates/admin/top-nav.php"; ?>
@@ -66,7 +66,7 @@
                                                 $error_msg_personnel1 = $_SESSION['error_msg_personnel1'];
                                                 echo "<p style='color: red'>$error_msg_personnel1</p>";
                                                 unset($_SESSION['error_msg_personnel1']);
-                                            } 
+                                            }
                                         ?>
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                                                 $error_msg_personnel2 = $_SESSION['error_msg_personnel2'];
                                                 echo "<p style='color: red'>$error_msg_personnel2</p>";
                                                 unset($_SESSION['error_msg_personnel2']);
-                                            } 
+                                            }
                                          ?>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="password" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password" 
+                                            <input id="password" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password"
                                              data-parsley-minlength="4"
                                              data-parsley-minlength-message="Password should be greater than 4 characters"
                                              data-parsley-maxlength="50"
@@ -103,7 +103,7 @@
                                      <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Confirm Password</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="password2" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password2" 
+                                            <input id="password2" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password2"
                                              data-parsley-minlength="4"
                                              data-parsley-minlength-message="Password should be greater than 4 characters"
                                              data-parsley-maxlength="50"
@@ -163,9 +163,6 @@
                                             <select id="curr-select" class="form-control col-md-7 col-xs-12" name="access_type"  required="required">
                                                 <option value="">--NO SELECTED--</option>
                                                 <?php
-                                                if(!$conn) {
-                                                    die("Connection failed: " . mysqli_connect_error());
-                                                }
                                                 $access_type= $row['access_type'];
                                                 echo <<<OPTION1
                                                     <option value="REGISTRAR">REGISTRAR</option>
@@ -182,9 +179,6 @@ OPTION1;
                                             <select id="curr-select" class="form-control col-md-7 col-xs-12" name="accnt_status"  required="required">
                                                 <option value="">--NO SELECTED--</option>
                                                 <?php
-                                                if(!$conn) {
-                                                    die("Connection failed: " . mysqli_connect_error());
-                                                }
                                                 $access_type= $row['accnt_status'];
                                                 echo <<<OPTION2
                                                     <option value="ACTIVE">ACTIVATED</option>
@@ -198,7 +192,7 @@ OPTION2;
                                 <div class="form-group">
                                     <br>
                                     <div class="col-md-5 col-md-offset-3 pull-left">
-                                        <button type="submit" class="btn btn-success"  >Add Personnel</button> 
+                                        <button type="submit" class="btn btn-success"  >Add Personnel</button>
                                     </div>
                                 </div>
 

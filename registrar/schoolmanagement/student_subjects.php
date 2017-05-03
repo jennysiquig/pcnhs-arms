@@ -24,8 +24,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    
+
+
      <!-- jQuery -->
     <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 
@@ -38,15 +38,15 @@
     <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.js"></script>
     <script src="../../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
 
-    
+
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <!-- Datatables -->
     <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
      <!-- Custom Theme Style -->
@@ -55,7 +55,7 @@
     <!--[if lt IE 9]>
     <script src="../js/ie8-responsive-file-warning.js"></script>
     <![endif]-->
-    
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -84,7 +84,7 @@
 			</div>
 			<div class="">
 				<div class="row top_tiles">
-					
+
 				</div>
 			</div>
 			<div class="row">
@@ -107,16 +107,12 @@
 										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="curriculum">
 											<option value="all">All</option>
 											<?php
-												if(!$conn) {
-													die("Connection failed: " . mysqli_connect_error());
-												}
 
 												$statement = "SELECT * FROM pcnhsdb.curriculum";
 
-												$result = $conn->query($statement);
-												if ($result->num_rows > 0) {
-												// output data of each row
-													while($row = $result->fetch_assoc()) {
+												$result = DB::query($statement);
+												if (count($result) > 0) {
+													foreach ($result as $row) {
 														$curr_id = $row['curr_id'];
 														$curr_name = $row['curr_name'];
 														if(isset($_GET['curriculum'])) {
@@ -126,29 +122,24 @@
 																echo "<option value='$curr_id'>$curr_name</option>";
 															}
 														}
-														
+
 													}
 												}
 											?>
 											</select>
 										</div>
 									</div>
-								
+
 								<div class="item form-group">
 									<label class="control-label col-md-9 col-sm-3 col-xs-12">Filter Program</label>
 									<div class="col-md-3 col-sm-4 col-xs-12">
 										<select id="curriculum" class="form-control col-md-7 col-xs-12" name="program">
 											<option value="all">All</option>
 											<?php
-												if(!$conn) {
-													die("Connection failed: " . mysqli_connect_error());
-												}
-
 												$statement = "SELECT * FROM pcnhsdb.programs";
-												$result = $conn->query($statement);
-												if ($result->num_rows > 0) {
-												// output data of each row
-													while($row = $result->fetch_assoc()) {
+												$result = DB::query($statement);
+												if (count($result) > 0) {
+													foreach ($result as $row) {
 														$prog_id = $row['prog_id'];
 														$prog_name = $row['prog_name'];
 														if(isset($_GET['program'])) {
@@ -163,14 +154,14 @@
 											?>
 											</select>
 										</div>
-										
+
 								</div>
-								
+
 							</div>
 							<div class="row">
 								<div class="col-md-12">
 									<button class="btn btn-primary pull-right">Filter</button>
-								</div>	
+								</div>
 							</div>
 							<div class="clearfix"></div>
 							<div class="table-responsive subj-list">
@@ -186,9 +177,6 @@
 								</thead>
 								<tbody id="subjlist">
 									<?php
-										if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
-										}
 										if(isset($_GET['curriculum']) && isset($_GET['program']) ) {
 										$get_curr_id = $_GET['curriculum'];
 										$get_prog_id = $_GET['curriculum'];
@@ -200,10 +188,9 @@
 										}else {
 										$statement = "SELECT * FROM pcnhsdb.curriculum";
 										}
-										$result = $conn->query($statement);
-										if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
+										$result = DB::query($statement);
+										if (count($result) > 0) {
+											foreach ($result as $row) {
 										$curr_id = $row['curr_id'];
 										$curr_name = $row['curr_name'];
 										}
@@ -223,30 +210,30 @@
 							                if(isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] <> "all" && $_GET['program'] <> "all") {
 												$get_curr_id = $_GET['curriculum'];
 												$get_prog_id = $_GET['program'];
-												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id and programs.prog_id = $get_prog_id limit $start, $limit;";         	
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id and programs.prog_id = $get_prog_id limit $start, $limit;";
 											}elseif (isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] == "all" && $_GET['program'] <> "all") {
 												$get_curr_id = "all";
 												$get_prog_id = $_GET['program'];
-												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where programs.prog_id = $get_prog_id limit $start, $limit;";  
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where programs.prog_id = $get_prog_id limit $start, $limit;";
 											}elseif (isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] <> "all" && $_GET['program'] == "all") {
 												$get_prog_id = "all";
 												$get_curr_id = $_GET['curriculum'];
-												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id limit $start, $limit;"; 
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id limit $start, $limit;";
 											}
 											else {
 											        $statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id limit $start, $limit;";
 											}
-											
-											$result = $conn->query($statement);
-											if($result->num_rows>0) {
-												while ($row = $result->fetch_assoc()) {
+
+											$result = DB::query($statement);
+											if (count($result) > 0) {
+												foreach ($result as $row) {
 													# code...
 													$subj_id = $row['subj_id'];
 													$subj_name = $row['subj_name'];
 													$subj_level = $row['subj_level'];
 													$curr_name = $row['curr_name'];
 													$prog_name = $row['prog_name'];
-													
+
 													echo <<<SUBJS
 														<tr>
 																<td>$subj_name</td>
@@ -264,21 +251,20 @@ SUBJS;
 			                  	if(isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] <> "all" && $_GET['program'] <> "all") {
 												$get_curr_id = $_GET['curriculum'];
 												$get_prog_id = $_GET['program'];
-												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id and programs.prog_id = $get_prog_id;";         	
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id and programs.prog_id = $get_prog_id;";
 											}elseif (isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] == "all" && $_GET['program'] <> "all") {
 												$get_curr_id = "all";
 												$get_prog_id = $_GET['program'];
-												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where programs.prog_id = $get_prog_id;";  
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where programs.prog_id = $get_prog_id;";
 											}elseif (isset($_GET['curriculum']) && $_GET['program'] && $_GET['curriculum'] <> "all" && $_GET['program'] == "all") {
 												$get_prog_id = "all";
 												$get_curr_id = $_GET['curriculum'];
-												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id;"; 
+												$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where curriculum.curr_id = $get_curr_id;";
 											}
 											else {
 											        $statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id;";
 											}
-							    $result = $conn->query($statement);
-			                    $rows = mysqli_num_rows($result);
+			                    $rows = DB::count($statement);
 			                    $total = ceil($rows/$limit);
 
 			                    echo '<div class="pull-right">
@@ -332,7 +318,7 @@ SUBJS;
 			                        echo "<li class='disabled'><a>Next</a></li>";
 			                      }
 			                        echo "</ul></div></div>";
-			                      
+
 
 			                ?>
 							<a href="subject_add.php">Add Subject</a>
@@ -340,7 +326,7 @@ SUBJS;
 					</div>
 					</form>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -348,7 +334,7 @@ SUBJS;
 	<!-- Content Here -->
 	<!-- Footer -->
 	<?php include "../../resources/templates/registrar/footer.php"; ?>
-	
+
 		<!-- Scripts -->
 
 		<!-- Bootstrap -->
@@ -376,12 +362,12 @@ SUBJS;
 	}else {
 		xhttp.open("GET", "phpscripts/showsubjectlist.php?curr_id="+curriculum, true);
 	}
-	
+
 	xhttp.send();
 	}
 	</script>
 	<script type="text/javascript">
-    
+
     $(function() {
 
       $('.subj-list').tablesorter();
@@ -393,7 +379,7 @@ SUBJS;
       });
 
     });
-    
+
     </script>
 </body>
 </html>

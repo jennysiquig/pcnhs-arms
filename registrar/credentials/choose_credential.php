@@ -13,21 +13,16 @@
 	$last_name;
 	$curriculum;
 	$statement = "SELECT * FROM pcnhsdb.students left join curriculum on students.curr_id = curriculum.curr_id where students.stud_id = '$stud_id' limit 1";
-	$result = $conn->query($statement);
+	$result = DB::query($statement);
 	if (!$result) {
 	//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
 	header("location: student_list.php");
 	die();
 	}
-	if ($result->num_rows>0) {
-	while ($row=$result->fetch_assoc()) {
-	$curriculum = $row['curr_name'];
-	$first_name = $row['first_name'];
-	$last_name = $row['last_name'];
-	}
-	} else {
-	header("location: student_list.php");
-	die();
+	foreach ($result as $row) {
+		$curriculum = $row['curr_name'];
+		$first_name = $row['first_name'];
+		$last_name = $row['last_name'];
 	}
 
 ?>
@@ -96,19 +91,14 @@
                           <select id="credential" class="form-control" name="credential" required>
 							<option value="">Choose..</option>
 							<?php
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT * FROM credentials";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$cred_id = $row['cred_id'];
-										$cred_name = $row['cred_name'];
 
-										echo "<option value='$cred_id'>$cred_name</option>";
-									}
+								$statement = "SELECT * FROM credentials";
+								$result = DB::query($statement);
+								foreach ($result as $row) {
+									$cred_id = $row['cred_id'];
+									$cred_name = $row['cred_name'];
+
+									echo "<option value='$cred_id'>$cred_name</option>";
 								}
 							?>
 							</select>
