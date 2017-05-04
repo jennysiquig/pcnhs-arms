@@ -9,9 +9,9 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		
-		
+
+
+
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
@@ -21,15 +21,15 @@
 
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-		
+
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
-		
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -55,7 +55,7 @@
 			</div>
 			<div class="">
 				<div class="row top_tiles">
-					
+
 				</div>
 			</div>
 			<!-- Generate Error Message Here  -->
@@ -106,7 +106,7 @@
 		                              <option value="8">8</option>
 		                              <option value="9">9</option>
 		                              <option value="10">10</option>
-		                              
+
 		                            </optgroup>
 		                          </select>
 		                        </div>
@@ -127,7 +127,7 @@
 		                              <option value="8">8</option>
 		                              <option value="9">9</option>
 		                              <option value="10">10</option>
-		                              
+
 		                            </optgroup>
 		                          </select>
 		                        </div>
@@ -150,16 +150,11 @@
 									<div class="form-group">
 				                        <div class="col-md-9 col-sm-9 col-xs-12">
 				                        	<?php
-												
-																								
-											if(!$conn) {
-												die("Connection failed: " . mysqli_connect_error());
-											}
+
 											$statement = "SELECT * FROM pcnhsdb.curriculum";
-											$result = $conn->query($statement);
-											if ($result->num_rows > 0) {
-											// output data of each row
-											while($row = $result->fetch_assoc()) {
+											$result = DB::query($statement);
+											if (count($result) > 0) {
+												foreach ($result as $row) {
 												$curr_id = $row['curr_id'];
 												$curr_name = $row['curr_name'];
 												echo <<<OPTION2
@@ -169,12 +164,12 @@
 							                            </label>
 							                         </div>
 
-																	
+
 OPTION2;
 																}
 															}
 											?>
-				                          
+
 				                        </div>
 				                      </div>
 									</div>
@@ -185,16 +180,10 @@ OPTION2;
 										<div class="form-group">
 					                        <div class="col-md-9 col-sm-9 col-xs-12">
 											<?php
-												
-																									
-												if(!$conn) {
-													die("Connection failed: " . mysqli_connect_error());
-												}
 												$statement = "SELECT * FROM pcnhsdb.programs";
-												$result = $conn->query($statement);
-												if ($result->num_rows > 0) {
-												// output data of each row
-												while($row = $result->fetch_assoc()) {
+												$result = DB::query($statement);
+												if (count($result) > 0) {
+													foreach ($result as $row) {
 													$prog_id = $row['prog_id'];
 													$prog_name = $row['prog_name'];
 													echo <<<OPTION3

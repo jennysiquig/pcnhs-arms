@@ -13,21 +13,16 @@
 	$last_name;
 	$curriculum;
 	$statement = "SELECT * FROM pcnhsdb.students left join curriculum on students.curr_id = curriculum.curr_id where students.stud_id = '$stud_id' limit 1";
-	$result = $conn->query($statement);
+	$result = DB::query($statement);
 	if (!$result) {
 	//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
 	header("location: student_list.php");
 	die();
 	}
-	if ($result->num_rows>0) {
-	while ($row=$result->fetch_assoc()) {
-	$curriculum = $row['curr_name'];
-	$first_name = $row['first_name'];
-	$last_name = $row['last_name'];
-	}
-	} else {
-	header("location: student_list.php");
-	die();
+	foreach ($result as $row) {
+		$curriculum = $row['curr_name'];
+		$first_name = $row['first_name'];
+		$last_name = $row['last_name'];
 	}
 
 ?>
@@ -46,7 +41,8 @@
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
+		<!-- NProgress -->
+		<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 
@@ -96,19 +92,14 @@
                           <select id="credential" class="form-control" name="credential" required>
 							<option value="">Choose..</option>
 							<?php
-								if(!$conn) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$statement = "SELECT * FROM credentials";
-								$result = $conn->query($statement);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										$cred_id = $row['cred_id'];
-										$cred_name = $row['cred_name'];
 
-										echo "<option value='$cred_id'>$cred_name</option>";
-									}
+								$statement = "SELECT * FROM credentials";
+								$result = DB::query($statement);
+								foreach ($result as $row) {
+									$cred_id = $row['cred_id'];
+									$cred_name = $row['cred_name'];
+
+									echo "<option value='$cred_id'>$cred_name</option>";
 								}
 							?>
 							</select>
@@ -137,6 +128,8 @@
 	<!-- input mask -->
 	<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+	<!-- NProgress -->
+  <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src= "../../assets/js/custom.min.js"></script>
 	<!-- iCheck -->

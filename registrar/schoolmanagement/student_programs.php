@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php include('include_files/session_check.php'); ?>
+<?php require_once "../../resources/config.php"; ?>
 <html>
 	<head>
 	<title>Student Programs</title>
@@ -8,9 +9,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    
-    
+
+
+
 		<!-- jQuery -->
 	    <script src="../../resources/libraries/jquery/dist/jquery.min.js" ></script>
 
@@ -29,19 +30,19 @@
 	    <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	    <!-- Font Awesome -->
 	    <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	    
+
 	    <!-- Datatables -->
 	    <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-	    
+
 	    <!-- Custom Theme Style -->
 	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
 	     <!-- Custom Theme Style -->
 	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
-    
+
     <!--[if lt IE 9]>
     <script src="../js/ie8-responsive-file-warning.js"></script>
     <![endif]-->
-    
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -65,7 +66,7 @@
 			</div>
 			<div class="">
 				<div class="row top_tiles">
-					
+
 				</div>
 			</div>
 			<div class="row">
@@ -86,18 +87,15 @@
 									<tr class="headings">
 										<th class="column-title" data-sorter="false">Program ID</th>
 										<th class="column-title" data-sorter="false">Program Name</th>
-									
-									</th>		
+
+									</th>
 								</tr>
 							</thead>
 							<tbody>
-								
-								
+
+
 								<?php
-									require_once "../../resources/config.php";
-									if(!$conn) {
-										die("Connection failed: " . mysqli_connect_error());
-									}
+
 
 									$start=0;
                    					$limit=20;
@@ -109,31 +107,32 @@
 				                    }
 
 									$statement = "SELECT * FROM pcnhsdb.programs limit $start, $limit";
-									$result = $conn->query($statement);
-									if($result->num_rows>0) {
-										while($row=$result->fetch_assoc()) {
+									$result = DB::query($statement);
+									if (count($result) > 0) {
+										foreach ($result as $row) {
 											$prog_id = $row['prog_id'];
 											$prog_name = $row['prog_name'];
-											
+
 											echo <<<CURR
 											<tr class="odd pointer">
 													<td class=" ">$prog_id</td>
 													<td class=" ">$prog_name</td>
-													
-													
+
+
 											</tr>
 CURR;
 										}
 									}
 								?>
-								
+
 							</tbody>
 						</table>
 						<?php
 		                  $statement = "SELECT * FROM pcnhsdb.programs;";
-		                    $rows = mysqli_num_rows(mysqli_query($conn, $statement));
+												$result = DB::query($statement);
+												$rows = count($result);
 		                    $total = ceil($rows/$limit);
-		                    
+
 		                    echo '<div class="pull-right">
 		                      <div class="col s12">
 		                      <ul class="pagination center-align">';
@@ -187,12 +186,12 @@ CURR;
 		                        echo "<li class='disabled'><a>Next</a></li>";
 		                      }
 		                        echo "</ul></div></div>";
-		                      
+
 
 		                ?>
 					</div>
 					<a href="programs_add.php">Add Program</a>
-					
+
 				</div>
 			</div>
 		</div>
@@ -211,6 +210,8 @@ CURR;
 		<!-- input mask -->
 		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+		<!-- NProgress -->
+		<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../assets/js/custom.min.js"></script>
 		<script type="text/javascript">

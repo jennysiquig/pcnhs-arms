@@ -5,7 +5,7 @@
     // Session Timeout
     $time = time();
     $session_timeout = 1800; //seconds
-    
+
     if(isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
       session_unset();
       session_destroy();
@@ -21,7 +21,7 @@
     	header('Location: ../../login.php');
     }
     date_default_timezone_set('Asia/Manila');
-    
+
   ?>
 <html>
 	<head>
@@ -31,9 +31,9 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		
-		
+
+
+
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
@@ -42,15 +42,16 @@
 		<link href="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+    <!-- NProgress -->
+		<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-		
+
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
-		
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -105,14 +106,10 @@
 										<option value="">No Selected</option>
 										<optgroup label="HEAD TEACHER"></optgroup>
 										<?php
-											if(!$conn) {
-												die("Connection failed: " . mysqli_connect_error());
-											}
 											$statement = "SELECT * FROM signatories WHERE position='HEAD TEACHER'";
-											$result = $conn->query($statement);
-											if ($result->num_rows > 0) {
-												// output data of each row
-												while($row = $result->fetch_assoc()) {
+											$result = DB::query($statement);
+                      if (count($result) > 0) {
+                    		foreach ($result as $row) {
 													$sign_id = $row['sign_id'];
 													$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
 													echo "<option value='$sign_id'>$sign_name</option>";
@@ -121,14 +118,10 @@
 										?>
 										<optgroup label="PRINCIPAL"></optgroup>
 										<?php
-												if(!$conn) {
-													die("Connection failed: " . mysqli_connect_error());
-												}
 												$statement = "SELECT * FROM signatories WHERE position='PRINCIPAL'";
-												$result = $conn->query($statement);
-												if ($result->num_rows > 0) {
-													// output data of each row
-													while($row = $result->fetch_assoc()) {
+												$result = DB::query($statement);
+                        if (count($result) > 0) {
+                      		foreach ($result as $row) {
 														$sign_id = $row['sign_id'];
 														$sign_name = $row['first_name'].' '.$row['mname'].' '.$row['last_name'];
 														echo "<option value='$sign_id'>$sign_name</option>";
@@ -143,7 +136,7 @@
 						<button id="generatebutton" class="btn btn-primary pull-right" type="submit">
 							<i class="fa fa-print m-right-xs"></i> Generate</button>
 					</form>
-							
+
 
 						</div>
 
@@ -168,11 +161,12 @@
 	<!-- Date Range Picker -->
 	<script src="../../resources/libraries/moment/min/moment.min.js"></script>
 	<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
-	
+  <!-- NProgress -->
+  <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src= "../../assets/js/custom.js"></script>
-	
-	
+
+
 </body>
 </html>

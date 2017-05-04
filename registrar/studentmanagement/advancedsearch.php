@@ -139,12 +139,6 @@
                     }else{
                       $page=1;
                     }
-
-                    if(!$conn) {
-                      die("Connection failed: " . mysqli_connect_error());
-                    }
-
-
                     $search = "";
                     if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                       $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
@@ -169,10 +163,9 @@
                       $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by last_name asc limit $start, $limit;";
                     }
 
-                    $result = $conn->query($statement);
-                    if ($result->num_rows > 0) {
-                    // output data of each row
-                    while($row = $result->fetch_assoc()) {
+                    $result = DB::query($statement);
+                    if (count($result) > 0) {
+                  		foreach ($result as $row) {
                     $stud_id = $row['stud_id'];
                     $first_name = $row['first_name'];
                     $mid_name = $row['mid_name'];
@@ -221,7 +214,7 @@ STUDLIST;
                   }
 
 
-                    $rows = mysqli_num_rows(mysqli_query($conn, $statement));
+                    $rows = DB::count($statement);
                     $total = ceil($rows/$limit);
 
                     echo "<p>Showing $limit Entries</p>";

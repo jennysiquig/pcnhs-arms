@@ -17,10 +17,6 @@ $access_type = htmlspecialchars(filter_var($_POST['access_type'], FILTER_SANITIZ
 $accnt_status = htmlspecialchars(filter_var($_POST['accnt_status'], FILTER_SANITIZE_STRING));
 $insertChck = true;
 
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
 if (empty($per_id) || empty($uname) || empty($last_name) || empty($first_name) || empty($mname) || empty($position) || empty($position) || empty($access_type) || empty($accnt_status) || empty($password)) {
     $insertChck = false;
     $alert_type = "danger";
@@ -31,19 +27,13 @@ if (empty($per_id) || empty($uname) || empty($last_name) || empty($first_name) |
     header("location" . $_SERVER["HTTP_REFERER"]);
 }
 
-$queryCheck1 = "SELECT * from personnel where per_id = ?";
-$preparedQuery1 = $conn->prepare($queryCheck1);
-$preparedQuery1->bind_param("s", $per_id);
-$preparedQuery1->execute();
-$result1 = $preparedQuery1->get_result();
+$queryCheck1 = "SELECT * from personnel where per_id = '$per_id';";
+$result1 = DB::query($queryCheck1);
 
-$queryCheck2 = "SELECT * from personnel where uname = ?";
-$preparedQuery2 = $conn->prepare($queryCheck2);
-$preparedQuery2->bind_param("s", $uname);
-$preparedQuery2->execute();
-$result2 = $preparedQuery2->get_result();
+$queryCheck2 = "SELECT * from personnel where uname = '$uname'";
+$result2 = DB::query($queryCheck2);
 
-if ($result1->num_rows > 0) {
+if (count($result1) > 0) {
     $_SESSION['error_msg_personnel1'] = "Personnel ID: $per_id already exists";
     $insertChck = false;
     $alert_type = "danger";
@@ -55,7 +45,7 @@ if ($result1->num_rows > 0) {
     die(header("Location: ../personnel_add.php"));
 }
 
-if ($result2->num_rows > 0) {
+if (count($result2) > 0) {
     $_SESSION['error_msg_personnel2'] = "User name: $uname already exists";
     $insertChck = false;
     $alert_type = "danger";
@@ -67,10 +57,17 @@ if ($result2->num_rows > 0) {
     die(header("Location: ../personnel_add.php"));
 }
 else {
-    $statement = $conn->prepare("INSERT INTO `pcnhsdb`.`personnel` (`per_id`, `uname`,`password`, `last_name`, `first_name`, `mname`, `position`, `access_type`, `accnt_status`) 
-                                     VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $statement->bind_param("sssssssss", $per_id, $uname, $encrypted_pw, $last_name, $first_name, $mname, $position, $access_type, $accnt_status);
-    $statement->execute();
+    DB::insert('personnel', array(
+      'per_id' => $per_id,
+      'uname' => $uname,
+      'password' => $encrypted_pw,
+      'last_name' => $last_name,
+      'first_name' => $first_name,
+      'mname' => $mname,
+      'position' => $position,
+      'access_type' => $access_type,
+      'accnt_status' => $accnt_status
+    ));
 
     $per_add = "ADDED PERSONNEL ACCOUNT: $per_id";
     $_SESSION['user_activity'][] = $per_add;
@@ -81,8 +78,6 @@ else {
     $popover->set_popover($alert_type, $message);
     $_SESSION['success_personnel'] = $popover->get_popover();
     header("location: ../personnel_view.php?per_id=$per_id");
-    $statement->close();
-    $conn->close();
 }
 
 ?>

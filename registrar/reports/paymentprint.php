@@ -1,11 +1,5 @@
 <?php include('include_files/session_check.php'); ?>
 <?php require_once "../../resources/config.php"; ?>
-<!-- Update Database -->
-<?php
-	if(!$conn) {
-		die();
-	}
-?>
 <html>
 	<head>
 		<title>Payment Remittance</title>
@@ -14,10 +8,11 @@
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+		<!-- NProgress -->
+		<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
@@ -33,7 +28,7 @@
 
 					<center><h4 class="top">PINES CITY NATIONAL HIGH SCHOOL</h4></center>
 					<center><h4 class="top">PAYMENT REMITTANCE</h4></center>
-					<center><h4 class="top"><?php 
+					<center><h4 class="top"><?php
 						// date ex. March 1-17, 2017
 						echo $_POST['payment_date'];
 					?></h4></center>
@@ -77,17 +72,16 @@
 									$pay_date = date('m/d/y').'-'.date('m/d/y');
 										$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials natural join transaction;";
 									}
-									$result = $conn->query($statement);
-									if ($result->num_rows > 0) {
-									// output data of each row
-										while($row = $result->fetch_assoc()) {
+									$result = DB::query($statement);
+									if (count($result) > 0) {
+										foreach ($result as $row) {
 											$pay_date = $row['pay_date'];
 											$or_no = $row['or_no'];
 											$student = $row['first_name']." ".$row['last_name'];
 											$credential = $row['cred_name'];
 											$pay_amt = $row['pay_amt'];
 											$remarks = $row['remarks'];
-												
+
 												//remarks
 											echo <<<PAYMENT
 													<tr class="odd pointer">
@@ -98,11 +92,11 @@
 															<td class=" ">$pay_amt</td>
 															<td class=" ">1</td>
 															<td class=" ">$remarks</td>
-															
-															
+
+
 													</tr>
 PAYMENT;
-													
+
 											}
 										}
 									?>
@@ -115,9 +109,9 @@ PAYMENT;
 					<?php
 					$personnel_id = $_SESSION['per_id'];
 					$statement = "SELECT * FROM personnel WHERE per_id='$personnel_id'";
-					$result = $conn->query($statement);
-					if ($result->num_rows > 0) {
-					while($row = $result->fetch_assoc()) {
+					$result = DB::query($statement);
+					if (count($result) > 0) {
+						foreach ($result as $row) {
 					$registrar_id = $row['per_id'];
 					$registrar_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
 					$registrar_name = strtoupper($registrar_name);
@@ -130,9 +124,9 @@ PAYMENT;
 					<?php
 					$signatory = $_POST['signatory'];
 					$statement = "SELECT * FROM signatories WHERE sign_id='$signatory'";
-					$result = $conn->query($statement);
-					if ($result->num_rows > 0) {
-					while($row = $result->fetch_assoc()) {
+					$result = DB::query($statement);
+					if (count($result) > 0) {
+						foreach ($result as $row) {
 					$sign_id = $row['sign_id'];
 					$sign_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
 					$sign_name = strtoupper($sign_name);
@@ -142,12 +136,12 @@ PAYMENT;
 					}
 					}
 					?>
-					
+
 					<?php
 					$statement = "SELECT * FROM personnel WHERE per_id='$personnel_id'";
-					$result = $conn->query($statement);
-					if ($result->num_rows > 0) {
-					while($row = $result->fetch_assoc()) {
+					$result = DB::query($statement);
+					if (count($result) > 0) {
+						foreach ($result as $row) {
 					$registrar_id = $row['per_id'];
 					$registrar_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
 					$registrar_name = strtoupper($registrar_name);
@@ -159,9 +153,9 @@ PAYMENT;
 					?>
 					<?php
 					$statement = "SELECT * FROM signatories WHERE sign_id='$signatory'";
-					$result = $conn->query($statement);
-					if ($result->num_rows > 0) {
-					while($row = $result->fetch_assoc()) {
+					$result = DB::query($statement);
+					if (count($result) > 0) {
+						foreach ($result as $row) {
 					$sign_id = $row['sign_id'];
 					$sign_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
 					$sign_name = strtoupper($sign_name);
@@ -190,12 +184,14 @@ PAYMENT;
 				<br>
 
 				<div class="no-print">
-				
+
 				<div class="col-md-8">
 					<a href="../../registrar" class="btn btn-success pull-right"><i class="fa fa-home"></i> Back to Home</a>
 					<button class="btn btn-success pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
 				</div>
 			</div>
 			</div>
+			<!-- NProgress -->
+			<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 		</body>
 	</html>

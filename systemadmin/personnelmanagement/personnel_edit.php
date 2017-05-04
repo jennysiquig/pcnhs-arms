@@ -21,13 +21,13 @@
         <!-- Custom Theme Style -->
         <link href="../../assets/css/custom.min.css" rel="stylesheet">
         <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-    </head> 
+    </head>
         <body class="nav-md">
             <?php include "../../resources/templates/admin/sidebar.php"; ?>
             <?php include "../../resources/templates/admin/top-nav.php"; ?>
             <!-- page content -->
             <div class="right_col" role="main">
-              
+
               <div class="col-md-5">
                 <ol class="breadcrumb">
                   <li><a href="../index.php">Home</a></li>
@@ -35,7 +35,7 @@
                   <li class="active">Edit Personnel Account</li>
                 </ol>
               </div>
-                
+
                 <div class="row top_tiles"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -71,15 +71,10 @@
                                     $access_type;
                                     $accnt_status;
                                     $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
-                                    $result = $conn->query($statement);
+                                    $result = DB::query($statement);
 
-                                    if (!$result) {
-                                      header("location: personnels.php");
-                                      die();
-                                    }
-
-                                    if ($result->num_rows > 0) {
-                                      while ($row = $result->fetch_assoc()) {
+                                    if (count($result) > 0) {
+                                      foreach ($result as $row) {
                                         $uname = $row['uname'];
                                         $password = $row['password'];
                                         $last_name = $row['last_name'];
@@ -184,9 +179,6 @@
                                                 <select id="curr-select" class="form-control col-md-7 col-xs-12" required="required" name="access_type" value = <?php echo "'access_type'"; ?>>
                                                      <option value="<?php echo $access_type ?>"> <?php echo $access_type ?> </option>
                                                         <?php
-                                                          if (!$conn) {
-                                                            die("Connection failed: " . mysqli_connect_error());
-                                                          }
 
                                                           $access_type = $row['access_type'];
 echo <<<OPTION1
@@ -202,13 +194,10 @@ OPTION1;
                                              <label class="control-label col-md-3 col-sm-3 col-xs-12">Account Status</label>
                                              <div class="col-md-6 col-sm-6 col-xs-12">
                                                  <select id="curr-select" class="form-control col-md-7 col-xs-12" required="required" name="accnt_status" value=<?php echo "'accnt_status'"; ?>>
-                                                     <option value="<?php echo $accnt_status ?>"> 
+                                                     <option value="<?php echo $accnt_status ?>">
                                                         <?php echo $accnt_status ?></option>
                                                         <?php
 
-                                                            if (!$conn) {
-                                                              die("Connection failed: " . mysqli_connect_error());
-                                                            }
                                                             $access_type = $row['accnt_status'];
 echo <<<OPTION2
                                                                 <option value="ACTIVE">ACTIVATE</option>
@@ -222,7 +211,7 @@ OPTION2;
                                         <div class="item form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Confirm Password</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input id="password" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password" 
+                                                <input id="password" class="form-control col-md-7 col-xs-12" required="required"  type="password" name="password"
                                                  data-parsley-minlength="4"
                                                  data-parsley-minlength-message="Password should be greater than 4 characters"
                                                  data-parsley-maxlength="75"
@@ -269,10 +258,10 @@ OPTION2;
                                   $access_type;
                                   $accnt_status;
                                   $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
-                                  $result = $conn->query($statement);
+                                  $result = DB::query($statement);
 
-                                  if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
+                                  if (count($result) > 0) {
+                                    foreach ($result as $row) {
                                       $uname = $row['uname'];
                                       $password = $row['password'];
                                       $last_name = $row['last_name'];
@@ -286,21 +275,21 @@ OPTION2;
                                 ?>
 
                                 <label for="cpw">Current Password :</label>
-                                <input type="password" id="cpw" class="form-control" name="password" required 
+                                <input type="password" id="cpw" class="form-control" name="password" required
                                     data-parsley-minlength="4"
                                     data-parsley-minlength-message="Password should be greater than 4 characters"
                                     data-parsley-maxlength="300"
                                     data-parsley-maxlength-message="Error">
 
                                 <label for="npw">New Password :</label>
-                                <input type="password" id="npw" class="form-control" name="npw" data-parsley-trigger="change" required 
+                                <input type="password" id="npw" class="form-control" name="npw" data-parsley-trigger="change" required
                                     data-parsley-minlength="4"
                                     data-parsley-minlength-message="Password should be greater than 4 characters"
                                     data-parsley-maxlength="50"
                                     data-parsley-maxlength-message="Error">
 
                                 <label for="cnpw">Confirm New Password :</label>
-                                <input type="password" id="cnpw" class="form-control" name="new_password" data-parsley-trigger="change" required 
+                                <input type="password" id="cnpw" class="form-control" name="new_password" data-parsley-trigger="change" required
                                     data-parsley-minlength="4"
                                     data-parsley-minlength-message="Password should be greater than 4 characters"
                                     data-parsley-maxlength="50"

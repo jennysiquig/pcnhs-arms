@@ -187,77 +187,52 @@
                     }else{
                       $page=1;
                     }
-
-                    if(!$conn) {
-                      die("Connection failed: " . mysqli_connect_error());
-                    }
-
-
                     $search = "";
                     if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                       $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
                       $statement =
-                              "SELECT
-                                  *
-                              FROM
-                                  students
-                                      LEFT JOIN
-                                  curriculum ON students.curr_id = curriculum.curr_id
-                              WHERE
-                                  last_name LIKE '$search%'
-                                      OR first_name LIKE '$search%'
-                                      OR stud_id LIKE '$search%'
-                                      OR CONCAT(first_name, ' ', last_name) LIKE '$search%'
-                                      OR curr_code LIKE '$search%'
-                                      OR curr_name LIKE '$search%'
-                              GROUP BY stud_id
-                              order by last_name asc
-                              LIMIT $start , $limit;";
+                              "SELECT * FROM students LEFT JOIN curriculum ON students.curr_id = curriculum.curr_id WHERE last_name LIKE '$search%' OR first_name LIKE '$search%' OR stud_id LIKE '$search%' OR CONCAT(first_name, ' ', last_name) LIKE '$search%' OR curr_code LIKE '$search%' OR curr_name LIKE '$search%' GROUP BY stud_id order by last_name asc LIMIT $start , $limit;";
                     }else {
                       $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by last_name asc limit $start, $limit;";
                     }
-
-                    $result = $conn->query($statement);
-                    if ($result->num_rows > 0) {
-                    // output data of each row
-                    while($row = $result->fetch_assoc()) {
-                    $stud_id = $row['stud_id'];
-                    $first_name = $row['first_name'];
-                    $mid_name = $row['mid_name'];
-                    $last_name = $row['last_name'];
-                    $gender = $row['gender'];
-                    $birth_date = $row['birth_date'];
+                    $result = DB::query($statement);
+                    foreach ($result as $row) {
+                      $stud_id = $row['stud_id'];
+                      $first_name = $row['first_name'];
+                      $mid_name = $row['mid_name'];
+                      $last_name = $row['last_name'];
+                      $gender = $row['gender'];
+                      $birth_date = $row['birth_date'];
 
 
-                    //$yr_grad = $row['yr_grad'];
-                    $program = $row['prog_id'];
-                    $curriculum = $row['curr_id'];
-                    $curr_code = $row['curr_code'];
-                    $date_modified = $row['date_modified'];
+                      //$yr_grad = $row['yr_grad'];
+                      $program = $row['prog_id'];
+                      $curriculum = $row['curr_id'];
+                      $curr_code = $row['curr_code'];
+                      $date_modified = $row['date_modified'];
 
-                    if(empty($date_modified)) {
-                      $date_modified = "No grades edited.";
-                    }
-
-
-                    echo <<<STUDLIST
-                    <tr>
-                      <td>$stud_id</td>
-                      <td>$last_name</td>
-                      <td>$first_name</td>
-                      <td>$mid_name</td>
-                      <td>$curr_code</td>
-                      <td>$date_modified</td>
-                      <td>
-                        <center>
-                          <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default"><i class="fa fa-user"></i> View </a>
-                        </center>
-                      </td>
-                    </tr>
-STUDLIST;
+                      if(empty($date_modified)) {
+                        $date_modified = "No grades edited.";
                       }
+
+
+                      echo <<<STUDLIST
+                      <tr>
+                        <td>$stud_id</td>
+                        <td>$last_name</td>
+                        <td>$first_name</td>
+                        <td>$mid_name</td>
+                        <td>$curr_code</td>
+                        <td>$date_modified</td>
+                        <td>
+                          <center>
+                            <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default"><i class="fa fa-user"></i> View </a>
+                          </center>
+                        </td>
+                      </tr
+STUDLIST;
                     }
-                    ?>
+                  ?>
                   </tbody>
                 </table>
                 <?php
@@ -268,8 +243,8 @@ STUDLIST;
                     $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by last_name asc;";
                   }
 
-
-                    $rows = mysqli_num_rows(mysqli_query($conn, $statement));
+                    $result = DB::query($statement);
+                    $rows = count($result);
                     $total = ceil($rows/$limit);
 
                     echo "<p>Showing $limit Entries</p>";
@@ -348,10 +323,11 @@ STUDLIST;
     <!-- input mask -->
     <script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
     <script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src= "../../assets/js/custom.min.js"></script>
     <!-- NProgress -->
     <script src="../../resources/libraries/nprogress/nprogress.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src= "../../assets/js/custom.min.js"></script>
+
     <!-- <script type="text/javascript" src="../../resources/libraries/tablesorter/jquery.tablesorter.js"></script> -->
     <script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
     <!-- Scripts -->

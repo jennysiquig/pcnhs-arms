@@ -25,11 +25,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap -->
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+		<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Datatables -->
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
@@ -51,8 +53,8 @@
             <h4 class="inst">PINES CITY NATIONAL HIGH SCHOOL</h4>
             <h4 class="inst">REGISTRAR'S ACCOMPLISHMENT REPORT</h4>
 
-            <div id="month"> 
-                <?php 
+            <div id="month">
+                <?php
                     $accomplishment_date = $_POST['accomplishment_date'];
                     //echo $accomplishment_date;
                     $from_and_to_date = explode("-", $accomplishment_date);
@@ -66,12 +68,12 @@
                     $from = $y."-".$m."-".$d;
                     $month_array = array('January','February','March','April','May','June','July','August','September','October','November','December');
                     $m = $month_array[$m-1];
-                    echo $m.' '.$y; 
+                    echo $m.' '.$y;
 
-                ?> 
+                ?>
 
             </div>
-                
+
               <table class="table-1">
                 <tr id="b1-head">
                     <th class="b1">AREAS</th>
@@ -85,7 +87,7 @@
                     <td class="col">
                         <div id="r_fm">
                             <?php
-                                echo "<p style='word-break: break-all;'>$r_fm</p>"; 
+                                echo "<p style='word-break: break-all;'>$r_fm</p>";
                             ?>
                         </div>
                 </td>
@@ -95,7 +97,7 @@
                     <td class="col">
                         <p class="td-p1">Registrar's Services</p>
                         <p class="td-p2">The registrar's office is responsible in the maintenance of students' permanent academic records, receiving of incoming correspondence, processing of requests and issuance/releasing of school credentials.</p>
-                        
+
                     </td>
                     <td class="col">
                         <p class="td-p">Below is the summary of accomplished and released credentials</p>
@@ -107,11 +109,11 @@
                             </thead>
                             <tbody>
                                     <?php
-    
+
                                          $statement = "SELECT * FROM pcnhsdb.credentials;";
-                                            $result = $conn->query($statement);
-                                            if($result->num_rows>0){
-                                                while ($row=$result->fetch_assoc()) {
+                                            $result = DB::query($statement);
+                                            if (count($result) > 0) {
+                                              foreach ($result as $row) {
                                                     $cred_id = $row['cred_id'];
                                                     $cred_name = $row['cred_name'];
 
@@ -146,27 +148,26 @@
                                                         $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to' and credentials.cred_id = $cred_id";
                                                         }
 
-                                                        $result_1 = $conn->query($statement);
-                                                        if ($result_1->num_rows > 0) {
-                                                            // output data of each row
-                                                            while($row_1 = $result_1->fetch_assoc()) {
-                                                                
+                                                        $result_1 = DB::query($statement);
+                                                        if (count($result_1) > 0) {
+                                                          foreach ($result_1 as $row_1) {
+
                                                                 $date_processed_count = $row_1['date_processed_count'];
                                                                 $date_released_count = $row_1['date_released_count'];
                                                             echo <<<REQ
-                                                                
+
                                                                     <td class=" ">$date_processed_count</td>
                                                                     <td class=" ">$date_released_count</td>
-                                                                
+
 REQ;
-                                                                
+
 
                                                             }
                                                         }
                                                     echo    "</tr>";
                                                     }
                                                 }
-                                                
+
                                             ?>
                                             </tbody>
                                         </table>
@@ -186,7 +187,7 @@ REQ;
 
                                         <div id="fm">
                                             <?php
-                                                echo "<p>$fm</p>"; 
+                                                echo "<p>$fm</p>";
                                             ?>
                                         </div>
 
@@ -205,7 +206,7 @@ REQ;
 
                                         <div id="ot">
                                         <?php
-                                            echo "<p style='word-break: break-all;'>$ot</p>"; 
+                                            echo "<p style='word-break: break-all;'>$ot</p>";
                                         ?>
                                         </div>
 
@@ -216,9 +217,9 @@ REQ;
                             <?php
                             $personnel_id = $_SESSION['per_id'];
                              $statement = "SELECT * FROM personnel WHERE per_id='$personnel_id'";
-                             $result = $conn->query($statement);
-                             if ($result->num_rows > 0) {
-                                    while($row = $result->fetch_assoc()) {
+                             $result = DB::query($statement);
+                             if (count($result) > 0) {
+                               foreach ($result as $row) {
                                         $registrar_id = $row['per_id'];
                                         $registrar_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
                                         $registrar_name = strtoupper($registrar_name);
@@ -231,9 +232,9 @@ REQ;
                             <?php
                             $signatory_1 = $_POST['signatory_1'];
                              $statement1 = "SELECT * FROM signatories WHERE sign_id='$signatory_1'";
-                             $result1 = $conn->query($statement1);
-                             if ($result1->num_rows > 0) {
-                                    while($row1 = $result1->fetch_assoc()) {
+                             $result1 = DB::query($statement1);
+                             if (count($result1) > 0) {
+                               foreach ($result1 as $row1) {
                                         $sign_id1 = $row1['sign_id'];
                                         $sign_name1 = $row1['first_name'].' '.substr($row1['mname'], 0, 1).'. '.$row1['last_name'];
                                         $sign_name1 = strtoupper($sign_name1);
@@ -246,9 +247,9 @@ REQ;
                             <?php
                             $signatory_2 = $_POST['signatory_2'];
                              $statement2 = "SELECT * FROM signatories WHERE sign_id='$signatory_2'";
-                             $result2 = $conn->query($statement1);
-                             if ($result2->num_rows > 0) {
-                                    while($row2 = $result2->fetch_assoc()) {
+                             $result2 = DB::query($statement1);
+                             if (count($result2) > 0) {
+                               foreach ($result2 as $row2) {
                                         $sign_id2 = $row2['sign_id'];
                                         $sign_name2 = $row2['first_name'].' '.substr($row2['mname'], 0, 1).'. '.$row2['last_name'];
                                         $sign_name2 = strtoupper($sign_name2);
@@ -257,7 +258,7 @@ REQ;
                                         $position2 = ucfirst($position2);
                                     }
                              }
-                             ?>                             
+                             ?>
                             <div id="box-2">
                                 <p id="b2-r1-p1">Prepared by:</p>
                                 <div id="b2-r2-name"><p><?php echo $registrar_name; ?></p></div>
@@ -277,7 +278,7 @@ REQ;
                         </div>
                     </div>
                 </div>
-                
+
         </div>
 
         <div class="row no-print">
@@ -287,6 +288,7 @@ REQ;
           <button class="btn btn-success pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
         </div>
       </div>
+      <!-- NProgress -->
+  		<script src="../../resources/libraries/nprogress/nprogress.js"></script>
     </body>
 </html>
-

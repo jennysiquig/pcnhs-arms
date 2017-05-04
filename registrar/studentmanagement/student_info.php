@@ -25,38 +25,34 @@ $primary_schl_name;
 $primary_schl_year;
 $total_elem_years;
 $gpa;
+
 $statement = "SELECT * FROM pcnhsdb.students left join parent on students.stud_id = parent.stud_id left join primaryschool on students.stud_id = primaryschool.stud_id left join programs on students.prog_id = programs.prog_id left join curriculum on students.curr_id = curriculum.curr_id left join grades on students.stud_id = grades.stud_id where students.stud_id = '$stud_id' order by schl_year desc limit 1";
-$result = $conn->query($statement);
+$result = DB::query($statement);
 if (!$result) {
-//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
-header("location: student_list.php");
-die();
+	//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
+	header("location: student_list.php");
+	die();
 }
-if ($result->num_rows>0) {
-while ($row=$result->fetch_assoc()) {
-$curriculum = $row['curr_name'];
-$first_name = $row['first_name'];
-$mid_name = $row['mid_name'];
-$last_name = $row['last_name'];
-$gender = $row['gender'];
-$birth_date = $row['birth_date'];
-$province = $row['province'];
-$towncity = $row['towncity'];
-$barangay = $row['barangay'];
-$last_schyear_attended = $row['schl_year'];
-$second_school_name = $row['second_school_name'];
-$program = $row['prog_name'];
-$pname = $row['pname'];
-$parent_occupation = $row['occupation'];
-$parent_address = $row['address'];
-$primary_schl_name = $row['psname'];
-$primary_schl_year = $row['pschool_year'];
-$total_elem_years = $row['total_elem_years'];
-$gpa = $row['gen_average'];
-}
-} else {
-header("location: student_list.php");
-die();
+foreach ($result as $row) {
+	$curriculum = $row['curr_name'];
+	$first_name = $row['first_name'];
+	$mid_name = $row['mid_name'];
+	$last_name = $row['last_name'];
+	$gender = $row['gender'];
+	$birth_date = $row['birth_date'];
+	$province = $row['province'];
+	$towncity = $row['towncity'];
+	$barangay = $row['barangay'];
+	$last_schyear_attended = $row['schl_year'];
+	$second_school_name = $row['second_school_name'];
+	$program = $row['prog_name'];
+	$pname = $row['pname'];
+	$parent_occupation = $row['occupation'];
+	$parent_address = $row['address'];
+	$primary_schl_name = $row['psname'];
+	$primary_schl_year = $row['pschool_year'];
+	$total_elem_years = $row['total_elem_years'];
+	$gpa = $row['gen_average'];
 }
 ?>
 <html>
@@ -117,13 +113,13 @@ die();
 			</div>
 			<?php
 			if (isset($_SESSION['success'])) {
-			echo $_SESSION['success'];
-			unset($_SESSION['success']);
+				echo $_SESSION['success'];
+				unset($_SESSION['success']);
 			}
 			?>
 			<div class="row">
 				<div class="col-md-9">
-					<a class="btn btn-default" href=<?php echo $_SERVER['HTTP_REFERER']; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
+					<a class="btn btn-default" href=<?php //echo $_SERVER['HTTP_REFERER']; ?>><i class="fa fa-arrow-circle-left"></i> Back</a>
 				</div>
 			</div>
 			<div class="clearfix"></div>
@@ -357,65 +353,62 @@ die();
 																			</tr>
 																		</thead>
 																		<tbody>
+																			<!-- Grades Record -->
 																			<?php
-													if(!$conn) {
-													die();
-													}else {
-													$already_generated =  false;
-													$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
-													$result = $conn->query($statement);
-													if($result->num_rows > 0) {
-													$already_generated =  true;
-													}
-													$statement = "SELECT * FROM pcnhsdb.grades WHERE stud_id = '$stud_id' order by yr_level asc;";
-													$result = $conn->query($statement);
-													$grade_count = 0;
-													if($result->num_rows > 0) {
-													// output data of each row
-													while($row = $result->fetch_assoc()) {
-													$grade_count += 1;
-													$schl_name = $row['schl_name'];
-													$yr_level = $row['yr_level'];
-													$schl_year = $row['schl_year'];
-													$average_grade = $row['average_grade'];
-													$average_grade = number_format($average_grade, 2);
-													$total_credit = $row['total_credit'];
-													echo <<<GRADES
-														<tr>
-															<th scope="row">$schl_name</th>
-															<td>$yr_level</td>
-															<td>$schl_year</td>
-															<td>$average_grade</td>
-															<td>$total_credit</td>
-															<td>
-																<center>
-																<a class="btn btn-primary btn-xs" href="subject_grades.php?stud_id=$stud_id&yr_level=$yr_level">View Grades</a>
-																<a href="edit_grade.php?stud_id=$stud_id&yr_level=$yr_level"><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></a>
+
+																			$already_generated =  false;
+																			$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
+																			$count = DB::count($statement);
+																			if($count > 0) {
+																			  $already_generated =  true;
+																			}
+																			$statement = "SELECT * FROM pcnhsdb.grades WHERE stud_id = '$stud_id' order by yr_level asc;";
+																			$result = DB::query($statement);
+																			$result_count = DB::count($statement);
+																			$grade_count = 0;
+																			foreach ($result as $row) {
+																			  $grade_count += 1;
+																			  $schl_name = $row['schl_name'];
+																			  $yr_level = $row['yr_level'];
+																			  $schl_year = $row['schl_year'];
+																			  $average_grade = $row['average_grade'];
+																			  $average_grade = number_format($average_grade, 2);
+																			  $total_credit = $row['total_credit'];
+																			  echo <<<GRADES
+																			    <tr>
+																			      <th scope="row">$schl_name</th>
+																			      <td>$yr_level</td>
+																			      <td>$schl_year</td>
+																			      <td>$average_grade</td>
+																			      <td>$total_credit</td>
+																			      <td>
+																			        <center>
+																			        <a class="btn btn-primary btn-xs" href="subject_grades.php?stud_id=$stud_id&yr_level=$yr_level">View Grades</a>
+																			        <a href="edit_grade.php?stud_id=$stud_id&yr_level=$yr_level"><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></a>
 GRADES;
-																if($result->num_rows == $yr_level && !$already_generated) {
-																echo <<<REMOVE
+																			        if($result_count == $yr_level && !$already_generated) {
+																			        echo <<<REMOVE
 
-																<button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
+																			        <button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
 REMOVE;
-																}else {
-																if($yr_level < 4 && $result->num_rows == $yr_level) {
-																echo <<<REMOVE
-																<button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
+																			        }else {
+																			        if($yr_level < 4 && $result_count == $yr_level) {
+																			        echo <<<REMOVE
+																			        <button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
 REMOVE;
-																}else {
-																echo <<<REMOVE
-																<button type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash"></i></button>
+																			        }else {
+																			        echo <<<REMOVE
+																			        <button type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash"></i></button>
 REMOVE;
-																}
-																}
+																			        }
+																			        }
 
-																echo "</center>
-															</td>
-														</tr>";
-														}
-														}
-														}
-																				?>
+																			        echo "</center>
+																			      </td>
+																			    </tr>";
+																			}
+
+																			?>
 																			</tbody>
 																		</table>
 																	</div>
@@ -457,47 +450,41 @@ REMOVE;
 																		</tr>
 																	</thead>
 																	<tbody>
+																	<!-- Other Subjects -->
 																	<?php
-																	if(!$conn) {
-																	die("Connection failed: " . mysqli_connect_error());
-																	}
 																	$query = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id';";
-																	$result = $conn->query($query);
-																	if ($result->num_rows > 0) {
-																	// output data of each row
-																	while($row = $result->fetch_assoc()) {
-																	$osubj_id = $row['osubj_id'];
-																	$schl_name = $row['schl_name'];
-																	$schl_year = $row['schl_year'];
-																	$yr_level = $row['yr_level'];
-																	$subj_name = $row['subj_name'];
-																	$subj_level = $row['subj_level'];
-																	$subj_type = $row['subj_type'];
-																	$fin_grade = $row['fin_grade'];
-																	$credit_earned = $row['credit_earned'];
-																	$comment = $row['comment'];
+																	$result = DB::query($query);
+																	foreach ($result as $row) {
+																	  $osubj_id = $row['osubj_id'];
+																	  $schl_name = $row['schl_name'];
+																	  $schl_year = $row['schl_year'];
+																	  $yr_level = $row['yr_level'];
+																	  $subj_name = $row['subj_name'];
+																	  $subj_level = $row['subj_level'];
+																	  $subj_type = $row['subj_type'];
+																	  $fin_grade = $row['fin_grade'];
+																	  $credit_earned = $row['credit_earned'];
+																	  $comment = $row['comment'];
 
-																	echo <<<YR1
-																	<tr>
-																		<th scope="row">$schl_name</th>
-																		<td>$schl_year</td>
-																		<td>$yr_level</td>
-																		<td>$subj_name</td>
-																		<td>$subj_level</td>
-																		<td>$subj_type</td>
-																		<td>$fin_grade</td>
-																		<td>$credit_earned</td>
-																		<td>$comment</td>
-																		<td>
-																			<a class="btn btn-danger btn-xs" href="phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id&schl_year=$schl_year&credit_earned=$credit_earned">Remove Record</a>
-																		</td>
-																	</tr>
+																	  echo <<<YR1
+																	  <tr>
+																	    <th scope="row">$schl_name</th>
+																	    <td>$schl_year</td>
+																	    <td>$yr_level</td>
+																	    <td>$subj_name</td>
+																	    <td>$subj_level</td>
+																	    <td>$subj_type</td>
+																	    <td>$fin_grade</td>
+																	    <td>$credit_earned</td>
+																	    <td>$comment</td>
+																	    <td>
+																	      <a class="btn btn-danger btn-xs" href="phpupdate/removeothersubjects.php?stud_id=$stud_id&osubj_id=$osubj_id&schl_year=$schl_year&credit_earned=$credit_earned">Remove Record</a>
+																	    </td>
+																	  </tr>
 YR1;
-																									}
-																								}
+																	}
 
-																		?>
-
+																	  ?>
 																	</tbody>
 																</table>
 															</div>
@@ -531,51 +518,45 @@ YR1;
 																	</tr>
 																</thead>
 																<tbody>
+																	<!-- Failed Subjects -->
 																	<?php
-																	if(!$conn) {
-																	die("Connection failed: " . mysqli_connect_error());
-																	}
-																	$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id natural join grades where stud_id = '$stud_id' AND comment = 'FAILED' ;";
-																	$result = $conn->query($query);
-																	if ($result->num_rows > 0) {
-																	// output data of each row
-																	while($row = $result->fetch_assoc()) {
-																	$status = "";
-																	$subj_id = $row['subj_id'];
-																	$subj_order = $row['subj_order'];
-																	$schl_name = $row['schl_name'];
-																	$yr_level = $row['yr_level'];
-																	$subj_name = $row['subj_name'];
-																	$subj_level = $row['subj_level'];
-																	$action = "<a class='btn btn-primary btn-xs' href='add_othersubject_grades.php?stud_id=$stud_id&schl_name=$schl_name&yr_level=$yr_level&subj_name=$subj_name&subj_level=$subj_level&subj_id=$subj_id&subj_order=$subj_order'>Add to Other Subjects</a>";
-																	// href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level
-																	// will check if this subject is existing in the other subjects
-																	$query_othersubj = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id' AND subj_id = '$subj_id' and comment = 'PASSED';";
-																	$result_othersubj = $conn->query($query_othersubj);
-																	if ($result_othersubj->num_rows > 0) {
-																	$status = "PASSED";
-																	$action = "<a class='btn btn-primary btn-xs disabled'>Add to Other Subjects</a>";
-																	}else {
-																	$status = "FAILED";
-																	}
-																	echo <<<YR1
-																	<tr>
-																		<td>$subj_name</td>
-																		<td>$subj_level</td>
-																		<td>$yr_level</td>
-																		<td>$status</td>
-																		<td>
-																			<center>
-																			$action
-																			</center>
-																		</td>
-																	</tr>
+																	$query = "SELECT * FROM pcnhsdb.studentsubjects inner join subjects on studentsubjects.subj_id = subjects.subj_id natural join grades where stud_id = '$stud_id' AND comment = 'FAILED';";
+																	$result = DB::query($query);
+																	foreach ($result as $row) {
+																		$status = "";
+																		$subj_id = $row['subj_id'];
+																		$subj_order = $row['subj_order'];
+																		$schl_name = $row['schl_name'];
+																		$yr_level = $row['yr_level'];
+																		$subj_name = $row['subj_name'];
+																		$subj_level = $row['subj_level'];
+																		$action = "<a class='btn btn-primary btn-xs' href='add_othersubject_grades.php?stud_id=$stud_id&schl_name=$schl_name&yr_level=$yr_level&subj_name=$subj_name&subj_level=$subj_level&subj_id=$subj_id&subj_order=$subj_order'>Add to Other Subjects</a>";
+																		// href=phpupdate/removeothersubjects.php?stud_id=$stud_id&yr_level=$yr_level
+																		// will check if this subject is existing in the other subjects
+																		$query_othersubj = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id' AND subj_id = '$subj_id' and comment = 'PASSED';";
+																		$count_othersubj = DB::count($query_othersubj);
+																		if ($count_othersubj > 0) {
+																			$status = "PASSED";
+																			$action = "<a class='btn btn-primary btn-xs disabled'>Add to Other Subjects</a>";
+																		}else {
+																			$status = "FAILED";
+																		}
+																		echo <<<YR1
+																		<tr>
+																			<td>$subj_name</td>
+																			<td>$subj_level</td>
+																			<td>$yr_level</td>
+																			<td>$status</td>
+																			<td>
+																				<center>
+																				$action
+																				</center>
+																			</td>
+																		</tr>
 YR1;
-																	}
 																	}
 
 																	?>
-
 																</tbody>
 															</table>
 														</div>
@@ -607,58 +588,54 @@ YR1;
 															</tr>
 														</thead>
 														<tbody>
+															<!-- Attendance -->
 															<?php
 																$attendance_count = 0;
-																if(!$conn) {
-																	die();
-																}else {
-																	$already_generated =  false;
-																	$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
-																	$result = $conn->query($statement);
-																	if($result->num_rows > 0) {
+																$already_generated =  false;
+																$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
+																$count = DB::count($statement);
+																if($count > 0) {
 																		$already_generated =  true;
-																	}
-																	$statement = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' order by yr_lvl asc;";
-																	$result = $conn->query($statement);
-																	if($result->num_rows > 0) {
-																		// output data of each row
-																		while($row = $result->fetch_assoc()) {
-																			$attendance_count += 1;
-																			$schl_yr = $row['schl_yr'];
-																			$yr_lvl = $row['yr_lvl'];
-																			$days_attended = $row['days_attended'];
-																			$school_days = $row['school_days'];
-																			$total_years_in_school = $row['total_years_in_school'];
-																			echo <<<GRADES
-																					<tr>
-																	<th scope="row">$yr_lvl</th>
-																	<td>$schl_yr</td>
-																	<td>$school_days</td>
-																	<td>$days_attended</td>
-																	<td>$total_years_in_school</td>
-																	<td>
-																								<center>
+																}
+																$statement = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' order by yr_lvl asc;";
+																$result = DB::query($statement);
+																$result_count = DB::count($statement);
+																	foreach ($result as $row) {
+																		$attendance_count += 1;
+																		$schl_yr = $row['schl_yr'];
+																		$yr_lvl = $row['yr_lvl'];
+																		$days_attended = $row['days_attended'];
+																		$school_days = $row['school_days'];
+																		$total_years_in_school = $row['total_years_in_school'];
+																		echo <<<GRADES
+																				<tr>
+																					<th scope="row">$yr_lvl</th>
+																					<td>$schl_yr</td>
+																					<td>$school_days</td>
+																					<td>$days_attended</td>
+																					<td>$total_years_in_school</td>
+																					<td>
+																							<center>
 GRADES;
-																						if($result->num_rows == $yr_lvl && !$already_generated) {
+																					if($result_count == $yr_lvl && !$already_generated) {
+																						echo <<<REMOVE
+																							<button type="button" class="btn btn-danger btn-xs" onclick="removeAttendance($yr_lvl,'$stud_id');">Remove Record</button>
+REMOVE;
+																						}else {
 																							echo <<<REMOVE
-																								<button type="button" class="btn btn-danger btn-xs" onclick="removeAttendance($yr_lvl,'$stud_id');">Remove Record</button>
+																							<button type="button" class="btn btn-danger btn-xs" disabled>Remove Record</button>
 REMOVE;
-																							}else {
-																								echo <<<REMOVE
-																								<button type="button" class="btn btn-danger btn-xs" disabled>Remove Record</button>
-REMOVE;
-																							}
+																						}
 
-																						echo "</center>
-																	</td>
-																</tr>";
-																			}
-																		}
+																					echo "</center>
+																</td>
+															</tr>";
 																	}
 																?>
 															</tbody>
 														</table>
 													</div>
+													<!-- Attendance Check -->
 													<?php
 														if($attendance_count < 1) {
 															$year_check = $attendance_count+1;
@@ -667,10 +644,10 @@ REMOVE;
 														}
 
 														$checkgrade = "SELECT * FROM pcnhsdb.grades where stud_id = '$stud_id' and yr_level = $year_check;";
-														$result_checkgrade = $conn->query($checkgrade);
-														if($result_checkgrade->num_rows>0) {
+														$result_checkgrade = DB::count($checkgrade);
+														if($result_checkgrade > 0) {
 															$next_attendance = $attendance_count+1;
-															if($attendance_count < 4) {
+															if($attendance_count < 4 && $next_attendance == $result_checkgrade) {
 																echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_lvl=$next_attendance'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
 															}else {
 																echo "<a class='btn btn-success pull-right disabled'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
@@ -704,41 +681,7 @@ REMOVE;
 																</tr>
 															</thead>
 															<tbody>
-																<?php
-																		if (!$conn) {
-																		die("Connection failed: " . mysqli_connect_error());
-																		}
-																		$statement = "SELECT request_purpose, date_processed, date_released, status, cred_name FROM pcnhsdb.requests natural join students natural join credentials where stud_id = '$stud_id';";
-																		$result = $conn->query($statement);
-																		if ($result->num_rows > 0) {
-																		// output data of each row
-																		while ($row = $result->fetch_assoc()) {
-																		$request_purpose = $row['request_purpose'];
-																		$request_purpose = strtoupper($request_purpose);
-																		$cred_name = $row['cred_name'];
-																		$date_processed = $row['date_processed'];
-																		$date_released = $row['date_released'];
-																		if (is_null($date_released)) {
-																		$date_released = "N/A";
-																		}
-																		$status = $row['status'];
-																		if ($status == 'r') {
-																		$status = "Released";
-																		} else {
-																		$status = "Unclaimed";
-																		}
-																			echo <<<CREDC
-																								<tr>
-																										<td>$cred_name</td>
-																										<td>$request_purpose</td>
-																										<td>$date_processed</td>
-																										<td>$status</td>
-																										<td>$date_released</td>
-																								</tr>
-CREDC;
-																				}
-																			}
-																?>
+																<!-- Credentials History  -->
 															</tbody>
 														</table>
 													</div>
@@ -754,28 +697,19 @@ CREDC;
 						<div class="ln_solid"></div>
 						<!-- Check Attendance and Grades to Generate Credentials -->
 						<?php
-						if (!$conn) {
-						die("Connection failed: " . mysqli_connect_error());
-						}
+
 						$stud_id = $_GET['stud_id'];
 						$attendancecount = "";
 						$gradecount = "";
-						$attquery = "SELECT count(*) as 'attendancecount' FROM pcnhsdb.attendance where stud_id = '$stud_id';";
-						$result1 = $conn->query($attquery);
-						if ($result1->num_rows > 0) {
-						// output data of each row
-						while ($row = $result1->fetch_assoc()) {
-						$attendancecount = $row['attendancecount'];
-						}
-						}
+						$attquery = "SELECT * as 'attendancecount' FROM pcnhsdb.attendance where stud_id = '$stud_id';";
+						$count1 = DB::count($attquery);
+						$attendancecount = $count1;
+
 						$gradequery = "SELECT count(*) as 'gradecount' FROM pcnhsdb.grades where stud_id = '$stud_id';";
-						$result2 = $conn->query($gradequery);
-						if ($result2->num_rows > 0) {
-						// output data of each row
-						while ($row = $result2->fetch_assoc()) {
-						$gradecount = $row['gradecount'];
-						}
-						}
+						$count2 = DB::count($gradequery);
+
+						$gradecount = $count2;
+
 						?>
 						<!--  -->
 						<div class="form-group">

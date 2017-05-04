@@ -5,10 +5,6 @@ include ('../../../resources/classes/Popover.php');
 
 session_start();
 
-if (!$conn) {
-    die();
-}
-
 $per_id = htmlspecialchars($_POST['per_id'], ENT_QUOTES);
 $uname = htmlspecialchars($_POST['uname'], ENT_QUOTES);
 $password = htmlspecialchars($_POST['password']);
@@ -20,21 +16,18 @@ $position = htmlspecialchars($_POST['position'], ENT_QUOTES);
 $access_type = htmlspecialchars($_POST['access_type'], ENT_QUOTES);
 $accnt_status = htmlspecialchars($_POST['accnt_status'], ENT_QUOTES);
 
-$pwCheck = "SELECT * from personnel where per_id = ?";
-$preparedPwCheck = $conn->prepare($pwCheck);
-$preparedPwCheck->bind_param("s", $per_id);
-$preparedPwCheck->execute();
-$resultCheckPw = $preparedPwCheck->get_result();
+$pwCheck = "SELECT * from personnel where per_id = '$per_id'";
+$resultCheckPw = DB::query($pwCheck);
 
-if ($resultCheckPw->num_rows > 0) {
-    while ($row = $resultCheckPw->fetch_assoc()) {
+if (count($resultCheckPw) > 0) {
+  foreach ($resultCheckPw as $row) {
         $verifypw = Bcrypt::checkPassword($password, $row['password']);
         if ($verifypw == TRUE) {
             $hashed = Bcrypt::hashPassword($new_password);
-            $updatestmnt = "UPDATE `pcnhsdb`.`personnel` 
-            SET `uname`='$uname', `password`='$hashed', `last_name`='$last_name', `first_name`='$first_name', `mname`='$mname', `position`='$position', `access_type` = '$access_type',`accnt_status`='$accnt_status' 
+            $updatestmnt = "UPDATE `pcnhsdb`.`personnel`
+            SET `uname`='$uname', `password`='$hashed', `last_name`='$last_name', `first_name`='$first_name', `mname`='$mname', `position`='$position', `access_type` = '$access_type',`accnt_status`='$accnt_status'
             WHERE personnel.per_id = '$per_id'";
-            mysqli_query($conn, $updatestmnt);
+            DB::query($updatestmnt);
             $per_edit = "EDITED PERSONNEL ACCOUNT PW: $per_id";
             $_SESSION['user_activity'][] = $per_edit;
 

@@ -4,10 +4,10 @@
 
 	$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id";
 
-	$result = $conn->query($statement);
+	$result = DB::query($statement);
 
-	if($result->num_rows>0) {
-		while ($row = $result->fetch_assoc()) {
+	if (count($result) > 0) {
+		foreach ($result as $row) {
 			# code...
 			$subj_id = $row['subj_id'];
 			$subj_name = $row['subj_name'];

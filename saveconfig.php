@@ -2,9 +2,9 @@
 
 $variable_url = "$" . "base_url";
 $variable_host = "$" . "host";
-$variable_db = "$" . "db";
+$variable_db = "$" . "dbName";
 $variable_user = "$" . "user";
-$variable_pass = "$" . "pass";
+$variable_pass = "$" . "password";
 $variable_conn = "$" . "conn";
 
 
@@ -24,12 +24,13 @@ echo $urlpath;
 $base_url = "$protocol" . $_SERVER['SERVER_NAME'] . "$urlpath";
 
 $string_replace = "<?php
+    require_once 'meekrodb.php';
     $variable_url='$base_url';
-    $variable_host='$host';
-    $variable_db='$db';
-    $variable_user='$user';
-    $variable_pass='$pass';
-    $variable_conn = new mysqli($variable_host,$variable_user,$variable_pass,$variable_db);
+    //$variable_host='$host';
+    DB::$variable_db='$db';
+    DB::$variable_user='$user';
+    DB::$variable_pass='$pass';
+    //$variable_conn = new mysqli($variable_host,$variable_user,$variable_pass,$variable_db);
 ?>";
 $string_replace_pc = "<?php
     $variable_url='$base_url';

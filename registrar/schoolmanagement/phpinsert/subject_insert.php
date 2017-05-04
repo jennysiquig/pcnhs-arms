@@ -3,17 +3,11 @@
 	require_once "../../../resources/config.php";
 	include('../../../resources/classes/Popover.php');
 
-
-	if(!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
-	
 	$subj_id = 1;
 	$statement = "SELECT * FROM pcnhsdb.subjects order by subj_id desc limit 1;";
-	$result = $conn->query($statement);
-	if ($result->num_rows > 0) {
-	// output data of each row
-		while($row = $result->fetch_assoc()) {
+	$result = DB::query($statement);
+	if (count($result) > 0) {
+		foreach ($result as $row) {
 		$subj_id = $row['subj_id'];
 		$subj_id = $subj_id+1;
 
@@ -81,26 +75,29 @@
 		header("Location: ".$_SERVER['HTTP_REFERER']);
 		die();
 	}
-
-	$insertsubject = "INSERT INTO `pcnhsdb`.`subjects` (`subj_id`,`subj_name`, `subj_level`, `yr_level_needed`, `subj_order`, `credit_earned`) VALUES ('$subj_id', '$subj_name', '$subj_level', '$yr_level_needed', '$subj_order', '$credit_earned');";
-
-
-	foreach ($curriculum as $key => $value) {
-		$curriculum = $_POST['curr_id'];
-		# code...
-		$curr_id = $curriculum[$key];
-		$multipleinsert .= "INSERT INTO `pcnhsdb`.`subjectcurriculum` (`subj_id`,`curr_id`) VALUES ('$subj_id', '$curr_id');";
-	}
-	
-	foreach ($program as $key => $value) {
-		$program = $_POST['prog_id'];
-		# code...
-		$prog_id = $program[$key];
-		$multipleinsert .= "INSERT INTO `pcnhsdb`.`subjectprogram` (`subj_id`,`prog_id`) VALUES ('$subj_id', '$prog_id');";
-	}
 	if($willInsert) {
-		mysqli_query($conn, $insertsubject);
-		mysqli_multi_query($conn, $multipleinsert);
+		$insertsubject = "INSERT INTO `pcnhsdb`.`subjects` (`subj_id`,`subj_name`, `subj_level`, `yr_level_needed`, `subj_order`, `credit_earned`) VALUES ('$subj_id', '$subj_name', '$subj_level', '$yr_level_needed', '$subj_order', '$credit_earned');";
+
+		DB::query($insertsubject);
+		foreach ($curriculum as $key => $value) {
+			$curriculum = $_POST['curr_id'];
+			# code...
+			$curr_id = $curriculum[$key];
+			DB::insert('subjectcurriculum', array(
+				'subj_id' => $subj_id,
+				'curr_id' => $curr_id
+			));
+
+		}
+		foreach ($program as $key => $value) {
+			$program = $_POST['prog_id'];
+			# code...
+			$prog_id = $program[$key];
+			DB::insert('subjectprogram', array(
+				'prog_id' => $subj_id,
+				'curr_id' => $curr_id
+			));
+		}
 
 		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
 		echo "<br>";
@@ -108,7 +105,4 @@
 		echo "<p>Updating Database, please wait...</p>";
 		header("Refresh:3; url=../student_subjects.php");
 	}
-	
-
-	$conn->close();
 ?>

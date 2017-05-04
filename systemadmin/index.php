@@ -42,15 +42,15 @@ else {
     <script src="../resources/libraries/tablesorter/js/jquery.tablesorter.widgets.js"></script>
     <!-- NProgress -->
     <link href="../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
-    
+
     <!-- Bootstrap -->
     <link href="../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <!-- Datatables -->
     <link href="../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom Theme Style -->
     <link href="../assets/css/custom.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
@@ -103,7 +103,7 @@ else {
                 Sort by date<br />
                 <form class="form-horizontal" action="index.php" method="get">
                   <fieldset>
-                    
+
                     <div class="control-group">
                       <div class="controls">
                         <div class="input-prepend input-group">
@@ -117,7 +117,7 @@ else {
                         </div>
                       </div>
                     </div>
-                    
+
                   </fieldset>
                 </form>
               </div>
@@ -129,7 +129,7 @@ else {
                           <label class="control-label col-md-10">Show Number Of Entries:</label>
                           <div class="col-sm-2">
                               <select class="form-control" onchange="changeEntries(this.value)">
-                                <option value="20" 
+                                <option value="20"
                                   <?php if (isset($_SESSION['entry'])) { if ($_SESSION['entry'] == 20) { echo "selected"; } } ?> >20</option>
                                 <option value="50"
                                    <?php if (isset($_SESSION['entry'])) { if ($_SESSION['entry'] == 50) { echo "selected"; } } ?> >50</option>
@@ -155,10 +155,6 @@ else {
                             </thead>
                             <tbody>
               <?php
-
-                if (!$conn) {
-                  die("Connection failed: " . mysqli_connect_error());
-                }
                 $statement = "";
                 $statement2 = "";
                 $start = 0;
@@ -200,18 +196,18 @@ else {
                   $d = preg_replace('/\s+/', '', $d);
                   $y = preg_replace('/\s+/', '', $y);
                   $to = $y . "-" . $m . "-" . $d;
-                  $statement = "SELECT * FROM pcnhsdb.user_logs 
-                                WHERE log_date 
+                  $statement = "SELECT * FROM pcnhsdb.user_logs
+                                WHERE log_date
                                 BETWEEN '$from' and '$to'
-                                ORDER BY log_id DESC                                           
+                                ORDER BY log_id DESC
                                 LIMIT $start, $limit;";
                 }
 
                 if (isset($_GET['search_key'])) {
                   $search = $_GET['search_key'];
-                  $statement2 = "SELECT * FROM pcnhsdb.user_logs WHERE 
+                  $statement2 = "SELECT * FROM pcnhsdb.user_logs WHERE
                                  user_name  LIKE '%$search%'
-                                 OR user_act LIKE '%$search%'                                     
+                                 OR user_act LIKE '%$search%'
                                  ORDER BY log_id DESC
                                  LIMIT $start, $limit";
                 }
@@ -229,7 +225,7 @@ else {
                   include "userlogs/paginations/dp_res_p.php";
                 }
             ?>
-                    
+
               </div>
             </div>
           </div>
@@ -253,7 +249,7 @@ else {
     <script src="../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
     <script src= "../assets/js/custom.min.js"></script>
-  
+
     <!-- Scripts -->
     <script type="text/javascript">
       function changeEntries(val) {

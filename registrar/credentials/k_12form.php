@@ -5,10 +5,7 @@
 <?php $stud_id = htmlspecialchars($_GET['stud_id'], ENT_QUOTES) ?>
 <!-- Update Database -->
 <?php
-    if(!$conn) {
-        die();
-    }
-    
+
     $cred_id = htmlspecialchars($_GET['cred_id'], ENT_QUOTES);
     $request_type = htmlspecialchars($_GET['request_type'], ENT_QUOTES);
     $signatory = htmlspecialchars($_GET['signatory'], ENT_QUOTES);
@@ -26,17 +23,18 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		
-		
+
+
+
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+    <!-- NProgress -->
+    <link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
@@ -47,7 +45,7 @@
 		</style>
 	</head>
 	<body class="nav-md">
-		
+
 		<div class="right_col" role="main">
 
 			<?php
@@ -74,13 +72,9 @@
              <?php
              $birth_date = "";
              $box1 = "SELECT *, concat(last_name, ', ', first_name, ' ', upper(left(mid_name, 1)), '.') as 'full_name' FROM students NATURAL JOIN parent NATURAL JOIN primaryschool WHERE students.stud_id = '$stud_id';";
-             $result = $conn->query($box1);
-             if(!$result) {
-                header("location: ../../index.php");
-                die();
-             }
-             if ($result->num_rows > 0){
-                while($row = $result->fetch_assoc()){
+             $result = DB::query($box1);
+             if (count($result) > 0) {
+               foreach ($result as $row) {
                     $name = $row['full_name'];
                     $province = $row['province'];
                     $barangay = $row['barangay'];
@@ -124,18 +118,13 @@
              }
              ?>
 
-             <?php 
-
-             if(!$conn) {
-                die();
-             }
+             <?php
 
              $stat = "";
              $grstmt = "SELECT * FROM studentsubjects where stud_id = '$stud_id' and comment = 'failed'";
 
-             $result = $conn->query($grstmt);
-
-             if($result->num_rows>0) {
+             $result = DB::query($grstmt);
+             if (count($result) > 0) {
                 $stat = "irregular";
              }else {
                 $stat = "regular";
@@ -148,9 +137,9 @@
              <?php
 
              $statement = "SELECT * FROM personnel WHERE per_id='$personnel_id'";
-             $result = $conn->query($statement);
-             if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
+             $result = DB::query($statement);
+             if (count($result) > 0) {
+               foreach ($result as $row){
                         $registrar_id = $row['per_id'];
                         $registrar_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
                         $registrar_name = strtoupper($registrar_name);
@@ -164,9 +153,9 @@
              <?php
 
              $statement = "SELECT * FROM signatories WHERE sign_id='$signatory'";
-               $result = $conn->query($statement);
-               if ($result->num_rows > 0) {
-                      while($row = $result->fetch_assoc()) {
+               $result = DB::query($statement);
+               if (count($result) > 0) {
+ 								foreach ($result as $row) {
                           $sign_id = $row['sign_id'];
                           $sign_name = $row['first_name'].' '.substr($row['mname'], 0, 1).'. '.$row['last_name'];
                           $sign_name = strtoupper($sign_name);
@@ -180,9 +169,9 @@
                 if(isset($_GET['for_signature']) && $_GET['for_signature'] != "") {
                   $for_signature = $_GET['for_signature'];
                   $for_sign_astm = "SELECT * FROM signatories WHERE sign_id='$for_signature'";
-                    $result_1 = $conn->query($for_sign_astm);
-                    if ($result_1->num_rows > 0) {
-                          while($row_1 = $result_1->fetch_assoc()) {
+                    $result_1 = DB::query($for_sign_astm);
+                    if (count($result_1) > 0) {
+      								foreach ($result_1 as $row_1) {
                               $sign_id_1 = $row_1['sign_id'];
                               $sign_name_1 = $row_1['first_name'].' '.substr($row_1['mname'], 0, 1).'. '.$row_1['last_name'];
                               $sign_name_1 = strtoupper($sign_name_1);
@@ -192,20 +181,15 @@
                           }
                    }
                 }
-                
+
              ?>
-                  
+
 
                   <?php
-                        if(!$conn) {
-                            die("Connection failed: " . mysqli_connect_error());
-                        }
-
                         $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 2;";
-                        $result = $conn->query($attendance1);
-                        if ($result->num_rows > 0) {
-                        // output data of each row
-                            while($row = $result->fetch_assoc()) {
+                        $result = DB::query($attendance1);
+                        if (count($result) > 0) {
+          								foreach ($result as $row) {
                                 $schl_yr2 = $row['schl_yr'];
                                 $yr_lvl2 = $row['yr_lvl'];
                                 $days_attended2 = $row['days_attended'];
@@ -219,15 +203,10 @@
 
 
                       <?php
-                        if(!$conn) {
-                            die("Connection failed: " . mysqli_connect_error());
-                        }
-
                         $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 4;";
-                        $result = $conn->query($attendance1);
-                        if ($result->num_rows > 0) {
-                        // output data of each row
-                            while($row = $result->fetch_assoc()) {
+                        $result = DB::query($attendance1);
+                        if (count($result) > 0) {
+          								foreach ($result as $row) {
                                 $schl_yr4 = $row['schl_yr'];
                                 $yr_lvl4 = $row['yr_lvl'];
                                 $days_attended4 = $row['days_attended'];
@@ -246,7 +225,7 @@
                     <img src="../../assets/images/p.jpg" id="img-2"></img>
                 <div id = heading-1>
                     <!--DepEd logo and PCNHS logo-->
-                    
+
                     <h4 class = "inst">Republic of the Philippines</h4>
                     <h4 class = "inst">Department of Education</h4>
                     <h4 class = "inst">Cordillera Administrative Region</h4>
@@ -260,14 +239,14 @@
 
                 <!--box-1-->
                 <div id = "box-1">
-                
+
                      <p id="b1-r6-p1">LRN:</p>
                         <div id="b1-r6-d1" class="underline">
                             <?php echo $stud_id; ?>
-                        </div>    
-                    <p id = "b1-r1-p1">Name:</p>            
+                        </div>
+                    <p id = "b1-r1-p1">Name:</p>
                         <div id = "b1-r1-d1" class="underline">
-                           <?php echo $name; ?> 
+                           <?php echo $name; ?>
                         </div>
 
                     <p id = "b1-r1-p2">Date of Birth:</p>
@@ -276,7 +255,7 @@
                         <div id ="b1-r1-d2" class="underline">
                             <?php echo $byear; ?>
                         </div>
-                    
+
                     <p id="b1-r1-p4">Month:</p>
                         <div id="b1-r1-d3" class="underline">
                             <?php echo $monthstr; ?>
@@ -286,84 +265,79 @@
                         <div id="b1-r1-d4" class="underline">
                             <?php echo $bday; ?>
                         </div>
-                   
+
 
                     <p id="b1-r2-p1">Place of Birth:</p>
-                    
+
 
                     <p id="b1-r2-p2">Province:</p>
                         <div id="b1-r2-d1" class="underline">
                             <?php echo $province; ?>
                         </div>
-                    
+
 
                     <p id="b1-r2-p3">Municipality/City:</p>
                         <div id="b1-r2-d2" class="underline">
                             <?php echo $towncity; ?>
                         </div>
-                    
+
 
                     <p id="b1-r2-p4">Barangay:</p>
                         <div id="b1-r2-d3" class="underline">
                             <?php echo $barangay; ?>
                         </div>
-                       
-                    
+
+
 
                     <p id="b1-r3-p1">Parent/Guardian:</p>
                         <div id="b1-r3-d1" class="underline">
                             <?php echo $pname; ?>
                         </div>
-                    
+
 
                     <p id="b1-r3-p2">Occupation:</p>
                         <div id="b1-r3-d2" class="underline">
                             <?php echo $occupation; ?>
                         </div>
-                    
+
 
                     <p id="b1-r4-p1">Address of Parent/Guardian:</p>
                         <div id="b1-r4-d1" class="underline">
                             <?php echo $address; ?>
                         </div>
-                    
+
 
                     <p id="b1-r5-p1">Elementary Course Completed:</p>
                         <div id="b1-r5-d1" class="underline">
                             <?php echo $total_elem_years; ?>
                         </div>
-                    
+
 
                     <p id="b1-r5-p2"></p>
                         <div id="b1-r5-d2" class="underline">
                             <?php echo $psname; ?>
                         </div>
-                    
+
 
                     <p id="b1-r5-p3">Year:</p>
                         <div id="b1-r5-d3" class="underline">
                             <?php echo $pschool_year; ?>
                         </div>
-                    
+
                    </div>
 
                    <span></span>
                    <!--end of box-1-->
-                   
+
                    <!--box-2-->
                     <div id = "box-2" class="gr">
                     <!-- First Year -->
                             <?php
-
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
                                     $stud_id = $_GET['stud_id'];
                                     $query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 1 and studentsubjects.stud_id = '$stud_id';";
-                                    $result = $conn->query($query);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while($row = $result->fetch_assoc()) {
+                                    $result = DB::query($query);
+                                    if (count($result) > 0) {
+                      								foreach ($result as $row) {
                                             $schl_name1 = $row['schl_name'];
                                             $yr_level1 = $row['yr_level'];
                                             $schl_year1 = $row['schl_year'];
@@ -374,15 +348,15 @@
 
                                                 <p id="b2-r1-p1">School:</p>
                                                     <div id="b2-r1-d1" class="underline">$schl_name1</div>
-                                                
+
 
                                                 <p id="b2-r2-p1">Grade:</p>
                                                     <div id="b2-r2-d1" class="underline">$yr_level1</div>
-                                                
+
 
                                                 <p id="b2-r2-p2">School Year:</p>
                                                     <div id="b2-r2-d2" class="underline">$schl_year1</div>
-                                                
+
 
                                             </div>
 A;
@@ -392,28 +366,28 @@ A;
 
                                                 <p id="b2-r1-p1">School:</p>
                                                     <div id="b2-r1-d1" class="underline"></div>
-                                                
+
 
                                                 <p id="b2-r2-p1">Grade:</p>
                                                     <div id="b2-r2-d1" class="underline"></div>
-                                                
+
 
                                                 <p id="b2-r2-p2">School Year:</p>
                                                     <div id="b2-r2-d2" class="underline"></div>
-                                                
+
 
                                             </div>
 A;
                                     }
-                                    
+
 
                                 ?>
                             <div id="1st-yr">
 
                                 <table id="1st-t">
-                                
+
                                 <thead>
-                                    <tr id="b2-r3-head">  
+                                    <tr id="b2-r3-head">
                                     <th class="col1">SUBJECT</th>
                                     <th class="col2">Final Rating</th>
                                     <th class="col3">Action Taken</th>
@@ -421,15 +395,10 @@ A;
                                 </thead>
                                 <tbody>
                                 <?php
-
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
                                     $query = "SELECT subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 1 and stud_id = '$stud_id';";
-                                    $result = $conn->query($query);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while($row = $result->fetch_assoc()) {
+                                    $result = DB::query($query);
+                                    if (count($result) > 0) {
+                      								foreach ($result as $row) {
                                             $subj_name1 = $row['subj_name'];
                                             $subj_level1 = $row['subj_level'];
                                             $fin_grade1 = $row['fin_grade'];
@@ -437,8 +406,8 @@ A;
                                             $comment1 = $row['comment'];
 
                                             echo <<<YR1
-                                               
-                                                <tr id="b2-r4">  
+
+                                                <tr id="b2-r4">
                                                     <td class="subj">$subj_name1</td> <!-- subject -->
                                                     <td class="fr">$fin_grade1</td> <!-- final rating -->
                                                     <td class="at">$comment1</td> <!-- Action Taken -->
@@ -457,22 +426,17 @@ YR1;
 YR1;
                                       }
                                     }
-                                    
+
 
                                 ?>
                             </tbody>
-                                
+
                             </table>
                              <?php
-                                if(!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                }
-
                                 $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 1;";
-                                $result = $conn->query($attendance1);
-                                if ($result->num_rows > 0) {
-                                // output data of each row
-                                    while($row = $result->fetch_assoc()) {
+                                $result = DB::query($attendance1);
+                                if (count($result) > 0) {
+                  								foreach ($result as $row) {
                                         $schl_yr1 = $row['schl_yr'];
                                         $yr_lvl1 = $row['yr_lvl'];
                                         $days_attended1 = $row['days_attended'];
@@ -512,29 +476,24 @@ A1;
                     <div id = "box-3" class="gr">
                       <div id="info">
                           <?php
-
-                            if(!$conn) {
-                                die("Connection failed: " . mysqli_connect_error());
-                            }
                             $stud_id = $_GET['stud_id'];
                             $query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 2 and studentsubjects.stud_id = '$stud_id';";
-                            $result = $conn->query($query);
-                            if ($result->num_rows > 0) {
-                                // output data of each row
-                                while($row = $result->fetch_assoc()) {
+                            $result = DB::query($query);
+                            if (count($result) > 0) {
+              								foreach ($result as $row) {
                                     $schl_name2 = $row['schl_name'];
                                     $yr_level2 = $row['yr_level'];
                                     $schl_year2 = $row['schl_year'];
-                                   
+
                                 }
                                  echo <<<A2
                                     <p id="b2-r1-p1">School:</p>
                                     <div id="b2-r1-d1" class="underline">$schl_name2</div>
-                                
+
 
                                     <p id="b2-r2-p1">Grade:</p>
                                         <div id="b2-r2-d1" class="underline">$yr_level2</div>
-                                    
+
 
                                     <p id="b2-r2-p2">School Year:</p>
                                         <div id="b2-r2-d2" class="underline">$schl_year2</div>
@@ -543,24 +502,24 @@ A2;
                               echo <<<A3
                                     <p id="b2-r1-p1">School:</p>
                                     <div id="b2-r1-d1" class="underline"></div>
-                                
+
 
                                     <p id="b2-r2-p1">Grade:</p>
                                         <div id="b2-r2-d1" class="underline"></div>
-                                    
+
 
                                     <p id="b2-r2-p2">School Year:</p>
                                         <div id="b2-r2-d2" class="underline"></div>
 A3;
                             }
                         ?>
-                                                            
+
                             </div>
                             <div id="2nd-yr">
 
                                 <table id="2nd-t">
                                 <thead>
-                                    <tr id="b3-r3-head">  
+                                    <tr id="b3-r3-head">
                                     <th class="col1">SUBJECT</th>
                                     <th class="col2">Final Rating</th>
                                     <th class="col3">Action Taken</th>
@@ -568,15 +527,10 @@ A3;
                                 </thead>
                                 <tbody>
                                     <?php
-
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
                                     $query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 2 and stud_id = '$stud_id';";
-                                    $result = $conn->query($query);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while($row = $result->fetch_assoc()) {
+                                    $result = DB::query($query);
+                                    if (count($result) > 0) {
+                      								foreach ($result as $row) {
                                             $subj_name2 = $row['subj_name'];
                                             $subj_level2 = $row['subj_level'];
                                             $fin_grade2 = $row['fin_grade'];
@@ -584,8 +538,8 @@ A3;
                                             $comment2 = $row['comment'];
 
                                             echo <<<YR1
-                                                
-                                                 <tr id="b3-r4">  
+
+                                                 <tr id="b3-r4">
                                                     <td class="subj">$subj_name2</td> <!-- subject -->
                                                     <td class="fr">$fin_grade2</td> <!-- final rating -->
                                                     <td class="at">$comment2</td> <!-- Action Taken -->
@@ -596,8 +550,8 @@ YR1;
                                     }else {
                                       for($x=0; $x <= 11; $x++) {
                                         echo <<<YR2
-                                                
-                                                 <tr id="b3-r4">  
+
+                                                 <tr id="b3-r4">
                                                     <td class="subj"></td> <!-- subject -->
                                                     <td class="fr"></td> <!-- final rating -->
                                                     <td class="at"></td> <!-- Action Taken -->
@@ -606,18 +560,17 @@ YR1;
 YR2;
                                       }
                                     }
-                                    
+
 
                                 ?>
-                               
+
                                  </tbody>
                             </table>
                               <?php
                                 $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 2;";
-                                $result = $conn->query($attendance1);
-                                if ($result->num_rows > 0) {
-                                // output data of each row
-                                    while($row = $result->fetch_assoc()) {
+                                $result = DB::query($attendance1);
+                                if (count($result) > 0) {
+                  								foreach ($result as $row) {
                                         $schl_yr2 = $row['schl_yr'];
                                         $yr_lvl2 = $row['yr_lvl'];
                                         $days_attended2 = $row['days_attended'];
@@ -650,11 +603,11 @@ A1;
                             ?>
                         </div>
 
-                        
+
                     </div>
 
-                    <!-- //Second Year --> 
-                   
+                    <!-- //Second Year -->
+
 
                         <!--end of box-2-->
 
@@ -664,16 +617,11 @@ A1;
                       <div id = "box-4" class="gr">
                         <div id="info">
                              <?php
-
-                                  if(!$conn) {
-                                      die("Connection failed: " . mysqli_connect_error());
-                                  }
                                   $stud_id = $_GET['stud_id'];
                                   $query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 3 and studentsubjects.stud_id = '$stud_id';";
-                                  $result = $conn->query($query);
-                                  if ($result->num_rows > 0) {
-                                      // output data of each row
-                                      while($row = $result->fetch_assoc()) {
+                                  $result = DB::query($query);
+                                  if (count($result) > 0) {
+                    								foreach ($result as $row) {
                                           $schl_name3 = $row['schl_name'];
                                           $yr_level3 = $row['yr_level'];
                                           $schl_year3 = $row['schl_year'];
@@ -682,11 +630,11 @@ A1;
                                       echo <<<A3
                                             <p id="b2-r1-p1">School:</p>
                                               <div id="b2-r1-d1" class="underline">$schl_name3</div>
-                                          
+
 
                                             <p id="b2-r2-p1">Grade:</p>
                                                 <div id="b2-r2-d1" class="underline">$yr_level3</div>
-                                            
+
 
                                             <p id="b2-r2-p2">School Year:</p>
                                                 <div id="b2-r2-d2" class="underline">$schl_year3</div>
@@ -695,26 +643,26 @@ A3;
                                     echo <<<A3
                                             <p id="b2-r1-p1">School:</p>
                                               <div id="b2-r1-d1" class="underline"></div>
-                                          
+
 
                                             <p id="b2-r2-p1">Grade:</p>
                                                 <div id="b2-r2-d1" class="underline"></div>
-                                            
+
 
                                             <p id="b2-r2-p2">School Year:</p>
                                                 <div id="b2-r2-d2" class="underline"></div>
 A3;
                                   }
-                                  
 
-                              ?>                                
+
+                              ?>
 
                             </div>
                             <div id="3rd-yr">
 
                                 <table id="3rd-t">
                                 <thead>
-                                    <tr id="b3-r3-head">  
+                                    <tr id="b3-r3-head">
                                     <th class="col1">SUBJECT</th>
                                     <th class="col2">Final Rating</th>
                                     <th class="col3">Action Taken</th>
@@ -722,15 +670,10 @@ A3;
                                 </thead>
                                 <tbody>
                                 <?php
-
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
                                     $query = "SELECT yr_level, schl_year, subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 3 and stud_id = '$stud_id';";
-                                    $result = $conn->query($query);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while($row = $result->fetch_assoc()) {
+                                    $result = DB::query($query);
+                                    if (count($result) > 0) {
+                      								foreach ($result as $row) {
                                             $yr_level3 = $row['yr_level'];
                                             $schl_year3 = $row['schl_year'];
                                             $subj_name3 = $row['subj_name'];
@@ -740,7 +683,7 @@ A3;
                                             $comment3 = $row['comment'];
 
                                             echo <<<YR1
-                                                <tr id="b3-r4">  
+                                                <tr id="b3-r4">
                                                     <td class="subj">$subj_name3</td> <!-- subject -->
                                                     <td class="fr">$fin_grade3</td> <!-- final rating -->
                                                     <td class="at">$comment3</td> <!-- Action Taken -->
@@ -751,8 +694,8 @@ YR1;
                                     }else {
                                       for($x=0; $x <= 11; $x++) {
                                         echo <<<YR3
-                                                
-                                                 <tr id="b3-r4">  
+
+                                                 <tr id="b3-r4">
                                                     <td class="subj"></td> <!-- subject -->
                                                     <td class="fr"></td> <!-- final rating -->
                                                     <td class="at"></td> <!-- Action Taken -->
@@ -761,21 +704,16 @@ YR1;
 YR3;
                                       }
                                     }
-                                    
+
 
                                 ?>
-                             </tbody>   
+                             </tbody>
                             </table>
                               <?php
-                                if(!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                }
-
                                 $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 3;";
-                                $result = $conn->query($attendance1);
-                                if ($result->num_rows > 0) {
-                                // output data of each row
-                                    while($row = $result->fetch_assoc()) {
+                                $result = DB::query($attendance1);
+                                if (count($result) > 0) {
+                  								foreach ($result as $row) {
                                         $schl_yr3 = $row['schl_yr'];
                                         $yr_lvl3 = $row['yr_lvl'];
                                         $days_attended3 = $row['days_attended'];
@@ -791,7 +729,7 @@ YR3;
                                         <p id="b2-r19-p1">Total Number of Years in School:</p>
                                         <div id="b2-r19-d1" class="underline">$total_years_in_school_3</div>
 A4;
-                                        
+
                                     }
                                 }else {
                                   echo <<<A4
@@ -806,27 +744,22 @@ A4;
                                 }
 
                             ?>
-                                
+
                                 <div id="b2-r19-d1" class="underline"></div>
                         </div>
 
-                        
+
                     </div>
                     <!-- //Third Year -->
                     <!-- Fourth Year -->
                     <div id = "box-5" class="gr">
                       <div id="info">
                               <?php
-
-                                  if(!$conn) {
-                                      die("Connection failed: " . mysqli_connect_error());
-                                  }
                                   $stud_id = $_GET['stud_id'];
                                   $query = "SELECT distinct(schl_name) as 'schl_name', studentsubjects.yr_level, studentsubjects.schl_year FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id left join pcnhsdb.grades on studentsubjects.stud_id = grades.stud_id where studentsubjects.yr_level = 4 and studentsubjects.stud_id = '$stud_id';";
-                                  $result = $conn->query($query);
-                                  if ($result->num_rows > 0) {
-                                      // output data of each row
-                                      while($row = $result->fetch_assoc()) {
+                                  $result = DB::query($query);
+                                  if (count($result) > 0) {
+                    								foreach ($result as $row) {
                                           $schl_name4 = $row['schl_name'];
                                           $yr_level4 = $row['yr_level'];
                                           $schl_year4 = $row['schl_year'];
@@ -834,11 +767,11 @@ A4;
                                        echo <<<A6
                                           <p id="b2-r1-p1">School:</p>
                                               <div id="b2-r1-d1" class="underline">$schl_name4</div>
-                                          
+
 
                                           <p id="b2-r2-p1">Grade:</p>
                                               <div id="b2-r2-d1" class="underline"> $yr_level4</div>
-                                          
+
 
                                           <p id="b2-r2-p2">School Year:</p>
                                               <div id="b2-r2-d2" class="underline">$schl_year4</div>
@@ -847,11 +780,11 @@ A6;
                                     echo <<<A7
                                           <p id="b2-r1-p1">School:</p>
                                               <div id="b2-r1-d1" class="underline"></div>
-                                          
+
 
                                           <p id="b2-r2-p1">Grade:</p>
                                               <div id="b2-r2-d1" class="underline"></div>
-                                          
+
 
                                           <p id="b2-r2-p2">School Year:</p>
                                               <div id="b2-r2-d2" class="underline"></div>
@@ -863,7 +796,7 @@ A7;
 
                                 <table id="4th-t">
                                 <thead>
-                                    <tr id="b3-r3-head">  
+                                    <tr id="b3-r3-head">
                                     <th class="col1">SUBJECT</th>
                                     <th class="col2">Final Rating</th>
                                     <th class="col3">Action Taken</th>
@@ -871,15 +804,10 @@ A7;
                                 </thead>
                                 <tbody>
                                 <?php
-
-                                    if(!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
                                     $query = "SELECT subj_name, subj_level, fin_grade, studentsubjects.credit_earned, comment FROM pcnhsdb.studentsubjects left join subjects on studentsubjects.subj_id = subjects.subj_id where yr_level = 4 and stud_id = '$stud_id';";
-                                    $result = $conn->query($query);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while($row = $result->fetch_assoc()) {
+                                    $result = DB::query($query);
+                                    if (count($result) > 0) {
+                      								foreach ($result as $row) {
                                             $subj_name4 = $row['subj_name'];
                                             $subj_level4 = $row['subj_level'];
                                             $fin_grade4 = $row['fin_grade'];
@@ -887,7 +815,7 @@ A7;
                                             $comment4 = $row['comment'];
 
                                             echo <<<YR4
-                                                <tr id="b3-r4">  
+                                                <tr id="b3-r4">
                                                     <td class="subj">$subj_name4</td> <!-- subject -->
                                                     <td class="fr">$fin_grade4</td><!-- final rating -->
                                                     <td class="at">$comment4</td><!-- Action Taken -->
@@ -898,8 +826,8 @@ YR4;
                                     }else {
                                       for($x=0; $x <= 11; $x++) {
                                         echo <<<YR4
-                                                
-                                                 <tr id="b3-r4">  
+
+                                                 <tr id="b3-r4">
                                                     <td class="subj"></td> <!-- subject -->
                                                     <td class="fr"></td> <!-- final rating -->
                                                     <td class="at"></td> <!-- Action Taken -->
@@ -914,15 +842,10 @@ YR4;
                                 </tbody>
                             </table>
                               <?php
-                                if(!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                }
-
                                 $attendance1 = "SELECT * FROM pcnhsdb.attendance WHERE stud_id = '$stud_id' and yr_lvl = 4;";
-                                $result = $conn->query($attendance1);
-                                if ($result->num_rows > 0) {
-                                // output data of each row
-                                    while($row = $result->fetch_assoc()) {
+                                $result = DB::query($attendance1);
+                                if (count($result) > 0) {
+                  								foreach ($result as $row) {
                                         $schl_yr4 = $row['schl_yr'];
                                         $yr_lvl4 = $row['yr_lvl'];
                                         $days_attended4 = $row['days_attended'];
@@ -956,7 +879,7 @@ A4;
                             ?>
                         </div>
 
-                        
+
                     </div>
                     <!-- //Fourth Year -->
                     </div>
@@ -971,13 +894,13 @@ A4;
                             <p id="b6-r1-p3">School Year:</p>
                             <div id="b6-r1-d2"></div>
 
-                            <!-- <p id="b6-r2-p1">Subject</p> 
-                            <p id="b6-r2-p2">Final Rating</p> 
+                            <!-- <p id="b6-r2-p1">Subject</p>
+                            <p id="b6-r2-p2">Final Rating</p>
                             <p id="b6-r2-p3">Action Taken</p> -->
 
                             <table style="height: 0px;">
-                                
-                                <tr id="b6-r2-head">  
+
+                                <tr id="b6-r2-head">
                                 <th class="add-col1">SUBJECT</th>
                                 <th class="add-col2">Final Rating</th>
                                 <th class="add-col3">Action Taken</th>
@@ -992,15 +915,15 @@ A4;
                             </table>
 
                             <!-- <div class="subject-name">
-                                    
+
                                 </div>
 
                                 <div class="final-rating">
-                                    
+
                                 </div>
 
-                                <div class="action-taken"> -->                           
-                        
+                                <div class="action-taken"> -->
+
                             <p id="b6-r3-p4">Days of School:</p>
                                 <div id="b6-r3-d1"></div>
 
@@ -1040,7 +963,7 @@ A4;
                             <div id="b9-r3-pos"> <p> <?php echo $position; ?></p> </div>
                             </div>
 
-                            <?php 
+                            <?php
                               if(isset($_GET['for_signature']) && $_GET['for_signature'] != "") {
                                 echo <<<FORSIGN
                                 <div id="box-9">
@@ -1074,7 +997,9 @@ FORSIGN;
       </div>
 
 		</div>
-	
+
 		<!-- Scripts -->
+    <!-- NProgress -->
+    <script src="../../resources/libraries/nprogress/nprogress.js"></script>
 	</body>
 </html>

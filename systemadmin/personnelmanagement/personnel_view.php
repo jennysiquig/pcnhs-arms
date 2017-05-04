@@ -21,7 +21,7 @@
         <!-- Custom Theme Style -->
         <link href="../../assets/css/custom.min.css" rel="stylesheet">
         <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-    </head> 
+    </head>
 
         <body class="nav-md">
             <?php include "../../resources/templates/admin/sidebar.php"; ?>
@@ -80,15 +80,10 @@
                                 $access_type;
                                 $accnt_status;
                                 $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
-                                $result = $conn->query($statement);
+                                $result = DB::query($statement);
 
-                                if (!$result) {
-                                    header("location: personnel_list.php");
-                                    die();
-                                }
-
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
+                                if (count($result) > 0) {
+                                  foreach ($result as $row) {
                                         $uname = $row['uname'];
                                         $password = $row['password'];
                                         $last_name = $row['last_name'];
@@ -204,7 +199,7 @@
                         <h4 class="modal-title" id="myModalLabel2"><i class="fa fa-warning"></i> Remove Personnel</h4>
                     </div>
                     <div class="modal-body">
-                           
+
                             <form id="change-pw" action="phpdelete/delete.php" method="POST" data-parsley-validate>
                                <?php
                                     $per_id;
@@ -217,10 +212,10 @@
                                     $access_type;
                                     $accnt_status;
                                     $statement = "SELECT * FROM pcnhsdb.personnel WHERE personnel.per_id = '$per_id'";
-                                    $result = $conn->query($statement);
+                                    $result = DB::query($statement);
 
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
+                                    if (count($result) > 0) {
+                                      foreach ($result as $row) {
                                             $uname = $row['uname'];
                                             $password = $row['password'];
                                             $last_name = $row['last_name'];
@@ -234,7 +229,7 @@
                                 ?>
 
                                 <label for="cnpw">Enter Personnel Account Password :</label>
-                                <input type="password" id="password" class="form-control" name="password" data-parsley-trigger="change" required 
+                                <input type="password" id="password" class="form-control" name="password" data-parsley-trigger="change" required
                                     data-parsley-minlength="4"
                                     data-parsley-minlength-message="Password should be greater than 4 characters"
                                     data-parsley-maxlength="50"

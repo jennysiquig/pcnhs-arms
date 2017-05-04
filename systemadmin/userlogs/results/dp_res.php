@@ -1,9 +1,9 @@
 <?php require_once "../resources/config.php"; ?>
 <?php
-$statement_res = $conn->query($statement);
+$statement_res = DB::query($statement);
 
-if ($statement_res->num_rows > 0) {
-    while ($row = $statement_res->fetch_assoc()) {
+if (count($statement_res) > 0) {
+  foreach ($statement_res as $row) {
         $log_id = $row['log_id'];
         $log_date = $row['log_date'];
         $user_name = $row['user_name'];
@@ -20,16 +20,16 @@ if ($statement_res->num_rows > 0) {
                                                         <td class=" ">$account_type</td>
                                                         <td class=" ">$log_in_time</td>
                                                         <td class=" ">$user_act</td>
-                                                        <td class=" ">$log_out_time</td>                                                    
+                                                        <td class=" ">$log_out_time</td>
                                             </tr>
 LOGLIST;
     }
 }
-else if ($statement_res->num_rows == 0) {
+else{
     echo <<<NORES
                                     <tr class="odd pointer">
                                     <span class="badge badge-danger">NO RESULT</span>
-                                    <br><br>        
+                                    <br><br>
                                     </tr>
 NORES;
 }

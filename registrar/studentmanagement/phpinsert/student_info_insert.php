@@ -1,12 +1,7 @@
 <?php
 	require_once "../../../resources/config.php";
 	include('../../../resources/classes/Popover.php');
-	if(!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
-
 	session_start();
-
 
 	$stud_id = strtoupper(htmlspecialchars(filter_var($_POST['stud_id'], FILTER_SANITIZE_STRING)));
 	$first_name = strtoupper(htmlspecialchars(filter_var($_POST['first_name'], FILTER_SANITIZE_STRING)));
@@ -33,18 +28,18 @@
 	$total_elem_years = htmlspecialchars(filter_var($_POST['total_elem_years'], FILTER_SANITIZE_STRING));
 	$gpa = htmlspecialchars(filter_var($_POST['gpa'], FILTER_SANITIZE_STRING));
 	$willInsert = true;
-	
-	
+
+
 // validate gpa
 	if($gpa > 99.99 || $gpa < 75) {
 		$willInsert = false;
 		$alert_type = "danger";
 		$error_message = "You have entered an invalid Average Grade.";
 		$popover = new Popover();
-		$popover->set_popover($alert_type, $error_message);	
+		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
-		
+
 	}
 
 	$validate_p_schl_yr = explode("-", $primary_schl_year);
@@ -56,7 +51,7 @@
 		$alert_type = "danger";
 		$error_message = "You have entered an invalid Primary School Year.";
 		$popover = new Popover();
-		$popover->set_popover($alert_type, $error_message);	
+		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 	}
@@ -67,44 +62,59 @@
 		$alert_type = "danger";
 		$error_message = "Cannot insert to database. Please make sure that you have input a valid value.";
 		$popover = new Popover();
-		$popover->set_popover($alert_type, $error_message);	
+		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 
 	}
 // Duplicate Checker
 	$selectStudents = "SELECT * from students where stud_id = '$stud_id' and (first_name = '$first_name' and last_name = '$last_name' and birth_date = '$birth_date');";
-	$result = $conn->query($selectStudents);
-	if ($result->num_rows > 0) {
+
+	$count = DB::count($selectStudents);
+
+	if ($count > 0) {
 		$willInsert = false;
 			$alert_type = "danger";
 			$error_message = "Duplicate Student found.";
 			$popover = new Popover();
-			$popover->set_popover($alert_type, $error_message);	
+			$popover->set_popover($alert_type, $error_message);
 			$_SESSION['error_pop'] = $popover->get_popover();
 			header("Location: " . $_SERVER["HTTP_REFERER"]);
-	}	
-
-	
-	//1 ========================
-	
-	$statement1 = "INSERT INTO `pcnhsdb`.`students` (`stud_id`, `first_name`, `mid_name`, `last_name`, `gender`, `birth_date`, `barangay`, `towncity`, `province`, `second_school_name`, `curr_id`, `prog_id`) VALUES ('$stud_id' , '$first_name', '$mid_name', '$last_name', '$gender', '$birth_date', '$barangay', '$towncity', '$province', '$second_school_name', '$curriculum', '$program')";
-
-	//2 ========================
-	$statement2 = "INSERT INTO `pcnhsdb`.`parent` (`stud_id`, `pname`, `occupation`, `address` ) VALUES ('$stud_id', '$pname', '$parent_occupation', '$parent_address')";
-	
-	// //3 ========================
-	$statement3 = "INSERT INTO `pcnhsdb`.`primaryschool` (`stud_id`, `psname`, `pschool_year`, `total_elem_years`, `gen_average`) VALUES ('$stud_id', '$primary_schl_name', '$primary_schl_year', '$total_elem_years', '$gpa')";
+	}
 
 	if($willInsert) {
-		$insertstmt1 = mysqli_query($conn, $statement1);
-		$insertstmt2 = mysqli_query($conn, $statement2);
-		$insertstmt3 = mysqli_query($conn, $statement3);
+		DB::insert('students', array(
+			'stud_id' => $stud_id,
+			'first_name' => $first_name,
+			'mid_name' => $mid_name,
+			'last_name' => $last_name,
+			'gender' => $gender,
+			'birth_date' => $birth_date,
+			'barangay' => $barangay,
+			'towncity' => $towncity,
+			'province' => $province,
+			'second_school_name' => $second_school_name,
+			'curr_id' => $curriculum,
+			'prog_id' => $program
+		));
+		DB::insert('parent', array(
+			'stud_id' => $stud_id,
+			'pname' => $pname,
+			'occupation' => $parent_occupation,
+			'address' => $parent_address
+		));
+		DB::insert('primaryschool', array(
+			'stud_id' => $stud_id,
+			'psname' => $primary_schl_name,
+			'pschool_year' => $primary_schl_year,
+			'total_elem_years' => $total_elem_years,
+			'gen_average' => $gpa
+		));
 // Generate Success Popover
 		$alert_type = "success";
 		$message = "Added Student Successfully.";
 		$popover = new Popover();
-		$popover->set_popover($alert_type, $message);	
+		$popover->set_popover($alert_type, $message);
 		$_SESSION['success'] = $popover->get_popover();
 		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
 		echo "<br>";
@@ -112,7 +122,5 @@
 
 		header("Location: ../student_info.php?stud_id=$stud_id");
 	}
-	
-	$conn->close();
 
 ?>

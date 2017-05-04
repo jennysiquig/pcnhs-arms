@@ -1,7 +1,8 @@
 <?php require_once "../resources/config.php"; ?>
 <?php
 $statement_disp = "select * from user_logs";
-$rows = mysqli_num_rows(mysqli_query($conn, $statement_disp));
+$result = DB::query($statement_disp);
+$rows = count($result);
 
 if ($rows > 50000) {
   $alert_type = "info";
@@ -10,7 +11,7 @@ if ($rows > 50000) {
   $popover->set_popover($alert_type, $error_message);
   $_SESSION['trunc_notif'] = $popover->get_popover();
   $sql = "TRUNCATE TABLE user_logs";
-  mysqli_query($conn, $sql);
+  DB::query($sql);
 }
 else {
   $total = ceil($rows / $limit);

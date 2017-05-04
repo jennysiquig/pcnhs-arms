@@ -9,25 +9,26 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		
-		
+
+
+
 		<!-- Bootstrap -->
 		<link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		
+		<!-- NProgress -->
+		<link href="../../resources/libraries/nprogress/nprogress.css" rel="stylesheet">
 		<!-- Datatables -->
 		<link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-		
+
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
-		
+
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
-		
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -44,7 +45,7 @@
 		<div class="right_col" role="main">
 			<div class="">
 				<div class="row top_tiles">
-					
+
 				</div>
 			</div>
 			<?php
@@ -80,12 +81,12 @@
 							</div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Year Started</label>
-								
+
 
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<select class="form-control" name="year_started">
 										<option value="">-- Choose Year Started --</option>
-										<?php 
+										<?php
 											$year_today = date('Y');
 											echo $year_today;
 											for($year_start = 1990; $year_start <= $year_today; $year_start++) {
@@ -102,7 +103,7 @@
 									<select class="form-control" name="year_ended">
 										<option value="">-- Choose Year Ended --</option>
 										<option value="PRESENT">Present</option>
-										<?php 
+										<?php
 											$year_today = date('Y');
 											echo $year_today;
 											for($year_start = 1990; $year_start <= $year_today; $year_start++) {
@@ -138,6 +139,8 @@
 		<!-- input mask -->
 		<script src= "../../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
+		<!-- NProgress -->
+		<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../../assets/js/custom.min.js"></script>
 	<!-- Scripts -->

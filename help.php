@@ -30,7 +30,8 @@
     <link href="resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
+    <!-- NProgress -->
+		<link href="resources/libraries/nprogress/nprogress.css" rel="stylesheet">
     <!-- Datatables -->
     <link href="resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 

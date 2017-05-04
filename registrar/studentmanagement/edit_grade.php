@@ -21,14 +21,9 @@
 	$last_name;
 	$curriculum;
 	$statement = "SELECT * FROM pcnhsdb.students left join curriculum on students.curr_id = curriculum.curr_id where students.stud_id = '$stud_id' limit 1";
-	$result = $conn->query($statement);
-	if (!$result) {
-	//echo "<p>Record Not Found. <a href='../../index.php'>Back to Home</a></p>";
-	header("location: student_list.php");
-	die();
-	}
-	if ($result->num_rows>0) {
-	while ($row=$result->fetch_assoc()) {
+	$result = DB::query($statement);
+	if (count($result) > 0) {
+		foreach ($result as $row) {
 	$curriculum = $row['curr_name'];
 	$first_name = $row['first_name'];
 	$last_name = $row['last_name'];
@@ -119,16 +114,11 @@
 				<div class="x_content">
 
 							<?php
-								if(!$conn) {
-									die();
-								}
-
 									$statement = "SELECT * FROM pcnhsdb.grades WHERE stud_id = '$stud_id' and yr_level = '$yr_level' order by yr_level asc;";
-									$result = $conn->query($statement);
+									$result = DB::query($statement);
 									$grade_count = 0;
-									if($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
+									if (count($result) > 0) {
+										foreach ($result as $row) {
 											$grade_count += 1;
 											$schl_name = $row['schl_name'];
 											$yr_level = $row['yr_level'];

@@ -2,17 +2,12 @@
 	session_start();
 	require_once "../../../resources/config.php";
 	include '../../../resources/classes/Popover.php';
-	
-	if(!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
 
 	$curr_id = 1;
 	$statement = "SELECT * FROM pcnhsdb.curriculum order by curr_id desc limit 1;";
-	$result = $conn->query($statement);
-	if ($result->num_rows > 0) {
-		// output data of each row
-		while($row = $result->fetch_assoc()) {
+	$result = DB::query($statement);
+	if (count($result) > 0) {
+		foreach ($result as $row) {
 		$curr_id = $row['curr_id'];
 		$curr_id = $curr_id+1;
 
@@ -27,7 +22,7 @@
 	$year_started = htmlspecialchars($_POST['year_started'], ENT_QUOTES, 'UTF-8');
 	$year_ended = htmlspecialchars($_POST['year_ended'], ENT_QUOTES, 'UTF-8');
 	$willInsert = true;
-	
+
 
 
 	if($year_started >= $year_ended) {
@@ -52,20 +47,18 @@
 	}
 
 	if($willInsert) {
-		$statement = $conn->prepare("INSERT INTO `pcnhsdb`.`curriculum` (`curr_id`, `curr_code`, `curr_name`, `year_started`, `year_ended`) VALUES (?, ?, ?, ?,?)");
-
-		$statement->bind_param("issii", $curr_id, $curr_code, $curr_name, $year_started,$year_ended);
-
-		$statement->execute();
-
+		DB::insert('curriculum', array(
+			'curr_id' => $curr_id,
+			'curr_code' => $curr_code,
+			'curr_name' => $curr_name,
+			'year_started' => $year_started,
+			'year_ended' => $year_ended
+		));
 		echo "<p>Fatal error occured, please logout.</p><a href='../../../logout.php'> Logout</a>";
 		echo "<br>";
 		$_SESSION['user_activity'][] = "ADDED NEW CURRICULUM: $curr_name";
 		header('location: ../curriculum.php');
-
-		$statement->close();
-		$conn->close();
 	}
 
-	
+
 ?>

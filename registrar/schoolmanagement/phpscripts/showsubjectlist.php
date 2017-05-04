@@ -4,12 +4,12 @@
 	$curriculum = $_GET['curr_id'];
 
 	$statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id where subjectcurriculum.curr_id = $curriculum";
-	
 
-	$result = $conn->query($statement);
 
-	if($result->num_rows>0) {
-		while ($row = $result->fetch_assoc()) {
+	$result = DB::query($statement);
+
+	if (count($result) > 0) {
+		foreach ($result as $row) {
 			$subj_id = $row['subj_id'];
 			$subj_name = $row['subj_name'];
 			$subj_level = $row['subj_level'];

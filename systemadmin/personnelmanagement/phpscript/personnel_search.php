@@ -1,17 +1,13 @@
 <?php
 	require_once "../../../resources/config.php";
 	$search = $_GET['query'];
-	
-	if(!$conn) {
-		$response = "Database Connection Error";
-	}
 
-	$query = "SELECT * FROM pcnhsdb.personnel where uname LIKE '$search%' and uname not like 'registrar' and uname not like 'admin' 
+	$query = "SELECT * FROM pcnhsdb.personnel where uname LIKE '$search%' and uname not like 'registrar' and uname not like 'admin'
 			  OR position like '$search';";
 
-	$result = $conn->query($query);
-	if($result->num_rows>0) {
-		while($row=$result->fetch_assoc()) {
+	$result = DB::query($query);
+	if (count($result) > 0) {
+		foreach ($result as $row) {
 			$uname = $row['uname'];
 			$response[] = array(
 				'uname' => "$uname",

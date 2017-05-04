@@ -28,10 +28,10 @@
     <link href="../../resources/libraries/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../resources/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <!-- Datatables -->
     <link href="../../resources/libraries/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom Theme Style -->
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
      <!-- Custom Theme Style -->
@@ -44,7 +44,7 @@
       <?php include "../../resources/templates/admin/top-nav.php"; ?>
       <!-- Content Start -->
       <div class="right_col" role="main">
-          
+
           <div class="col-md-5">
             <ol class="breadcrumb">
               <li><a href="../index.php">Home</a></li>
@@ -78,7 +78,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2><i class="fa fa-users"></i> Personnel Accounts 
+                    <h2><i class="fa fa-users"></i> Personnel Accounts
                     </h2>
                     <div class="clearfix"></div>
                     <br/>
@@ -96,7 +96,7 @@
                           <label class="control-label col-md-10">Show Number Of Entries:</label>
                           <div class="col-sm-2">
                               <select class="form-control" onchange="changeEntries(this.value)">
-                                <option value="20" 
+                                <option value="20"
                                   <?php if (isset($_SESSION['per_entry'])) { if ($_SESSION['per_entry'] == 20) { echo "selected"; } } ?>>20</option>
                                 <option value="50"
                                    <?php if (isset($_SESSION['per_entry'])) { if ($_SESSION['per_entry'] == 50) {  echo "selected"; } } ?>>50</option>
@@ -144,17 +144,14 @@
                               else {
                                 $page = 1;
                               }
-                              if (!$conn) {
-                                die("Connection failed: " . mysqli_connect_error());
-                              }
 
                               if (isset($_GET['search_key'])) {
                                   $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING) , ENT_QUOTES);
-                                  $statement = "SELECT * FROM pcnhsdb.personnel 
-                                                WHERE (per_id LIKE '%$search%') 
-                                                AND (per_id NOT LIKE '1' and per_id NOT LIKE '2') 
+                                  $statement = "SELECT * FROM pcnhsdb.personnel
+                                                WHERE (per_id LIKE '%$search%')
+                                                AND (per_id NOT LIKE '1' and per_id NOT LIKE '2')
                                                 OR (uname LIKE '%$search%')
-                                                AND (uname NOT LIKE 'admin' and uname NOT LIKE 'registrar') 
+                                                AND (uname NOT LIKE 'admin' and uname NOT LIKE 'registrar')
                                                 OR (first_name LIKE '%$search%')
                                                 AND (first_name NOT LIKE 'admin' and first_name NOT LIKE 'registrar')
                                                 OR(position LIKE '%$search%')
@@ -164,23 +161,15 @@
                               }
                               else {
                                   $statement = "SELECT * FROM pcnhsdb.personnel
-                                                WHERE uname NOT LIKE 'registrar' 
-                                                AND uname NOT LIKE 'admin' 
+                                                WHERE uname NOT LIKE 'registrar'
+                                                AND uname NOT LIKE 'admin'
                                                 LIMIT $start, $limit";
                               }
 
-                              $result = $conn->query($statement);
+                              $result = DB::query($statement);
 
-                              if ($result->num_rows == 0) {
-                                echo <<<NORES
-                                    <tr class="odd pointer">
-                                    <span class="badge badge-danger">NO RESULT</span>
-                                    <br><br>        
-                                    </tr>
-NORES;
-                              }
-                              else if ($result->num_rows > 0) {
-                                  while ($row = $result->fetch_assoc()) {
+                              if (count($result) > 0) {
+                              		foreach ($result as $row) {
                                     $per_id = $row['per_id'];
                                     $uname = $row['uname'];
                                     $last_name = $row['last_name'];
@@ -214,17 +203,24 @@ NORES;
                                                           <a href= "personnel_view.php?per_id=$per_id" class="btn btn-primary btn-xs">
                                                           <i class="fa fa-user"></i> View Profile</a>
                                                         </center>
-                                                        </td>           
+                                                        </td>
                                             </tr>
 PERSONNELLIST;
                                   }
+                              }else {
+                                echo <<<NORES
+                                    <tr class="odd pointer">
+                                    <span class="badge badge-danger">NO RESULT</span>
+                                    <br><br>
+                                    </tr>
+NORES;
                               }
                       ?>
                             </tbody>
                         </table>
                         <?php
                           $statement = "select * from personnel";
-                          $rows = mysqli_num_rows(mysqli_query($conn, $statement));
+                          $rows = DB::count($statement);
                           $total = ceil($rows / $limit);
                           echo "<p>Showing $limit Entries</p>";
                           echo '<div class="pull-right">

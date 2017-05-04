@@ -29,7 +29,6 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 } else {
     header('Location: ../login.php');
 }
-
 ?>
 <?php require_once '../resources/config.php' ?>
 <html>
@@ -92,19 +91,12 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 						<div class="tile-stats">
 							<div class="icon"><i class="fa fa-user"></i></div>
 							<?php
-                                if (!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                }
-                                $statement = "SELECT count(*) as students FROM pcnhsdb.students";
-                                $result = $conn->query($statement);
-                                if ($result->num_rows > 0) {
-                                    // output data of each row
-                                    while ($row = $result->fetch_assoc()) {
-                                        $students = $row["students"];
-                                        echo "<div class='count'>$students</div>";
-                                    }
-                                }
-                            ?>
+                $result = DB::query("SELECT count(*) as students FROM pcnhsdb.students");
+                foreach ($result as $row) {
+                  $students = $row["students"];
+                  echo "<div class='count'>$students</div>";
+                }
+              ?>
 							<p>&nbsp</p>
 							<h3>Total Students</h3>
 							<p>&nbsp</p>
@@ -116,19 +108,12 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 							<div class="tile-stats">
 								<div class="icon"><i class="glyphicon glyphicon-hourglass"></i></div>
 								<?php
-                                    if (!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $statement = "SELECT count(*) as unclaimed FROM pcnhsdb.requests where status = 'u'";
-                                    $result = $conn->query($statement);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while ($row = $result->fetch_assoc()) {
-                                            $unclaimed = $row["unclaimed"];
-                                            echo "<div class='count'>$unclaimed</div>";
-                                        }
-                                    }
-                                ?>
+                    $result = DB::query("SELECT count(*) as unclaimed FROM pcnhsdb.requests where status = 'u';");
+                    foreach ($result as $row) {
+                      $unclaimed = $row["unclaimed"];
+                      echo "<div class='count'>$unclaimed</div>";
+                    }
+                ?>
 								<p>&nbsp</p>
 								<h3>Unclaimed Credentials</h3>
 								<p>&nbsp</p>
@@ -140,19 +125,12 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 							<div class="tile-stats">
 								<div class="icon"><i class="fa fa-paper-plane"></i></div>
 								<?php
-                                    if (!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $statement = "SELECT count(*) as released FROM pcnhsdb.requests where status = 'r'";
-                                    $result = $conn->query($statement);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while ($row = $result->fetch_assoc()) {
-                                            $released = $row["released"];
-                                            echo "<div class='count'>$released</div>";
-                                        }
-                                    }
-                                ?>
+                    $result = DB::query("SELECT count(*) as released FROM pcnhsdb.requests where status = 'r';");
+                    foreach ($result as $row) {
+                      $released = $row["released"];
+                      echo "<div class='count'>$released</div>";
+                    }
+                ?>
 								<p>&nbsp</p>
 								<h3>Released Credentials</h3>
 								<p>&nbsp</p>
@@ -164,19 +142,12 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 							<div class="tile-stats">
 								<div class="icon"><i class="glyphicon glyphicon-check"></i></div>
 								<?php
-                                    if (!$conn) {
-                                        die("Connection failed: " . mysqli_connect_error());
-                                    }
-                                    $statement = "SELECT count(*) as totaltrans FROM pcnhsdb.transaction";
-                                    $result = $conn->query($statement);
-                                    if ($result->num_rows > 0) {
-                                        // output data of each row
-                                        while ($row = $result->fetch_assoc()) {
-                                            $totaltrans = $row["totaltrans"];
-                                            echo "<div class='count'>$totaltrans</div>";
-                                        }
-                                    }
-                                ?>
+                  $result = DB::query("SELECT count(*) as totaltrans FROM pcnhsdb.transaction;");
+                  foreach ($result as $row) {
+                    $totaltrans = $row["totaltrans"];
+                    echo "<div class='count'>$totaltrans</div>";
+                  }
+                ?>
 								<p>&nbsp</p>
 								<h3>Transactions</h3>
 								<p>&nbsp</p>
@@ -210,41 +181,34 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 								</thead>
 								<tbody>
 									<?php
-                  $statement = "";
+                  $statement = "SELECT stud_id, req_id, cred_id, request_purpose, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_id, cred_name, request_type FROM pcnhsdb.requests natural join students natural join credentials where status='p' order by req_id asc limit 5;";
 
-                                        if (!$conn) {
-                                            die("Connection failed: " . mysqli_connect_error());
-                                        }
-                                        $statement = "SELECT stud_id, req_id, cred_id, request_purpose, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_id, cred_name, request_type FROM pcnhsdb.requests natural join students natural join credentials where status='p' order by req_id asc limit 5;";
-                                        $result = $conn->query($statement);
-                                        if ($result->num_rows > 0) {
-                                            // output data of each row
-                                            while ($row = $result->fetch_assoc()) {
-                                                $date_processed = $row['date processed'];
-                                                $stud_name = $row['stud_name'];
-                                                $cred_name = $row['cred_name'];
-                                                $request_purpose = $row['request_purpose'];
-                                                $request_purpose = strtoupper($request_purpose);
-                                                $cred_id = $row['cred_id'];
-                                                $stud_id = $row['stud_id'];
+                  $result = DB::query($statement);
+                  foreach ($result as $row) {
+                    $date_processed = $row['date processed'];
+                    $stud_name = $row['stud_name'];
+                    $cred_name = $row['cred_name'];
+                    $request_purpose = $row['request_purpose'];
+                    $request_purpose = strtoupper($request_purpose);
+                    $cred_id = $row['cred_id'];
+                    $stud_id = $row['stud_id'];
 
-                                                echo <<<UNCLAIMED
-												<tr class="odd pointer">
-																<td class=" ">$date_processed</td>
-																<td class=" ">$stud_name</td>
-																<td class=" ">$cred_name</td>
-																<td class=" ">$request_purpose</td>
-																<td class=" ">
-																	<center>
-																		<a href="../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose" class="btn btn-default"> Process Request</a>
-																	</center>
-																</td>
-												</tr>
+                    echo <<<UNCLAIMED
+                      <tr class="odd pointer">
+                          <td class=" ">$date_processed</td>
+                          <td class=" ">$stud_name</td>
+                          <td class=" ">$cred_name</td>
+                          <td class=" ">$request_purpose</td>
+                          <td class=" ">
+                            <center>
+                              <a href="../registrar/credentials/generate_cred.php?stud_id=$stud_id&credential=$cred_id&purpose=$request_purpose" class="btn btn-default"> Process Request</a>
+                            </center>
+                          </td>
+                      </tr>
 UNCLAIMED;
-                                            }
-                                        }
+                  }
 
-                                    ?>
+                  ?>
 									</tbody>
 								</table>
 							</div>
