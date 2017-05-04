@@ -265,7 +265,8 @@ SUBJS;
 											else {
 											        $statement = "select * from subjects left join subjectcurriculum on subjects.subj_id = subjectcurriculum.subj_id left join curriculum on curriculum.curr_id = subjectcurriculum.curr_id left join subjectprogram on subjects.subj_id = subjectprogram.subj_id left join programs on programs.prog_id = subjectprogram.prog_id;";
 											}
-			                    $rows = DB::count($statement);
+													$result = DB::query($statement);
+													$rows = count($result);
 			                    $total = ceil($rows/$limit);
 
 			                    echo '<div class="pull-right">

@@ -242,7 +242,8 @@ TRANS;
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials";
 				                    }
 
-							$rows = DB::count($statement);
+              $result = DB::query($statement);
+              $rows = count($result);
 							$total = ceil($rows/$limit);
 							echo '<div class="pull-right">
 									<div class="col s12">

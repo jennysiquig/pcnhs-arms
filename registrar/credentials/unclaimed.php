@@ -129,7 +129,8 @@ UNCLAIMED;
 							<?php
 							$statement = "SELECT req_id, stud_id, date_processed as 'date processed', concat(first_name, ' ', last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='u' order by date_processed desc;";
 
-							$rows = DB::count($statement);
+							$result = DB::query($statement);
+							$rows = count($result);
 							$total = ceil($rows/$limit);
 							echo '<div class="pull-right">
 									<div class="col s12">

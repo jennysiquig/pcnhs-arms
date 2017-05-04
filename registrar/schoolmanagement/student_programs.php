@@ -129,7 +129,8 @@ CURR;
 						</table>
 						<?php
 		                  $statement = "SELECT * FROM pcnhsdb.programs;";
-		                    $rows = DB::count($statement);
+												$result = DB::query($statement);
+												$rows = count($result);
 		                    $total = ceil($rows/$limit);
 
 		                    echo '<div class="pull-right">

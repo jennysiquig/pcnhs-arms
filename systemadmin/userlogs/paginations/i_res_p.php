@@ -1,7 +1,8 @@
 <?php require_once "../resources/config.php"; ?>
 <?php
 $statement_disp = "select * from user_logs";
-$rows = DB::count($statement_disp);
+$result = DB::query($statement_disp);
+$rows = count($result);
 
 if ($rows > 50000) {
   $alert_type = "info";

@@ -243,7 +243,8 @@ STUDLIST;
                     $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by last_name asc;";
                   }
 
-                    $rows = DB::count($statement);
+                    $result = DB::query($statement);
+                    $rows = count($result);
                     $total = ceil($rows/$limit);
 
                     echo "<p>Showing $limit Entries</p>";

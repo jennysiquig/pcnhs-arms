@@ -132,7 +132,8 @@ CURR;
 						</table>
 						<?php
 		                  	$statement = "SELECT * FROM pcnhsdb.credentials;";
-		                    $rows = DB::count($statement);
+												$result = DB::query($statement);
+		                    $rows = count($result);
 		                    $total = ceil($rows/$limit);
 
 		                    echo '<div class="pull-right">

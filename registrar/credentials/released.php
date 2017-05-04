@@ -119,7 +119,8 @@ RELEASED;
 				<?php
 							$statement = "SELECT date_released as 'date released', concat(first_name, ' ' ,last_name) as 'stud_name', cred_name FROM pcnhsdb.requests natural join students natural join credentials where status='r';";
 
-							$rows = DB::count($statement);
+							$result = DB::query($statement);
+							$rows = count($result);
 
 							$total = ceil($rows/$limit);
 							echo '<div class="pull-right">
