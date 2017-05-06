@@ -41,6 +41,7 @@
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+		<link href="../../assets/css/customstyle.css" rel="stylesheet">
 		<link href="../../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
 
 		<!--[if lt IE 9]>

@@ -10,22 +10,18 @@
 					<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 				</div>
 			</div>
-			<div class="search-bar col-md-7">
-				<form class="" action="$base_url/registrar/studentmanagement/student_list.php" method="GET">
-					<div class="form-group">
-						<div class="input-group">
-							<input id="search_key" type="text" class="form-control" name="search_key" placeholder="Search Student...">
-							<span class="input-group-btn">
-								<button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-							</span>
-						</div>
+			<div class="search-bar col-sm-7">
+				<form class="search_key" action="$base_url/registrar/studentmanagement/student_list.php" method="GET">
+					<div class="input-group">
+						<input id="search_key" type="text" class="form-control" placeholder="Search Student" name="search_key">
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+						</span>
 					</div>
 				</form>
 			</div>
-			
 			<ul class="nav navbar-nav pull-right">
 				<li class="">
-
 					<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 						<img src="$base_url/assets/images/icon-user-default.png" alt="">Registrar
 						<span class=" fa fa-angle-down"></span>

@@ -1,6 +1,3 @@
-@media screen and (min-width: 1024px) and (max-width: 1024px) {
-  .search-bar { display: none; }   /* hide it elsewhere */
-}
 @media screen and (min-width: 1024px) {
   .toggle { display: none; }   /* hide it elsewhere */
 }

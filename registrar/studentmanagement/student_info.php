@@ -683,6 +683,40 @@ REMOVE;
 															</thead>
 															<tbody>
 																<!-- Credentials History  -->
+																<?php
+																	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join credentials where stud_id = '$stud_id';";
+																	$result = DB::query($statement);
+																	if(count($result) > 0) {
+																		foreach ($result as $row) {
+																			$cred_name = $row['cred_name'];
+																			$request_purpose = $row['request_purpose'];
+																			$date_processed = $row['date_processed'];
+																			$status = $row['status'];
+																			switch ($status) {
+																				case 'r':
+																					$status = "Released";
+																					break;
+																				case 'u':
+																					$status = "Unclaimed";
+																					break;
+																				case 'p':
+																					$status = "Pending";
+																					break;
+																			}
+																			$date_released = $row['date_released'];
+																			echo <<<CH
+																				<tr>
+																					<td>$cred_name</td>
+																					<td>$request_purpose</td>
+																					<td>$date_processed</td>
+																					<td>$status</td>
+																					<td>$date_released</td>
+																				</tr>
+CH;
+																		}
+																	}
+																?>
+																;
 															</tbody>
 														</table>
 													</div>

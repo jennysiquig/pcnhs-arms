@@ -166,6 +166,14 @@
                           <?php if(isset($_SESSION['sort'])){if($_SESSION['sort'] == "date_modified") {echo "selected";}} ?>>Date Modified</option>
                       </select>
                     </div>
+                    <div class="form-group col-md-9">
+                      <select class="form-control" onchange="sorttype(this.value)">
+                          <option value="asc"
+                           <?php if(isset($_SESSION['sorttype'])){if($_SESSION['sorttype'] == "asc") {echo "selected";}} ?>>Ascending</option>
+                          <option value="desc"
+                           <?php if(isset($_SESSION['sorttype'])){if($_SESSION['sorttype'] == "desc") {echo "selected";}} ?>>Descending</option>
+                      </select>
+                    </div>
                   </form>
                 </div>
                 <div class="col-md-3">
@@ -222,6 +230,11 @@
                     }else {
                       $sort = "stud_id";
                     }
+                    if(isset($_SESSION['sorttype'])){
+                      $sorttype = $_SESSION['sorttype'];
+                    }else {
+                      $sorttype = "asc";
+                    }
 
                     if(isset($_SESSION['filter'])){
                       $filter = $_SESSION['filter'];
@@ -237,14 +250,14 @@
                     $search = "";
                     if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                       $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
-                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' order by $sort asc;";
+                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' order by $sort $sorttype;";
                     }else {
-                      if($filter=="graduate") {
-                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level = 4 group by stud_id order by $sort asc limit $start, $limit;";
-                      }elseif ($filter == "current") {
-                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level < 4 group by stud_id order by $sort asc limit $start, $limit;";
+                      if($filter=="all") {
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by $sort $sorttype limit $start, $limit;";
+                      }elseif ($filter == "graduate") {
+                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level >= 4 group by stud_id order by $sort $sorttype limit $start, $limit;";
                       }else {
-                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by $sort asc limit $start, $limit;";
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where stud_id not in (select stud_id from grades where yr_level >= 4) group by stud_id order by $sort $sorttype limit $start, $limit;";
                       }
                       
                     }
@@ -279,7 +292,7 @@
                         <td>$date_modified</td>
                         <td>
                           <center>
-                            <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default"><i class="fa fa-user"></i> View </a>
+                            <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default"> View or Add Grades </a>
                           </center>
                         </td>
                       </tr
@@ -292,14 +305,14 @@ STUDLIST;
 
                   if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                     $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
-                    $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' order by $sort asc;"; 
+                    $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' order by $sort $sorttype;"; 
                   }else {
-                    if($filter=="graduate") {
-                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level = 4 group by stud_id order by $sort asc;";
-                      }elseif ($filter == "current") {
-                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level < 4 group by stud_id order by $sort asc;";
+                    if($filter=="all") {
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by $sort $sorttype;";
+                      }elseif ($filter == "graduate") {
+                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level >= 4 group by stud_id order by $sort $sorttype;";
                       }else {
-                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by $sort asc;";
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where stud_id not in (select stud_id from grades where yr_level >= 4) group by stud_id order by $sort $sorttype;";
                       }
                   }
 
@@ -355,7 +368,7 @@ STUDLIST;
 
 
                       if($total == 0) {
-                        echo "<li class='disabled'><a>Next</a></li>";
+                        echo "<li class='disabled'><a><i class='fa fa-angle-right'></i></a></li>";
                       }else if($page!=$total) {
                         echo "<li class=''><a href='student_list.php?search_key=$search&page=".($page+1)."'><i class='fa fa-angle-right'></i></a></li>";
                       }else {
@@ -450,6 +463,28 @@ STUDLIST;
     }
     };
     xhttp.open("GET", "phpscript/sort.php?sort="+val, true);
+    xhttp.send();
+    }
+    //Filter
+    function filter(val) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    location.reload();
+    }
+    };
+    xhttp.open("GET", "phpscript/filter.php?filter="+val, true);
+    xhttp.send();
+    }
+    //type
+    function sorttype(val) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    location.reload();
+    }
+    };
+    xhttp.open("GET", "phpscript/sorttype.php?sorttype="+val, true);
     xhttp.send();
     }
     //Filter
