@@ -214,7 +214,8 @@ STUDLIST;
                   }
 
 
-                    $rows = DB::count($statement);
+                    $result = DB::query($statement);
+                    $rows = count($result);
                     $total = ceil($rows/$limit);
 
                     echo "<p>Showing $limit Entries</p>";

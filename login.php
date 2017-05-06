@@ -105,6 +105,9 @@
                                title="Contact System Administrator to reset password."><i class="fa fa-info-circle"></i>
                                 Forgot Password?</a>
                         </center>
+                        <center>
+                            <a href="help.php">Help Page</a>
+                        </center>
                     </div>
                 </div>
             </div>

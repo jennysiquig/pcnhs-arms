@@ -1,22 +1,4 @@
 <!DOCTYPE html>
-<?php
-    session_start();
-    // Session Timeout
-    $time = time();
-    $session_timeout = 1800; //seconds
-
-    if (isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > $session_timeout) {
-        session_unset();
-        session_destroy();
-        session_start();
-    }
-
-   if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
-   } else {
-       header('Location: ../../login.php');
-   }
-
- ?>
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -47,9 +29,50 @@
   </head>
   <body class="nav-md">
     <!-- Sidebar -->
-    <?php include "resources/templates/registrar/sidebar.php"; ?>
-    <!-- Top Navigation -->
-    <?php include "resources/templates/registrar/top-nav.php"; ?>
+        <div class="container body">
+        <div class="main_container">
+        <div class="col-md-3 left_col menu_fixed">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="help.php" class="site_title"><i class="fa fa-question-circle-o"></i> <span>Help Page</span></a>
+                </div>
+                <div class="clearfix"></div>
+                <!-- menu profile quick info -->
+                <!-- /menu profile quick info -->
+                <br>
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section active">
+                        <h3>Menu</h3>
+                        <ul class="nav side-menu">
+                            <li><a href="login.php"><i class="fa fa-home"></i> Back to Main Site</a></li>
+                            
+                            
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+        <!-- Top Navigation -->
+        <div class="top_nav">
+        <div class="nav_menu no-print">
+            <nav>
+                <div class="nav toggle">
+                    <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a class="user-profile">PCNHS ARMS</a>
+                        
+                    </li>
+                    
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    </div>
+    </div>
     <div class="right_col" role="main">
       <!-- Content -->
       <div id="pdf1">

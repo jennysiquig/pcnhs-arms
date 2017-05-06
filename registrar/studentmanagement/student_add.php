@@ -25,6 +25,7 @@
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+		<link href="../../assets/css/customstyle.css" rel="stylesheet">
 
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
@@ -66,7 +67,7 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Student Personal Information </h2>
-						<h2 class="pull-right"><small  style="color: red;"> <button type="reset" class="btn btn-danger btn-medium" onclick="releaseData();"> <i class="fa fa-info-circle"></i> Clear</button> Fields first before adding new student.</small></h2>
+						<h2 class="pull-right"><small> <button type="reset" class="btn btn-primary btn-medium" onclick="releaseData();"> <i class="fa fa-info-circle"></i> Clear</button> Fields first before adding new student.</small></h2>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
@@ -74,7 +75,7 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>Student</h2>
-									<h2 class="pull-right"><small style="color: red;"><i class="fa fa-info-circle"></i> If the information is not available, please enter "NONE"</small></h2>
+									<h2 class="pull-right"><small><i class="fa fa-info-circle"></i> If the information is not available, please enter "NONE"</small></h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="item form-group">
@@ -95,7 +96,7 @@ OPTION1;
 												}
 												?>
 											</select>
-											<p style="color: red"><i class="fa fa-info-circle"></i> Refer to the curriculum that is indicated on the Form 137.</p>
+											<p><i class="fa fa-info-circle"></i> Refer to the curriculum that is indicated on the Form 137.</p>
 										</div>
 									</div>
 									<div class="x_content">

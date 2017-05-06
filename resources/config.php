@@ -4,6 +4,6 @@
     //$host='localhost';
     DB::$dbName='pcnhsdb';
     DB::$user='root';
-    DB::$password='';
-    // = new mysqli($host,$user,$password,$dbName);
+    DB::$password='root';
+    //$conn = new mysqli($host,$user,$password,$dbName);
 ?>

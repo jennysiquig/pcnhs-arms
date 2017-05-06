@@ -5,9 +5,9 @@ include ('../../../resources/classes/Popover.php');
 session_start();
 
 $sign_id = $_GET['sign_id'];
-$first_name = $_GET['first_name'];
 $query = "DELETE FROM signatories WHERE sign_id = '$sign_id'";
 DB::query($query);
+
 $sign_del = "DELETED SIGNATORY: $sign_id";
 $_SESSION['user_activity'][] = $sign_del;
 
