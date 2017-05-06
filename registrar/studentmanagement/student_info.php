@@ -645,7 +645,8 @@ REMOVE;
 														}
 
 														$checkgrade = "SELECT * FROM pcnhsdb.grades where stud_id = '$stud_id' and yr_level = $year_check;";
-														$result_checkgrade = DB::count($checkgrade);
+														$result = DB::query($checkgrade);
+														$result_checkgrade = count($result);
 														if($result_checkgrade > 0) {
 															$next_attendance = $attendance_count+1;
 															if($attendance_count < 4 && $next_attendance == $result_checkgrade) {

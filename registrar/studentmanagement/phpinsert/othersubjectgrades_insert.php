@@ -34,7 +34,7 @@
 	if(!empty($fin_grade) && !empty($special_grade)) {
 		$willInsert = false;
 		$alert_type = "danger";
-		$error_message = "Leave the Special Grade field blank if the Final Grade has value.";
+		$error_message = "Ooops. The system did not accept the value that you entered, please leave the Special Grade field blank if the Final Grade has value.";
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
@@ -48,7 +48,7 @@
 		}else {
 			$willInsert = false;
 			$alert_type = "danger";
-			$error_message = "Invalid Special Grade Input.";
+			$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 			$popover = new Popover();
 			$popover->set_popover($alert_type, $error_message);
 			$_SESSION['error_pop'] = $popover->get_popover();
@@ -70,7 +70,7 @@
 	if((!is_numeric($fin_grade) && !$hasSpecialGrade) || $fin_grade < 65 || $fin_grade > 99.99) {
 		$willInsert = false;
 		$alert_type = "danger";
-		$error_message = "Invalid Final Grade Input.";
+		$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
@@ -85,7 +85,7 @@
 		}else {
 			$willInsert = false;
 			$alert_type = "danger";
-			$error_message = "Invalid Credit Earned Input.";
+			$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 			$popover = new Popover();
 			$popover->set_popover($alert_type, $error_message);
 			$_SESSION['error_pop'] = $popover->get_popover();
@@ -101,7 +101,7 @@
 	if(intval($input_year[0]) > intval($input_year[1]) || intval($input_year[0]) != (intval($input_year[1]))-1) {
 		$willInsert = false;
 		$alert_type = "danger";
-		$error_message = "Invalid School Year Input.";
+		$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();

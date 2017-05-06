@@ -87,7 +87,7 @@
                                             $statement = "SELECT * FROM pcnhsdb.students NATURAL JOIN primaryschool where stud_id = '$stud_id';";
                                             $result = DB::query($statement);
                                             foreach ($result as $row) {
-                                              $pschool_year = $row['schl_yr'];
+                                              $pschool_year = $row['pschool_year'];
                                             }
 
 
@@ -160,16 +160,6 @@
             <script src="../../resources/libraries/nprogress/nprogress.js"></script>
             <!-- Custom Theme Scripts -->
             <script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
-                <script type="text/javascript">
-                  $(function() {
-                  $('.recent-request').tablesorter();
-                  $('.tablesorter-bootstrap').tablesorter({
-                  theme : 'bootstrap',
-                  headerTemplate: '{content} {icon}',
-                  widgets    : ['zebra','columns', 'uitheme']
-                  });
-                  });
-                </script>
                 <!-- Scripts -->
                 <script type="text/javascript">
                 var options = {
