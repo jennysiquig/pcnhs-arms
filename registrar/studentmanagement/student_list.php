@@ -37,7 +37,7 @@
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
      <!-- Custom Theme Style -->
     <link href="../../assets/css/customstyle.css" rel="stylesheet">
-    <link href="../../assets/css/easy-autocomplete-custom.css" rel="stylesheet">
+    <link href="../../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="../js/ie8-responsive-file-warning.js"></script>
@@ -237,18 +237,12 @@
                     $search = "";
                     if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                       $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
-                      if($filter=="graduate") {
-                        $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' and yr_level = 4 order by $sort asc;";
-                      }elseif ($filter == "current") {
-                        $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' and yr_level < 4 order by $sort asc;";
-                      }else {
-                        $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' order by $sort asc;";
-                      }
+                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' order by $sort asc;";
                     }else {
                       if($filter=="graduate") {
-                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level = 4 order by $sort asc limit $start, $limit;";
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level = 4 group by stud_id order by $sort asc limit $start, $limit;";
                       }elseif ($filter == "current") {
-                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level < 4 order by $sort asc limit $start, $limit;";
+                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level < 4 group by stud_id order by $sort asc limit $start, $limit;";
                       }else {
                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by $sort asc limit $start, $limit;";
                       }
@@ -298,18 +292,12 @@ STUDLIST;
 
                   if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                     $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
-                    if($filter=="graduate") {
-                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' and yr_level = 4 order by $sort asc;";
-                    }elseif ($filter == "current") {
-                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' and yr_level < 4 order by $sort asc;";
-                    }else {
-                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' order by $sort asc;";
-                    } 
+                    $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' order by $sort asc;"; 
                   }else {
                     if($filter=="graduate") {
-                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level = 4 order by $sort asc;";
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level = 4 group by stud_id order by $sort asc;";
                       }elseif ($filter == "current") {
-                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level < 4 order by $sort asc;";
+                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level < 4 group by stud_id order by $sort asc;";
                       }else {
                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by $sort asc;";
                       }
@@ -399,6 +387,41 @@ STUDLIST;
     <!-- NProgress -->
     <script src="../../resources/libraries/nprogress/nprogress.js"></script>
     <!-- Custom Theme Scripts -->
+    <script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
+        <script type="text/javascript">
+            $(function() {
+            $('.recent-request').tablesorter();
+            $('.tablesorter-bootstrap').tablesorter({
+            theme : 'bootstrap',
+            headerTemplate: '{content} {icon}',
+            widgets    : ['zebra','columns', 'uitheme']
+            });
+            });
+          </script>
+        <!-- Scripts -->
+        <script type="text/javascript">
+        var options = {
+        url: function(phrase) {
+        return "phpscript/student_search.php?query="+phrase;
+        },
+        getValue: function(element) {
+        return element.name;
+        },
+        ajaxSettings: {
+        dataType: "json",
+        method: "POST",
+        data: {
+        dataType: "json"
+        }
+        },
+        preparePostData: function(data) {
+        data.phrase = $("#search_key").val();
+        return data;
+        },
+        requestDelay: 200
+        };
+        $("#search_key").easyAutocomplete(options);
+        </script>
     <script src= "../../assets/js/custom.min.js"></script>
 
     <!-- <script type="text/javascript" src="../../resources/libraries/tablesorter/jquery.tablesorter.js"></script> -->
@@ -449,6 +472,7 @@ STUDLIST;
       });
     </script>
     <!-- /jquery.inputmask -->
+
     <script type="text/javascript">
       $(function() {
       $('.stud-list').tablesorter();

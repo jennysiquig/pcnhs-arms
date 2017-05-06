@@ -49,7 +49,33 @@ var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
     $NAV_MENU = $('.nav_menu'),
     $FOOTER = $('footer');
 
-	
+// easycomplete
+var options = {
+        url: function(phrase) {
+          return "phpscript/student_search.php?query="+phrase;
+        },
+
+        getValue: function(element) {
+          return element.name;
+        },
+
+        ajaxSettings: {
+          dataType: "json",
+          method: "POST",
+          data: {
+            dataType: "json"
+          }
+        },
+
+        preparePostData: function(data) {
+          data.phrase = $("#search_key").val();
+          return data;
+        },
+
+        requestDelay: 200
+      };
+
+      $("#search_key").easyAutocomplete(options);
 	
 // Sidebar
 function init_sidebar() {

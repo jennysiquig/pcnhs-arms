@@ -235,7 +235,6 @@ UNCLAIMED;
 		<!-- NProgress -->
 		<script src="../resources/libraries/nprogress/nprogress.js"></script>
 		<!-- Custom Theme Scripts -->
-		<script src= "../assets/js/custom.min.js"></script>
 		<script src= "../assets/js/jquery.easy-autocomplete.js"></script>
 		<script type="text/javascript">
 	      $(function() {
@@ -271,5 +270,7 @@ UNCLAIMED;
 		};
 		$("#search_key").easyAutocomplete(options);
 		</script>
+		<script src= "../assets/js/custom.min.js"></script>
+		
 	</body>
 </html>
