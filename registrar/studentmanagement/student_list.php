@@ -292,7 +292,7 @@
                         <td>$date_modified</td>
                         <td>
                           <center>
-                            <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default"> View or Add Grades </a>
+                            <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default"> View Student Record </a>
                           </center>
                         </td>
                       </tr
