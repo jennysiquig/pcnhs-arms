@@ -324,13 +324,13 @@ STUDLIST;
                     echo '<div class="pull-right">
                       <div class="col s12">
                       <ul class="pagination center-align">';
-                      echo "<li class=''><a href='student_list.php?search_key=$search&page=".(1)."'><i class='fa fa-angle-double-left'></i></a></li>";
+                      echo "<li class=''><a href='student_list.php?search_key=$search&page=".(1)."'>First Page</a></li>";
                       if($page > 1) {
-                        echo "<li class=''><a href='student_list.php?search_key=$search&page=".($page-1)."'><i class='fa fa-angle-left'></i></a></li>";
+                        echo "<li class=''><a href='student_list.php?search_key=$search&page=".($page-1)."'>Previous</a></li>";
                       }else if($total <= 0) {
-                        echo '<li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>';
+                        echo '<li class="disabled"><a>Previous</i></a></li>';
                       }else {
-                        echo '<li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>';
+                        echo '<li class="disabled"><a>Previous</a></li>';
                       }
                       // Google Like Pagination
                       $x = 0;
@@ -368,13 +368,13 @@ STUDLIST;
 
 
                       if($total == 0) {
-                        echo "<li class='disabled'><a><i class='fa fa-angle-right'></i></a></li>";
+                        echo "<li class='disabled'><a>Next</a></li>";
                       }else if($page!=$total) {
-                        echo "<li class=''><a href='student_list.php?search_key=$search&page=".($page+1)."'><i class='fa fa-angle-right'></i></a></li>";
+                        echo "<li class=''><a href='student_list.php?search_key=$search&page=".($page+1)."'>Next</a></li>";
                       }else {
-                        echo "<li class='disabled'><a><i class='fa fa-angle-right'></i></a></li>";
+                        echo "<li class='disabled'><a>Next</a></li>";
                       }
-                        echo "<li class=''><a href='student_list.php?search_key=$search&page=".($total)."'><i class='fa fa-angle-double-right'></i></a></li>";
+                        echo "<li class=''><a href='student_list.php?search_key=$search&page=".($total)."'>Last Page</a></li>";
                         echo "</ul></div></div>";
 
 

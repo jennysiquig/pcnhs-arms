@@ -209,7 +209,7 @@
 
 							                    $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to' and credentials.cred_id = $cred_id";
 							                    }else {
-							                    	$accomplishment_date = date('m/d/y').'-'.date('m/d/y');
+							                    	$accomplishment_date = date('m/01/y').'-'.date('m/d/y');
 
 							                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and credentials.cred_id = $cred_id";
 							                    }
@@ -238,64 +238,6 @@ REQ;
 									?>
 								</tbody>
 							</table>
-							<?php
-								if(isset($_GET['accomplishment_date'])) {
-									$accomplishment_date = $_GET['accomplishment_date'];
-									//echo $accomplishment_date;
-									$from_and_to_date = explode("-", $accomplishment_date);
-									$sqldate_format_from = explode("/", $from_and_to_date[0]);
-									$m = $sqldate_format_from[0];
-									$d = $sqldate_format_from[1];
-									$y = $sqldate_format_from[2];
-									$m = preg_replace('/\s+/', '', $m);
-									$d = preg_replace('/\s+/', '', $d);
-									$y = preg_replace('/\s+/', '', $y);
-									$from = $y."-".$m."-".$d;
-									$sqldate_format_to = explode("/", $from_and_to_date[1]);
-									$m = $sqldate_format_to[0];
-									$d = $sqldate_format_to[1];
-									$y = $sqldate_format_to[2];
-									$m = preg_replace('/\s+/', '', $m);
-									$d = preg_replace('/\s+/', '', $d);
-									$y = preg_replace('/\s+/', '', $y);
-									$to = $y."-".$m."-".$d;
-											//echo $accomplishment_date;
-
-					                $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to';";
-					            }else {
-					                    	$accomplishment_date = date('m/d/y').'-'.date('m/d/y');
-					                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where date_released is null or date_released is not null;";
-					            }
-					        $rows = DB::count($statement);
-							    $total = ceil($rows/$limit);
-							echo '<div class="pull-right">
-									<div class="col s12">
-											<ul class="pagination center-align">';
-													if($page > 1) {
-													echo "<li class=''><a href='accomplishment.php?page=".($page-1)."&accomplishment_date=$accomplishment_date'>Previous</a></li>";
-													}else if($total <= 0) {
-													echo '<li class="disabled"><a>Previous</a></li>';
-													}else {
-													echo '<li class="disabled"><a>Previous</a></li>';
-													}
-													for($i = 1;$i <= $total; $i++) {
-													if($i==$page) {
-													echo "<li class='active'><a href='accomplishment.php?page=$i&accomplishment_date=$accomplishment_date'>$i</a></li>";
-													} else {
-													echo "<li class=''><a href='accomplishment.php?page=$i&accomplishment_date=$accomplishment_date'>$i</a></li>";
-													}
-													}
-													if($total == 0) {
-													echo "<li class='disabled'><a>Next</a></li>";
-													}else if($page!=$total) {
-													echo "<li class=''><a href='accomplishment.php?page=".($page+1)."&accomplishment_date=$accomplishment_date'>Next</a></li>";
-													}else {
-													echo "<li class='disabled'><a>Next</a></li>";
-													}
-											echo "</ul></div></div>";
-
-											// $_SESSION['accomplishment_date'] = $accomplishment_date;
-				             ?>
 						</div>
 					</div>
 				</div>

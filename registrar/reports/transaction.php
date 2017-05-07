@@ -178,7 +178,7 @@
 
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between '$from' and '$to' limit $start, $limit;";
 				                    }else {
-				                    	$transaction_date = date('m/d/y').'-'.date('m/d/y');
+				                    	$transaction_date = date('m/01/y').'-'.date('m/d/y');
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials limit $start, $limit";
 				                    }
 
@@ -239,12 +239,12 @@ TRANS;
 
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials where trans_date between '$from' and '$to';";
 				                    }else {
-				                    	$transaction_date = date('m/d/y').'-'.date('m/d/y');
+				                    	$transaction_date = date('m/01/y').'-'.date('m/d/y');
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join transaction natural join credentials";
 				                    }
 
-              $result = DB::query($statement);
-              $rows = count($result);
+			              	$result = DB::query($statement);
+			              	$rows = count($result);
 							$total = ceil($rows/$limit);
 							echo '<div class="pull-right">
 									<div class="col s12">
