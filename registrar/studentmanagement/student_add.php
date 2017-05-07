@@ -60,7 +60,6 @@
 	                    unset($_SESSION['error_pop']);
 	                }
 	            ?>
-
             <!--  -->
 			<div class="clearfix"></div>
 
@@ -282,20 +281,14 @@ OPTION1;
 				<script src= "../../resources/libraries/sisyphus/sisyphus.js"></script>
 				<!-- NProgress -->
     			<script src="../../resources/libraries/nprogress/nprogress.js"></script>
+    			<!-- Date Range Picker -->
+				<script src="../../resources/libraries/moment/min/moment.min.js"></script>
+				<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
 				<!-- Custom Theme Scripts -->
 				
 				<script src= "../../assets/js/custom.min.js"></script>
+				
 				<script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
-				<script type="text/javascript">
-			      $(function() {
-			      $('.recent-request').tablesorter();
-			      $('.tablesorter-bootstrap').tablesorter({
-			      theme : 'bootstrap',
-			      headerTemplate: '{content} {icon}',
-			      widgets    : ['zebra','columns', 'uitheme']
-			      });
-			      });
-			    </script>
 				<!-- Scripts -->
 				<script type="text/javascript">
 				var options = {
@@ -321,9 +314,7 @@ OPTION1;
 				$("#search_key").easyAutocomplete(options);
 				</script>
 				<!-- Scripts -->
-				<!-- Date Range Picker -->
-				<script src="../../resources/libraries/moment/min/moment.min.js"></script>
-				<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
+				
 
 				<!-- /jquery.inputmask -->
 				<script>
