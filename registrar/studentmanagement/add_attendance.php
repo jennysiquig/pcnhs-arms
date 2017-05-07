@@ -24,6 +24,7 @@
         <!-- Custom Theme Style -->
         <link href="../../assets/css/custom.min.css" rel="stylesheet">
         <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+        <link href="../../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
 
         <!--[if lt IE 9]>
         <script src="../js/ie8-responsive-file-warning.js"></script>
@@ -86,7 +87,7 @@
                                             $statement = "SELECT * FROM pcnhsdb.students NATURAL JOIN primaryschool where stud_id = '$stud_id';";
                                             $result = DB::query($statement);
                                             foreach ($result as $row) {
-                                              $pschool_year = $row['schl_yr'];
+                                              $pschool_year = $row['pschool_year'];
                                             }
 
 
@@ -158,6 +159,31 @@
             <!-- NProgress -->
             <script src="../../resources/libraries/nprogress/nprogress.js"></script>
             <!-- Custom Theme Scripts -->
+            <script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
+                <!-- Scripts -->
+                <script type="text/javascript">
+                var options = {
+                url: function(phrase) {
+                return "phpscript/student_search.php?query="+phrase;
+                },
+                getValue: function(element) {
+                return element.name;
+                },
+                ajaxSettings: {
+                dataType: "json",
+                method: "POST",
+                data: {
+                dataType: "json"
+                }
+                },
+                preparePostData: function(data) {
+                data.phrase = $("#search_key").val();
+                return data;
+                },
+                requestDelay: 200
+                };
+                $("#search_key").easyAutocomplete(options);
+                </script>
             <script src= "../../assets/js/custom.min.js"></script>
             <!-- Scripts -->
             <!-- Parsley -->

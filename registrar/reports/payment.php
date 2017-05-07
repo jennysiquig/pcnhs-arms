@@ -54,6 +54,7 @@
 	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
 	     <!-- Custom Theme Style -->
 	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
+	    <link href="../../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
 
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -188,7 +189,7 @@
 
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials natural join transaction where pay_date between '$from' and '$to' limit $start, $limit;";
 				                    }else {
-				                    	$pay_date = date('m/d/y').'-'.date('m/d/y');
+				                    	$payment_date = date('m/d/y').'-'.date('m/d/y');
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials natural join transaction limit $start, $limit";
 				                    }
 
@@ -196,7 +197,7 @@
 				                    $result = DB::query($statement);
                             if (count($result) > 0) {
                              foreach ($result as $row) {
-					                    	$pay_date = $row['pay_date'];
+					                    	$payment_date = $row['pay_date'];
 					                    	$or_no = $row['or_no'];
 					                    	$student = $row['first_name']." ".$row['last_name'];
 					                    	$credential = $row['cred_name'];
@@ -207,7 +208,7 @@
 					                    	//remarks
 					                    echo <<<PAYMENT
 					                    	<tr class="odd pointer">
-												<td class=" ">$pay_date</td>
+												<td class=" ">$payment_date</td>
 												<td class=" ">$or_no</td>
 												<td class=" ">$student</td>
 												<td class=" ">$credential</td>
@@ -229,9 +230,9 @@ PAYMENT;
 								</tbody>
 							</table>
 							<?php
-								if(isset($_GET['transaction_date'])) {
-				                    	$pay_date = $_GET['transaction_date'];
-				                    	$from_and_to_date = explode("-", $pay_date);
+								if(isset($_GET['payment_date'])) {
+				                    	$payment_date = $_GET['payment_date'];
+				                    	$from_and_to_date = explode("-", $payment_date);
 				                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
 										$m = $sqldate_format_from[0];
 										$d = $sqldate_format_from[1];
@@ -254,7 +255,7 @@ PAYMENT;
 
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials where pay_date between '$from' and '$to';";
 				                    }else {
-				                    	$pay_date = date('m/d/y').'-'.date('m/d/y');
+				                    	$payment_date = date('m/d/y').'-'.date('m/d/y');
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials";
 				                    }
 
@@ -265,7 +266,7 @@ PAYMENT;
 									<div class="col s12">
 											<ul class="pagination center-align">';
 													if($page > 1) {
-													echo "<li class=''><a href='transaction.php?page=".($page-1)."&pay_date=$pay_date'>Previous</a></li>";
+													echo "<li class=''><a href='payment.php?page=".($page-1)."&payment_date=$payment_date'>Previous</a></li>";
 													}else if($total <= 0) {
 													echo '<li class="disabled"><a>Previous</a></li>';
 													}else {
@@ -273,15 +274,15 @@ PAYMENT;
 													}
 													for($i = 1;$i <= $total; $i++) {
 													if($i==$page) {
-													echo "<li class='active'><a href='payment.php?page=$i&pay_date=$pay_date'>$i</a></li>";
+													echo "<li class='active'><a href='payment.php?page=$i&payment_date=$payment_date'>$i</a></li>";
 													} else {
-													echo "<li class=''><a href='transaction.php?page=$i&pay_date=$pay_date'>$i</a></li>";
+													echo "<li class=''><a href='payment.php?page=$i&payment_date=$payment_date'>$i</a></li>";
 													}
 													}
 													if($total == 0) {
 													echo "<li class='disabled'><a>Next</a></li>";
 													}else if($page!=$total) {
-													echo "<li class=''><a href='payment.php?page=".($page+1)."&pay_date=$pay_date'>Next</a></li>";
+													echo "<li class=''><a href='payment.php?page=".($page+1)."&payment_date=$payment_date'>Next</a></li>";
 													}else {
 													echo "<li class='disabled'><a>Next</a></li>";
 													}
@@ -310,7 +311,10 @@ PAYMENT;
 		<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 		<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- Custom Theme Scripts -->
+		<script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
 		<script src= "../../assets/js/custom.js"></script>
+		
+	    
 		<script type="text/javascript">
 			$('#payment_date').daterangepicker({
 			    ranges: {
@@ -327,6 +331,35 @@ PAYMENT;
 			  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
 			});
 		</script>
+		<script type="text/javascript">
+	      var options = {
+	        url: function(phrase) {
+	          return "../../registrar/studentmanagement/phpscript/student_search.php?query="+phrase;
+	        },
+
+	        getValue: function(element) {
+	          return element.name;
+	        },
+
+	        ajaxSettings: {
+	          dataType: "json",
+	          method: "POST",
+	          data: {
+	            dataType: "json"
+	          }
+	        },
+
+	        preparePostData: function(data) {
+	          data.phrase = $("#search_key").val();
+	          return data;
+	        },
+
+	        requestDelay: 200
+	      };
+
+	      $("#search_key").easyAutocomplete(options);
+	</script>
+	</script>
 		<script type="text/javascript">
 		$(function() {
 		$('.payment-list').tablesorter();

@@ -80,7 +80,7 @@
 				if(!empty($special_grade) && $curr_code != "NSEC") {
 					$willInsert = false;
 					$alert_type = "danger";
-					$error_message = "Special grades are for NSEC Students only.";
+					$error_message = "Ooops. The system did not accept the value that you entered, Special Grade fields are for NSEC Students only.";
 					$popover = new Popover();
 					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
@@ -91,7 +91,7 @@
 				if($fin_grade > 74 && $credit_earned == 0 && is_numeric($credit_earned)) {
 					$willInsert = false;
 					$alert_type = "danger";
-					$error_message = "Credit Earned cannot be 0 if the Final Grade is greater than 74.";
+					$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 					$popover = new Popover();
 					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
@@ -103,7 +103,7 @@
 					if($curr_code != "K-12") {
 						$willInsert = false;
 						$alert_type = "danger";
-						$error_message = "Please check the Credit Earned Input.";
+						$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 						$popover = new Popover();
 						$popover->set_popover($alert_type, $error_message);
 						$_SESSION['error_pop'] = $popover->get_popover();
@@ -118,7 +118,7 @@
 							$credit_earned = "";
 							$willInsert = false;
 							$alert_type = "danger";
-							$error_message = "Please check the Credit Earned Input.";
+							$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 							$popover = new Popover();
 							$popover->set_popover($alert_type, $error_message);
 							$_SESSION['error_pop'] = $popover->get_popover();
@@ -138,7 +138,7 @@
 					if($curr_code == "K-12") {
 						$willInsert = false;
 						$alert_type = "danger";
-						$error_message = "Error saving to database. ";
+						$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 						$popover = new Popover();
 						$popover->set_popover($alert_type, $error_message);
 						$_SESSION['error_pop'] = $popover->get_popover();
@@ -161,7 +161,7 @@
 				if($fin_grade > 99.99 || $fin_grade < 65) {
 					$willInsert = false;
 					$alert_type = "danger";
-					$error_message = "You have entered an Invalid Final Grade.";
+					$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 					$popover = new Popover();
 					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
@@ -172,7 +172,7 @@
 				if($credit_earned < 0 || $credit_earned > 100) {
 					$willInsert = false;
 					$alert_type = "danger";
-					$error_message = "You have entered an Invalid Credits Earned.";
+					$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 					$popover = new Popover();
 					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
@@ -193,7 +193,7 @@
 				if($average_grade > 99.999) {
 					$willInsert = false;
 					$alert_type = "danger";
-					$error_message = "You have entered an Invalid Average Grade.";
+					$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 					$popover = new Popover();
 					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();
@@ -203,7 +203,7 @@
 				if(empty($average_grade)) {
 					$willInsert = false;
 					$alert_type = "danger";
-					$error_message = "Empty Average Grade.";
+					$error_message = "Ooops. The system cannot accept empty Average Grade, please check and enter a valid value.";
 					$popover = new Popover();
 					$popover->set_popover($alert_type, $error_message);
 					$_SESSION['error_pop'] = $popover->get_popover();

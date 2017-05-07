@@ -15,17 +15,17 @@ $user = $_POST['dbuser'];
 $pass = $_POST['dbpass'];
 
 if (isset($_POST['urlpath']) && $_POST['protocol'] == "http://") {
-    $urlpath = '/' . $_POST['urlpath'];
+    $url =  "/" . $_POST['urlpath'];
+    $urlpath = "."."'$url'";
 } else {
     $urlpath = "";
 }
 
-echo $urlpath;
-$base_url = "$protocol" . $_SERVER['SERVER_NAME'] . "$urlpath";
+$base_url = "$protocol." . $_SERVER['SERVER_NAME'] . "$urlpath";
 
 $string_replace = "<?php
     require_once 'meekrodb.php';
-    $variable_url='$base_url';
+    $variable_url="."'$protocol'".".". '$_SERVER["SERVER_NAME"]'."$urlpath;"."
     //$variable_host='$host';
     DB::$variable_db='$db';
     DB::$variable_user='$user';
@@ -33,8 +33,7 @@ $string_replace = "<?php
     //$variable_conn = new mysqli($variable_host,$variable_user,$variable_pass,$variable_db);
 ?>";
 $string_replace_pc = "<?php
-    $variable_url='$base_url';
-?>";
+    $variable_url="."'$protocol'".".". '$_SERVER["SERVER_NAME"]'."$urlpath;"."; ?>";
 //echo $string_replace;
 $file = fopen("resources/config.php", "w");
 fwrite($file, $string_replace);

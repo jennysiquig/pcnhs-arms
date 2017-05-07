@@ -62,6 +62,7 @@
 	    <link href="../../assets/css/custom.min.css" rel="stylesheet">
 	     <!-- Custom Theme Style -->
 	    <link href="../../assets/css/customstyle.css" rel="stylesheet">
+	    <link href="../../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
 
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -313,11 +314,14 @@ REQ;
 	<!-- Date Range Picker -->
 	<script src="../../resources/libraries/moment/min/moment.min.js"></script>
 	<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
-  <!-- NProgress -->
-  <script src="../../resources/libraries/nprogress/nprogress.js"></script>
+  	<!-- NProgress -->
+  	<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 	<script src= "../../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 	<!-- Custom Theme Scripts -->
+	
+	<script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
 	<script src= "../../assets/js/custom.js"></script>
+	    
 	<script type="text/javascript">
 			$('#accomplishment_date').daterangepicker({
 			    ranges: {
@@ -349,7 +353,34 @@ REQ;
                  $("#date").datepicker();
            });
    		</script>
+   		<script type="text/javascript">
+	      var options = {
+	        url: function(phrase) {
+	          return "../../registrar/studentmanagement/phpscript/student_search.php?query="+phrase;
+	        },
 
+	        getValue: function(element) {
+	          return element.name;
+	        },
+
+	        ajaxSettings: {
+	          dataType: "json",
+	          method: "POST",
+	          data: {
+	            dataType: "json"
+	          }
+	        },
+
+	        preparePostData: function(data) {
+	          data.phrase = $("#search_key").val();
+	          return data;
+	        },
+
+	        requestDelay: 200
+	      };
+
+	      $("#search_key").easyAutocomplete(options);
+	</script>
 
 </body>
 </html>

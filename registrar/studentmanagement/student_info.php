@@ -86,6 +86,7 @@ foreach ($result as $row) {
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/customstyle.css" rel="stylesheet">
+		<link href="../../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
@@ -644,7 +645,8 @@ REMOVE;
 														}
 
 														$checkgrade = "SELECT * FROM pcnhsdb.grades where stud_id = '$stud_id' and yr_level = $year_check;";
-														$result_checkgrade = DB::count($checkgrade);
+														$result = DB::query($checkgrade);
+														$result_checkgrade = count($result);
 														if($result_checkgrade > 0) {
 															$next_attendance = $attendance_count+1;
 															if($attendance_count < 4 && $next_attendance == $result_checkgrade) {
@@ -682,6 +684,40 @@ REMOVE;
 															</thead>
 															<tbody>
 																<!-- Credentials History  -->
+																<?php
+																	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join credentials where stud_id = '$stud_id';";
+																	$result = DB::query($statement);
+																	if(count($result) > 0) {
+																		foreach ($result as $row) {
+																			$cred_name = $row['cred_name'];
+																			$request_purpose = $row['request_purpose'];
+																			$date_processed = $row['date_processed'];
+																			$status = $row['status'];
+																			switch ($status) {
+																				case 'r':
+																					$status = "Released";
+																					break;
+																				case 'u':
+																					$status = "Unclaimed";
+																					break;
+																				case 'p':
+																					$status = "Pending";
+																					break;
+																			}
+																			$date_released = $row['date_released'];
+																			echo <<<CH
+																				<tr>
+																					<td>$cred_name</td>
+																					<td>$request_purpose</td>
+																					<td>$date_processed</td>
+																					<td>$status</td>
+																					<td>$date_released</td>
+																				</tr>
+CH;
+																		}
+																	}
+																?>
+																;
 															</tbody>
 														</table>
 													</div>
@@ -740,6 +776,41 @@ GEN;
 		<!-- NProgress -->
 		<script src="../../resources/libraries/nprogress/nprogress.js"></script>
 		<!-- Custom Theme Scripts -->
+		<script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
+				<script type="text/javascript">
+			      $(function() {
+			      $('.recent-request').tablesorter();
+			      $('.tablesorter-bootstrap').tablesorter({
+			      theme : 'bootstrap',
+			      headerTemplate: '{content} {icon}',
+			      widgets    : ['zebra','columns', 'uitheme']
+			      });
+			      });
+			    </script>
+				<!-- Scripts -->
+				<script type="text/javascript">
+				var options = {
+				url: function(phrase) {
+				return "phpscript/student_search.php?query="+phrase;
+				},
+				getValue: function(element) {
+				return element.name;
+				},
+				ajaxSettings: {
+				dataType: "json",
+				method: "POST",
+				data: {
+				dataType: "json"
+				}
+				},
+				preparePostData: function(data) {
+				data.phrase = $("#search_key").val();
+				return data;
+				},
+				requestDelay: 200
+				};
+				$("#search_key").easyAutocomplete(options);
+				</script>
 		<script src= "../../assets/js/custom.min.js"></script>
 		<!-- Scripts -->
 		<!-- validator -->

@@ -25,6 +25,8 @@
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
 		<link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+		<link href="../../assets/css/customstyle.css" rel="stylesheet">
+		<link href="../../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
 
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
@@ -58,7 +60,6 @@
 	                    unset($_SESSION['error_pop']);
 	                }
 	            ?>
-
             <!--  -->
 			<div class="clearfix"></div>
 
@@ -66,7 +67,7 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Student Personal Information </h2>
-						<h2 class="pull-right"><small  style="color: red;"> <button type="reset" class="btn btn-danger btn-medium" onclick="releaseData();"> <i class="fa fa-info-circle"></i> Clear</button> Fields first before adding new student.</small></h2>
+						<h2 class="pull-right"><small> <button type="reset" class="btn btn-primary btn-medium" onclick="releaseData();"> <i class="fa fa-info-circle"></i> Clear</button> Fields first before adding new student.</small></h2>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
@@ -74,11 +75,10 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>Student</h2>
-									<h2 class="pull-right"><small style="color: red;"><i class="fa fa-info-circle"></i> If the information is not available, please enter "NONE"</small></h2>
+									<h2 class="pull-right"><small><i class="fa fa-info-circle"></i> If the information is not available, please enter "NONE"</small></h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="item form-group">
-
 									<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum of Student *</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										<select id="curr-select" class="form-control col-md-7 col-xs-12" name="curriculum" required="">
@@ -95,7 +95,7 @@ OPTION1;
 												}
 												?>
 											</select>
-											<p style="color: red"><i class="fa fa-info-circle"></i> Refer to the curriculum that is indicated on the Form 137.</p>
+											<p><i class="fa fa-info-circle"></i> Refer to the curriculum that is indicated on the Form 137.</p>
 										</div>
 									</div>
 									<div class="x_content">
@@ -281,12 +281,40 @@ OPTION1;
 				<script src= "../../resources/libraries/sisyphus/sisyphus.js"></script>
 				<!-- NProgress -->
     			<script src="../../resources/libraries/nprogress/nprogress.js"></script>
-				<!-- Custom Theme Scripts -->
-				<script src= "../../assets/js/custom.min.js"></script>
-				<!-- Scripts -->
-				<!-- Date Range Picker -->
+    			<!-- Date Range Picker -->
 				<script src="../../resources/libraries/moment/min/moment.min.js"></script>
 				<script src="../../resources/libraries/bootstrap-daterangepicker/daterangepicker.js"></script>
+				<!-- Custom Theme Scripts -->
+				
+				<script src= "../../assets/js/custom.min.js"></script>
+				
+				<script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
+				<!-- Scripts -->
+				<script type="text/javascript">
+				var options = {
+				url: function(phrase) {
+				return "phpscript/student_search.php?query="+phrase;
+				},
+				getValue: function(element) {
+				return element.name;
+				},
+				ajaxSettings: {
+				dataType: "json",
+				method: "POST",
+				data: {
+				dataType: "json"
+				}
+				},
+				preparePostData: function(data) {
+				data.phrase = $("#search_key").val();
+				return data;
+				},
+				requestDelay: 200
+				};
+				$("#search_key").easyAutocomplete(options);
+				</script>
+				<!-- Scripts -->
+				
 
 				<!-- /jquery.inputmask -->
 				<script>

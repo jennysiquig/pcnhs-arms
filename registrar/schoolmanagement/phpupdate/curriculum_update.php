@@ -13,7 +13,7 @@
 		if($year_ended < $year_started) {
 			$willInsert = false;
 			$alert_type = "danger";
-			$error_message = "Invalid Year Ended Input.";
+			$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 			$popover = new Popover();
 			$popover->set_popover($alert_type, $error_message);
 			$_SESSION['error_pop'] = $popover->get_popover();
@@ -24,7 +24,7 @@
 		if(strtoupper($year_ended) != "PRESENT") {
 			$willInsert = false;
 			$alert_type = "danger";
-			$error_message = "Invalid Year Ended Input.";
+			$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 			$popover = new Popover();
 			$popover->set_popover($alert_type, $error_message);
 			$_SESSION['error_pop'] = $popover->get_popover();

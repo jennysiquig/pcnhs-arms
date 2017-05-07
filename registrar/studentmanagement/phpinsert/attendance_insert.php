@@ -27,7 +27,7 @@
 	if(!is_numeric($days_attended) || !is_numeric($school_days)) {
 		$willInsert = false;
 		$alert_type = "danger";
-		$error_message = "You entered an Invalid number of Days Attended or School Days.";
+		$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
@@ -38,7 +38,7 @@
 	if($days_attended > $school_days) {
 		$willInsert = false;
 		$alert_type = "danger";
-		$error_message = "Days attended must be less than or equal to School Days.";
+		$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
@@ -48,7 +48,17 @@
 	if(intval($days_attended) > $days_in_year || intval($school_days) > $days_in_year) {
 		$willInsert = false;
 		$alert_type = "danger";
-		$error_message = "Days attended must be less than or equal to Days in year (365).";
+		$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
+		$popover = new Popover();
+		$popover->set_popover($alert_type, $error_message);
+		$_SESSION['error_pop'] = $popover->get_popover();
+		header("Location: " . $_SERVER["HTTP_REFERER"]);
+		die();
+	}
+	if(intval($days_attended) < 100 || intval($school_days) < 100) {
+		$willInsert = false;
+		$alert_type = "danger";
+		$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
@@ -62,7 +72,7 @@
 	if(intval($year1) > intval($year2) || intval($year2) != (intval($year1)+1) ) {
 		$willInsert = false;
 		$alert_type = "danger";
-		$error_message = "You entered an Invalid School Year.";
+		$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();
@@ -73,7 +83,7 @@
 	if(intval($total_years_in_school) != (intval($yr_lvl)+6)) {
 		$willInsert = false;
 		$alert_type = "danger";
-		$error_message = "You entered an Invalid Total Years in School.";
+		$error_message = "Ooops. The system did not accept the value that you entered, please check and enter a valid value.";
 		$popover = new Popover();
 		$popover->set_popover($alert_type, $error_message);
 		$_SESSION['error_pop'] = $popover->get_popover();

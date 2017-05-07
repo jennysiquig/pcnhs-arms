@@ -37,7 +37,7 @@
     <link href="../../assets/css/custom.min.css" rel="stylesheet">
      <!-- Custom Theme Style -->
     <link href="../../assets/css/customstyle.css" rel="stylesheet">
-    <link href="../../assets/css/easy-autocomplete-custom.css" rel="stylesheet">
+    <link href="../../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="../js/ie8-responsive-file-warning.js"></script>
@@ -62,7 +62,7 @@
             <li class="active">Student List</li>
           </ol>
         </div>
-        <form class="form-horizontal form-label-left" action="student_list.php" method="GET">
+        <!-- <form class="form-horizontal form-label-left" action="student_list.php" method="GET">
           <div class="">
             <div class="col-sm-5"></div>
             <div class="col-sm-7">
@@ -74,16 +74,16 @@
               </div>
             </div>
           </div>
-        </form>
+        </form> -->
       </div>
       <div class="pull-right">
         <div class="col-md-12">
-          <div class="container">
+          <!-- <div class="container">
         	<div class="row">
                 <div id="filter-panel" class="collapse filter-panel">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <form class="form-inline" role="form" action="advancedsearch.php" method="GET">
+                            <form class="form-inline" role="form" action="student_list.php" method="GET">
                                 <div class="form-group">
                                     <div class="radio" style="margin-left:10px; margin-right:10px;">
                                         <label><input type="radio" name="student_status" value="graduate"> Graduated</label>
@@ -92,7 +92,7 @@
                                         <label><input type="radio" name="student_status" value="current"> Currently Enrolled</label>
                                     </div>
                                     <button type="submit" class="btn btn-default filter-col">
-                                        <span class="glyphicon glyphicon-search"></span> Search
+                                        <span class="glyphicon glyphicon-filter"></span> Filter
                                     </button>
                                 </div>
                             </form>
@@ -101,13 +101,13 @@
                 </div>
 
                 <button type="button" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#filter-panel">
-                    <span class="glyphicon glyphicon-cog"></span> Advanced Search
+                    <span class="glyphicon glyphicon-filter"></span> Filter List
                 </button>
         	</div>
           <div class="pull-right">
             <a><i class="fa fa-info-circle"></i> Search Student by <strong>Last Name / First Name / Curriculum</strong></a>
           </div>
-        </div>
+        </div> -->
         </div>
       </div>
       <div class="row">
@@ -130,24 +130,67 @@
                   </div>
                 </div>
               </form> -->
-              <form class="form-horizontal form-label-left">
-                <div class="form-group">
-                  <label class="control-label col-md-10">Show Number Of Entries:</label>
-                  <div class="col-sm-2">
+                <div class="col-md-3 pull-right">
+                  <form class="form-horizontal form-label-left">
+                    <div class="form-group col-md-9 pull-right">
+                      <label class="control-label">Number Of Entries:</label>
                       <select class="form-control" onchange="changeEntries(this.value)">
                         <option value="20"
                           <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 20) {echo "selected";}} ?>
-                          >20</option>
+                        >20</option>
                         <option value="50"
-                           <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 50) {echo "selected";}} ?>
-                          >50</option>
+                          <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 50) {echo "selected";}} ?>
+                        >50</option>
                         <option value="100"
-                           <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 100) {echo "selected";}} ?>
+                          <?php if(isset($_SESSION['entry'])){if($_SESSION['entry'] == 100) {echo "selected";}} ?>
                         >100</option>
                       </select>
-                  </div>
+                    </div>
+                  </form>
                 </div>
-              </form>
+                <div class="col-md-3">
+                  <form class="form-horizontal form-label-left">
+                    <div class="form-group col-md-9">
+                      <label class="control-label">Sort</label>
+                      <select class="form-control" onchange="sort(this.value)">
+                          <option value="stud_id"
+                          <?php if(isset($_SESSION['sort'])){if($_SESSION['sort'] == "stud_id") {echo "selected";}} ?>
+                        >Student ID</option>
+                          <option value="last_name"
+                          <?php if(isset($_SESSION['sort'])){if($_SESSION['sort'] == "last_name") {echo "selected";}} ?>>Last Name</option>
+                          <option value="first_name"
+                          <?php if(isset($_SESSION['sort'])){if($_SESSION['sort'] == "first_name") {echo "selected";}} ?>>First Name</option>
+                          <option value="curr_name"
+                          <?php if(isset($_SESSION['sort'])){if($_SESSION['sort'] == "curr_name") {echo "selected";}} ?>>Curriculum</option>
+                          <option value="date_modified"
+                          <?php if(isset($_SESSION['sort'])){if($_SESSION['sort'] == "date_modified") {echo "selected";}} ?>>Date Modified</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-9">
+                      <select class="form-control" onchange="sorttype(this.value)">
+                          <option value="asc"
+                           <?php if(isset($_SESSION['sorttype'])){if($_SESSION['sorttype'] == "asc") {echo "selected";}} ?>>Ascending</option>
+                          <option value="desc"
+                           <?php if(isset($_SESSION['sorttype'])){if($_SESSION['sorttype'] == "desc") {echo "selected";}} ?>>Descending</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-3">
+                  <form class="form-horizontal form-label-left">
+                    <div class="form-group col-md-9">
+                      <label class="control-label">Student Status</label>
+                      <select class="form-control" onchange="filter(this.value)">
+                          <option value="all"
+                           <?php if(isset($_SESSION['filter'])){if($_SESSION['filter'] == "all") {echo "selected";}} ?>>All</option>
+                          <option value="current"
+                           <?php if(isset($_SESSION['filter'])){if($_SESSION['filter'] == "current") {echo "selected";}} ?>>Current</option>
+                          <option value="graduate"
+                           <?php if(isset($_SESSION['filter'])){if($_SESSION['filter'] == "graduate") {echo "selected";}} ?>>Graduate</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
               </div>
               <?php
                 if(isset($_GET['search_key'])) {
@@ -159,12 +202,12 @@
                 <table class="tablesorter-bootstrap">
                   <thead>
                     <tr>
-                      <th>Student ID</th>
-                      <th>Last Name</th>
-                      <th>First Name</th>
-                      <th>Middle Name</th>
-                      <th>Curriculum</th>
-                      <th>Date Modified</th>
+                      <th data-sorter="false">Student ID</th>
+                      <th data-sorter="false">Last Name</th>
+                      <th data-sorter="false">First Name</th>
+                      <th data-sorter="false">Middle Name</th>
+                      <th data-sorter="false">Curriculum</th>
+                      <th data-sorter="false">Date Modified</th>
                       <th data-sorter="false">Action</th>
                     </tr>
                   </thead>
@@ -174,13 +217,30 @@
                     $statement = "";
                     $start=0;
                     $limit;
-
+                    $sort;
+                    $filter;
                     if(isset($_SESSION['entry'])){
                       $limit = $_SESSION['entry'];
                     }else {
                       $limit = 20;
                     }
 
+                    if(isset($_SESSION['sort'])){
+                      $sort = $_SESSION['sort'];
+                    }else {
+                      $sort = "stud_id";
+                    }
+                    if(isset($_SESSION['sorttype'])){
+                      $sorttype = $_SESSION['sorttype'];
+                    }else {
+                      $sorttype = "asc";
+                    }
+
+                    if(isset($_SESSION['filter'])){
+                      $filter = $_SESSION['filter'];
+                    }else {
+                      $filter = "";
+                    }
                     if(isset($_GET['page'])){
                       $page=$_GET['page'];
                       $start=($page-1)*$limit;
@@ -190,10 +250,16 @@
                     $search = "";
                     if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
                       $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
-                      $statement =
-                              "SELECT * FROM students LEFT JOIN curriculum ON students.curr_id = curriculum.curr_id WHERE last_name LIKE '$search%' OR first_name LIKE '$search%' OR stud_id LIKE '$search%' OR CONCAT(first_name, ' ', last_name) LIKE '$search%' OR curr_code LIKE '$search%' OR curr_name LIKE '$search%' GROUP BY stud_id order by last_name asc LIMIT $start , $limit;";
+                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' order by $sort $sorttype;";
                     }else {
-                      $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by last_name asc limit $start, $limit;";
+                      if($filter=="all") {
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by $sort $sorttype limit $start, $limit;";
+                      }elseif ($filter == "graduate") {
+                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level >= 4 group by stud_id order by $sort $sorttype limit $start, $limit;";
+                      }else {
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where stud_id not in (select stud_id from grades where yr_level >= 4) group by stud_id order by $sort $sorttype limit $start, $limit;";
+                      }
+                      
                     }
                     $result = DB::query($statement);
                     foreach ($result as $row) {
@@ -226,7 +292,7 @@
                         <td>$date_modified</td>
                         <td>
                           <center>
-                            <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default"><i class="fa fa-user"></i> View </a>
+                            <a href="../../registrar/studentmanagement/student_info.php?stud_id=$stud_id" class="btn btn-default"> View or Add Grades </a>
                           </center>
                         </td>
                       </tr
@@ -236,28 +302,35 @@ STUDLIST;
                   </tbody>
                 </table>
                 <?php
+
                   if(isset($_GET['search_key']) && $_GET['search_key'] != "") {
-                      $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
-                      $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' or (schl_year = '$search' and yr_level = 4) order by last_name;";
+                    $search = htmlspecialchars(filter_var($_GET['search_key'], FILTER_SANITIZE_STRING), ENT_QUOTES);
+                    $statement = "SELECT * from students left join curriculum on students.curr_id = curriculum.curr_id where last_name like '$search%' or first_name like '$search%' or stud_id like '$search%' or concat(first_name,' ',last_name) like '$search%' or concat(last_name,' ',first_name,' ',mid_name) like '$search%' or concat(first_name,' ',mid_name,' ',last_name) like '$search%' order by $sort $sorttype;"; 
                   }else {
-                    $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by last_name asc;";
+                    if($filter=="all") {
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id order by $sort $sorttype;";
+                      }elseif ($filter == "graduate") {
+                         $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level >= 4 group by stud_id order by $sort $sorttype;";
+                      }else {
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where stud_id not in (select stud_id from grades where yr_level >= 4 and yr_level != null) group by stud_id order by $sort $sorttype;";
+                      }
                   }
 
                     $result = DB::query($statement);
                     $rows = count($result);
                     $total = ceil($rows/$limit);
-
                     echo "<p>Showing $limit Entries</p>";
 
                     echo '<div class="pull-right">
                       <div class="col s12">
                       <ul class="pagination center-align">';
+                      echo "<li class=''><a href='student_list.php?search_key=$search&page=".(1)."'><i class='fa fa-angle-double-left'></i></a></li>";
                       if($page > 1) {
-                        echo "<li class=''><a href='student_list.php?page=".($page-1)."&search_key=$search'>Previous</a></li>";
+                        echo "<li class=''><a href='student_list.php?search_key=$search&page=".($page-1)."'><i class='fa fa-angle-left'></i></a></li>";
                       }else if($total <= 0) {
-                        echo '<li class="disabled"><a>Previous</a></li>';
+                        echo '<li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>';
                       }else {
-                        echo '<li class="disabled"><a>Previous</a></li>';
+                        echo '<li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>';
                       }
                       // Google Like Pagination
                       $x = 0;
@@ -287,20 +360,21 @@ STUDLIST;
                       // Google Like Pagination
                       for($i = $y;$i <= $x; $i++) {
                         if($i==$page) {
-                          echo "<li class='active'><a href='student_list.php?page=$i&search_key=$search'>$i</a></li>";
+                          echo "<li class='active'><a href='student_list.php?search_key=$search&page=$i'>$i</a></li>";
                         } else {
-                            echo "<li class=''><a href='student_list.php?page=$i&search_key=$search'>$i</a></li>";
+                            echo "<li class=''><a href='student_list.php?search_key=$search&page=$i'>$i</a></li>";
                           }
                       }
 
 
                       if($total == 0) {
-                        echo "<li class='disabled'><a>Next</a></li>";
+                        echo "<li class='disabled'><a><i class='fa fa-angle-right'></i></a></li>";
                       }else if($page!=$total) {
-                        echo "<li class=''><a href='student_list.php?page=".($page+1)."&search_key=$search'>Next</a></li>";
+                        echo "<li class=''><a href='student_list.php?search_key=$search&page=".($page+1)."'><i class='fa fa-angle-right'></i></a></li>";
                       }else {
-                        echo "<li class='disabled'><a>Next</a></li>";
+                        echo "<li class='disabled'><a><i class='fa fa-angle-right'></i></a></li>";
                       }
+                        echo "<li class=''><a href='student_list.php?search_key=$search&page=".($total)."'><i class='fa fa-angle-double-right'></i></a></li>";
                         echo "</ul></div></div>";
 
 
@@ -326,6 +400,41 @@ STUDLIST;
     <!-- NProgress -->
     <script src="../../resources/libraries/nprogress/nprogress.js"></script>
     <!-- Custom Theme Scripts -->
+    <script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
+        <script type="text/javascript">
+            $(function() {
+            $('.recent-request').tablesorter();
+            $('.tablesorter-bootstrap').tablesorter({
+            theme : 'bootstrap',
+            headerTemplate: '{content} {icon}',
+            widgets    : ['zebra','columns', 'uitheme']
+            });
+            });
+          </script>
+        <!-- Scripts -->
+        <script type="text/javascript">
+        var options = {
+        url: function(phrase) {
+        return "phpscript/student_search.php?query="+phrase;
+        },
+        getValue: function(element) {
+        return element.name;
+        },
+        ajaxSettings: {
+        dataType: "json",
+        method: "POST",
+        data: {
+        dataType: "json"
+        }
+        },
+        preparePostData: function(data) {
+        data.phrase = $("#search_key").val();
+        return data;
+        },
+        requestDelay: 200
+        };
+        $("#search_key").easyAutocomplete(options);
+        </script>
     <script src= "../../assets/js/custom.min.js"></script>
 
     <!-- <script type="text/javascript" src="../../resources/libraries/tablesorter/jquery.tablesorter.js"></script> -->
@@ -345,6 +454,50 @@ STUDLIST;
     xhttp.open("GET", "phpscript/showentry.php?entry="+val, true);
     xhttp.send();
     }
+    //Sort
+    function sort(val) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    location.reload();
+    }
+    };
+    xhttp.open("GET", "phpscript/sort.php?sort="+val, true);
+    xhttp.send();
+    }
+    //Filter
+    function filter(val) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    location.reload();
+    }
+    };
+    xhttp.open("GET", "phpscript/filter.php?filter="+val, true);
+    xhttp.send();
+    }
+    //type
+    function sorttype(val) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    location.reload();
+    }
+    };
+    xhttp.open("GET", "phpscript/sorttype.php?sorttype="+val, true);
+    xhttp.send();
+    }
+    //Filter
+    function filter(val) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    location.reload();
+    }
+    };
+    xhttp.open("GET", "phpscript/filter.php?filter="+val, true);
+    xhttp.send();
+    }
     </script>
     <!--  -->
     <!-- jquery.inputmask -->
@@ -354,6 +507,7 @@ STUDLIST;
       });
     </script>
     <!-- /jquery.inputmask -->
+
     <script type="text/javascript">
       $(function() {
       $('.stud-list').tablesorter();

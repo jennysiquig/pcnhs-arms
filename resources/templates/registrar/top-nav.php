@@ -4,11 +4,23 @@
 <!-- top navigation -->
 <div class="top_nav">
 	<div class="nav_menu no-print">
-		<nav>
-			<div class="nav toggle">
-				<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+		<nav class="navbar">
+			<div class="col-md-2">
+				<div class="nav toggle">
+					<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+				</div>
 			</div>
-			<ul class="nav navbar-nav navbar-right">
+			<div class="search-bar col-sm-7">
+				<form class="search_key" action="$base_url/registrar/studentmanagement/student_list.php" method="GET">
+					<div class="input-group">
+						<input id="search_key" type="text" class="form-control" placeholder="Search Student" name="search_key">
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+						</span>
+					</div>
+				</form>
+			</div>
+			<ul class="nav navbar-nav pull-right">
 				<li class="">
 					<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 						<img src="$base_url/assets/images/icon-user-default.png" alt="">Registrar
@@ -24,6 +36,7 @@
 			</ul>
 		</li>
 	</ul>
+	
 </nav>
 </div>
 </div>

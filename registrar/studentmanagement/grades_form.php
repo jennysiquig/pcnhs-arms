@@ -74,7 +74,7 @@
 
         <!-- Custom Theme Style -->
         <link href="../../assets/css/custom.min.css" rel="stylesheet">
-        <link href="../../assets/css/tstheme/style.css" rel="stylesheet">
+        <link href="../../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
 
         <!--[if lt IE 9]>
         <script src="../js/ie8-responsive-file-warning.js"></script>
@@ -120,7 +120,7 @@
                         $curr_id = $_GET['curriculum'];
                     ?>
                     <!-- val-gr-form -->
-                    <form id=<?php echo "'$stud_id-$yr_level'"; ?> class="form-horizontal form-label-left" name="val-gr-form" action=<?php echo "phpinsert/grades_insert.php?curr_id=$curr_id"; ?> method="POST" >
+                    <form id=<?php echo "'$stud_id-$yr_level'"; ?> class="form-horizontal form-label-left validate-gr" name="val-gr-form" action=<?php echo "phpinsert/grades_insert.php?curr_id=$curr_id"; ?> method="POST" >
                         <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                           <div class="panel">
                             <a class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -280,7 +280,7 @@
                                           <tr>
                                               <td>
                                                   <div class="item form-group">
-                                                      <div class="col-md-5">
+                                                      <div class="col-md-6">
                                                           <input class="form-control" name="subj_id[]" value="$subj_id"  style="width: 50px;" readonly>
                                                       </div>
                                                   </div>
@@ -288,17 +288,17 @@
                                               <td>$subj_name</td>
                                               <td>$subj_level</td>
                                               <td>
-                                                  <div class="col-md-5">
-                                                      <input type="text" id="grade-$x" class="form-control" name="fin_grade[]"  onkeypress="return isNumberKey(event), dateModified();" placeholder="" value="$grades">
+                                                  <div class="col-md-6">
+                                                      <input type="text" id="grade-$x" class="form-control" name="fin_grade[]"  onkeypress="return isNumberKey(event), dateModified();" placeholder="" value="$grades" pattern="\d+(\.\d{2})?" required="">
                                                   </div>
                                               </td>
                                               <td>
-                                                  <div class="col-md-5">
-                                                      <input type="text" id="credit-$x" class="form-control" name="credit_earned[]" onkeypress="dateModified();" placeholder="" value="$credits">
+                                                  <div class="col-md-6">
+                                                      <input type="text" id="credit-$x" class="form-control" name="credit_earned[]" onkeypress="dateModified();" placeholder="" value="$credits" pattern="\d+(\.\d{2})?" required="" >
                                                   </div>
                                               </td>
                                               <td>
-                                                  <div class="col-md-5">
+                                                  <div class="col-md-6">
                                                       <input type="text" class="form-control" name="special_grade[]" placeholder="" value="">
                                                   </div>
                                               </td>
@@ -311,7 +311,7 @@ SUBJ;
                                           <tr>
                                               <td>
                                                   <div class="item form-group">
-                                                      <div class="col-md-5">
+                                                      <div class="col-md-6">
                                                           <input class="form-control" name="subj_id[]" value="$subj_id"  style="width: 50px;" readonly>
                                                       </div>
                                                   </div>
@@ -319,17 +319,17 @@ SUBJ;
                                               <td>$subj_name</td>
                                               <td>$subj_level</td>
                                               <td>
-                                                  <div class="col-md-5">
-                                                      <input type="text" id="grade-$x" class="form-control" name="fin_grade[]" onkeypress="return isNumberKey(event), dateModified(this.value);" placeholder="" value="">
+                                                  <div class="col-md-6">
+                                                      <input type="text" id="grade-$x" class="form-control" name="fin_grade[]" onkeypress="return isNumberKey(event), dateModified(this.value);" placeholder="" value="" pattern="\d+(\.\d{2})?" required="">
                                                   </div>
                                               </td>
                                               <td>
-                                                  <div class="col-md-5">
-                                                      <input type="text" id="credit-$x" class="form-control" name="credit_earned[]"  onkeypress="dateModified();" placeholder="" value="$credit_earned">
+                                                  <div class="col-md-6">
+                                                      <input type="text" id="credit-$x" class="form-control" name="credit_earned[]"  onkeypress="dateModified();" placeholder="" value="$credit_earned" pattern="\d+(\.\d{2})?" required="">
                                                   </div>
                                               </td>
                                               <td>
-                                                  <div class="col-md-5">
+                                                  <div class="col-md-6">
                                                       <input type="text" class="form-control" name="special_grade[]" onblur="dateModified();" placeholder="" value="">
                                                   </div>
                                               </td>
@@ -374,7 +374,7 @@ NUM;
                             <div class="pull-right">
                                 <button type="reset" class="btn btn-default" onclick="releaseData();">Clear Fields</button>
 
-                                <button type="" id="send" class="btn btn-primary" onclick="saveToFile();" data-toggle="tooltip" data-placement="top" title="Save grades as CSV"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
+                                <button type="" class="btn btn-primary" onclick="saveToFile();" data-toggle="tooltip" data-placement="top" title="Save grades as CSV"><i class="glyphicon glyphicon-floppy-disk"></i> Save to File</button>
                                 <button type="submit" id="send" class="btn btn-success" onclick="saveToDB();"><i class="glyphicon glyphicon-floppy-disk"></i> Save to Database</button>
                             </div>
 
@@ -415,10 +415,46 @@ NUM;
         <!-- NProgress -->
         <script src="../../resources/libraries/nprogress/nprogress.js"></script>
         <!-- Custom Theme Scripts -->
+        <script src= "../../assets/js/jquery.easy-autocomplete.js"></script>
+        <!-- Scripts -->
+        <script type="text/javascript">
+        var options = {
+        url: function(phrase) {
+        return "phpscript/student_search.php?query="+phrase;
+        },
+        getValue: function(element) {
+        return element.name;
+        },
+        ajaxSettings: {
+        dataType: "json",
+        method: "POST",
+        data: {
+        dataType: "json"
+        }
+        },
+        preparePostData: function(data) {
+        data.phrase = $("#search_key").val();
+        return data;
+        },
+        requestDelay: 200
+        };
+        $("#search_key").easyAutocomplete(options);
+        </script>
         <script src= "../../assets/js/custom.min.js"></script>
         <!-- Scripts -->
        <!-- Parsley -->
-
+       <script>
+        $(function () {
+          $('.validate-gr').parsley().on('field:validated', function() {
+            var ok = $('.parsley-error').length === 0;
+            $('.bs-callout-info').toggleClass('hidden', !ok);
+            $('.bs-callout-warning').toggleClass('hidden', ok);
+          })
+          .on('form:#send', function() {
+            return false; // Don't submit form for this demo
+          });
+        });
+        </script>
         <!-- Sisyphus -->
 
         <!-- jquery.inputmask -->
