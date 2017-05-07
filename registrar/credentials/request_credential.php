@@ -23,7 +23,7 @@
 
 		<!-- Custom Theme Style -->
 		<link href="../../assets/css/custom.min.css" rel="stylesheet">
-		<link href="../../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
+		<link href="../../assets/css/easy-autocomplete.css" rel="stylesheet">
 
 		<!--[if lt IE 9]>
 		<script src="../../js/ie8-responsive-file-warning.js"></script>
@@ -39,7 +39,34 @@
 		<!-- Sidebar -->
 		<?php include "../../resources/templates/registrar/sidebar.php"; ?>
 		<!-- Top Navigation -->
-		<?php include "../../resources/templates/registrar/top-nav.php"; ?>
+		<div class="top_nav">
+			<div class="nav_menu no-print">
+				<nav class="navbar">
+					<div class="col-md-2">
+						<div class="nav toggle">
+							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+						</div>
+					</div>
+					<ul class="nav navbar-nav pull-right">
+						<li class="">
+							<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<img src="../../assets/images/icon-user-default.png" alt="">Registrar
+								<span class=" fa fa-angle-down"></span>
+							</a>
+							<ul class="dropdown-menu dropdown-usermenu pull-right">
+								<li><a href="../../help.php" target="_blank">Help</a></li>
+								<li><a href="https://goo.gl/forms/Db1YtGkquWuIIEeB3" target="_blank">Report an Issue</a></li>
+								<li><a href="../../logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+							</ul>
+						</li>
+						
+					</ul>
+				</li>
+			</ul>
+			
+		</nav>
+		</div>
+		</div>
 		<!-- Contents Here -->
 		<div class="right_col" role="main">
 
@@ -139,7 +166,7 @@
 	<script type="text/javascript">
 	      var options = {
 	        url: function(phrase) {
-	          return "../../registrar/studentmanagement/phpscript/student_search.php?query="+phrase;
+	          return "phpscript/student_search.php?query="+phrase;
 	        },
 
 	        getValue: function(element) {
@@ -155,14 +182,14 @@
 	        },
 
 	        preparePostData: function(data) {
-	          data.phrase = $("#search_key").val();
+	          data.phrase = $("#full-name").val();
 	          return data;
 	        },
 
 	        requestDelay: 200
 	      };
 
-	      $("#search_key").easyAutocomplete(options);
+	      $("#full-name").easyAutocomplete(options);
 	</script>
 		<script src= "../../assets/js/custom.min.js"></script>
 		<script type="text/javascript">
