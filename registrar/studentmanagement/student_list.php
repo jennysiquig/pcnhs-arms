@@ -257,7 +257,7 @@
                       }elseif ($filter == "graduate") {
                          $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where yr_level >= 4 group by stud_id order by $sort $sorttype limit $start, $limit;";
                       }else {
-                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id natural join grades where stud_id not in (select stud_id from grades where yr_level >= 4) group by stud_id order by $sort $sorttype limit $start, $limit;";
+                        $statement = "select * from students left join curriculum on students.curr_id = curriculum.curr_id left join grades using(stud_id) where stud_id not in (select stud_id from grades where yr_level >= 4) group by stud_id order by $sort $sorttype limit $start, $limit;";
                       }
                       
                     }
