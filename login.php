@@ -44,7 +44,7 @@
 <div class="top-content">
     <div class="inner-bg">
         <div class="container">
-            <div class="row">
+           <!--  <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 text">
 
                     <h1><img src="assets/images/pcnhslogo.png" style='height: 80px; width: 80px;'/> <strong>PCNHS
@@ -54,7 +54,7 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="row">
                 <div class="col-sm-5 col-sm-offset-3 form-box">
                     <!-- Generate Error Message -->
@@ -102,10 +102,13 @@
                         <br>
                         <center>
                             <a href="#" data-toggle="tooltip" data-placement="top"
-                               title="Contact System Administrator to reset password."><i class="fa fa-info-circle"></i>
-                                Forgot Password?</a>
-                        </center>
-                        <center>
+                               title="Login as System Administrator to add an account.">
+                                Create an Account</a>
+                                |
+                            <a href="#" data-toggle="tooltip" data-placement="top"
+                               title="Contact System Administrator to reset password.">
+                                Reset Password</a>
+                                |
                             <a href="help.php">Help Page</a>
                         </center>
                     </div>

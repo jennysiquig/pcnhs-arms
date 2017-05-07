@@ -24,7 +24,7 @@
     <script src="resources/libraries/PDFObject/pdfobject.min.js"></script>
 
     <style>
-    .pdfobject-container { height: 600px;}
+    .pdfobject-container { height: 560px;}
     </style>
   </head>
   <body class="nav-md">
@@ -33,14 +33,12 @@
         <div class="main_container">
         <div class="col-md-3 left_col menu_fixed">
             <div class="left_col scroll-view">
-                <div class="navbar nav_title" style="border: 0;">
-                    <a href="help.php" class="site_title"><i class="fa fa-question-circle-o"></i> <span>Help Page</span></a>
-                </div>
                 <div class="clearfix"></div>
                 <!-- menu profile quick info -->
                 <!-- /menu profile quick info -->
                 <br>
                 <!-- sidebar menu -->
+
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section active">
                         <h3>Menu</h3>
@@ -63,7 +61,7 @@
                 </div>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="">
-                        <a class="user-profile">PCNHS ARMS</a>
+                        <a class="user-profile">PCNHS ARMS Help Page</a>
                         
                     </li>
                     
