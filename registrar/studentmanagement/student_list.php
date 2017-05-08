@@ -239,7 +239,7 @@
                     if(isset($_SESSION['filter'])){
                       $filter = $_SESSION['filter'];
                     }else {
-                      $filter = "";
+                      $filter = "all";
                     }
                     if(isset($_GET['page'])){
                       $page=$_GET['page'];
