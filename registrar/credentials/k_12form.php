@@ -71,7 +71,7 @@
 
              <?php
              $birth_date = "";
-             $box1 = "SELECT *, concat(last_name, ', ', first_name, ' ', upper(left(mid_name, 1)), '.') as 'full_name' FROM students NATURAL JOIN parent NATURAL JOIN primaryschool WHERE students.stud_id = '$stud_id';";
+             $box1 = "SELECT concat(last_name, ', ', first_name, ' ', upper(left(mid_name, 1)), '.') as 'full_name', province, barangay, towncity, pname, occupation, address, total_elem_years, psname, pschool_year, stud_id, birth_date, gender FROM students left join parent using (stud_id) LEFT JOIN primaryschool using (stud_id) WHERE students.stud_id = '$stud_id';";
              $result = DB::query($box1);
              if (count($result) > 0) {
                foreach ($result as $row) {
