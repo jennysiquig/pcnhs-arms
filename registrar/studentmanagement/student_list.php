@@ -448,7 +448,7 @@ STUDLIST;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-    location.reload();
+    location.assign("student_list.php");
     }
     };
     xhttp.open("GET", "phpscript/showentry.php?entry="+val, true);
@@ -459,7 +459,7 @@ STUDLIST;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-    location.reload();
+    location.assign("student_list.php");
     }
     };
     xhttp.open("GET", "phpscript/sort.php?sort="+val, true);
@@ -470,7 +470,7 @@ STUDLIST;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-    location.reload();
+    location.assign("student_list.php");
     }
     };
     xhttp.open("GET", "phpscript/filter.php?filter="+val, true);
@@ -481,7 +481,7 @@ STUDLIST;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-    location.reload();
+    location.assign("student_list.php");
     }
     };
     xhttp.open("GET", "phpscript/sorttype.php?sorttype="+val, true);
@@ -492,7 +492,7 @@ STUDLIST;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-    location.reload();
+    location.assign("student_list.php");
     }
     };
     xhttp.open("GET", "phpscript/filter.php?filter="+val, true);

@@ -200,7 +200,8 @@ CURR;
 
 		                ?>
 					</div>
-					<a href=<?php echo "../../registrar/schoolmanagement/curriculum_add.php" ?>>Add Curriculum</a>
+					<a class="btn btn-primary" href=<?php echo "curriculum_add.php" ?>>Add Curriculum</a>
+					<a class="btn btn-primary" href="subject_add.php">Add Subject</a>
 
 				</div>
 			</div>

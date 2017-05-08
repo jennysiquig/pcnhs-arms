@@ -86,7 +86,79 @@
 					</div>
 					<div class="x_content">
 						<form id="subject-val" class="form-horizontal form-label-left" action="phpinsert/subject_insert.php" method="POST" novalidate>
-							<div class="item form-group">
+						<div class="panel panel-default">
+							<div class="panel-heading">You can add one or more subjects here</div>
+  								<div class="panel-body">
+									<div id="subject_add_fields">
+										
+									</div>
+									<div class="col-md-1 nopadding" style="display: none;">
+										<div class="item form-group">
+											<input class="form-control" required="required" type="text" name="row_number[]" value="1" readonly="">
+										</div>
+									</div>
+									<div class="col-md-3 nopadding">
+										<div class="item form-group">
+											<input id="name" class="form-control" required="required" type="text" name="subj_name[]" placeholder="Subject Name">
+										</div>
+									</div>
+									<div class="col-md-2 nopadding">
+										<div class="form-group">
+											<select class="form-control" name="subj_level[]" required="">
+												<option value="">Subject Level</option>
+												<optgroup label="Year">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+												</optgroup>
+												<optgroup label="Grade">
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+													<option value="10">10</option>
+												</optgroup>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-2 nopadding">
+										<div class="form-group">
+											<input class="form-control" name="subj_order[]" pattern="\d+" required="" placeholder="Subject Order">
+										</div>
+									</div>
+									<div class="col-md-3 nopadding">
+										<div class="form-group">
+											<select class="form-control" name="yr_level_needed[]" required="">
+												<option value="">Year Level Needed</option>
+												<optgroup label="Year">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+												</optgroup>
+												<optgroup label="Grade">
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+													<option value="10">10</option>
+												</optgroup>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-2 nopadding">
+										<div class="form-group">
+											<div class="input-group">
+												<input class="form-control" name="credit_earned[]" placeholder="Credit Earned">
+												<div class="input-group-btn">
+													<button class="btn btn-success" type="button"  onclick="add_row();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+									<div class="clear"></div>
+							<!-- <div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Name</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="name" class="form-control col-md-7 col-xs-12" required="required" type="text" name="subj_name">
@@ -96,7 +168,7 @@
 		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Level</label>
 		                        <div class="col-md-6 col-sm-6 col-xs-12">
 		                          <select class="form-control" name="subj_level" required="">
-		                            <option value="">-- No Selected --</option>
+		                            <option value=""> No Selected </option>
 		                            <optgroup label="Year">
 		                              <option value="1">1</option>
 		                              <option value="2">2</option>
@@ -117,7 +189,7 @@
 		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Level Needed</label>
 		                        <div class="col-md-6 col-sm-6 col-xs-12">
 		                          <select class="form-control" name="yr_level_needed" required="">
-		                            <option value="">-- No Selected --</option>
+		                            <option value=""> No Selected </option>
 		                            <optgroup label="Year">
 		                              <option value="1">1</option>
 		                              <option value="2">2</option>
@@ -145,7 +217,9 @@
 		                        <div class="col-md-6 col-sm-6 col-xs-12">
 		                          <input class="form-control" name="credit_earned">
 		                        </div>
-		                    </div>
+		                    </div> -->
+
+		                    <!-- Check Boxes -->
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Curriculum</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -204,7 +278,7 @@ OPTION3;
 								</div>
 								<div class="form-group">
 									<div class="col-md-5 col-md-offset-3 pull-right">
-										<button type="submit" class="btn btn-success">Add Subject</button>
+										<button id="submit" type="submit" class="btn btn-success">Add Subject</button>
 									</div>
 								</div>
 							</form>
@@ -266,7 +340,7 @@ OPTION3;
 			$.listen('parsley:field:validate', function() {
 			validateFront();
 			});
-			$('#subject-val .btn').on('click', function() {
+			$('#subject-val #submit').on('click', function() {
 			$('#subject-val').parsley().validate();
 			validateFront();
 			});
@@ -283,6 +357,25 @@ OPTION3;
 			try {
 			hljs.initHighlightingOnLoad();
 			} catch (err) {}
+		</script>
+		<script type="text/javascript" charset="utf-8" async defer>
+			var room = 1;
+			var row_no = 1;
+			function add_row() {
+			 
+			    room++;
+			    row_no++;
+			    var objTo = document.getElementById('subject_add_fields')
+			    var divtest = document.createElement("div");
+				divtest.setAttribute("class", "form-group removeclass"+room);
+				var rdiv = 'removeclass'+room;
+			    divtest.innerHTML = '<div id="subject_add_fields"><div class="col-md-1 nopadding" style="display: none;"><div class="item form-group"><input class="form-control" required="required" type="text" name="row_number[]" value="'+row_no+'" readonly=""></div></div></div><div class="col-md-3 nopadding"><div class="item form-group"><input id="name" class="form-control" required="required" type="text" name="subj_name[]" placeholder="Subject Name"></div></div><div class="col-md-2 nopadding"><div class="form-group"><select class="form-control" name="subj_level[]" required=""><option value="">Subject Level</option><optgroup label="Year"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></optgroup><optgroup label="Grade"><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></optgroup></select></div></div><div class="col-md-2 nopadding"><div class="form-group"><input class="form-control" name="subj_order[]" pattern="\\d+" required="" placeholder="Subject Order"></div></div><div class="col-md-3 nopadding"><div class="form-group"><select class="form-control" name="yr_level_needed[]" required=""><option value="">Year Level Needed</option><optgroup label="Year"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></optgroup><optgroup label="Grade"><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></optgroup></select></div></div><div class="col-md-2 nopadding"><div class="form-group"><div class="input-group"><input class="form-control" name="credit_earned[]" placeholder="Credit Earned"><div class="input-group-btn"><button class="btn btn-danger" type="button" onclick="remove_row('+ room +');"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
+			    
+			    objTo.appendChild(divtest)
+			}
+			   function remove_row(rid) {
+				   $('.removeclass'+rid).remove();
+			   }
 		</script>
 	<!-- /Parsley -->
 	</body>
