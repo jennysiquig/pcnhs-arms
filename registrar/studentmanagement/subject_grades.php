@@ -19,6 +19,7 @@
 		$curriculum = $row['curr_name'];
 		$first_name = $row['first_name'];
 		$last_name = $row['last_name'];
+		}
 	}else {
 		header("location: student_list.php");
 		die();

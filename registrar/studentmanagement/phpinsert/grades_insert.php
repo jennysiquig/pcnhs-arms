@@ -216,9 +216,9 @@
 				if($hasSpecialGrade) {
 					$fin_grade = 0.0;
 				}
-				$insertgrades[] = "INSERT INTO `pcnhsdb`.`studentsubjects` (`stud_id`, `subj_id`, `schl_year`, `yr_level`, `fin_grade`, `comment`, `credit_earned`,  `special_grade`) VALUES ('$stud_id', '$subj_id', '$schl_year', '$yr_level', '$fin_grade', '$comment', '$credit_earned', '$special_grade');";
+				$insertgrades = "INSERT INTO `pcnhsdb`.`studentsubjects` (`stud_id`, `subj_id`, `schl_year`, `yr_level`, `fin_grade`, `comment`, `credit_earned`,  `special_grade`) VALUES ('$stud_id', '$subj_id', '$schl_year', '$yr_level', '$fin_grade', '$comment', '$credit_earned', '$special_grade');";
 
-
+				DB::query($insertgrades);
 			}
 			$insertaverage = "INSERT INTO `pcnhsdb`.`grades` (`stud_id`, `schl_name`, `schl_year`, `yr_level`, `average_grade`, `total_credit`) VALUES ('$stud_id', '$schl_name', '$schl_year', '$yr_level', '$average_grade', '$total_credit');";
 
@@ -227,12 +227,9 @@
 				unset($_SESSION['credits']);
 				unset($_SESSION['save-type']);
 				DB::query($insertaverage);
-				foreach ($insertgrades as $statement) {
-					DB::query($statement);
-				}
 				echo "<p>Updating Database, please wait...</p>";
 				header("refresh:3;url=../student_info.php?stud_id=$stud_id");
-				$_SESSION['user_activity'][] = "ADDED NEW GRADES: $stud_id - $yr_level";
+				//$_SESSION['user_activity'][] = "ADDED NEW GRADES: $stud_id - $yr_level";
 			}
 		}
 	}

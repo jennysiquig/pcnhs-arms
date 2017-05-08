@@ -359,7 +359,8 @@ foreach ($result as $row) {
 
 																			$already_generated =  false;
 																			$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
-																			$count = DB::count($statement);
+																			$result = DB::query($statement);
+																			$count = count($result);
 																			if($count > 0) {
 																			  $already_generated =  true;
 																			}
@@ -393,7 +394,7 @@ GRADES;
 																			        <button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
 REMOVE;
 																			        }else {
-																			        if($yr_level < 4 && $result_count == $yr_level) {
+																			        if($yr_level < 4 && $result_count == $yr_level && !$already_generated) {
 																			        echo <<<REMOVE
 																			        <button type="button" class="btn btn-danger btn-xs" onclick="removeGrade($yr_level,'$stud_id');"><i class="fa fa-trash"></i></button>
 REMOVE;
@@ -594,7 +595,8 @@ YR1;
 																$attendance_count = 0;
 																$already_generated =  false;
 																$statement = "SELECT * FROM pcnhsdb.requests WHERE stud_id = '$stud_id';";
-																$count = DB::count($statement);
+																$result = DB::query($statement);
+																$count = count($result);
 																if($count > 0) {
 																		$already_generated =  true;
 																}
@@ -649,7 +651,7 @@ REMOVE;
 														$result_checkgrade = count($result);
 														if($result_checkgrade > 0) {
 															$next_attendance = $attendance_count+1;
-															if($attendance_count < 4 && $next_attendance == $result_checkgrade) {
+															if($attendance_count < 4 && $next_attendance >= $result_checkgrade) {
 																echo "<a class='btn btn-success pull-right' href='../../registrar/studentmanagement/add_attendance.php?stud_id=$stud_id&yr_lvl=$next_attendance'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
 															}else {
 																echo "<a class='btn btn-success pull-right disabled'><i class='fa fa-plus m-right-xs'></i> Add Attendance</a>";
