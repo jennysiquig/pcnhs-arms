@@ -78,8 +78,23 @@
                 </div>
                 <div class="x_content">
                     <!-- First -->
-
+                    <?php 
+                        $full_name= "$last_name".', '."$first_name";
+                    ?>
                     <form id="val-gr" class="form-horizontal form-label-left" action=<?php  echo "grades_form.php"; ?> method="GET" novalidate>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Name</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+
+                                    <?php
+
+                                    echo <<<SP
+                                        <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="stud_name" readonly value='$full_name'>
+SP;
+                                    ?>
+
+                            </div>
+                        </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Student ID</label>
                             <div class="col-md-4 col-sm-6 col-xs-12">
@@ -168,6 +183,7 @@ OPTION2;
                                 <div class="col-md-4 col-sm-6 col-xs-12">
                                     <?php
                                         $stud_id = $_GET['stud_id'];
+                                        $stryr = "";
                                         if($_GET['yr_level'] > 1) {
 
                                             $pschool_year = "";
@@ -194,20 +210,23 @@ OPTION2;
 
                                             $statement = "SELECT * FROM pcnhsdb.students NATURAL JOIN primaryschool where stud_id = '$stud_id';";
                                             $result = DB::query($statement);
-                                            foreach ($result as $row) {
-                                              $pschool_year = $row['pschool_year'];
+                                            if(count($result) > 0) {
+                                                foreach ($result as $row) {
+                                                  $pschool_year = $row['pschool_year'];
+                                                }
+
+
+                                                $explode_pschool_year = explode("-", $pschool_year);
+
+                                                $yr1 = intval($explode_pschool_year[0]);
+                                                $yr2 = intval($explode_pschool_year[1]);
+
+                                                $yr1plus1 = $yr1+1;
+                                                $yr2plus1 = $yr2+1;
+                                                $stryr = $yr1plus1.' - '.$yr2plus1;
                                             }
-
-
-                                            $explode_pschool_year = explode("-", $pschool_year);
-
-                                            $yr1 = intval($explode_pschool_year[0]);
-                                            $yr2 = intval($explode_pschool_year[1]);
-
-                                            $yr1plus1 = $yr1+1;
-                                            $yr2plus1 = $yr2+1;
-                                            $stryr = $yr1plus1.' - '.$yr2plus1;
-                                            }
+                                            
+                                        }
                                     ?>
                                     <input type="text" class="form-control col-md-7 col-xs-12" name="schl_year" placeholder="YYYY - YYYY" data-inputmask="'mask': '9999 - 9999'" value=<?php echo "'$stryr'"; ?> required="" >
                                     <div id="sy-input-error">

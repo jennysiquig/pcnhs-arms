@@ -6,7 +6,7 @@
 echo <<<SB
 <div class="container body">
 	<div class="main_container">
-		<div class="col-md-3 left_col menu_fixed">
+		<div class="col-md-3 left_col">
 			<div class="left_col scroll-view">
 				<div class="navbar nav_title" style="border: 0;">
 					<a href="$base_url/registrar/index.php" class="site_title"><img src="$base_url/assets/images/pcnhslogo.png" style='height: 40px; width: 40px;'/> <span>PCNHS ARMS</span></a>
@@ -29,15 +29,15 @@ echo <<<SB
 					<div class="menu_section active">
 						<h3>Menu</h3>
 						<ul class="nav side-menu">
-							<li><a href="$base_url/registrar/index.php"><i class="fa fa-home"></i> Home </a></li>
-							<li><a href="$base_url/registrar/credentials/requests.php"><i class="fa fa-file"></i> Credential Requests</a></li>
-							<li><a><i class="fa fa-edit"></i>Student Management<span class="fa fa-chevron-down"></span></a>
+							<li><a id="nav-1" href="$base_url/registrar/index.php"><i class="fa fa-home"></i> Home </a></li>
+							<li><a id="nav-2" href="$base_url/registrar/credentials/requests.php"><i class="fa fa-file"></i> Credential Requests</a></li>
+							<li><a id="nav-3"><i class="fa fa-edit"></i>Student Management<span class="fa fa-chevron-down"></span></a>
 							<ul class="nav child_menu">
 								<li><a href="$base_url/registrar/studentmanagement/student_add.php">Add Student Record</a></li>
 								<li><a href="$base_url/registrar/studentmanagement/student_list.php">Student List</a></li>
 							</ul>
 						</li>
-						<li><a><i class="fa fa-university"></i>School Management<span class="fa fa-chevron-down"></span></a>
+						<li><a id="nav-4"><i class="fa fa-university"></i>School Management<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<li><a href="$base_url/registrar/schoolmanagement/curriculum.php">Curriculum</a></li>
 							<li><a href="$base_url/registrar/schoolmanagement/student_subjects.php">Student Subjects</a></li>
@@ -45,13 +45,13 @@ echo <<<SB
 							<li><a href="$base_url/registrar/schoolmanagement/credentials.php">Credentials</a></li>
 						</ul>
 					</li>
-					<li><a><i class="fa fa-check"></i>Credential Status<span class="fa fa-chevron-down"></span></a>
+					<li><a id="nav-5"><i class="fa fa-check"></i>Credential Status<span class="fa fa-chevron-down"></span></a>
 					<ul class="nav child_menu">
 						<li><a href="$base_url/registrar/credentials/unclaimed.php">Unclaimed Credentials</a></li>
 						<li><a href="$base_url/registrar/credentials/released.php">Released Credentials</a></li>
 					</ul>
 				</li>
-				<li><a><i class="fa fa-desktop"></i>Reports<span class="fa fa-chevron-down"></span></a>
+				<li><a id="nav-6"><i class="fa fa-desktop"></i>Reports<span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu">
 					<li><a href="$base_url/registrar/reports/transaction.php">Transaction Reports</a></li>
 					<li><a href="$base_url/registrar/reports/payment.php">Payment Remittance</a></li>

@@ -67,6 +67,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 		<!-- Custom Theme Style -->
 	    <link href="../assets/css/customstyle.css" rel="stylesheet">
 	    <link href="../assets/css/easy-autocomplete-topnav.css" rel="stylesheet">
+		<link href="../resources/libraries/bootstrap-tour/build/css/bootstrap-tour-standalone.min.css" rel="stylesheet">
 
 		<!--[if lt IE 9]>
 		<script src="../js/ie8-responsive-file-warning.js"></script>
@@ -86,18 +87,27 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 		<!-- Content Here -->
 		<!-- page content -->
 		<div class="right_col" role="main">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="button-wc" class="pull-right">
+						<button  class="btn btn-default" onclick="start_tour();" data-toggle="tooltip" data-placement="top"
+                               title="Click to start the quick tour of the site.">Start the Quick Tour</button>
+					</div>
+				</div>
+			</div>
+			<br>
 			<div class="row top_tiles">
 				<a href="studentmanagement/student_list.php">
-					<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div id="dash-1" class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 						<div class="tile-stats">
 							<div class="icon"><i class="fa fa-user"></i></div>
 							<?php
-                $result = DB::query("SELECT count(*) as students FROM pcnhsdb.students");
-                foreach ($result as $row) {
-                  $students = $row["students"];
-                  echo "<div class='count'>$students</div>";
-                }
-              ?>
+				                $result = DB::query("SELECT count(*) as students FROM pcnhsdb.students");
+				                foreach ($result as $row) {
+				                  $students = $row["students"];
+				                  echo "<div class='count'>$students</div>";
+				                }
+				              ?>
 							<p>&nbsp</p>
 							<h3>Total Students</h3>
 							<p>&nbsp</p>
@@ -105,7 +115,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 					</div>
 					</a>
 					<a href="credentials/unclaimed.php">
-						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+						<div id="dash-2" class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"><i class="glyphicon glyphicon-hourglass"></i></div>
 								<?php
@@ -122,7 +132,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 						</div>
 					</a>
 					<a href="credentials/released.php">
-						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+						<div id="dash-3" class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"><i class="fa fa-paper-plane"></i></div>
 								<?php
@@ -139,7 +149,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 						</div>
 					</a>
 					<a href="reports/transaction.php">
-						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+						<div id="dash-4" class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"><i class="glyphicon glyphicon-check"></i></div>
 								<?php
@@ -163,11 +173,11 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 							<h2>Recent Credential Requests</h2>
 							<ul class="nav navbar-right panel_toolbox">
 							</ul>
-							<a href="credentials/request_credential.php" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> New Request</a>
+							<a id="button-1" href="credentials/request_credential.php" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> New Request</a>
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content">
-							<div class="recent-request table-list">
+							<div id="table-1" class="recent-request table-list">
 								<table class="tablesorter-bootstrap">
 									<thead>
 										<tr class="headings">
@@ -230,10 +240,9 @@ UNCLAIMED;
 		<!-- FastClick -->
 		<script src= "../resources/libraries/fastclick/lib/fastclick.js"></script>
 		<!-- input mask -->
-		<script src= "../resources/libraries/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-		<script src= "../resources/libraries/parsleyjs/dist/parsley.min.js"></script>
 		<!-- NProgress -->
 		<script src="../resources/libraries/nprogress/nprogress.js"></script>
+		<script src="../resources/libraries/bootstrap-tour/build/js/bootstrap-tour-standalone.min.js"></script>
 		<!-- Custom Theme Scripts -->
 		<script src= "../assets/js/jquery.easy-autocomplete.js"></script>
 		<script type="text/javascript">
@@ -270,7 +279,93 @@ UNCLAIMED;
 		};
 		$("#search_key").easyAutocomplete(options);
 		</script>
+		<script type="text/javascript">
+			var tour = new Tour({
+				  steps: [
+				  {
+				    element: "#button-wc",
+				    placement: "left",
+				    title: "Welcome",
+				    content: "This tour will navigate you through the basic functionalities and links of this site."
+				  },
+				  {
+				    element: "#dash-1",
+				    placement: "bottom",
+				    title: "Total Students Count",
+				    content: "This will show you the number of students that are saved in the Database."
+				  },
+				  {
+				    element: "#dash-2",
+				    placement: "bottom",
+				    title: "Unclaimed Credentials Count",
+				    content: "This will show you the number of requested credentials that are not yet claimed."
+				  },
+				  {
+				    element: "#dash-3",
+				    placement: "bottom",
+				    title: "Released Credentials Count",
+				    content: "This will show you the number of released credentials."
+				  },
+				  {
+				    element: "#dash-4",
+				    placement: "bottom",
+				    title: "Total Transactions Count",
+				    content: "This will show you the number of transactions made."
+				  },
+				  {
+				    element: "#button-1",
+				    placement: "bottom",
+				    title: "New Request Button",
+				    content: "You can add new credential request by clicking this button."
+				  },
+				  {
+				    element: "#table-1",
+				    placement: "top",
+				    title: "List of recent credential request",
+				    content: "This will show you the list of five recent credential request. You can process these requests by clicking the Process Request button."
+				  },
+				  {
+				    element: "#nav-2",
+				    placement: "right",
+				    title: "Credential Requests",
+				    content: "You can add new request and view all the list of requested credentials here."
+				  },
+				  {
+				    element: "#nav-3",
+				    placement: "right",
+				    title: "Student Management",
+				    content: "You can add and view the student records here."
+				  },
+				  {
+				    element: "#nav-4",
+				    placement: "right",
+				    title: "School Management",
+				    content: "You can add and manage the curriculum, student subjects, student programs, and credentials here."
+				  },
+				  {
+				    element: "#nav-5",
+				    placement: "right",
+				    title: "Credential Status",
+				    content: "You can manage all the unclaimed and released credentials here."
+				  },
+				  {
+				    element: "#nav-6",
+				    placement: "right",
+				    title: "Reports",
+				    content: "You can view all the reports of the transactions made. You can also generate monthly accomplishment report and payment remittance here."
+				  }
+
+				]});
+
+				// Initialize the tour
+				tour.init();
+				function start_tour() {
+					tour.restart();
+				}
+			
+		</script>
 		<script src= "../assets/js/custom.min.js"></script>
+		
 		
 	</body>
 </html>

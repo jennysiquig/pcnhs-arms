@@ -166,31 +166,45 @@
 				                    	$payment_date = $_GET['payment_date'];
 				                    	$from_and_to_date = explode("-", $payment_date);
 				                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
-          										$m = $sqldate_format_from[0];
-          										$d = $sqldate_format_from[1];
-          										$y = $sqldate_format_from[2];
-          										$m = preg_replace('/\s+/', '', $m);
-          										$d = preg_replace('/\s+/', '', $d);
-          										$y = preg_replace('/\s+/', '', $y);
-
-          										$from = $y."-".$m."-".$d;
-
-          										$sqldate_format_to = explode("/", $from_and_to_date[1]);
-          										$m = $sqldate_format_to[0];
-          										$d = $sqldate_format_to[1];
-          										$y = $sqldate_format_to[2];
-          										$m = preg_replace('/\s+/', '', $m);
-          										$d = preg_replace('/\s+/', '', $d);
-          										$y = preg_replace('/\s+/', '', $y);
-
-          										$to = $y."-".$m."-".$d;
+										$m = $sqldate_format_from[0];
+										$d = $sqldate_format_from[1];
+										$y = $sqldate_format_from[2];
+										$m = preg_replace('/\s+/', '', $m);
+										$d = preg_replace('/\s+/', '', $d);
+										$y = preg_replace('/\s+/', '', $y);
+										$from = $y."-".$m."-".$d;
+										$sqldate_format_to = explode("/", $from_and_to_date[1]);
+										$m = $sqldate_format_to[0];
+										$d = $sqldate_format_to[1];
+										$y = $sqldate_format_to[2];
+										$m = preg_replace('/\s+/', '', $m);
+										$d = preg_replace('/\s+/', '', $d);
+										$y = preg_replace('/\s+/', '', $y);
+										$to = $y."-".$m."-".$d;
 
 
 
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials natural join transaction where pay_date between '$from' and '$to' limit $start, $limit;";
 				                    }else {
 				                    	$payment_date = date('m/01/y').'-'.date('m/d/y');
-				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials natural join transaction limit $start, $limit";
+				                    	$from_and_to_date = explode("-", $payment_date);
+				                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
+										$m = $sqldate_format_from[0];
+										$d = $sqldate_format_from[1];
+										$y = $sqldate_format_from[2];
+										$m = preg_replace('/\s+/', '', $m);
+										$d = preg_replace('/\s+/', '', $d);
+										$y = preg_replace('/\s+/', '', $y);
+										$from = $y."-".$m."-".$d;
+										$sqldate_format_to = explode("/", $from_and_to_date[1]);
+										$m = $sqldate_format_to[0];
+										$d = $sqldate_format_to[1];
+										$y = $sqldate_format_to[2];
+										$m = preg_replace('/\s+/', '', $m);
+										$d = preg_replace('/\s+/', '', $d);
+										$y = preg_replace('/\s+/', '', $y);
+										$to = $y."-".$m."-".$d;
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials natural join transaction where pay_date between '$from' and '$to' limit $start, $limit";
 				                    }
 
 
@@ -256,7 +270,27 @@ PAYMENT;
 				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials where pay_date between '$from' and '$to';";
 				                    }else {
 				                    	$payment_date = date('m/01/y').'-'.date('m/d/y');
-				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials";
+				                    	$from_and_to_date = explode("-", $payment_date);
+				                    	$sqldate_format_from = explode("/", $from_and_to_date[0]);
+										$m = $sqldate_format_from[0];
+										$d = $sqldate_format_from[1];
+										$y = $sqldate_format_from[2];
+										$m = preg_replace('/\s+/', '', $m);
+										$d = preg_replace('/\s+/', '', $d);
+										$y = preg_replace('/\s+/', '', $y);
+
+										$from = $y."-".$m."-".$d;
+
+										$sqldate_format_to = explode("/", $from_and_to_date[1]);
+										$m = $sqldate_format_to[0];
+										$d = $sqldate_format_to[1];
+										$y = $sqldate_format_to[2];
+										$m = preg_replace('/\s+/', '', $m);
+										$d = preg_replace('/\s+/', '', $d);
+										$y = preg_replace('/\s+/', '', $y);
+
+										$to = $y."-".$m."-".$d;
+				                    	$statement = "SELECT * FROM pcnhsdb.students natural join requests natural join payment natural join credentials where pay_date between '$from' and '$to'";
 				                    }
 
 			              	$result = DB::query($statement);

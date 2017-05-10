@@ -67,7 +67,7 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Student Personal Information </h2>
-						<h2 class="pull-right"><small> <button type="reset" class="btn btn-primary btn-medium" onclick="releaseData();"> <i class="fa fa-info-circle"></i> Clear</button> Fields first before adding new student.</small></h2>
+						<h2 class="pull-right"><button type="reset" class="btn btn-primary btn-medium" onclick="releaseData();"> Clear Fields</button></h2>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">

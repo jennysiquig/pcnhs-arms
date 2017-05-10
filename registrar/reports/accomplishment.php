@@ -210,8 +210,24 @@
 							                    $statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and date_processed between '$from' and '$to' and credentials.cred_id = $cred_id";
 							                    }else {
 							                    	$accomplishment_date = date('m/01/y').'-'.date('m/d/y');
-
-							                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null) and credentials.cred_id = $cred_id";
+							                    	$from_and_to_date = explode("-", $accomplishment_date);
+													$sqldate_format_from = explode("/", $from_and_to_date[0]);
+													$m = $sqldate_format_from[0];
+													$d = $sqldate_format_from[1];
+													$y = $sqldate_format_from[2];
+													$m = preg_replace('/\s+/', '', $m);
+													$d = preg_replace('/\s+/', '', $d);
+													$y = preg_replace('/\s+/', '', $y);
+													$from = $y."-".$m."-".$d;
+													$sqldate_format_to = explode("/", $from_and_to_date[1]);
+													$m = $sqldate_format_to[0];
+													$d = $sqldate_format_to[1];
+													$y = $sqldate_format_to[2];
+													$m = preg_replace('/\s+/', '', $m);
+													$d = preg_replace('/\s+/', '', $d);
+													$y = preg_replace('/\s+/', '', $y);
+													$to = $y."-".$m."-".$d;
+							                    	$statement = "SELECT count(date_processed) as 'date_processed_count', count(date_released) as 'date_released_count' FROM pcnhsdb.requests natural join credentials where (date_released is null or date_released is not null)  and date_processed between '$from' and '$to' and credentials.cred_id = $cred_id";
 							                    }
 
 

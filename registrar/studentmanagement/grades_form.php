@@ -12,7 +12,7 @@
     $curriculum_subj = $_GET['curriculum_subj'];
     $schl_name = $_GET['schl_name'];
     $schl_year = $_GET['schl_year'];
-
+    $stud_name = $_GET['stud_name'];
     $pschool_year = "";
     $getsy = $_GET['schl_year'];
     $statement = "SELECT * FROM pcnhsdb.students NATURAL JOIN primaryschool where stud_id = '$stud_id';";
@@ -128,6 +128,15 @@
                             </a>
                             <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="true">
                               <div class="panel-body">
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Name:</label>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <?php
+                                        $schl_name = $_GET['schl_name'];
+                                        echo "<input class='form-control' value='$stud_name' readonly>";
+                                    ?>
+                                    </div>
+                                </div>
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">School Name:</label>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
