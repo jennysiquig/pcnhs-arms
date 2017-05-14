@@ -96,6 +96,29 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 				</div>
 			</div>
 			<br>
+            <?php
+                $month = date('m/01/y') . '-' . date('m/d/y');
+                $from_and_to_date = explode("-", $month);
+                $sqldate_format_from = explode("/", $from_and_to_date[0]);
+                $m = $sqldate_format_from[0];
+                $d = $sqldate_format_from[1];
+                $y = $sqldate_format_from[2];
+                $m = preg_replace('/\s+/', '', $m);
+                $d = preg_replace('/\s+/', '', $d);
+                $y = preg_replace('/\s+/', '', $y);
+
+                $from = $y . "-" . $m . "-" . $d;
+
+                $sqldate_format_to = explode("/", $from_and_to_date[1]);
+                $m = $sqldate_format_to[0];
+                $d = $sqldate_format_to[1];
+                $y = $sqldate_format_to[2];
+                $m = preg_replace('/\s+/', '', $m);
+                $d = preg_replace('/\s+/', '', $d);
+                $y = preg_replace('/\s+/', '', $y);
+
+                $to = $y . "-" . $m . "-" . $d;
+            ?>
 			<div class="row top_tiles">
 				<a href="studentmanagement/student_list.php">
 					<div id="dash-1" class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -119,7 +142,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 							<div class="tile-stats">
 								<div class="icon"><i class="glyphicon glyphicon-hourglass"></i></div>
 								<?php
-                    $result = DB::query("SELECT count(*) as unclaimed FROM pcnhsdb.requests where status = 'u';");
+                    $result = DB::query("SELECT count(*) as unclaimed FROM pcnhsdb.requests where status = 'u' and date_processed between '$from' and '$to';");
                     foreach ($result as $row) {
                       $unclaimed = $row["unclaimed"];
                       echo "<div class='count'>$unclaimed</div>";
@@ -136,7 +159,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 							<div class="tile-stats">
 								<div class="icon"><i class="fa fa-paper-plane"></i></div>
 								<?php
-                    $result = DB::query("SELECT count(*) as released FROM pcnhsdb.requests where status = 'r';");
+                    $result = DB::query("SELECT count(*) as released FROM pcnhsdb.requests where status = 'r' and date_released between '$from' and '$to';");
                     foreach ($result as $row) {
                       $released = $row["released"];
                       echo "<div class='count'>$released</div>";
@@ -153,7 +176,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['account_type'])) {
 							<div class="tile-stats">
 								<div class="icon"><i class="glyphicon glyphicon-check"></i></div>
 								<?php
-                  $result = DB::query("SELECT count(*) as totaltrans FROM pcnhsdb.transaction;");
+                  $result = DB::query("SELECT count(*) as totaltrans FROM pcnhsdb.transaction where trans_date between '$from' and '$to';");
                   foreach ($result as $row) {
                     $totaltrans = $row["totaltrans"];
                     echo "<div class='count'>$totaltrans</div>";

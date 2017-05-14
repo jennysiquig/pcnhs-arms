@@ -365,7 +365,7 @@ OPTION3;
 			 
 			    room++;
 			    row_no++;
-			    var objTo = document.getElementById('subject_add_fields')
+			    var objTo = document.getElementById('subject_add_fields');
 			    var divtest = document.createElement("div");
 				divtest.setAttribute("class", "form-group removeclass"+room);
 				var rdiv = 'removeclass'+room;

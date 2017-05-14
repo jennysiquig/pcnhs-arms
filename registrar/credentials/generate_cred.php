@@ -124,7 +124,7 @@
     $school_year = "SELECT max(schl_year) as schl_year from studentsubjects where stud_id = '$stud_id'";
     $ans = DB::query($school_year);
     if (count($ans) > 0) {
-    	foreach ($ans as $row => $value) {
+    	foreach ($ans as $row) {
     		$last_yr_attended = $row['schl_year'];
     	}
     }

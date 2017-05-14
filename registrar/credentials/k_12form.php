@@ -885,14 +885,30 @@ A4;
                     </div>
 
                         <div id="box-6">
-
+                          <?php
+                              $school = "";
+                              $school_year = "";
+                              $subject = "";
+                              $final_rating = "";
+                              $action_taken = "";
+                              $comment = "";
+                              $statement = "SELECT * FROM pcnhsdb.othersubjects where stud_id = '$stud_id' and subj_type = 'summer';";
+                              $result = DB::query($statement);
+                              if(count($result) > 0) {
+                                $school = $row['schl_name'];
+                                $school_year = $row['schl_year'];
+                                $subject = $row['subj_name'];
+                                $final_rating = $row['fin_grade'];
+                                $comment = $row['comment'];
+                              }
+                            ?>
                             <p id="b6-r1-p1">SUMMER/REMEDIAL CLASS</p>
 
                             <p id="b6-r1-p2">School:</p>
-                            <div id="b6-r1-d1"></div>
+                            <div id="b6-r1-d1"><?php echo $school; ?></div>
 
                             <p id="b6-r1-p3">School Year:</p>
-                            <div id="b6-r1-d2"></div>
+                            <div id="b6-r1-d2"><?php echo $school_year; ?></div>
 
                             <!-- <p id="b6-r2-p1">Subject</p>
                             <p id="b6-r2-p2">Final Rating</p>
@@ -907,9 +923,9 @@ A4;
                                 </tr>
 
                                 <tr id="b6-r3">  <!-- additional subject -->
-                                <td class="add-subj"></td> <!-- subject -->
-                                <td class="add-fr"></td> <!-- final rating -->
-                                <td class="add-at"></td> <!-- Action Taken -->
+                                <td class="add-subj"><?php echo $subject; ?></td> <!-- subject -->
+                                <td class="add-fr"><?php echo $final_rating; ?></td> <!-- final rating -->
+                                <td class="add-at"><?php echo $comment; ?></td> <!-- Action Taken -->
                                 </tr>
 
                             </table>
@@ -923,7 +939,7 @@ A4;
                                 </div>
 
                                 <div class="action-taken"> -->
-
+                            
                             <p id="b6-r3-p4">Days of School:</p>
                                 <div id="b6-r3-d1"></div>
 
